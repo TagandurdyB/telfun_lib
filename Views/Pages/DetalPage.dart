@@ -6,7 +6,6 @@ import '/Models/Public.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class DetalPage extends StatelessWidget {
-  static String routName = "/DetalPage";
   final String image, name, phone, price, place, about, mark;
   DetalPage(
       {Key key,

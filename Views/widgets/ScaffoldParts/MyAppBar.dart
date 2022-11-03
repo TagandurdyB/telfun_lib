@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import '/Models/Public.dart';
 import '/Views/Pages/SearchPage.dart';
 import '/Views/Pages/SetingsPage.dart';
@@ -70,9 +71,9 @@ class _MyAppBarState extends State<MyAppBar>
         IconButton(
             onPressed: () {
               if (widget.IsUser) {
-                Navigator.of(context).pushNamed(SetingsPage.routName);
+                Navigator.of(context).pushNamed(PageName.pageSetting);
               } else {
-                Navigator.of(context).pushNamed(SearchPage.routName);
+                Navigator.of(context).pushNamed(PageName.pageSearch);
               }
             },
             icon: Icon(

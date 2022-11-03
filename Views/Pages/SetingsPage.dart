@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class SetingsPage extends StatelessWidget {
-  static String routName="/SettingPage";
   // const SetingsPage({Key? key}) : super(key: key);
 
   _callNum(String num) async {

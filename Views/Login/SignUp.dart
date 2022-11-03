@@ -6,7 +6,6 @@ import '/ViewModels/ApiDebuging.dart';
 import 'Verification.dart';
 
 class SignUpPage extends StatelessWidget {
-  static String routName = "/SignUp";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

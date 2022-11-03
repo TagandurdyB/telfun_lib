@@ -2,14 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/ApiDebuging.dart';
-import 'package:telfun/Views/Login/LoginPage.dart';
+import '/ViewModels/ApiDebuging.dart';
+import '/ViewModels/Routes.dart';
 import '/Views/Login/verificationInput.dart';
-import '/Views/Pages/MainPage.dart';
 import '/Models/Public.dart';
 
 class VerificationPage extends StatelessWidget {
-  static String routName = "/Verification";
   FirebaseAuth auth;
   User user;
   String verificationID;
@@ -200,7 +198,7 @@ paroly ýazyň.
           ));
           Future.delayed(Duration(seconds: 4)).then((value) =>
               Navigator.popUntil(
-                  context, ModalRoute.withName(MainPage.routName)));
+                  context, ModalRoute.withName(PageName.pageMain)));
         } else {
           print("***ERROR***");
           /*    Fluttertoast.showToast(

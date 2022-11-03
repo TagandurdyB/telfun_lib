@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
 import 'package:telfun/Views/Pages/MainPage.dart';
 
@@ -30,7 +31,7 @@ class MyDrawer extends StatelessWidget {
                   DrawBarBtn(
                     onTap: (context) {
                       Navigator.pushNamedAndRemoveUntil(
-                          context, MainPage.routName, (route) => false);
+                          context, PageName.pageMain, (route) => false);
                     },
                     leading: Icon(Icons.home),
                     title: Text("Baş sahypa"),
@@ -45,7 +46,7 @@ class MyDrawer extends StatelessWidget {
                       child: DrawBarBtn(
                     onTap: (context) {
                       Provider.of<UsesVar>(context,listen: false).navBarSelect(2);
-                      Navigator.popUntil(context, ModalRoute.withName(MainPage.routName));
+                      Navigator.popUntil(context, ModalRoute.withName(PageName.pageMain));
                     },
                     leading: Icon(Icons.account_box_sharp),
                     title: Text("Şahsy sahypa"),

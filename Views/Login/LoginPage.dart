@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/SharedPref.dart';
@@ -14,7 +15,6 @@ void callTel(String num) async {
 }
 
 class LoginPage extends StatelessWidget {
-  static String routName = "/LogIn";
   //const LoginPage({Key? key}) : super(key: key);
   String _empetySMS = "Doly we dogry ýazyň!";
 
@@ -56,7 +56,7 @@ class LoginPage extends StatelessWidget {
           Provider.of<UsesVar>(context, listen: false).navBarSelect(1);
           //Provider.of<UsesVar>(context,listen: false).changeLogin(true);
           UserLoginDetals.saveLogin(true);
-          Navigator.popUntil(context, ModalRoute.withName(MainPage.routName));
+          Navigator.popUntil(context, ModalRoute.withName(PageName.pageMain));
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Container(
@@ -153,7 +153,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, SignUpPage.routName);
+                          Navigator.pushNamed(context, PageName.pageSignUp);
                         },
                         child: Text("Hasap döret")),
                   ],

@@ -203,8 +203,8 @@ class _AddBtnState extends State<AddBtn> {
                     "about": controls[2].text,
                   };
                   bool isUpload = await service.addImage(body, [
-                    image == null ? "" : image.path,
-                    image1 == null ? "" : image1.path
+                     image,
+                     image1,
                   ]);
                   if (isUpload) {
                     controls.forEach((element) {

@@ -52,30 +52,9 @@ class API {
 
   Future<List> getDate() async {
     final response = await http.get(Uri.parse(URL));
-    print(json.decode(response.body));
+    print(json.decode(response.body).toString());
     return json.decode(response.body);
   }
 }
-
-//List<APILists> ApiBase = [APILists([], [])];
-
-/*class APILists{
-   List GaleryList,CategoriList;
-
-  APILists(this.GaleryList, this.CategoriList);
-
-  */ /*void changeGallery(List list){
-    _GaleryList=list??[];
-  }
-   void changeCategori(List list){
-     _CategoriList=list??[];
-   }
-   List getGallery(){
-    return _GaleryList;
-   }
-  List getCategory(){
-   return _CategoriList;
-  }*/ /*
-}*/
 
 Map<String,List> ApiBase={};

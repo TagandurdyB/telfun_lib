@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/Views/Pages/MainPage.dart';
 import '/Views/Pages/AddPage.dart';
 import '/Views/Login/LoginPage.dart';
@@ -43,10 +44,10 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             if(UserLoginDetals.getIsLogin()&&index==1){
               Provider.of<UsesVar>(context,listen: false).navBarSelect(1);
               if(!widget.IsMain)
-               Navigator.popUntil(context, ModalRoute.withName(MainPage.routName));
+               Navigator.popUntil(context, ModalRoute.withName(PageName.pageMain));
             }
             else if(index==1&&!UserLoginDetals.getIsLogin()){
-              Navigator.pushNamed(context, LoginPage.routName);
+              Navigator.pushNamed(context, PageName.pageLogIn);
             }
             else if(index==2&&!UserLoginDetals.getIsLogin())
             {}

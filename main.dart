@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/Views/Pages/DetalPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
@@ -48,17 +49,8 @@ UserProperties.loading();
               color: Color(0xff7163DF),
             )),
       ),
-      initialRoute: LogoPage.routName,
-      routes: {
-        MainPage.routName: (context) => MainPage(),
-        SetingsPage.routName: (context) => SetingsPage(),
-        SearchPage.routName: (context) => SearchPage(),
-        LogoPage.routName: (context) => Logo(),
-        LoginPage.routName: (context) => LoginPage(),
-        SignUpPage.routName: (context) => SignUpPage(),
-        VerificationPage.routName: (context) => VerificationPage(),
-        DetalPage.routName:(context)=>DetalPage(),
-      },
+      initialRoute: PageName.pageLogo,
+      routes: PageName().routes ,
     );
   }
 }

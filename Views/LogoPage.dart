@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import '/ViewModels/ApiDebuging.dart';
+import '/ViewModels/Routes.dart';
 import '/ViewModels/ShPBDebug.dart';
-import '/Views/Pages/MainPage.dart';
 import '/Models/Public.dart';
-import '/Views/Login/LoginPage.dart';
 
 class LogoPage extends StatelessWidget {
-  static String routName = "/LogoPage";
   //const ({Key? key}) : super(key: key);
 
   @override
@@ -42,7 +39,7 @@ class _LogoState extends State<Logo> {
     ).IsLogin();*/
    // print("is login ? $islogin");
     Future.delayed(Duration(seconds: 3)).then((value) =>
-        Navigator.of(context).pushReplacementNamed(MainPage.routName));
+        Navigator.of(context).pushReplacementNamed(PageName.pageMain));
   }
 
   @override

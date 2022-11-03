@@ -10,7 +10,6 @@ import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 import 'UserPage.dart';
 
 class MainPage extends StatelessWidget {
-  static String routName = "/MainPage";
   MainPage({Key key}) : super(key: key);
 
   @override
