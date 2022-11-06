@@ -58,7 +58,7 @@ class InCategory extends StatelessWidget {
                   width: SWi*0.35,
                   height: SWi * 0.35,
                   child: Image.network(
-                      "$IP/storage/${list[index]["image"]}"),
+                      "$IP/storage/${list[index]["image"][0]["image"]}"),
                 ),
                 Positioned(
                   bottom: 0,

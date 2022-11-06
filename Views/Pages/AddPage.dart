@@ -202,10 +202,7 @@ class _AddBtnState extends State<AddBtn> {
                     "place": filters[4].value,
                     "about": controls[2].text,
                   };
-                  bool isUpload = await service.addImage(body, [
-                     image,
-                     image1,
-                  ]);
+                  bool isUpload = await service.addImage(body, images);
                   if (isUpload) {
                     controls.forEach((element) {
                       element.text = "";
@@ -213,12 +210,11 @@ class _AddBtnState extends State<AddBtn> {
                     setState(() {
                       _isUpload = false;
                       _about = false;
-                      image = null;
-                      image1 = null;
+                      images=[];
                     });
                     MySnack(
                             textColor: Colors.white,
-                            message: "Bildiriş goşuldy",
+                            message: "Bildiriş ugradyldy",
                             textBgColor: Colors.blue)
                         .pushSnack(context);
                     Future.delayed(Duration(seconds: 3)).then((value) =>

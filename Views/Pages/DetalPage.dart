@@ -6,7 +6,8 @@ import '/Models/Public.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class DetalPage extends StatelessWidget {
-  final String image, name, phone, price, place, about, mark;
+  final String name, phone, price, place, about, mark;
+  final List image;
   DetalPage(
       {Key key,
       @required this.image,
@@ -18,7 +19,7 @@ class DetalPage extends StatelessWidget {
       this.mark = ""})
       : super(key: key);
 
-  void tellCall(String phone)async{
+  void tellCall(String phone) async {
     launch("tel://$phone");
   }
 
@@ -30,23 +31,32 @@ class DetalPage extends StatelessWidget {
         children: [
           Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(8),
-              child: ImgBtn(
-                width: double.infinity,
-                height: SWi,
-                //  color: Colors.,
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Zoom(image: image)));
-                },
-                shape: 30,
-                boxShadow: [
-                  BoxShadow(color: Colors.grey, blurRadius: 10, spreadRadius: 0)
-                ],
-                child: Image.network("$IP/storage/$image"),
-              )),
+              // padding: EdgeInsets.all(8),
+              width: SWi,
+              height: SWi,
+              child: PageView.builder(
+                  itemCount: image.length,
+                  itemBuilder: (context,index)=>ImgBtn(
+                    width: double.infinity,
+                    height: SWi,
+                    //  color: Colors.,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Zoom(images: image,index:index)));
+                    },
+                    shape: 30,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 10,
+                          spreadRadius: 0)
+                    ],
+                    child:
+                    Image.network("$IP/storage/${image[index]["image"]}"),
+                  ))),
           EventDetal(),
         ],
       ),
@@ -147,38 +157,44 @@ class DetalPage extends StatelessWidget {
 }
 
 class Zoom extends StatelessWidget {
-  final String image;
-  const Zoom({Key key, this.image}) : super(key: key);
+  final List images;
+  final int index;
+   Zoom({Key key, this.images,this.index}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
+    PageController controler=PageController(initialPage: index);
     return Scaffold(
-        body: SafeArea(
-      child: Stack(
-        children: [
-          Container(
-            width: SWi,
-            height: SHe,
-            color: Colors.black,
-            child: InteractiveViewer(
-                maxScale: 5,
-                child: Hero(
-                    tag: "Event",
-                    child: Image.network("$IP/storage/$image"))),
+        body: PageView.builder(
+          controller: controler,
+            itemCount: images.length,
+            itemBuilder: (context,index)=>SafeArea(
+          child: Stack(
+            children: [
+              Container(
+                width: SWi,
+                height: SHe,
+                color: Colors.black,
+                child: InteractiveViewer(
+                    maxScale: 5,
+                    child: Hero(
+                        tag: "Event", child: Image.network("$IP/storage/${images[index]["image"]}"))),
+              ),
+              Positioned(
+                right: 1,
+                top: 1,
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                    )),
+              ),
+            ],
           ),
-          Positioned(
-            right: 1,
-            top: 1,
-            child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.clear,
-                  color: Colors.white,
-                )),
-          ),
-        ],
-      ),
-    ));
+        )));
   }
 }

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '/Models/Public.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 File image, image1;
-bool imageOk=false;
+List<File> images = [];
+bool imageOk = false;
 
 class AddImages extends StatefulWidget {
   @override
@@ -21,66 +21,58 @@ class _AddImagesState extends State<AddImages> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        if (index == 0) {
-          imageOk=true;
-          image = File(pickedFile.path);
+        imageOk = true;
+        if (index + 1 > images.length) {
+          images.add(File(pickedFile.path));
+        } else {
+          images[index] = File(pickedFile.path);
         }
-        else
-          image1 = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
     });
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    image=null;image1=null;
+    image = null;
+    images = [];
   }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        GestureDetector(
-          onTap: () {
-            getImage(0);
-          },
-          child: _buildImage(image),
-        ),
-        GestureDetector(
-          onTap: () {
-            getImage(1);
-          },
-          child: _buildImage(image1),
-        ),
-        /*  Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadiusDirectional.circular(30),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.blue,
-                    blurRadius: 1,
-                    spreadRadius: 0)
-              ]),
-          width: SWi * 0.45,
-          height: SWi * 0.45,
-          child: Text(
-            "Surat sayla!",
-            style: TextStyle(color: Colors.grey),
+    return Container(
+      alignment: Alignment.center,
+      child: Wrap(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          runSpacing: SWi * 0.05,
+          spacing: SWi * 0.05,
+          children: List.generate(
+            images.length + 1,
+            (index) => GestureDetector(
+              onTap: () {
+                getImage(index);
+              },
+              child: _buildImage(
+                  index > images.length - 1 ? image : images[index]),
+            ),
+          ) /* [
+
+       */ /*   GestureDetector(
+            onTap: () {
+              getImage(1);
+            },
+            child: _buildImage(image1),
+          ),*/ /*
+        ],*/
           ),
-        ),*/
-      ],
     );
   }
 
-  Widget _buildImage(File _image) {
-    String imageStr = "Surat saýlaň!";
+  Widget _buildImage(_image) {
+    String imageStr = "Surat Goş!";
     if (_image == null) {
       return Container(
         alignment: Alignment.center,
@@ -92,9 +84,15 @@ class _AddImagesState extends State<AddImages> {
             ]),
         width: SWi * 0.45,
         height: SWi * 0.45,
-        child: Text(
-          "$imageStr",
-          style: TextStyle(color: Colors.grey),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.add, color: Colors.blue, size: SWi * 0.1),
+            Text(
+              "$imageStr",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
         ),
       );
     } else {
