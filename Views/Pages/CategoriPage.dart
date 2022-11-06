@@ -10,12 +10,13 @@ class CategoriPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldAll(
+      EnableBotomMenu: true,
         IsTabBar: true,
         myTabs: [
           Tab(text: 'Hemmesi'),
           Tab(text: 'Model'),
         ],
-        topBarHeight: 0.25,
+       // topBarHeight: 0.25,
         body: TabViewer());
   }
 }

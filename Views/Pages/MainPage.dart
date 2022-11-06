@@ -54,7 +54,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
     // print(selPage);
     selPage.index = Provider.of<UsesVar>(context).witchNavBarSelect();
     return ScaffoldAll(
-      IsSideBar: true,
+     IsSideBar: true,
       IsMain: true,
       body: TabBarView(
           physics: NeverScrollableScrollPhysics(),

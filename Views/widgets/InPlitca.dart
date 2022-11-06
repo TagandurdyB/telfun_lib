@@ -7,7 +7,8 @@ import 'imgBtn.dart';
 class InCategory extends StatelessWidget {
   const InCategory({
     Key key,
-    @required this.list,@required this.index,
+    @required this.list,
+    @required this.index,
   }) : super(key: key);
 
   final List list;
@@ -16,9 +17,10 @@ class InCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: SWi * 0.05),
+      padding:
+          EdgeInsets.symmetric(horizontal: SWi * 0.05, vertical: SWi * 0.02),
       child: ImgBtn(
-        color: Colors.white,
+        color: Color(0xff6A00FF),
         onTap: () {
           print(
               "${list[index]["image"]} ${list[index]["name"]}  ${list[index]["price"]} ${list[index]["place"]} ${list[index]["about"]}");
@@ -27,79 +29,73 @@ class InCategory extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => DetalPage(
-                    image: list[index]["image"],
-                    name: list[index]["name"],
-                    phone: list[index]["user"]["phone"],
-                    price: list[index]["price"],
-                    about: list[index]["about"],
-                    place: list[index]["place"],
-                    mark: list[index]["mark"]["name"],
-                  )));
+                        image: list[index]["image"],
+                        name: list[index]["name"],
+                        phone: list[index]["user"]["phone"],
+                        price: list[index]["price"],
+                        about: list[index]["about"],
+                        place: list[index]["place"],
+                        mark: list[index]["mark"]["name"],
+                      )));
         },
         boxShadow: [
-          BoxShadow(spreadRadius: 0, blurRadius:3,color: Colors.grey,offset: Offset(2,2))
+          BoxShadow(spreadRadius: 0, blurRadius: 5, color: Colors.grey)
         ],
-        shape: SWi * 0.03,
-        width: SWi*0.45,
-        height: SWi * 0.55,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(SWi * 0.03),
-          child: Container(
-            width: SWi*0.45,
-            height: SWi * 0.55,
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: SWi*0.05),
+        width: null,
+        height: null,
+        child: Container(
+          color: Colors.white,
+          margin: EdgeInsets.all(SWi * 0.005),
+          width: SWi,
+          height: SWi * 0.3,
+          child: Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              Positioned(
+                right: SWi * 0.1,
+                child: Container(
+                  padding: EdgeInsets.all(SWi * 0.01),
                   decoration: BoxDecoration(
-                    //  color: Colors.grey[400],
-                  ),
-                  width: SWi*0.35,
-                  height: SWi * 0.35,
+                      //  color: Colors.grey[400],
+                      ),
+                  width: SWi * 0.3,
+                  height: SWi * 0.3,
                   child: Image.network(
                       "$IP/storage/${list[index]["image"][0]["image"]}"),
                 ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    width: SWi*0.45,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment:
-                      MainAxisAlignment.center,
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            child: Text(
-                                "${list[index]["name"]}",
-                                style: TextStyle(
-                                    fontSize: SWi * 0.05,
-                                    fontFamily:
-                                    "NunitoRegular"))),
-                        Container(
-                          child: Text("${list[index]["place"]}",
+              ),
+              Positioned(
+                left: 0,
+                child: Container(
+                  // color: Colors.red,
+                  padding: EdgeInsets.all(SWi * 0.04),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          child: Text("${list[index]["name"]}",
                               style: TextStyle(
                                   fontSize: SWi * 0.04,
-                                  fontFamily: "Itim")),
-                        ),
-                        Container(
-                          child: Text("${list[index]["price"]} TMT",
-                              style: TextStyle(
-                                  fontSize: SWi * 0.045,
-                                  fontFamily:
-                                  "NunitoRegular")),
-                        ),
-                      ],
-                    ),
-                    color: Colors.white,
+                                  fontFamily: "NunitoRegular"))),
+                      SizedBox(height: SWi * 0.01),
+                      /*    Container(
+                        child: Text("${list[index]["place"]}",
+                            style: TextStyle(
+                                fontSize: SWi * 0.04,
+                                fontFamily: "Itim")),
+                      ),*/
+                      Container(
+                        child: Text("${list[index]["price"]} TMT",
+                            style: TextStyle(
+                                fontSize: SWi * 0.045,
+                                fontFamily: "NunitoRegular",
+                                fontWeight: FontWeight.w900)),
+                      ),
+                    ],
                   ),
                 ),
-
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

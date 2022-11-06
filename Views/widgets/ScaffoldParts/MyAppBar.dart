@@ -11,12 +11,12 @@ class MyAppBar extends StatefulWidget {
     @required this.myTabs,
     @required this.title,
     this.IsTabBar,
-    this.IsUser,
+    this.IsUser, this.IsSideBar=false,
   }) : super(key: key);
 
   final List<Tab> myTabs;
   final Widget title;
-  final bool IsTabBar, IsUser;
+  final bool IsTabBar, IsUser,IsSideBar;
 
   @override
   _MyAppBarState createState() => _MyAppBarState();
@@ -44,6 +44,35 @@ class _MyAppBarState extends State<MyAppBar>
   @override
   Widget build(BuildContext context) {
     return AppBar(
+/*      leading: PreferredSize(
+          preferredSize: Size.fromHeight(100),
+          child:Container(
+            color: Colors.red,
+            child: Column(
+        children: [
+            BackButton(),
+            Container(
+              padding: EdgeInsets.only(left: SWi * 0.01),
+              alignment: Alignment.centerLeft,
+              child: Builder(builder: (context) {
+                return IconButton(
+                  splashColor: Colors.transparent,
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                );
+              }),
+            ),
+        ],
+      ),
+          )),*/
+leading: !widget.IsSideBar?BackButton():null,
+     /* ////////////////////////////////////
       bottom: widget.IsTabBar
           ? PreferredSize(
               preferredSize: Size.fromHeight(5),
@@ -59,6 +88,8 @@ class _MyAppBarState extends State<MyAppBar>
               ),
             )
           : null,
+      ////////////////////////////////////
+      */
       elevation: 0,
       shadowColor: Colors.white,
 /*      shape: RoundedRectangleBorder(
@@ -67,7 +98,7 @@ class _MyAppBarState extends State<MyAppBar>
       backgroundColor: Colors.white,
       title: widget.title,
       centerTitle: true,
-      actions: [
+/*      actions: [
         IconButton(
             onPressed: () {
               if (widget.IsUser) {
@@ -79,7 +110,7 @@ class _MyAppBarState extends State<MyAppBar>
             icon: Icon(
               widget.IsUser ? Icons.settings : Icons.search,
             ))
-      ],
+      ],*/
     );
   }
 }

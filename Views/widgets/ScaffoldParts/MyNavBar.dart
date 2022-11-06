@@ -36,8 +36,9 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         backgroundColor: Colors.white,
-        selectedItemColor: Color(0xff7262DF),
-        currentIndex: selectIndex,
+        selectedItemColor: Color(0xffC944F6),
+        unselectedItemColor: Colors.grey[700],
+        currentIndex: Provider.of<UsesVar>(context).witchNavBarSelect(),//selectIndex,
         iconSize: SWi*0.09,
         onTap: (index){
           setState(() {
@@ -63,18 +64,20 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           BottomNavigationBarItem(
               label: "",
               icon: Icon(
-                Icons.home_outlined,
-                color: Colors.black,
+                Icons.home,
+               // color: Colors.black,
               )),
           BottomNavigationBarItem(
               label: "",
               icon: Icon(
                 Icons.add_circle_outline_rounded,
-                color: Colors.blue[800],
+             //   color: Colors.blue[800],
               )),
           BottomNavigationBarItem(
               label: "", icon: Icon(Icons.account_circle_outlined,
-          color: UserLoginDetals.getIsLogin()?Colors.black:Colors.grey)),
+        //  color: UserLoginDetals.getIsLogin()?Colors.black:Colors.grey
+          )
+          ),
         ],
       ),
     );
