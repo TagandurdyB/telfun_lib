@@ -18,24 +18,24 @@ class InCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: SWi * 0.05, vertical: SWi * 0.02),
+          EdgeInsets.symmetric(horizontal: SWi * 0.02, vertical: SWi * 0.017),
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-          print(
+        /*  print(
               "${list[index]["image"]} ${list[index]["name"]}  ${list[index]["price"]} ${list[index]["place"]} ${list[index]["about"]}");
-          print("${list[index]["user"]["phone"]}");
+          //print("${list[index]["user"]["phone"]}");*/
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => DetalPage(
                         image: list[index]["image"],
                         name: list[index]["name"],
-                        phone: list[index]["user"]["phone"],
+                        phone: list[index]["user_phone"],
                         price: list[index]["price"],
                         about: list[index]["about"],
                         place: list[index]["place"],
-                        mark: list[index]["mark"]["name"],
+                        mark:  list[index]["mark"]["name"],
                       )));
         },
         boxShadow: [
@@ -61,7 +61,7 @@ class InCategory extends StatelessWidget {
                   width: SWi * 0.3,
                   height: SWi * 0.3,
                   child: Image.network(
-                      "$IP/storage/${list[index]["image"][0]["image"]}"),
+                      "$IP/storage/${list[index]["public_image"]}"),
                 ),
               ),
               Positioned(

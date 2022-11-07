@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/ViewModels/ApiDebuging.dart';
 import '/ViewModels/Routes.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Models/Public.dart';
@@ -24,8 +25,10 @@ class _LogoState extends State<Logo> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(UserLoginDetals.getIsLogin())
-    print("token: ${UserProperties.getProperty("token")}");
+    if(UserLoginDetals.getIsLogin()) {
+      print("token: ${UserProperties.getProperty("token")}");
+      Get_Me(URL: "$IP/api/me",token:UserProperties.getProperty("token")).check();
+    }
     else print("Not Login!");
 /*    Post_Api(
       URL: "$IP/api/login",

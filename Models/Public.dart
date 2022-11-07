@@ -4,7 +4,7 @@ import 'package:telfun/ViewModels/ShPBDebug.dart';
 double SWi=0.0,SHe=0.0;
 int _select=0,_navBarSelect=0;
 List<DropDBid> filters=List.generate(10, (index) => DropDBid());
-int categoriId;
+int categoriId,_selectMarkId,_selectMarkIndex;
 bool _canAddEvent=false;
 
 class DropDBid{
@@ -34,6 +34,15 @@ Widget telfun= ShaderMask(
 
 TabController tabController;
 class UsesVar extends ChangeNotifier {
+
+  void changeMark(i,j) {
+    _selectMarkId=i;
+    _selectMarkIndex=j;
+    notifyListeners();
+  }
+  List<int> getMark(){
+    return [_selectMarkId,_selectMarkIndex];
+  }
 
   void changeCanAdd(i) {
     _canAddEvent=i;

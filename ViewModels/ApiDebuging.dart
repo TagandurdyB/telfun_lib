@@ -48,6 +48,16 @@ class Get_api extends StatelessWidget {
   }
 }
 
+class Get_Me{
+  final String URL,token;
+
+  Get_Me({this.URL,this.token});
+  check()async{
+   var ss=await API(URL).getBerarer(token);
+   print(ss);
+  }
+}
+
 class Post_Api {
   final String URL, name, phone, pass;
 

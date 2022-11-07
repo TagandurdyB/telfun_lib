@@ -55,6 +55,17 @@ class API {
     print(json.decode(response.body).toString());
     return json.decode(response.body);
   }
+
+   getBerarer(String token) async {
+     final response = await http.get(Uri.parse(URL),headers: {
+       'Content-Type': 'application/json',
+       'Accept': 'application/json',
+       'Authorization': 'Bearer $token',
+     });
+    // print(json.decode(response.body).toString());
+     return json.decode(response.body);
+   }
+
 }
 
 Map<String,List> ApiBase={};
