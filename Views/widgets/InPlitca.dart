@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import '/Views/Pages/DetalPage.dart';
 import '/Models/Public.dart';
@@ -35,7 +37,7 @@ class InCategory extends StatelessWidget {
                         price: list[index]["price"],
                         about: list[index]["about"],
                         place: list[index]["place"],
-                        mark:  list[index]["mark"]["name"],
+                        mark:  "Sammung"//list[index]["mark"]["name"],
                       )));
         },
         boxShadow: [
@@ -60,8 +62,23 @@ class InCategory extends StatelessWidget {
                       ),
                   width: SWi * 0.3,
                   height: SWi * 0.3,
-                  child: Image.network(
-                      "$IP/storage/${list[index]["public_image"]}"),
+                  child: CachedNetworkImage(
+                    cacheManager: CacheManager(Config("events",
+                        stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+                    key: UniqueKey(),
+                    placeholder: (context, url) =>
+                        Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => Center(
+                        child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: Icon(
+                              Icons.photo,
+                              color: Colors.grey,
+                            ))),
+                    imageUrl:
+                    "$IP/storage/${list[index]["public_image"]}",
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Positioned(

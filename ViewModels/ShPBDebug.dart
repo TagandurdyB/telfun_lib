@@ -29,6 +29,7 @@ class ShPUser {
 
   void erase() {
     SharedPBase().saveShPUser(["", "", "", "",""]);
+    UserLoginDetals.saveLogin(false);
     loading();
   }
 

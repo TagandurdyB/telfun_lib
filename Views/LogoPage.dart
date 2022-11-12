@@ -20,14 +20,25 @@ class Logo extends StatefulWidget {
   _LogoState createState() => _LogoState();
 }
 
+
+
 class _LogoState extends State<Logo> {
   @override
+
+  IsBlock()async{
+    var me=await Get_Me(URL: "$IP/api/me",token:UserProperties.getProperty("token")).check();
+    print("I am me: $me");
+    if(me!=0){
+      UserProperties.erase();
+    }
+  }
+
   void initState() {
     // TODO: implement initState
     super.initState();
     if(UserLoginDetals.getIsLogin()) {
       print("token: ${UserProperties.getProperty("token")}");
-      Get_Me(URL: "$IP/api/me",token:UserProperties.getProperty("token")).check();
+     IsBlock();
     }
     else print("Not Login!");
 /*    Post_Api(

@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:convert';
 
 import '/ViewModels/ShPBDebug.dart';
+import 'Public.dart';
 
 class API {
    String URL; /*, name, phone, region, district, payment;*/
@@ -50,11 +54,39 @@ class API {
      return map;
    }
 
-  Future<List> getDate() async {
-    final response = await http.get(Uri.parse(URL));
-    print(json.decode(response.body).toString());
-    return json.decode(response.body);
+  Future<List> getDate(String fileJsonName) async {
+    String filename="$fileJsonName.json";
+    var dir=await getTemporaryDirectory();
+    File file=new File(dir.path+"/"+filename);
+    if(file.existsSync()){
+      print("Loading from local...");
+     var jsonDate=file.readAsStringSync();
+     return json.decode(jsonDate);
+    }else{
+      print("Loading from API...");
+      final response = await http.get(Uri.parse(URL));
+      print(json.decode(response.body).toString());
+      //save json in local file...
+      file.writeAsStringSync(response.body,flush: true,mode: FileMode.write);
+      return json.decode(response.body);
+    }
   }
+/*   void getDateStream()  async{
+     final response = await http.get(Uri.parse(URL));
+     var apiList=json.decode(response.body).toString();
+     print(apiList);
+     myStreamControler.sink.add(apiList);
+     //return json.decode(response.body);
+   }*/
+  Stream getDateStream() async* {
+    yield* Stream.periodic(Duration(minutes: 1), (_) async{
+      final response =await http.get(Uri.parse(URL));
+      print(json.decode(response.body).toString());
+      return json.decode(response.body);
+    }).asyncMap((event) async => await event);
+  }
+
+
 
    getBerarer(String token) async {
      final response = await http.get(Uri.parse(URL),headers: {

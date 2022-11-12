@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
 
@@ -6,6 +8,7 @@ int _select=0,_navBarSelect=0;
 List<DropDBid> filters=List.generate(10, (index) => DropDBid());
 int categoriId,_selectMarkId,_selectMarkIndex;
 bool _canAddEvent=false;
+StreamController myStreamControler=StreamController();
 
 class DropDBid{
    String value;

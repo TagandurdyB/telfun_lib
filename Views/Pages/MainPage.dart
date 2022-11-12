@@ -18,11 +18,11 @@ class MainPage extends StatelessWidget {
         URL: "$IP/api/images",
         ApiName: Get_Lists.img,
         Return: Get_api(
-            URL: "$IP/api/categories",
-            ApiName: Get_Lists.categori,
+            URL: "$IP/api/marks",
+            ApiName: Get_Lists.mark,
             Return: Get_api(
-                URL: "$IP/api/marks",
-                ApiName: Get_Lists.mark,
+                URL: "$IP/api/categories",
+                ApiName: Get_Lists.categori,
                 Return: Main())));
   }
 }

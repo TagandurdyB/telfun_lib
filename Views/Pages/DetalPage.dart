@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,27 +38,42 @@ class DetalPage extends StatelessWidget {
               height: SWi,
               child: PageView.builder(
                   itemCount: image.length,
-                  itemBuilder: (context,index)=>ImgBtn(
-                    width: double.infinity,
-                    height: SWi,
-                    //  color: Colors.,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Zoom(images: image,index:index)));
-                    },
-                    shape: 30,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 10,
-                          spreadRadius: 0)
-                    ],
-                    child:
-                    Image.network("$IP/storage/${image[index]["image"]}"),
-                  ))),
+                  itemBuilder: (context, index) => ImgBtn(
+                        width: double.infinity,
+                        height: SWi,
+                        //  color: Colors.,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Zoom(images: image, index: index)));
+                        },
+                        shape: 30,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 10,
+                              spreadRadius: 0)
+                        ],
+                        child: CachedNetworkImage(
+                          cacheManager: CacheManager(Config("events_detal",
+                              stalePeriod: Duration(days: 15),
+                              maxNrOfCacheObjects: 200)),
+                          key: UniqueKey(),
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => Center(
+                              child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: Icon(
+                                    Icons.photo,
+                                    color: Colors.grey,
+                                  ))),
+                          imageUrl: "$IP/storage/${image[index]["image"]}",
+                          fit: BoxFit.cover,
+                        ),
+                      ))),
           EventDetal(),
         ],
       ),
@@ -159,42 +176,59 @@ class DetalPage extends StatelessWidget {
 class Zoom extends StatelessWidget {
   final List images;
   final int index;
-   Zoom({Key key, this.images,this.index}) : super(key: key);
-
+  Zoom({Key key, this.images, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    PageController controler=PageController(initialPage: index);
+    PageController controler = PageController(initialPage: index);
     return Scaffold(
         body: PageView.builder(
-          controller: controler,
+            controller: controler,
             itemCount: images.length,
-            itemBuilder: (context,index)=>SafeArea(
-          child: Stack(
-            children: [
-              Container(
-                width: SWi,
-                height: SHe,
-                color: Colors.black,
-                child: InteractiveViewer(
-                    maxScale: 5,
-                    child: Hero(
-                        tag: "Event", child: Image.network("$IP/storage/${images[index]["image"]}"))),
-              ),
-              Positioned(
-                right: 1,
-                top: 1,
-                child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    )),
-              ),
-            ],
-          ),
-        )));
+            itemBuilder: (context, index) => SafeArea(
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: SWi,
+                        height: SHe,
+                        color: Colors.black,
+                        child: InteractiveViewer(
+                            maxScale: 5,
+                            child: Hero(
+                                tag: "Event",
+                                child: CachedNetworkImage(
+                                  cacheManager: CacheManager(Config("events_detal",
+                                      stalePeriod: Duration(days: 15),
+                                      maxNrOfCacheObjects: 200)),
+                                  key: UniqueKey(),
+                                  placeholder: (context, url) =>
+                                      Center(child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) => Center(
+                                      child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Icon(
+                                            Icons.photo,
+                                            color: Colors.grey,
+                                          ))),
+                                  imageUrl: "$IP/storage/${images[index]["image"]}",
+                                 // fit: BoxFit.cover,
+                                ),
+                            )),
+                      ),
+                      Positioned(
+                        right: 1,
+                        top: 1,
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.white,
+                            )),
+                      ),
+                    ],
+                  ),
+                )));
   }
 }

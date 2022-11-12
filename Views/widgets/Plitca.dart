@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/ApiDebuging.dart';
-import 'package:telfun/Views/Pages/CategoriPage.dart';
-
+import '/ViewModels/ApiDebuging.dart';
+import '/Views/Pages/CategoriPage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import '/Models/Public.dart';
 
 class Categori extends StatelessWidget {
@@ -15,6 +16,8 @@ class Categori extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Provider.of<UsesVar>(context, listen: false).changeMark(
+            Get_Lists().getList(Get_Lists.mark)[0]["id"],0);
         Provider.of<UsesVar>(context, listen: false).Select(0);
         categoriId = Get_Lists().getList(Get_Lists.categori)[index]["id"];
         Navigator.of(context).push(MaterialPageRoute(
@@ -47,14 +50,12 @@ class Categori extends StatelessWidget {
             children: [
               SizedBox(width: SWi * 0.05),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Stack(
+                 // crossAxisAlignment: CrossAxisAlignment.start,
+                  //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                        flex:4,
-                        child: Container(
-                          alignment: Alignment.center,
+                        Container(
+                          alignment: Alignment.centerLeft,
                          // color: Colors.red,
                       child: Text("${list[index]["name"]}",
                           textAlign: TextAlign.center,
@@ -62,12 +63,11 @@ class Categori extends StatelessWidget {
                               color: Colors.white,
                               fontFamily: "ProximaSoftBold",
                               fontSize: 30)),
-                    )),
-                    Expanded(
-
-                      child: Container(
+                    ),
+                    Container(
                        // color: Colors.blue,
-                        //alignment: Alignment.bottomCenter,
+                      padding:EdgeInsets.all(SWi*0.02),
+                        alignment: Alignment.bottomLeft,
                         child: Text(
                           "Bildirişler : (${list[index]["id"]})",
                           textAlign: TextAlign.center,
@@ -77,7 +77,6 @@ class Categori extends StatelessWidget {
                               fontSize: 13),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
@@ -85,11 +84,25 @@ class Categori extends StatelessWidget {
               Container(
                 width: SWi * 0.35,
                 height: SWi * 0.35,
-                decoration: BoxDecoration(
+            /*    decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "$IP/storage/${list[index]["image"]}"))),
+                        image: *//*NetworkImage(
+                            "$IP/storage/${list[index]["image"]}")*//*
+                    )),*/
+                child:CachedNetworkImage(
+                  cacheManager: CacheManager(Config("categori",
+                      stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Center(
+                      child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Icon(Icons.photo,color: Colors.grey,))),
+                  key:UniqueKey(),
+                  imageUrl:"$IP/storage/${list[index]["image"]}",
+                  fit:BoxFit.cover,
+                ),
               ),
             ],
           ),

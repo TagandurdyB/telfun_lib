@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/Models/Public.dart';
 import '../Views/LogoPage.dart';
 import '/Models/connect.dart';
 import 'ShPBDebug.dart';
@@ -21,7 +22,7 @@ class Get_api extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: API(URL).getDate(),
+        future: API(URL).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
             print("Error Fail***");
@@ -48,13 +49,58 @@ class Get_api extends StatelessWidget {
   }
 }
 
+class Get_apiStream extends StatelessWidget {
+  final String URL;
+  final Widget Return;
+  final String ApiName;
+  // final int LIndex;
+  const Get_apiStream({
+    Key key,
+    @required this.URL,
+    @required this.Return,
+    @required this.ApiName,
+    // @required this.LIndex,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final stream=API(URL).getDateStream();
+    return StreamBuilder(
+        stream: stream,
+        builder: (ctx, ss) {
+          if (ss.hasError) {
+            print("Error Fail***");
+          }
+          if (ss.hasData) {
+            print("++++++++++++++++++++++++++++++Snapshot:${ss.data}");
+            // ApiBase[ApiName]=ss.data;
+            ApiBase.addAll({ApiName: ss.data});
+            return Return;
+          } else {
+            return Center(
+                child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      //color: Colors.red,
+                        gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Colors.yellow, Colors.red])),
+                    child: Container(child: CircularProgressIndicator())));
+          }
+        });
+  }
+}
+
 class Get_Me{
   final String URL,token;
 
   Get_Me({this.URL,this.token});
   check()async{
    var ss=await API(URL).getBerarer(token);
-   print(ss);
+   print("isban: ${ss["isban"]}");
+   return ss["isban"];
   }
 }
 

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/Public.dart';
@@ -34,27 +36,44 @@ class _Slider_proState extends State<Slider_pro> {
                   });
                 },
                 images: List.generate(
-                    Get_Lists().getList(Get_Lists.img).length?? 0,
+                    Get_Lists().getList(Get_Lists.img).length ?? 0,
                     (index) => Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
-                           image: DecorationImage(
+                            /*  image: DecorationImage(
                              fit: BoxFit.cover,
                              image: NetworkImage("$IP/storage/${Get_Lists().getList(Get_Lists.img)[index]["image"]}")
-                           )
+                           )*/
+                          ),
+                          child: CachedNetworkImage(
+                            cacheManager: CacheManager(Config("slider",
+                                stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+                            key: UniqueKey(),
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Center(
+                                child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Icon(
+                                      Icons.photo,
+                                      color: Colors.grey,
+                                    ))),
+                            imageUrl:
+                                "$IP/storage/${Get_Lists().getList(Get_Lists.img)[index]["image"]}",
+                            fit: BoxFit.cover,
                           ),
                         )),
-                /* dotSize: 6.0,
+                dotSize: 6.0,
                 dotSpacing: 15.0,
-                dotColor: Colors.white,
+                dotColor: Colors.grey[300],
                 dotIncreasedColor: Color(0xff7262DF),
                 indicatorBgPadding: 5.0,
-                dotBgColor: Colors.transparent,*/
-                showIndicator: false,
+                dotBgColor: Colors.transparent,
+                showIndicator: true,
               ),
             ),
           ),
-          Visibility(
+          /* Visibility(
             visible: (Get_Lists().getList("img").length>0&&Get_Lists().getList("img").length!=null),
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
@@ -68,7 +87,7 @@ class _Slider_proState extends State<Slider_pro> {
                     dotHeight: 8),
               ),
             ),
-          )
+          )*/
         ],
       ),
     );

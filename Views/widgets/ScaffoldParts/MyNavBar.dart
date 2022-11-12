@@ -57,7 +57,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             }
             else {
               Provider.of<UsesVar>(context, listen: false).navBarSelect(index);
-              Navigator.pop(context);}
+              Navigator.popUntil(context,(rout)=>rout.isFirst);}
           });
         },
         items: [
