@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:telfun/Models/Public.dart';
 import '../Views/LogoPage.dart';
@@ -12,28 +14,42 @@ class Get_api extends StatelessWidget {
   final Widget Return;
   final String ApiName;
   // final int LIndex;
-  const Get_api({
+   Get_api({
     Key key,
     @required this.URL,
     @required this.Return,
     @required this.ApiName,
     // @required this.LIndex,
   }) : super(key: key);
+
+File file;
+
+void fillFile() async{
+  file =await API(URL).getDirectory(ApiName);
+}
   @override
   Widget build(BuildContext context) {
+    //fillFile();
     return FutureBuilder<List>(
-        future: API(URL).getDate(ApiName),
+        future: API(URL).getDate(),
         builder: (ctx, ss) {
           if (ss.hasError) {
             print("Error Fail***");
           }
           if (ss.hasData) {
             // ApiBase[ApiName]=ss.data;
-            API(URL).localSave(ApiName,ss.date);
-            ApiBase.addAll({ApiName: ss.data});
+            API(URL).localSave(ApiName,ss.data);
+            API(URL).localLoad(ApiName);
+          //  ApiBase.addAll({ApiName: ss.data});
             return Return;
           } else {
-            return Center(
+            /*file.existsSync()*/
+            if(Get_Lists().getList(ApiName)!=null) {
+              API(URL).localLoad(ApiName);
+              return Return;
+            }
+              else {
+                return  Center(
                 child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -45,6 +61,7 @@ class Get_api extends StatelessWidget {
                             end: Alignment.bottomCenter,
                             colors: [Colors.yellow, Colors.red])),
                     child: Container(child: CircularProgressIndicator())));
+            }
           }
         });
   }

@@ -54,7 +54,7 @@ class API {
      return map;
    }
 
-  Future<List> getDate(String fileJsonName) async {
+  Future<List> getDate() async {
    // if(file.existsSync())
       print("Loading from API...");
       final response = await http.get(Uri.parse(URL));
@@ -64,19 +64,22 @@ class API {
    
    Future<File> getDirectory(String fileName)async{
       var dir=await getTemporaryDirectory();
-      File file=new File("${dir.path}/$filename.json");
+      print("${dir.path}/$fileName.json");
+      File file=new File("${dir.path}/$fileName.json");
+      return file;
    }
-   void localSave(String fileName,value)async{
+   void localSave(String fileName, value)async{
       File file=await getDirectory(fileName);
    //save json in local file...
-      file.writeAsStringSync(value,flush: true,mode: FileMode.write);
+      file.writeAsStringSync(json.encode(value),flush: true,mode: FileMode.write);
    }
-   Future<List> localLoad(String filename)async{
+   void localLoad(String fileName)async{
     print("Loading from local..."); 
      File file=await getDirectory(fileName);
      //load json in local file...
      var jsonDate=file.readAsStringSync();
-     return json.decode(jsonDate);
+    ApiBase.addAll({fileName: json.decode(jsonDate)});
+    // return json.decode(jsonDate);
    }
    
 /*   void getDateStream()  async{
