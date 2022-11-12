@@ -29,6 +29,7 @@ class Get_api extends StatelessWidget {
           }
           if (ss.hasData) {
             // ApiBase[ApiName]=ss.data;
+            API(URL).localSave(ApiName,ss.date);
             ApiBase.addAll({ApiName: ss.data});
             return Return;
           } else {
