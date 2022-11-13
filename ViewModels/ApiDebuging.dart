@@ -14,7 +14,7 @@ class Get_api extends StatelessWidget {
   final Widget Return;
   final String ApiName;
   // final int LIndex;
-   Get_api({
+  Get_api({
     Key key,
     @required this.URL,
     @required this.Return,
@@ -22,34 +22,24 @@ class Get_api extends StatelessWidget {
     // @required this.LIndex,
   }) : super(key: key);
 
-File file;
-
-void fillFile() async{
-  file =await API(URL).getDirectory(ApiName);
-}
   @override
   Widget build(BuildContext context) {
     //fillFile();
     return FutureBuilder<List>(
-        future: API(URL).getDate(),
+        future: API(URL).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
+         //   print("+++${ss}");
             print("Error Fail***");
           }
           if (ss.hasData) {
             // ApiBase[ApiName]=ss.data;
-            API(URL).localSave(ApiName,ss.data);
-            API(URL).localLoad(ApiName);
-          //  ApiBase.addAll({ApiName: ss.data});
+            // API(URL).localSave(ApiName,ss.data);
+            // API(URL).localLoad(ApiName);
+            ApiBase.addAll({ApiName: ss.data});
             return Return;
           } else {
-            /*file.existsSync()*/
-            if(Get_Lists().getList(ApiName)!=null) {
-              API(URL).localLoad(ApiName);
-              return Return;
-            }
-              else {
-                return  Center(
+            return Center(
                 child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -61,7 +51,6 @@ void fillFile() async{
                             end: Alignment.bottomCenter,
                             colors: [Colors.yellow, Colors.red])),
                     child: Container(child: CircularProgressIndicator())));
-            }
           }
         });
   }
@@ -81,7 +70,7 @@ class Get_apiStream extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final stream=API(URL).getDateStream();
+    final stream = API(URL).getDateStream();
     return StreamBuilder(
         stream: stream,
         builder: (ctx, ss) {
@@ -100,7 +89,7 @@ class Get_apiStream extends StatelessWidget {
                     height: double.infinity,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      //color: Colors.red,
+                        //color: Colors.red,
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -111,14 +100,14 @@ class Get_apiStream extends StatelessWidget {
   }
 }
 
-class Get_Me{
-  final String URL,token;
+class Get_Me {
+  final String URL, token;
 
-  Get_Me({this.URL,this.token});
-  check()async{
-   var ss=await API(URL).getBerarer(token);
-   print("isban: ${ss["isban"]}");
-   return ss["isban"];
+  Get_Me({this.URL, this.token});
+  check() async {
+    var ss = await API(URL).getBerarer(token);
+    print("isban: ${ss["isban"]}");
+    return ss["isban"];
   }
 }
 
