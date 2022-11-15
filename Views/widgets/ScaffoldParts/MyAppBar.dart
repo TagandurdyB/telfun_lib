@@ -72,7 +72,7 @@ class _MyAppBarState extends State<MyAppBar>
       ),
           )),*/
 leading: !widget.IsSideBar?BackButton():null,
-     /* ////////////////////////////////////
+     /////////////////////////////////////
       bottom: widget.IsTabBar
           ? PreferredSize(
               preferredSize: Size.fromHeight(5),
@@ -89,7 +89,7 @@ leading: !widget.IsSideBar?BackButton():null,
             )
           : null,
       ////////////////////////////////////
-      */
+      //
       elevation: 0,
       shadowColor: Colors.white,
 /*      shape: RoundedRectangleBorder(

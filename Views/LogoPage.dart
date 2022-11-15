@@ -4,6 +4,9 @@ import '/ViewModels/Routes.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Models/Public.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class LogoPage extends StatelessWidget {
   //const ({Key? key}) : super(key: key);
 
@@ -20,27 +23,40 @@ class Logo extends StatefulWidget {
   _LogoState createState() => _LogoState();
 }
 
-
-
 class _LogoState extends State<Logo> {
   @override
-
-  IsBlock()async{
-    var me=await Get_Me(URL: "$IP/api/me",token:UserProperties.getProperty("token")).check();
+  IsBlock() async {
+    var me = await Get_Me(
+            URL: "$IP/api/me", token: UserProperties.getProperty("token"))
+        .check();
     print("I am me: $me");
-    if(me!=0){
+    if (me != 0) {
       UserProperties.erase();
     }
+
+    Map<String, dynamic> map;
+    await http.post(Uri.parse("$IP/api/filter"),
+        body: {"mark_id": "12", "category_id": "3"}).then((response) {
+      if (response.statusCode == 200) {
+        map = json.decode(response.body);
+      } else {
+        print("${response.statusCode}");
+        print("${json.decode(response.body)}");
+        print("ERROR! you can't Login. Bicause you not sign up  :(");
+        map = {"status": false};
+      }
+    });
   }
 
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(UserLoginDetals.getIsLogin()) {
+
+    if (UserLoginDetals.getIsLogin()) {
       print("token: ${UserProperties.getProperty("token")}");
-     IsBlock();
-    }
-    else print("Not Login!");
+      IsBlock();
+    } else
+      print("Not Login!");
 /*    Post_Api(
       URL: "$IP/api/login",
       //URL: "$IP/api/register",
@@ -51,7 +67,7 @@ class _LogoState extends State<Logo> {
       pass: UserProperties.getProperty("pass"),
       //  name: "salam"
     ).IsLogin();*/
-   // print("is login ? $islogin");
+    // print("is login ? $islogin");
     Future.delayed(Duration(seconds: 3)).then((value) =>
         Navigator.of(context).pushReplacementNamed(PageName.pageMain));
   }
@@ -62,8 +78,13 @@ class _LogoState extends State<Logo> {
     SHe = MediaQuery.of(context).size.height;
     print(SWi);
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        brightness: Brightness.light,
+      ),
       body: Container(
-        decoration: BoxDecoration(
+        color: Colors.white,
+        /*decoration: BoxDecoration(
           //color: Colors.black,
           gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -73,9 +94,25 @@ class _LogoState extends State<Logo> {
                 Color(0xffC544FF),
                 Color(0xff5700FD)
               ]),
-        ),
+        ),*/
         child: Center(
-          child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  width: SWi * 0.9,
+                  height: SWi * 0.9,
+                  decoration: BoxDecoration(
+                    // color: Colors.red,
+                    image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: ExactAssetImage("assets/logo.png")),
+                  )),
+              SizedBox(height: 50),
+            ],
+          ),
+
+          /* child: Container(
             decoration: BoxDecoration(
                 //color: Colors.black,
                 gradient: LinearGradient(
@@ -102,7 +139,7 @@ class _LogoState extends State<Logo> {
                       fontWeight: FontWeight.w500,
                       color: Colors.white)),
             ),
-          ),
+          ),*/
         ),
       ),
     );

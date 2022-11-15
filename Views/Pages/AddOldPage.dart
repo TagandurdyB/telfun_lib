@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/Views/widgets/AddBtn.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/MySnackBar.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Views/widgets/DropDownBtn.dart';
@@ -10,16 +11,18 @@ import '/Views/widgets/AddImg.dart';
 import '/Views/widgets/ReadyInput.dart';
 import '/ViewModels/ApiDebuging.dart';
 
-class AddPage extends StatelessWidget {
-  TextEditingController tel = TextEditingController();
+class AddOldPage extends StatelessWidget {
   List<String> inputValues = ["", "", ""];
 void canOpenAddBtn(BuildContext context){
- if (controls.where((element) => element.text=="").toList().length==0&&imageOk){
+  int d=0;
+  if(controls[0].text=="") d++;
+  if(controls[1].text=="") d++;
+  if(controls[2].text=="") d++;
+if (d==0&&imageOk){
    Provider.of<UsesVar>(context,listen: false).changeCanAdd(true);}
  else{
    Provider.of<UsesVar>(context,listen: false).changeCanAdd(false);
  }
-
 }
 
   @override
@@ -103,7 +106,7 @@ void canOpenAddBtn(BuildContext context){
                         var getlist =
                             Get_Lists().getList(Get_Lists.categori)[index];
                         return DropDBid(
-                            value: getlist["name"], id: getlist["id"]);
+                            value: getlist["tm"], id: getlist["id"]);
                       }),
                     ),
                   ),
@@ -139,117 +142,4 @@ void canOpenAddBtn(BuildContext context){
   }
 }
 
-class AddBtn extends StatefulWidget {
-  const AddBtn({Key key, @required this.inputValues}) : super(key: key);
 
-  final List<String> inputValues;
-
-  @override
-  _AddBtnState createState() => _AddBtnState();
-}
-
-class _AddBtnState extends State<AddBtn> {
-  Service service = Service();
-  bool _about = false, _isUpload = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Visibility(
-          visible: _isUpload,
-          child: Column(
-            children: [
-              CircularProgressIndicator(color: Colors.grey[400]),
-              Container(
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                    "Bildirişiňiz goşulýança garaşyň.",
-                    style: TextStyle(fontSize: 20, color: Colors.blue[900]),
-                    textAlign: TextAlign.center,
-                  )),
-            ],
-          ),
-        ),
-        Visibility(
-          visible: _about,
-          child: Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                "Bildirişiňizi goşanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
-                "Şol sebäpden garaşmagyňyzy haýyş edýäris. ",
-                style: TextStyle(fontSize: 18, color: Colors.blue),
-                textAlign: TextAlign.center,
-              )),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Builder(
-            builder: (context) => MaterialButton(
-              onPressed: () async {
-                if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
-                  setState(() {
-                    _isUpload = true;
-                    _about = true;
-                  });
-                  Map<String, String> body = {
-                    "category_id": filters[6].id.toString(),
-                    "user_id": UserProperties.getProperty("id"),
-                    'name': controls[0].text,
-                    "mark_id": filters[5].id.toString(),
-                    "price": controls[1].text,
-                    "place": filters[4].value,
-                    "about": controls[2].text,
-                  };
-                  bool isUpload = await service.addImage(body, images);
-                  if (isUpload) {
-                    controls.forEach((element) {
-                      element.text = "";
-                    });
-                    setState(() {
-                      _isUpload = false;
-                      _about = false;
-                      images=[];
-                    });
-                    MySnack(
-                            textColor: Colors.white,
-                            message: "Bildiriş ugradyldy",
-                            textBgColor: Colors.blue)
-                        .pushSnack(context);
-                    Future.delayed(Duration(seconds: 3)).then((value) =>
-                        MySnack(
-                                sec: 4,
-                                textColor: Colors.white,
-                                message: "Tassyklanmagyna garaşyň!",
-                                textBgColor: Colors.orange[700])
-                            .pushSnack(context));
-                    Provider.of<UsesVar>(context, listen: false)
-                        .navBarSelect(0);
-                  } else {
-                    setState(() {
-                      _isUpload = false;
-                    });
-                    MySnack(
-                            textColor: Colors.white,
-                            textBgColor: Colors.red,
-                            message: "Maglumatlary doly giriziň!")
-                        .pushSnack(context);
-                  }
-                } else {}
-              },
-              height: 50,
-              color: Provider.of<UsesVar>(context, listen: false).canAdd()
-                  ? Colors.blueAccent
-                  : Colors.grey,
-              child: Text(
-                "Bildiriş goş",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}

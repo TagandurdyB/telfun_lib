@@ -42,6 +42,16 @@ UserProperties.loading();
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(color: Color(0xffAD88DF)),
+          hintStyle: TextStyle(color: Color(0xffAD88DF)),
+          focusedBorder: OutlineInputBorder(
+           //   borderRadius: BorderRadius.all(Radius.circular(60)),
+              borderSide: BorderSide(color: Color(0xff5308BE))),
+          enabledBorder: OutlineInputBorder(
+           //   borderRadius: BorderRadius.all(Radius.circular(60)),
+              borderSide: BorderSide(color: Color(0xffAD88DF))),
+        ),
         primarySwatch: Colors.blue,
         canvasColor:  Colors.white,//Color(0xffF0EBFF),
         appBarTheme: AppBarTheme(

@@ -37,7 +37,7 @@ class InCategory extends StatelessWidget {
                         price: list[index]["price"],
                         about: list[index]["about"],
                         place: list[index]["place"],
-                        mark:  "Sammung"//list[index]["mark"]["name"],
+                        mark:  list[index]["mark"]["name"],
                       )));
         },
         boxShadow: [

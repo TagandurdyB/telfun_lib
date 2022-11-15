@@ -9,9 +9,10 @@ import '/ViewModels/ShPBDebug.dart';
 import 'Public.dart';
 
 class API {
-  String URL; /*, name, phone, region, district, payment;*/
+  String URL;
+  final Map Post;/*, name, phone, region, district, payment;*/
 
-  API(this.URL /*, this.name, this.phone, this.region, this.district, this.payment,
+  API({this.URL, this.Post} /*, this.name, this.phone, this.region, this.district, this.payment,
       this.list,*/
       );
 
@@ -65,7 +66,18 @@ class API {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('connected');
-        final response = await http.get(Uri.parse(URL));
+        print("+*+*++*+*+*+*+*+*++*$Post}");
+        final response = Post==null?await http.get(Uri.parse(URL)):
+        await http.post(Uri.parse(URL), body: Post).then((respon) {
+          if (respon.statusCode == 200) {
+              print("+*+*+*${json.decode(respon.body)}");
+          } else {
+            print("${respon.statusCode}");
+            print("${json.decode(respon.body)}");
+            print("ERROR! you can't Login. Bicause you not sign up  :(");
+          //  map = {"status": false};
+          }
+        });
         if (response.statusCode == 200) {
           print("Loading from API...");
           //  print("++++++Send data json:${response.body.length}");

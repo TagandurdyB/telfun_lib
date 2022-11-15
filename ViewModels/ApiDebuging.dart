@@ -13,12 +13,14 @@ class Get_api extends StatelessWidget {
   final String URL;
   final Widget Return;
   final String ApiName;
+  final Map Post;
   // final int LIndex;
   Get_api({
     Key key,
     @required this.URL,
     @required this.Return,
     @required this.ApiName,
+     this.Post
     // @required this.LIndex,
   }) : super(key: key);
 
@@ -26,7 +28,7 @@ class Get_api extends StatelessWidget {
   Widget build(BuildContext context) {
     //fillFile();
     return FutureBuilder<List>(
-        future: API(URL).getDate(ApiName),
+        future: API(URL:URL,Post:Post).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
          //   print("+++${ss}");
@@ -70,7 +72,7 @@ class Get_apiStream extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final stream = API(URL).getDateStream();
+    final stream = API(URL:URL).getDateStream();
     return StreamBuilder(
         stream: stream,
         builder: (ctx, ss) {
@@ -105,7 +107,7 @@ class Get_Me {
 
   Get_Me({this.URL, this.token});
   check() async {
-    var ss = await API(URL).getBerarer(token);
+    var ss = await API(URL:URL).getBerarer(token);
     print("isban: ${ss["isban"]}");
     return ss["isban"];
   }
@@ -122,7 +124,7 @@ class Post_Api {
 
   //if you aren't in base then send firebase sms
   Future<bool> IsRegister() async {
-    Map<String, dynamic> map = await API(URL).Register([name, phone, pass]);
+    Map<String, dynamic> map = await API(URL:URL).Register([name, phone, pass]);
     return map["status"];
     print("+++*** $map");
   }
@@ -139,7 +141,7 @@ class Post_Api {
 
   //if sms code true you are login
   void addRegister() async {
-    Map<String, dynamic> map = await API(URL).Register([name, phone, pass]);
+    Map<String, dynamic> map = await API(URL:URL).Register([name, phone, pass]);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     print("***${UserLoginDetals.getIsLogin()}");
@@ -149,7 +151,7 @@ class Post_Api {
   }
 
   Future<bool> IsLogin() async {
-    Map<String, dynamic> map = await API(URL).Login([phone, pass]);
+    Map<String, dynamic> map = await API(URL:URL).Login([phone, pass]);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     if (map["status"]) {
@@ -166,6 +168,8 @@ class Get_Lists {
   static String categori = "category";
   static String mark = "mark";
   static String events = "events";
+  static String model = "model";
+
 /*  final int index;
   Get_Lists(this.index);*/
 

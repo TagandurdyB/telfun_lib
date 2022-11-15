@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum Type { tel, pass, text, num, email }
-List<TextEditingController> controls = [];
+List<TextEditingController> controls = List.generate(10, (index) => TextEditingController());
 
 class MyInput extends StatefulWidget {
   final int index,maxline;
@@ -24,9 +24,9 @@ class _MyInputState extends State<MyInput> {
   @override
   void initState() {
 controls.forEach((element) {element.text="";});
-    if (controls.length < widget.index + 1) {
+/*    if (controls.length < widget.index + 1) {
       controls.add(TextEditingController());
-    }
+    }*/
     // TODO: implement initState
     super.initState();
   }
@@ -36,6 +36,7 @@ controls.forEach((element) {element.text="";});
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        cursorColor: Color(0xff5308BE),
         maxLines: widget.maxline,
         onChanged: (value) {
           widget.onControl( value,widget.index);

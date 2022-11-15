@@ -29,17 +29,20 @@ class _DropdawnChangeState extends State<DropdawnChange> {
   @override
   Widget build(BuildContext context) {
   List<String> itims=List.generate(widget.itims.length, (index) => widget.itims[index].value);
-    return DropdownButton(
-      items: itims.map((val) {
-        return DropdownMenuItem(child: Text(val), value: val);
-      }).toList(),
-      value:filters[widget.index].value,
-      onChanged: (String newVal) {
-        setState(() {
-          myvalue=newVal;
-          filters[widget.index].value=myvalue;
-        });
-      },
+    return DropdownButtonHideUnderline(
+      child: DropdownButton(
+        underline: SizedBox(),
+        items: itims.map((val) {
+          return DropdownMenuItem(child: Text(val), value: val);
+        }).toList(),
+        value:filters[widget.index].value,
+        onChanged: (String newVal) {
+          setState(() {
+            myvalue=newVal;
+            filters[widget.index].value=myvalue;
+          });
+        },
+      ),
     );
   }
 }
@@ -72,18 +75,20 @@ class _DropdawnChangeStateOnly extends State<DropdawnChangeOnly> {
   @override
   Widget build(BuildContext context) {
     //List<String> itims=List.generate(widget.itims.length, (index) => widget.itims[index].value);
-    return DropdownButton(
-      items: itims.map((val) {
-        return DropdownMenuItem(child: Text(val.value), value: val.id.toString());
-      }).toList(),
-      value:filters[widget.index].id.toString(),
-      onChanged: (String newVal) {
-        print("${newVal}");
-        setState(() {
-          myvalue=newVal;
-          filters[widget.index].id=int.parse(myvalue);
-        });
-      },
+    return DropdownButtonHideUnderline(
+      child: DropdownButton(
+        items: itims.map((val) {
+          return DropdownMenuItem(child: Text(val.value), value: val.id.toString());
+        }).toList(),
+        value:filters[widget.index].id.toString(),
+        onChanged: (String newVal) {
+          print("${newVal}");
+          setState(() {
+            myvalue=newVal;
+            filters[widget.index].id=int.parse(myvalue);
+          });
+        },
+      ),
     );
   }
 }

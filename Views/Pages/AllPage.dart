@@ -14,9 +14,7 @@ class AllPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List list = Get_Lists()
-        .getList(Get_Lists.events)
-        .where((element) => element["category_id"] == categoriId)
-        .toList();
+        .getList(Get_Lists.events);
     return ListView(
       physics: BouncingScrollPhysics(),
       children: [
@@ -49,18 +47,24 @@ class AllPage extends StatelessWidget {
             child: Text("Bildirişler",
                 style: TextStyle(
                     fontSize: SWi * 0.05, fontWeight: FontWeight.w800))),
-        Container(
-          alignment: Alignment.center,
-          child: Column(
-              // spacing: SWi * 0.02,
-              //runSpacing: SWi * 0.04,
-              children: List.generate(
-                  list.length,
-                  (index) => InCategory(
+        Get_api(
+            URL: "$IP/api/category/$categoriId/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]}",
+            //  URL: "$IP/api/category/$categoriId/marks/13",
+            ApiName: Get_Lists.events,
+            //   Post:{"mark_id":Get_Lists().getList(Get_Lists.mark)[0]["id"],"category_id":categoriId},
+            Return: Container(
+              alignment: Alignment.center,
+              child: Column(
+                // spacing: SWi * 0.02,
+                //runSpacing: SWi * 0.04,
+                  children: List.generate(
+                      list.length,
+                          (index) => InCategory(
                         list: list,
                         index: index,
                       ))),
-        ),
+            ))
+        ,
       ],
     );
   }

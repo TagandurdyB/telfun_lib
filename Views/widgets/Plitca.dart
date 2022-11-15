@@ -20,10 +20,13 @@ class Categori extends StatelessWidget {
             Get_Lists().getList(Get_Lists.mark)[0]["id"],0);
         Provider.of<UsesVar>(context, listen: false).Select(0);
         categoriId = Get_Lists().getList(Get_Lists.categori)[index]["id"];
+        print("${Provider.of<UsesVar>(context, listen: false).getMark()[0]}");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => Get_api(
-                URL: "$IP/api/events",
+URL: "$IP/api/category/$categoriId/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]}",
+              //  URL: "$IP/api/category/$categoriId/marks/13",
                 ApiName: Get_Lists.events,
+             //   Post:{"mark_id":Get_Lists().getList(Get_Lists.mark)[0]["id"],"category_id":categoriId},
                 Return: CategoriPage())));
       },
       child: Container(
@@ -57,7 +60,7 @@ class Categori extends StatelessWidget {
                         Container(
                           alignment: Alignment.centerLeft,
                          // color: Colors.red,
-                      child: Text("${list[index]["name"]}",
+                      child: Text("${list[index]["tm"]}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
@@ -69,7 +72,7 @@ class Categori extends StatelessWidget {
                       padding:EdgeInsets.all(SWi*0.02),
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          "Bildirişler : (${list[index]["id"]})",
+                          "Bildirişler : (${list[index]["count"]})",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
