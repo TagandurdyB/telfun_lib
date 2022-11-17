@@ -1,10 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/Models/DDBBase.dart';
+import 'package:telfun/Views/widgets/MyDropdown.dart';
+import 'package:telfun/Views/widgets/imgBtn.dart';
+import '/ViewModels/Names.dart';
 import '/Views/widgets/AddBtn.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/MySnackBar.dart';
 import '/ViewModels/ShPBDebug.dart';
-import '/Views/widgets/DropDownBtn.dart';
+import '../widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/Public.dart';
 import '/Models/service.dart';
 import '/Views/widgets/AddImg.dart';
@@ -34,106 +38,103 @@ if (d==0&&imageOk){
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                MyInput(
-                  shape: true,
-                  index: 0,
-                  borderRad: 60,
-                  hidden: "Bildirişiň adyny ýazyň...",
-                  label: "Bildirişiň ady...",
-                  onControl: (val, index) {
-                    inputValues[index] = controls[index].text;
-                    canOpenAddBtn(context);
-                  },
-                ),
-                MyInput(
-                  shape: true,
-                  index: 1,
-                  type: Type.num,
-                  borderRad: 60,
-                  hidden: "Bildirişiň bahasyny ýazyň...",
-                  label: "Bahasy...",
-                  onControl: (val, index) {
-                    inputValues[index] = controls[index].text;
-                    canOpenAddBtn(context);
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      //welayats
-                      child: DropdawnChange(
-                        index: 4,
-                        itims: [
-                          DropDBid(value: "Aşgabat", id: 0),
-                          DropDBid(value: "Ahal", id: 1),
-                          DropDBid(value: "Balkan", id: 2),
-                          DropDBid(value: "Mary", id: 3),
-                          DropDBid(value: "Lebap", id: 4),
-                          DropDBid(value: "Daşoguz", id: 5),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      //marks
-                      child: DropdawnChangeOnly(
-                        index: 5,
-                        itims: List.generate(
-                            Get_Lists().getList(Get_Lists.mark).length ?? 0,
-                            (index) {
-                          var getlist =
-                              Get_Lists().getList(Get_Lists.mark)[index];
-                          return DropDBid(
-                              value: getlist["name"], id: getlist["id"]);
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
-                //categories
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text("Bölümler:"),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: DropdawnChangeOnly(
-                      index: 6,
-                      itims: List.generate(
-                          Get_Lists().getList(Get_Lists.categori).length ?? 0,
-                          (index) {
-                        var getlist =
-                            Get_Lists().getList(Get_Lists.categori)[index];
-                        return DropDBid(
-                            value: getlist["tm"], id: getlist["id"]);
-                      }),
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  MyInput(
+                    shape: true,
+                    index: 0,
+                    borderRad: 60,
+                    hidden: "Bildirişiň adyny ýazyň...",
+                    label: "Bildirişiň ady...",
+                    onControl: (val, index) {
+                      inputValues[index] = controls[index].text;
+                      canOpenAddBtn(context);
+                    },
+                  ),
+                  MyInput(
+                    shape: true,
+                    index: 1,
+                    type: Type.num,
+                    borderRad: 60,
+                    hidden: "Bildirişiň bahasyny ýazyň...",
+                    label: "Bahasy...",
+                    onControl: (val, index) {
+                      inputValues[index] = controls[index].text;
+                      canOpenAddBtn(context);
+                    },
+                  ),
+                  Container(
+                    //welayats
+                    child: MyDropdown(
+                      tag: DDBName.dDBLocation,
+                      hidden: "Ýerleşýän ýeri",
+                      icon: Icons.location_on_outlined,
+                      items:[
+                        DDBEl(id: 1, index: 0, value: "Asgabat"),
+                        DDBEl(id: 2, index: 1, value: "Ahal"),
+                        DDBEl(id: 3, index: 2, value: "Balkan"),
+                        DDBEl(id: 4, index: 3, value: "Mary"),
+                        DDBEl(id: 5, index: 4, value: "Lebap"),
+                        DDBEl(id: 6, index: 5, value: "Daşoguz"),
+                      ],
                     ),
                   ),
-                ]),
-                //AddImages(),
-                AddImages(),
-                MyInput(
-                  shape: true,
-                  index: 2,
-                  maxline: 3,
-                  borderRad: 30,
-                  hidden: "Bildirişiňiz barada maglumat ýazyň...",
-                  label: "Bildiriş barada...",
-                  onControl: (val, index) {
-                    inputValues[index] = controls[index].text;
-                    canOpenAddBtn(context);
-                  },
-                ),
+                  Container(
+                    //welayats
+                    child:  MyDropdown(
+                      tag: DDBName.dDBCategory,
+                      hidden: "Bölümler",
+                      icon: Icons.category,
+                      items: List.generate(
+                          Get_Lists().getList(Get_Lists.categori).length ?? 0,
+                              (index) {
+                            var getlist = Get_Lists().getList(Get_Lists.categori)[index];
+                            return DDBEl(value: getlist["tm"], id: getlist["id"],index: index);
+                          }),
+                    ),
+                  ),
+                  Container(
+                    child:  MyDropdown(
+                      hidden: "Marka",
+                      icon: Icons.bookmark,
+                      tag: DDBName.dDBMark,
+                      items: List.generate(
+                          Get_Lists().getList(Get_Lists.mark).length ?? 0,
+                              (index) {
+                            var getlist =
+                            Get_Lists().getList(Get_Lists.mark)[index];
+                            return DDBEl(
+                                value: getlist["name"], id: getlist["id"],index: index);
+                          }),
+                    ),
+                  ),
 
-                AddBtn(inputValues: inputValues),
-                /*   Column(children: [
-                  Text("${UserProperties.getProperty("id")}"),
-                  Text("${UserProperties.getProperty("name")}"),
-                  Text("${UserProperties.getProperty("phone")}"),
-                  Text("${UserProperties.getProperty("isban")}"),
-                ]),*/
-              ],
+                  AddImages(),
+                  MyInput(
+                    shape: true,
+                    index: 2,
+                    maxline: 3,
+                    borderRad: 30,
+                    hidden: "Bildirişiňiz barada maglumat ýazyň...",
+                    label: "Bildiriş barada...",
+                    onControl: (val, index) {
+                      inputValues[index] = controls[index].text;
+                      canOpenAddBtn(context);
+                    },
+                  ),
+
+                  AddBtn(inputValues: inputValues),
+                 /*    Column(children: [
+                    Text("${UserProperties.getProperty("id")}"),
+                    Text("${UserProperties.getProperty("name")}"),
+                    Text("${UserProperties.getProperty("phone")}"),
+                    Text("${UserProperties.getProperty("isban")}"),
+                  ]),*/
+                ],
+              ),
             ),
           ],
         ),

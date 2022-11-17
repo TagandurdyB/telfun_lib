@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/Models/DDBBase.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Models/service.dart';
@@ -64,12 +67,12 @@ class _AddBtnState extends State<AddBtn> {
                       _about = true;
                     });
                     Map<String, String> body = {
-                      "category_id": filters[6].id.toString(),
+                      "category_id": DDBBase().getDate(DDBName.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
                       'name': controls[0].text,
-                      "mark_id": filters[5].id.toString(),
+                      "mark_id":DDBBase().getDate(DDBName.dDBMark).id.toString(),
                       "price": controls[1].text,
-                      "place": filters[4].value,
+                      "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,
                     };
                     bool isUpload = await service.addImage(body, images);
@@ -85,7 +88,7 @@ class _AddBtnState extends State<AddBtn> {
                       MySnack(
                           textColor: Colors.white,
                           message: "Bildiriş ugradyldy",
-                          textBgColor: Color(0xff))
+                          textBgColor: Color(0xff5308BE))
                           .pushSnack(context);
                       Future.delayed(Duration(seconds: 3)).then((value) =>
                           MySnack(

@@ -1,3 +1,4 @@
+import '/Views/Pages/DemoPage.dart';
 import '/Views/Login/LoginPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
@@ -16,6 +17,7 @@ class PageName {
   static String pageSignUp = "/SignUp";
   static String pageVerification = "/Verification";
   static String pageDetal = "/DetalPage";
+  static String pageDemo = "/DetalPage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -26,5 +28,6 @@ class PageName {
     pageSignUp: (context) => SignUpPage(),
     pageVerification: (context) => VerificationPage(),
     pageDetal: (context) => DetalPage(),
+    pageDemo: (context) => DemoPage(),
   };
 }

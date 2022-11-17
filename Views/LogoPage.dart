@@ -34,7 +34,7 @@ class _LogoState extends State<Logo> {
       UserProperties.erase();
     }
 
-    Map<String, dynamic> map;
+/*    Map<String, dynamic> map;
     await http.post(Uri.parse("$IP/api/filter"),
         body: {"mark_id": "12", "category_id": "3"}).then((response) {
       if (response.statusCode == 200) {
@@ -45,7 +45,7 @@ class _LogoState extends State<Logo> {
         print("ERROR! you can't Login. Bicause you not sign up  :(");
         map = {"status": false};
       }
-    });
+    });*/
   }
 
   void initState() {

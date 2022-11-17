@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '/Models/Public.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'imgBtn.dart';
+
 File image, image1;
 List<File> images = [];
 bool imageOk = false;
@@ -45,29 +47,66 @@ class _AddImagesState extends State<AddImages> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      child: Wrap(
-          //mainAxisAlignment: MainAxisAlignment.spaceAround,
-          runSpacing: SWi * 0.05,
-          spacing: SWi * 0.05,
-          children: List.generate(
-            images.length + 1,
-            (index) => GestureDetector(
-              onTap: () {
-                getImage(index);
+      child: Column(
+        children: [
+          Visibility(
+            visible: images.isEmpty,
+            child: GestureDetector(
+              onTap: (){
+                getImage(0);
               },
-              child: _buildImage(
-                  index > images.length - 1 ? image : images[index]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ImgBtn(
+                    width: SWi * 0.1,
+                    height: SWi * 0.1,
+                    shape: 10,
+                    color: Color(0xff5408BF),
+                    child: Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Surat Goş!"),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ) /* [
-
-       */ /*   GestureDetector(
-            onTap: () {
-              getImage(1);
-            },
-            child: _buildImage(image1),
-          ),*/ /*
-        ],*/
           ),
+
+          Visibility(
+            visible: images.isNotEmpty,
+            child: Wrap(
+                //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                runSpacing: SWi * 0.05,
+                spacing: SWi * 0.05,
+                children: List.generate(
+                  images.length + 1,
+                  (index) => GestureDetector(
+                    onTap: () {
+                      getImage(index);
+                    },
+                    child: _buildImage(
+                        index > images.length - 1 ? image : images[index]),
+                  ),
+                ) /* [
+
+             */ /*   GestureDetector(
+                  onTap: () {
+                    getImage(1);
+                  },
+                  child: _buildImage(image1),
+                ),*/ /*
+              ],*/
+                ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -80,14 +119,14 @@ class _AddImagesState extends State<AddImages> {
             color: Colors.white,
             borderRadius: BorderRadiusDirectional.circular(30),
             boxShadow: [
-              BoxShadow(color: Colors.blue, blurRadius: 1, spreadRadius: 0)
+              BoxShadow(color: Color(0xff5308BE), blurRadius: 1, spreadRadius: 0)
             ]),
-        width: SWi * 0.45,
-        height: SWi * 0.45,
+        width: SWi * 0.41,
+        height: SWi * 0.41,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.add, color: Colors.blue, size: SWi * 0.1),
+            Icon(Icons.add, color: Color(0xff5308BE), size: SWi * 0.1),
             Text(
               "$imageStr",
               style: TextStyle(color: Colors.grey),
@@ -97,8 +136,8 @@ class _AddImagesState extends State<AddImages> {
       );
     } else {
       return Container(
-          width: SWi * 0.45,
-          height: SWi * 0.45,
+          width: SWi * 0.41,
+          height: SWi * 0.41,
           child: Image.file(File(_image.path))); //Text(_image!.path);
     }
   }

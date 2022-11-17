@@ -23,6 +23,51 @@ class MyDrawer extends StatelessWidget {
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top,
               )),
+          Container(height: SHe*0.02,),
+          Visibility(
+            visible: UserLoginDetals.getIsLogin(),
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.black,
+                    child: CircleAvatar(
+                        radius: 23,
+                        backgroundColor: Colors.deepPurple,
+                        child: Text(
+                            UserLoginDetals.getIsLogin()
+                                ? "${UserProperties.getProperty("name")[0].toUpperCase()}"
+                                : "",
+                            style: TextStyle(fontSize: 24))),
+                  ),
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                       /* Text("Baş sahypa",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: "ProximaSoftBold")),*/
+
+                        Text(
+                            UserLoginDetals.getIsLogin()
+                                ? "${UserProperties.getProperty("name")}"
+                                : "",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: "ProximaSoftBold")),
+                        Text(UserProperties.getProperty("phone"),
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400)),
+                      ]),
+
+                ],
+              ),
+            ),
+          ),
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -50,7 +95,20 @@ class MyDrawer extends StatelessWidget {
                     },
                     leading: Icon(Icons.account_box_sharp),
                     title: Text("Şahsy sahypa"),
-                  ))
+                  )),
+                /*  DrawBarBtn(
+                    onTap: (context) {
+                      Navigator.pushNamed(
+                          context, PageName.pageDemo);
+                    },
+                    leading: Icon(Icons.desktop_mac_outlined),
+                    title: Text("Demo page"),
+                    trailing: IconButton(
+                        onPressed: () {
+
+                        },
+                        icon: Icon(Icons.mode_night)),
+                  ),*/
                 ],
               ),
             ),

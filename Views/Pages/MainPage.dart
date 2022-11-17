@@ -76,48 +76,6 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
                   child: ListView(
                     physics: BouncingScrollPhysics(),
                     children: [
-                      Visibility(
-                        visible: UserLoginDetals.getIsLogin(),
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Baş sahypa",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: "ProximaSoftBold")),
-                                    Text("Hoş geldiňiz",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w400)),
-                                    Text(
-                                        UserLoginDetals.getIsLogin()
-                                            ? "${UserProperties.getProperty("name")}"
-                                            : "",
-                                        style: TextStyle(
-                                            fontSize: 24,
-                                            fontFamily: "ProximaSoftBold")),
-                                  ]),
-                              CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.black,
-                                child: CircleAvatar(
-                                    radius: 23,
-                                    backgroundColor: Colors.deepPurple,
-                                    child: Text(
-                                        UserLoginDetals.getIsLogin()
-                                            ? "${UserProperties.getProperty("name")[0].toUpperCase()}"
-                                            : "",
-                                        style: TextStyle(fontSize: 24))),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
                       //MySlider1(),
                       // MySlider(),
                       Slider_pro(),

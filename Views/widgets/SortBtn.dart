@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:telfun/Models/Public.dart';
 
-import 'DropDownBtn.dart';
+import 'DropDownBtn/DropDownBtn.dart';
 
 class SortBtn extends StatelessWidget {
   // const SortBtn({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ List<String> filters=["Samsung","G9","3000TM","Gowy"];
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Table(
+                       /* Table(
                           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                           children: [
                             TableRow(
@@ -30,7 +30,7 @@ List<String> filters=["Samsung","G9","3000TM","Gowy"];
                                 Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Text("Marka:")),
-                                DropdawnChange(index:  0,itims: [DropDBid(value: "Samsung",id: 0),DropDBid(value: "123",id: 0)]),
+                                DropDownBtn(index:  0,itims: [DropDBid(value: "Samsung",id: 0),DropDBid(value: "123",id: 0)]),
                               ],
                             ),
                             TableRow(
@@ -52,7 +52,7 @@ List<String> filters=["Samsung","G9","3000TM","Gowy"];
                               ],
                             ),
                           ],
-                        )
+                        )*/
                       ],
                     ),
                   ),
