@@ -17,14 +17,13 @@ class Categori extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Provider.of<UsesVar>(context, listen: false).changeMark(
-            Get_Lists().getList(Get_Lists.mark)[0]["id"],0);
-        Provider.of<UsesVar>(context, listen: false).Select(0);
+            0,-1);
+       // Provider.of<UsesVar>(context, listen: false).Select(0);
         categoriId = Get_Lists().getList(Get_Lists.categori)[index]["id"];
-        print("${Provider.of<UsesVar>(context, listen: false).getMark()[0]}");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => Get_api(
-URL: "$IP/api/category/$categoriId/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]}",
-              //  URL: "$IP/api/category/$categoriId/marks/13",
+//URL: "$IP/api/category/$categoriId/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]}",
+                URL: "$IP/api/category/$categoriId",
                 ApiName: Get_Lists.events,
              //   Post:{"mark_id":Get_Lists().getList(Get_Lists.mark)[0]["id"],"category_id":categoriId},
                 Return: CategoriPage())));

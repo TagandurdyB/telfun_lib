@@ -9,63 +9,90 @@ import '/ViewModels/ApiDebuging.dart';
 import '/Views/widgets/SortBtn.dart';
 import '/Views/widgets/Search.dart';
 import 'package:provider/provider.dart';
+import '/ViewModels/Routes.dart';
+
 
 class AllPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List list = Get_Lists()
-        .getList(Get_Lists.events);
+    List list = Get_Lists().getList(Get_Lists.events);
     return ListView(
       physics: BouncingScrollPhysics(),
       children: [
         SearchBtn(),
-        Container(
-            padding: EdgeInsets.only(left: SWi * 0.06),
-            child: Text("Markalar",
-                style: TextStyle(
-                    fontSize: SWi * 0.05, fontWeight: FontWeight.w800))),
-      //  SortBtn(),
-        Container(
+        Row(
+          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+            children:[
+          Container(
+              padding: EdgeInsets.only(left: SWi * 0.06),
+              child: TextButton(
+    onPressed:(){
+      Navigator.pushNamed(context, PageName.pageMark);
+    },
+                  child:Text("Markalar",
+                  style: TextStyle(
+                      fontSize: SWi * 0.05, fontWeight: FontWeight.w800,color:Colors.black)),)),
+          //  SortBtn(),
+          Container(
             padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
             alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: (){
-                Provider.of<UsesVar>(context,listen:false).changeMark(-1,-1);
+            child: OutlinedButton(
+              onPressed: () {
+                Provider.of<UsesVar>(context, listen: false)
+                    .changeMark(-1, -1);
               },
               child: Text("Hemmesini görmek",
                   style: TextStyle(
-                    color: Color(0xff9747FF),
+                      color: Provider.of<UsesVar>(context).getMark()[1] == -1
+                          ? Color(0xff9747FF)
+                          : Colors.grey,
                       fontSize: SWi * 0.035)),
-            )),
-       Visibility(
-    visible:Get_Lists().getList(Get_Lists.mark).length>0,
-    child: MarkScrol(),
-    ),
+
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(
+                    color: Provider.of<UsesVar>(context).getMark()[1] == -1
+                        ? Color(0xff9747FF)
+                        : Colors.grey,
+                    width:Provider.of<UsesVar>(context).getMark()[1] == -1?2:1
+                ),
+                shape: StadiumBorder(),
+              ),
+            ),
+          ),
+        ]),
+
+
+        Visibility(
+          visible: Get_Lists().getList(Get_Lists.mark).length > 0,
+          child: MarkScrol(),
+        ),
         //
         Container(
-            padding: EdgeInsets.symmetric(horizontal: SWi * 0.06,vertical: SWi*0.06),
+            padding: EdgeInsets.symmetric(
+                horizontal: SWi * 0.06, vertical: SWi * 0.06),
             child: Text("Bildirişler",
                 style: TextStyle(
                     fontSize: SWi * 0.05, fontWeight: FontWeight.w800))),
         Get_api(
-            URL: "$IP/api/category/$categoriId/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]}",
+            URL: "$IP/api/category/$categoriId}",
             //  URL: "$IP/api/category/$categoriId/marks/13",
             ApiName: Get_Lists.events,
             //   Post:{"mark_id":Get_Lists().getList(Get_Lists.mark)[0]["id"],"category_id":categoriId},
             Return: Container(
               alignment: Alignment.center,
               child: Column(
-                // spacing: SWi * 0.02,
-                //runSpacing: SWi * 0.04,
+                  // spacing: SWi * 0.02,
+                  //runSpacing: SWi * 0.04,
                   children: List.generate(
                       list.length,
-                          (index) => InCategory(
-                        list: list,
-                        index: index,
-                      ))),
-            ))
-        ,
+                      (index) => InCategory(
+                            list: list,
+                            index: index,
+                          ))),
+            )),
       ],
     );
   }
 }
+
+/*/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]*/

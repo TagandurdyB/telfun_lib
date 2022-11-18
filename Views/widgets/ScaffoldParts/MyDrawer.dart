@@ -96,7 +96,7 @@ class MyDrawer extends StatelessWidget {
                     leading: Icon(Icons.account_box_sharp),
                     title: Text("Şahsy sahypa"),
                   )),
-                /*  DrawBarBtn(
+                  DrawBarBtn(
                     onTap: (context) {
                       Navigator.pushNamed(
                           context, PageName.pageDemo);
@@ -108,7 +108,7 @@ class MyDrawer extends StatelessWidget {
 
                         },
                         icon: Icon(Icons.mode_night)),
-                  ),*/
+                  ),
                 ],
               ),
             ),

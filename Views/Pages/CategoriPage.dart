@@ -26,9 +26,9 @@ class TabViewer extends StatefulWidget {
   _TabViewerState createState() => _TabViewerState();
 }
 class _TabViewerState extends State<TabViewer>
-    with SingleTickerProviderStateMixin {
+  /*  with SingleTickerProviderStateMixin*/ {
 
-  TabController tabController;
+/*  TabController tabController;
   @override
   void initState() {
     super.initState();
@@ -41,19 +41,20 @@ class _TabViewerState extends State<TabViewer>
   void dispose() {
     tabController.dispose();
     super.dispose();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    tabController.index=Provider.of<UsesVar>(context).witchSelect();
-    return TabBarView(
+    //tabController.index=Provider.of<UsesVar>(context).witchSelect();
+ /*   return TabBarView(
       controller:tabController,
       physics: NeverScrollableScrollPhysics(),
       children: [
         AllPage(),
         ModelPage(),
       ],
-    );
+    );*/
+    return AllPage();
   }
 }
 

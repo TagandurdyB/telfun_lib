@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
@@ -78,6 +79,12 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
                     children: [
                       //MySlider1(),
                       // MySlider(),
+                    /*  OutlinedButton(
+                        onPressed:(){
+                          Navigator.pushNamed(context, PageName.pageMark);
+                        },
+                        child: Text('Button'),
+                      ),*/
                       Slider_pro(),
                       Categories(),
                     ],

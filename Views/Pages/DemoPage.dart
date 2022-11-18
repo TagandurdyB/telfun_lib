@@ -9,7 +9,83 @@ class DemoPage extends StatefulWidget {
 }
 
 class _DemoPageState extends State<DemoPage> {
+  String Value;
   String valuee=DDBBase().getDate(DDBName.dDBLocation).value;
+  bool boolDrop=true;
+List menuItems=List();
+
+  Map web={
+    "1":"PHP0",
+    "2":"PHP1",
+    "3":"PHP2",
+  };
+  Map app={
+    "1":"Flutter0",
+    "2":"Flutter1",
+    "3":"Flutter2",
+  };
+  Map pc={
+    "1":"C",
+    "2":"C#",
+    "3":"C++",
+  };
+
+  void populateWeb(){
+    for(String key in web.keys){
+      menuItems.add(
+        DropdownMenuItem(
+          value: web[key],
+          child: Text(web[key]),
+        )
+      );
+    }
+  }
+  void populateApp(){
+    for(String key in web.keys){
+      menuItems.add(
+          DropdownMenuItem(
+            value: web[key],
+            child: Text(web[key]),
+          )
+      );
+    }
+  }
+  void populatePC(){
+    for(String key in web.keys){
+      menuItems.add(
+          DropdownMenuItem(
+            value: web[key],
+            child: Text(web[key]),
+          )
+      );
+    }
+  }
+
+  void valueChanged(String _value){
+    if(_value=="1") {
+      menuItems=[];
+      populateWeb();
+    }
+    if(_value=="2") {
+      menuItems=[];
+      populateApp();
+    }
+    if(_value=="3") {
+      menuItems=[];
+      populatePC();
+    }
+    setState(() {
+      Value=_value;
+      boolDrop=false;
+    });
+  }
+
+  void secondV(String _value){
+setState(() {
+  Value=_value;
+});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +98,7 @@ class _DemoPageState extends State<DemoPage> {
         width: double.infinity,
         height: double.infinity,
         color: Colors.grey[800],
-        child: Column(
+        child: /*Column(
           children: [
             DropDownBtn(
               onChanged:(String value){
@@ -85,7 +161,38 @@ class _DemoPageState extends State<DemoPage> {
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ))
           ],
-        ),
+        )*/
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          DropdownButton<String>(
+            value: Value,
+              items: [
+            DropdownMenuItem(child: Text("one"),value: "1"),
+            DropdownMenuItem(child: Text("Two"),value: "2"),
+            DropdownMenuItem(child: Text("Three"),value: "3"),
+          ],
+          onChanged: (_value)=>valueChanged(_value),
+            hint: Text("Seleck filter"),
+          ),
+            DropdownButton<String>(
+            //  value: Value,
+              items: [
+                DropdownMenuItem(child: Text("one"),value: "1"),
+                DropdownMenuItem(child: Text("Two"),value: "2"),
+                DropdownMenuItem(child: Text("Three"),value: "3"),
+                DropdownMenuItem(child: Text("Four"),value: "4"),
+              ],
+              onChanged:boolDrop? null:(_value)=>secondV(_value),/*(_value){
+                setState(() {
+                  Value=_value;
+                });
+              },*/
+              hint: Text("Seleck color"),
+              disabledHint: Text("First select filter"),
+            ),
+            Text("${Value}"),
+        ],),
       ),
     );
   }
