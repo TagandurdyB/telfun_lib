@@ -10,9 +10,10 @@ class DemoPage extends StatefulWidget {
 
 class _DemoPageState extends State<DemoPage> {
   String Value;
+  String Valuee;
   String valuee=DDBBase().getDate(DDBName.dDBLocation).value;
   bool boolDrop=true;
-List menuItems=List();
+List<DropdownMenuItem<String>> menuItems=List();
 
   Map web={
     "1":"PHP0",
@@ -28,6 +29,7 @@ List menuItems=List();
     "1":"C",
     "2":"C#",
     "3":"C++",
+    "4":"C++2",
   };
 
   void populateWeb(){
@@ -41,21 +43,21 @@ List menuItems=List();
     }
   }
   void populateApp(){
-    for(String key in web.keys){
+    for(String key in app.keys){
       menuItems.add(
           DropdownMenuItem(
-            value: web[key],
-            child: Text(web[key]),
+            value: app[key],
+            child: Text(app[key]),
           )
       );
     }
   }
   void populatePC(){
-    for(String key in web.keys){
+    for(String key in pc.keys){
       menuItems.add(
           DropdownMenuItem(
-            value: web[key],
-            child: Text(web[key]),
+            value: pc[key],
+            child: Text(pc[key]),
           )
       );
     }
@@ -82,7 +84,7 @@ List menuItems=List();
 
   void secondV(String _value){
 setState(() {
-  Value=_value;
+  Valuee=_value;
 });
   }
 
@@ -177,12 +179,7 @@ setState(() {
           ),
             DropdownButton<String>(
             //  value: Value,
-              items: [
-                DropdownMenuItem(child: Text("one"),value: "1"),
-                DropdownMenuItem(child: Text("Two"),value: "2"),
-                DropdownMenuItem(child: Text("Three"),value: "3"),
-                DropdownMenuItem(child: Text("Four"),value: "4"),
-              ],
+              items: menuItems,
               onChanged:boolDrop? null:(_value)=>secondV(_value),/*(_value){
                 setState(() {
                   Value=_value;
@@ -192,6 +189,7 @@ setState(() {
               disabledHint: Text("First select filter"),
             ),
             Text("${Value}"),
+            Text("${Valuee}"),
         ],),
       ),
     );

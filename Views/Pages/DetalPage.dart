@@ -37,7 +37,7 @@ class DetalPage extends StatelessWidget {
               width: SWi,
               height: SWi,
               child: PageView.builder(
-                  itemCount: image.length,
+                  itemCount: Get_Lists().getList(Get_Lists.eventDetal)[0]["image"].length,//image.length,
                   itemBuilder: (context, index) => ImgBtn(
                         width: double.infinity,
                         height: SWi,
@@ -47,7 +47,7 @@ class DetalPage extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      Zoom(images: image, index: index)));
+                                      Zoom(images: Get_Lists().getList(Get_Lists.eventDetal)[0]["image"], index: index)));
                         },
                         shape: 30,
                         boxShadow: [
@@ -70,7 +70,7 @@ class DetalPage extends StatelessWidget {
                                     Icons.photo,
                                     color: Colors.grey,
                                   ))),
-                          imageUrl: "$IP/storage/${image[index]["image"]}",
+                          imageUrl: "$IP/storage/${Get_Lists().getList(Get_Lists.eventDetal)[0]["image"][index]["image"]}",
                           fit: BoxFit.cover,
                         ),
                       ))),

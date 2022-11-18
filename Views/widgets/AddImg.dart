@@ -71,9 +71,13 @@ class _AddImagesState extends State<AddImages> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Surat Goş!"),
+                      child: Text("Surat goş!",style: TextStyle(color: Colors.grey,fontSize: 16),),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.add,color: Color(0xff616161),),
+                  )
                 ],
               ),
             ),
@@ -111,7 +115,7 @@ class _AddImagesState extends State<AddImages> {
   }
 
   Widget _buildImage(_image) {
-    String imageStr = "Surat Goş!";
+    String imageStr = "Surat goş!";
     if (_image == null) {
       return Container(
         alignment: Alignment.center,
@@ -121,8 +125,8 @@ class _AddImagesState extends State<AddImages> {
             boxShadow: [
               BoxShadow(color: Color(0xff5308BE), blurRadius: 1, spreadRadius: 0)
             ]),
-        width: SWi * 0.41,
-        height: SWi * 0.41,
+        width: SWi * 0.39,
+        height: SWi * 0.39,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -136,8 +140,8 @@ class _AddImagesState extends State<AddImages> {
       );
     } else {
       return Container(
-          width: SWi * 0.41,
-          height: SWi * 0.41,
+          width: SWi * 0.39,
+          height: SWi * 0.39,
           child: Image.file(File(_image.path))); //Text(_image!.path);
     }
   }

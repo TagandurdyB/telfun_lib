@@ -43,30 +43,37 @@ if (d==0&&imageOk){
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  MyInput(
-                    shape: true,
-                    index: 0,
-                    borderRad: 60,
-                    hidden: "Bildirişiň adyny ýazyň...",
-                    label: "Bildirişiň ady...",
-                    onControl: (val, index) {
-                      inputValues[index] = controls[index].text;
-                      canOpenAddBtn(context);
-                    },
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MyInput(
+                      shape: true,
+                      index: 0,
+                      borderRad: 60,
+                      hidden: "Bildirişiň adyny ýazyň...",
+                      label: "Bildirişiň ady...",
+                      onControl: (val, index) {
+                        inputValues[index] = controls[index].text;
+                        canOpenAddBtn(context);
+                      },
+                    ),
                   ),
-                  MyInput(
-                    shape: true,
-                    index: 1,
-                    type: Type.num,
-                    borderRad: 60,
-                    hidden: "Bildirişiň bahasyny ýazyň...",
-                    label: "Bahasy...",
-                    onControl: (val, index) {
-                      inputValues[index] = controls[index].text;
-                      canOpenAddBtn(context);
-                    },
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MyInput(
+                      shape: true,
+                      index: 1,
+                      type: Type.num,
+                      borderRad: 60,
+                      hidden: "Bildirişiň bahasyny ýazyň...",
+                      label: "Bahasy...",
+                      onControl: (val, index) {
+                        inputValues[index] = controls[index].text;
+                        canOpenAddBtn(context);
+                      },
+                    ),
                   ),
                   Container(
+                    padding:  EdgeInsets.symmetric(horizontal: 8.0),
                     //welayats
                     child: MyDropdown(
                       tag: DDBName.dDBLocation,
@@ -84,6 +91,7 @@ if (d==0&&imageOk){
                   ),
                   Container(
                     //welayats
+                    padding:  EdgeInsets.symmetric(horizontal: 8.0),
                     child:  MyDropdown(
                       tag: DDBName.dDBCategory,
                       hidden: "Bölümler",
@@ -97,6 +105,7 @@ if (d==0&&imageOk){
                     ),
                   ),
                   Container(
+                    padding:  EdgeInsets.symmetric(horizontal: 8.0),
                     child:  MyDropdown(
                       hidden: "Marka",
                       icon: Icons.bookmark,
@@ -112,18 +121,24 @@ if (d==0&&imageOk){
                     ),
                   ),
 
-                  AddImages(),
-                  MyInput(
-                    shape: true,
-                    index: 2,
-                    maxline: 3,
-                    borderRad: 30,
-                    hidden: "Bildirişiňiz barada maglumat ýazyň...",
-                    label: "Bildiriş barada...",
-                    onControl: (val, index) {
-                      inputValues[index] = controls[index].text;
-                      canOpenAddBtn(context);
-                    },
+                  Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 8.0,vertical: SWi*0.04),
+                    child: AddImages(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MyInput(
+                      shape: true,
+                      index: 2,
+                      maxline: 3,
+                      borderRad: 30,
+                      hidden: "Bildirişiňiz barada maglumat ýazyň...",
+                      label: "Bildiriş barada...",
+                      onControl: (val, index) {
+                        inputValues[index] = controls[index].text;
+                        canOpenAddBtn(context);
+                      },
+                    ),
                   ),
 
                   AddBtn(inputValues: inputValues),

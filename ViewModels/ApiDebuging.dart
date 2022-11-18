@@ -51,7 +51,7 @@ class Get_api extends StatelessWidget {
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.yellow, Colors.red])),
+                            colors: [Colors.yellow,Color(0xff6911B0), Colors.red])),
                     child: Container(child: CircularProgressIndicator())));
           }
         });
@@ -91,11 +91,11 @@ class Get_apiStream extends StatelessWidget {
                     height: double.infinity,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        //color: Colors.red,
-                        gradient: LinearGradient(
+                        color: Color(0xff6911B0),
+                        /*gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.yellow, Colors.red])),
+                            colors: [Colors.yellow,Color(0xff6911B0), Colors.red])*/),
                     child: Container(child: CircularProgressIndicator())));
           }
         });
@@ -169,6 +169,7 @@ class Get_Lists {
   static String mark = "mark";
   static String events = "events";
   static String model = "model";
+  static String eventDetal = "eventDetal";
 
 /*  final int index;
   Get_Lists(this.index);*/

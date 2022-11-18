@@ -96,18 +96,16 @@ class MyDrawer extends StatelessWidget {
                     leading: Icon(Icons.account_box_sharp),
                     title: Text("Şahsy sahypa"),
                   )),
-                  DrawBarBtn(
-                    onTap: (context) {
-                      Navigator.pushNamed(
-                          context, PageName.pageDemo);
-                    },
-                    leading: Icon(Icons.desktop_mac_outlined),
-                    title: Text("Demo page"),
-                    trailing: IconButton(
-                        onPressed: () {
-
-                        },
-                        icon: Icon(Icons.mode_night)),
+                  Visibility(
+                    visible: UserLoginDetals.getIsLogin(),
+                    child: DrawBarBtn(
+                      onTap: (context) {
+                        Navigator.pushNamed(
+                            context, PageName.pageDemo);
+                      },
+                      leading: Icon(Icons.desktop_mac_outlined),
+                      title: Text("Demo page"),
+                    ),
                   ),
                 ],
               ),

@@ -7,14 +7,16 @@ import '/Models/Public.dart';
 import 'imgBtn.dart';
 
 class InCategory extends StatelessWidget {
-  const InCategory({
-    Key key,
-    @required this.list,
-    @required this.index,
-  }) : super(key: key);
-
-  final List list;
+  List list;
   final int index;
+
+   InCategory({
+
+   this.list,
+    @required this.index,
+  }) ;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +26,24 @@ class InCategory extends StatelessWidget {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-        /*  print(
-              "${list[index]["image"]} ${list[index]["name"]}  ${list[index]["price"]} ${list[index]["place"]} ${list[index]["about"]}");
-          //print("${list[index]["user"]["phone"]}");*/
+      // print("++++++++++++++++++ID:${Get_Lists().getList(Get_Lists.events)[0]["mark"]}");
+       list=Get_Lists().getList(Get_Lists.events);
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => DetalPage(
-                        image: list[index]["image"],
-                        name: list[index]["name"],
-                        phone: list[index]["user_phone"],
-                        price: list[index]["price"],
-                        about: list[index]["about"],
-                        place: list[index]["place"],
-                        mark:  list[index]["mark"]["name"],
-                      )));
+                  builder: (context) => Get_api(
+                    URL: "$IP/api/event/${list[index]["id"]}",
+                    ApiName: Get_Lists.eventDetal,
+                    Return: DetalPage(
+                        //  image: list[index]["image"],
+                          name: list[index]["name"],
+                          phone: list[index]["user"]["phone"],
+                          price: list[index]["price"],
+                          about: list[index]["about"],
+                          place: list[index]["place"],
+                          mark:  list[index]["mark"]["name"],
+                        ),
+                  )));
         },
         boxShadow: [
           BoxShadow(spreadRadius: 0, blurRadius: 5, color: Colors.grey)

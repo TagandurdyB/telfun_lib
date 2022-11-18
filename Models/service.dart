@@ -46,4 +46,28 @@ class Service {
       return false;
     }
   }
+  Future<bool> addNewEvent(Map list,String URL) async {
+    Map<String, dynamic> map;
+    print("${list}");
+    await http.post(Uri.parse(URL), body:list /*{
+      "user_id": list[0],
+      "place": list[1],
+      "price": list[2],
+      "color_id": list[3],
+      "products_id": list[4],
+    }*/).then((response) {
+      if (response.statusCode == 200) {
+        map = json.decode(response.body);
+        return true;
+      } else {
+        print("${response.statusCode}");
+        print("${json.decode(response.body)}");
+        print("ERROR! :(");
+        return false;
+       // map = {"status": false};
+      }
+    });
+    return false;
+  }
+
 }

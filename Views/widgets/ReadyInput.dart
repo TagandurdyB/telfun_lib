@@ -10,20 +10,25 @@ class MyInput extends StatefulWidget {
   final double borderRad;
   final Type type;
   final Function onControl;
+  final Widget reightWidget;
   MyInput(
       {this.index = 0,
         this.hidden = "",
         this.shape=false,
         this.type = Type.text,
-        this.onControl, this.borderRad=20, this.label="", this.maxline=1});
+        this.onControl, this.borderRad=20, this.label="", this.maxline=1, this.reightWidget});
   @override
   _MyInputState createState() => _MyInputState();
 }
 
 class _MyInputState extends State<MyInput> {
+
   @override
   void initState() {
-controls.forEach((element) {element.text="";});
+    if(widget.type==Type.num) {
+      controls[widget.index] = TextEditingController(text: "0");
+    }
+    controls.forEach((element) {element.text="";});
 /*    if (controls.length < widget.index + 1) {
       controls.add(TextEditingController());
     }*/
@@ -33,38 +38,36 @@ controls.forEach((element) {element.text="";});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        cursorColor: Color(0xff5308BE),
-        maxLines: widget.maxline,
-        onChanged: (value) {
-          widget.onControl( value,widget.index);
-        },
-        maxLength: widget.type == Type.tel ? 8 : null,
-        obscureText: widget.type == Type.pass ? true : false,
-        keyboardType: widget.type == Type.text
-            ? null
-            : widget.type == Type.tel
-            ? TextInputType.phone
-            : widget.type == Type.pass
-            ? TextInputType.visiblePassword
-            : widget.type == Type.email
-            ? TextInputType.emailAddress
-            : TextInputType.numberWithOptions(),
-        controller: controls[widget.index],
-        decoration: InputDecoration(
-            border: widget.shape?OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(widget.borderRad))):null,
-            prefix: widget.type == Type.tel ? Text("+993") : null,
-            hintText: widget.hidden!=""?widget.hidden:"",
-            labelText: widget.label!=""?widget.label:"",
-            suffix: GestureDetector(
-                onTap: () {
-                  controls[widget.index].clear();
-                },
-                child: Icon(Icons.cancel))),
-      ),
+    return TextFormField(
+      //initialValue: controls[widget.index].text,
+      cursorColor: Color(0xff5308BE),
+      maxLines: widget.maxline,
+      onChanged: (value) {
+        widget.onControl( value,widget.index);
+      },
+      maxLength: widget.type == Type.tel ? 8 : null,
+      obscureText: widget.type == Type.pass ? true : false,
+      keyboardType: widget.type == Type.text
+          ? null
+          : widget.type == Type.tel
+          ? TextInputType.phone
+          : widget.type == Type.pass
+          ? TextInputType.visiblePassword
+          : widget.type == Type.email
+          ? TextInputType.emailAddress
+          : TextInputType.numberWithOptions(),
+      controller: controls[widget.index],
+      decoration: InputDecoration(
+          border: widget.shape?OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(widget.borderRad))):null,
+          prefix: widget.type == Type.tel ? Text("+993") : null,
+          hintText: widget.hidden!=""?widget.hidden:"",
+          labelText: widget.label!=""?widget.label:"",
+          suffix: GestureDetector(
+              onTap: () {
+                controls[widget.index].clear();
+              },
+              child:widget.reightWidget?? Icon(Icons.cancel))),
     );
   }
 }
