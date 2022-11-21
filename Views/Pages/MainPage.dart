@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import '../../ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
 import '/Models/Public.dart';
@@ -17,16 +20,16 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Get_api(
         URL: "$IP/api/images",
-        ApiName: Get_Lists.img,
+        ApiName: ApiTags.img,
         Return: Get_api(
             URL: "$IP/api/marks",
-            ApiName: Get_Lists.mark,
+            ApiName: ApiTags.mark,
             Return: Get_api(
               URL: "$IP/api/model",
-              ApiName: Get_Lists.model,
+              ApiName: ApiTags.model,
               Return: Get_api(
                   URL: "$IP/api/categories",
-                  ApiName: Get_Lists.categori,
+                  ApiName: ApiTags.categori,
                   Return: Main()),
             )));
   }
@@ -56,6 +59,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
+
     // print(selPage);
     selPage.index = Provider.of<UsesVar>(context).witchNavBarSelect();
     return ScaffoldAll(

@@ -7,6 +7,8 @@ import 'ModelPage.dart';
 import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class CategoriPage extends StatelessWidget {
+  final String category_id;
+  CategoriPage(this.category_id);
   @override
   Widget build(BuildContext context) {
     return ScaffoldAll(
@@ -54,7 +56,7 @@ class _TabViewerState extends State<TabViewer>
         ModelPage(),
       ],
     );*/
-    return AllPage();
+    //return AllPage(category_id: ,);
   }
 }
 

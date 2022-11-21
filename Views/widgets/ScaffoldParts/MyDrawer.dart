@@ -75,6 +75,7 @@ class MyDrawer extends StatelessWidget {
                 children: [
                   DrawBarBtn(
                     onTap: (context) {
+                      Provider.of<UsesVar>(context,listen: false).navBarSelect(0);
                       Navigator.pushNamedAndRemoveUntil(
                           context, PageName.pageMain, (route) => false);
                     },

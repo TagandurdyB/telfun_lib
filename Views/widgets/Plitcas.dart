@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
+import '/ViewModels/Names.dart';
 import '/ViewModels/ApiDebuging.dart';
 import 'Plitca.dart';
 
@@ -8,8 +10,8 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      children:List.generate(Get_Lists().getList(Get_Lists.categori).length??0, (index) =>
-Categori(list:Get_Lists().getList(Get_Lists.categori),index: index)
+      children:List.generate(Get_Lists(apiName: ApiTags.categori).getList().length??0, (index) =>
+Categori(list:Get_Lists(apiName: ApiTags.categori).getList(),index: index)
       ),
     );
   }

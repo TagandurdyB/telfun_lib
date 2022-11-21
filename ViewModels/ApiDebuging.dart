@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:telfun/Models/Public.dart';
 import '../Views/LogoPage.dart';
 import '/Models/connect.dart';
+import 'ApiConverter.dart';
 import 'ShPBDebug.dart';
 
 //APILists ApiList;
@@ -26,19 +27,14 @@ class Get_api extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //fillFile();
     return FutureBuilder<List>(
         future: API(URL:URL,Post:Post).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
-         //   print("+++${ss}");
             print("Error Fail***");
           }
           if (ss.hasData) {
-            // ApiBase[ApiName]=ss.data;
-            // API(URL).localSave(ApiName,ss.data);
-            // API(URL).localLoad(ApiName);
-            ApiBase.addAll({ApiName: ss.data});
+            ApiBase.addAll({ApiName: ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()});
             return Return;
           } else {
             return Center(
@@ -80,9 +76,10 @@ class Get_apiStream extends StatelessWidget {
             print("Error Fail***");
           }
           if (ss.hasData) {
-            print("++++++++++++++++++++++++++++++Snapshot:${ss.data}");
+          //  print("++++++++++++++++++++++++++++++Snapshot:${ss.data}");
             // ApiBase[ApiName]=ss.data;
-            ApiBase.addAll({ApiName: ss.data});
+            print("+*+*+*Convert:${ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()}");
+            ApiBase.addAll({ApiName: ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()});
             return Return;
           } else {
             return Center(
@@ -163,18 +160,4 @@ class Post_Api {
   }
 }
 
-class Get_Lists {
-  static String img = "img";
-  static String categori = "category";
-  static String mark = "mark";
-  static String events = "events";
-  static String model = "model";
-  static String eventDetal = "eventDetal";
 
-/*  final int index;
-  Get_Lists(this.index);*/
-
-  List getList(String apiName) {
-    return ApiBase[apiName];
-  }
-}

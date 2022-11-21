@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/Model.dart';
@@ -22,8 +25,9 @@ class ModelPage extends StatelessWidget {
                 runSpacing: SWi * 0.05,
                 spacing: SWi * 0.09,
                 children: List.generate(
-                    Get_Lists().getList(Get_Lists.mark).length ?? 0,
-                    (index) => Model(image: Get_Lists().getList(Get_Lists.mark)[index]["image"],)),
+                    Get_Lists(apiName:ApiTags.mark).getList()
+                    .length ?? 0,
+                    (index) => Model(image: Get_Lists(apiName:ApiTags.mark).getList()[index].image)),
               ),
             ),
           )

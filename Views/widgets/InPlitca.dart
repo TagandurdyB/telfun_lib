@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import '/Views/Pages/DetalPage.dart';
 import '/Models/Public.dart';
 import 'imgBtn.dart';
@@ -10,13 +14,10 @@ class InCategory extends StatelessWidget {
   List list;
   final int index;
 
-   InCategory({
-
-   this.list,
+  InCategory({
+    this.list,
     @required this.index,
-  }) ;
-
-
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +27,31 @@ class InCategory extends StatelessWidget {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-      // print("++++++++++++++++++ID:${Get_Lists().getList(Get_Lists.events)[0]["mark"]}");
-       list=Get_Lists().getList(Get_Lists.events);
+         // print("+++++Event_ID:${list[index].id}");
           Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Get_api(
+                    URL: "$IP/api/event/${list[index].id}",
+                    ApiName: ApiTags.eventDetal,
+                    Return: DetalPage())),
+          );
+          /*      Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => Get_api(
-                    URL: "$IP/api/event/${list[index]["id"]}",
-                    ApiName: Get_Lists.eventDetal,
-                    Return: DetalPage(
-                        //  image: list[index]["image"],
+                        URL: "$IP/api/event/${list[index]["id"]}",
+                        ApiName: ApiTags.eventDetal,
+                        Return: DetalPage(
+                          //  image: list[index]["image"],
                           name: list[index]["name"],
                           phone: list[index]["user"]["phone"],
                           price: list[index]["price"],
                           about: list[index]["about"],
                           place: list[index]["place"],
-                          mark:  list[index]["mark"]["name"],
+                          mark: list[index]["mark"]["name"],
                         ),
-                  )));
+                      )));*/
         },
         boxShadow: [
           BoxShadow(spreadRadius: 0, blurRadius: 5, color: Colors.grey)
@@ -69,7 +77,8 @@ class InCategory extends StatelessWidget {
                   height: SWi * 0.3,
                   child: CachedNetworkImage(
                     cacheManager: CacheManager(Config("events",
-                        stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+                        stalePeriod: Duration(days: 15),
+                        maxNrOfCacheObjects: 200)),
                     key: UniqueKey(),
                     placeholder: (context, url) =>
                         Center(child: CircularProgressIndicator()),
@@ -80,8 +89,7 @@ class InCategory extends StatelessWidget {
                               Icons.photo,
                               color: Colors.grey,
                             ))),
-                    imageUrl:
-                    "$IP/storage/${list[index]["public_image"]}",
+                    imageUrl: "$IP/storage/${list[index].public_image}",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -95,7 +103,7 @@ class InCategory extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          child: Text("${list[index]["name"]}",
+                          child: Text("${list[index].name}",
                               style: TextStyle(
                                   fontSize: SWi * 0.04,
                                   fontFamily: "NunitoRegular"))),
@@ -107,7 +115,7 @@ class InCategory extends StatelessWidget {
                                 fontFamily: "Itim")),
                       ),*/
                       Container(
-                        child: Text("${list[index]["price"]} TMT",
+                        child: Text("${list[index].price} TMT",
                             style: TextStyle(
                                 fontSize: SWi * 0.045,
                                 fontFamily: "NunitoRegular",

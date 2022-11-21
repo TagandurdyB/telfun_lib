@@ -5,3 +5,11 @@ class DDBName {
   static String dDBModel = "tagModel";
   static String dDBColor = "tagColor";
 }
+class ApiTags {
+  static String img = "img";
+  static String categori = "category";
+  static String mark = "mark";
+  static String events = "events";
+  static String model = "model";
+  static String eventDetal = "eventDetal";
+}

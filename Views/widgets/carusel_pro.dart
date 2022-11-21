@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/Names.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/Public.dart';
 
@@ -36,7 +39,8 @@ class _Slider_proState extends State<Slider_pro> {
                   });
                 },
                 images: List.generate(
-                    Get_Lists().getList(Get_Lists.img).length ?? 0,
+                    Get_Lists(apiName:ApiTags.img).getList()
+                    .length ?? 0,
                     (index) => Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -59,7 +63,7 @@ class _Slider_proState extends State<Slider_pro> {
                                       color: Colors.grey,
                                     ))),
                             imageUrl:
-                                "$IP/storage/${Get_Lists().getList(Get_Lists.img)[index]["image"]}",
+                                "$IP/storage/${Get_Lists(apiName:ApiTags.img).getList()[index].image}",
                             fit: BoxFit.cover,
                           ),
                         )),

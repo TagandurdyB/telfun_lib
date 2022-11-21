@@ -66,23 +66,13 @@ class API {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('connected');
-        print("+*+*++*+*+*+*+*+*++*$Post}");
+       // print("+*+*++*+*+*+*+*+*++*$Post}");
         final response = Post==null?await http.get(Uri.parse(URL)):
-        await http.post(Uri.parse(URL), body: Post).then((respon) {
-          if (respon.statusCode == 200) {
-              print("+*+*+*${json.decode(respon.body)}");
-          } else {
-            print("${respon.statusCode}");
-            print("${json.decode(respon.body)}");
-            print("ERROR! you can't Login. Bicause you not sign up  :(");
-          //  map = {"status": false};
-          }
-        });
+        await http.post(Uri.parse(URL), body: Post);
         if (response.statusCode == 200) {
           print("Loading from API...");
           //  print("++++++Send data json:${response.body.length}");
-          file.writeAsStringSync(response.body,
-              flush: true, mode: FileMode.write);
+          writeJson(file,response.body);
           // print(json.decode(response.body).toString());
           return json.decode(response.body);
         }
@@ -91,13 +81,19 @@ class API {
       print('not connected');
       if (file.existsSync()) {
         print("Loading from local...");
-        String jsonDate = file.readAsStringSync();
-        return json.decode(jsonDate);
+        return  readJson(file);
       }
     }
   }
 
-
+void writeJson(File file,String body){
+  file.writeAsStringSync(body,
+      flush: true, mode: FileMode.write);
+}
+readJson(File file){
+  String jsonDate = file.readAsStringSync();
+  return json.decode(jsonDate);
+}
 
 /*   void getDateStream()  async{
      final response = await http.get(Uri.parse(URL));
@@ -126,4 +122,4 @@ class API {
   }
 }
 
-Map<String, List> ApiBase = {};
+Map ApiBase = {};

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/Pages/AllPage.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Views/Pages/CategoriPage.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,17 +19,17 @@ class Categori extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<UsesVar>(context, listen: false).changeMark(
-            0,-1);
-       // Provider.of<UsesVar>(context, listen: false).Select(0);
-        categoriId = Get_Lists().getList(Get_Lists.categori)[index]["id"];
+        Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
+        // Provider.of<UsesVar>(context, listen: false).Select(0);
+        int categoriId =
+            Get_Lists(apiName: ApiTags.categori).getList()[index].id;
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => Get_api(
-//URL: "$IP/api/category/$categoriId/marks/${Provider.of<UsesVar>(context, listen: false).getMark()[0]}",
                 URL: "$IP/api/category/$categoriId",
-                ApiName: Get_Lists.events,
-             //   Post:{"mark_id":Get_Lists().getList(Get_Lists.mark)[0]["id"],"category_id":categoriId},
-                Return: CategoriPage())));
+                ApiName: ApiTags.events,
+                Return: AllPage(
+                  category_id: categoriId,
+                ))));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -53,13 +56,13 @@ class Categori extends StatelessWidget {
               SizedBox(width: SWi * 0.05),
               Expanded(
                 child: Stack(
-                 // crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                         // color: Colors.red,
-                      child: Text("${list[index]["tm"]}",
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      // color: Colors.red,
+                      child: Text("${list[index].tm}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
@@ -67,18 +70,18 @@ class Categori extends StatelessWidget {
                               fontSize: 30)),
                     ),
                     Container(
-                       // color: Colors.blue,
-                      padding:EdgeInsets.all(SWi*0.02),
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          "Bildirişler : (${list[index]["count"]})",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "ProximaSoftBold",
-                              fontSize: 13),
-                        ),
+                      // color: Colors.blue,
+                      padding: EdgeInsets.all(SWi * 0.02),
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "Bildirişler : (${list[index].count})",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: "ProximaSoftBold",
+                            fontSize: 13),
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -86,24 +89,28 @@ class Categori extends StatelessWidget {
               Container(
                 width: SWi * 0.35,
                 height: SWi * 0.35,
-            /*    decoration: BoxDecoration(
+                /*    decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: *//*NetworkImage(
-                            "$IP/storage/${list[index]["image"]}")*//*
+                        image: */ /*NetworkImage(
+                            "$IP/storage/${list[index]["image"]}")*/ /*
                     )),*/
-                child:CachedNetworkImage(
+                child: CachedNetworkImage(
                   cacheManager: CacheManager(Config("categori",
-                      stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+                      stalePeriod: Duration(days: 15),
+                      maxNrOfCacheObjects: 200)),
                   placeholder: (context, url) =>
                       Center(child: CircularProgressIndicator()),
                   errorWidget: (context, url, error) => Center(
                       child: FittedBox(
                           fit: BoxFit.cover,
-                          child: Icon(Icons.photo,color: Colors.grey,))),
-                  key:UniqueKey(),
-                  imageUrl:"$IP/storage/${list[index]["image"]}",
-                  fit:BoxFit.cover,
+                          child: Icon(
+                            Icons.photo,
+                            color: Colors.grey,
+                          ))),
+                  key: UniqueKey(),
+                  imageUrl: "$IP/storage/${list[index].image}",
+                  fit: BoxFit.cover,
                 ),
               ),
             ],

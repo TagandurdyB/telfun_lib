@@ -1,24 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
+import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class DetalPage extends StatelessWidget {
-  final String name, phone, price, place, about, mark;
-  final List image;
+/*  final String name, phone, price, place, about, mark;
+  final List image;*/
+  final int /*index,*/id;
   DetalPage(
       {Key key,
-      @required this.image,
+    /*  @required this.image,
       this.name = "",
       this.phone = "",
       this.price = "",
       this.place = "",
       this.about = "",
-      this.mark = ""})
+      this.mark = "",
+      this.index,*/
+      this.id})
       : super(key: key);
 
   void tellCall(String phone) async {
@@ -27,60 +33,64 @@ class DetalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List list=Get_Lists(apiName:ApiTags.eventDetal).getList();
+   // print("++++++++++IMAGES:${list[0].images}");
     return ScaffoldAll(
         body: Container(
       child: ListView(
-        children: [
-          Container(
-              alignment: Alignment.center,
-              // padding: EdgeInsets.all(8),
-              width: SWi,
-              height: SWi,
-              child: PageView.builder(
-                  itemCount: Get_Lists().getList(Get_Lists.eventDetal)[0]["image"].length,//image.length,
-                  itemBuilder: (context, index) => ImgBtn(
-                        width: double.infinity,
-                        height: SWi,
-                        //  color: Colors.,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Zoom(images: Get_Lists().getList(Get_Lists.eventDetal)[0]["image"], index: index)));
-                        },
-                        shape: 30,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 10,
-                              spreadRadius: 0)
-                        ],
-                        child: CachedNetworkImage(
-                          cacheManager: CacheManager(Config("events_detal",
-                              stalePeriod: Duration(days: 15),
-                              maxNrOfCacheObjects: 200)),
-                          key: UniqueKey(),
-                          placeholder: (context, url) =>
-                              Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Center(
-                              child: FittedBox(
-                                  fit: BoxFit.cover,
-                                  child: Icon(
-                                    Icons.photo,
-                                    color: Colors.grey,
-                                  ))),
-                          imageUrl: "$IP/storage/${Get_Lists().getList(Get_Lists.eventDetal)[0]["image"][index]["image"]}",
-                          fit: BoxFit.cover,
-                        ),
-                      ))),
-          EventDetal(),
-        ],
+          children: [
+            Container(
+                alignment: Alignment.center,
+                // padding: EdgeInsets.all(8),
+                width: SWi,
+                height: SWi,
+                child: PageView.builder(
+                    itemCount: list[0].images.length,//image.length,
+                    itemBuilder: (context, index) => ImgBtn(
+                          width: double.infinity,
+                          height: SWi,
+                          //  color: Colors.,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Zoom(images: list[0].images, index: index)));
+                          },
+                          shape: 30,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 10,
+                                spreadRadius: 0)
+                          ],
+                          child: CachedNetworkImage(
+                            cacheManager: CacheManager(Config("events_detal",
+                                stalePeriod: Duration(days: 15),
+                                maxNrOfCacheObjects: 200)),
+                            key: UniqueKey(),
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Center(
+                                child: FittedBox(
+                                    fit: BoxFit.cover,
+                                    child: Icon(
+                                      Icons.photo,
+                                      color: Colors.grey,
+                                    ))),
+                            imageUrl: "$IP/storage/${
+                               list[0].images[index]["image"]}",
+                            fit: BoxFit.cover,
+                          ),
+                        ))),
+            EventDetal(list),
+          ],
       ),
-    ));
+    ),
+        );
   }
 
-  Widget EventDetal() {
+  Widget EventDetal(List list) {
     return Container(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -94,7 +104,7 @@ class DetalPage extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                       children: [
                     TextSpan(text: "Ady : ", style: TextStyle(fontSize: 18)),
-                    TextSpan(text: name)
+                    TextSpan(text: list[0].name)
                   ])),
             ),
             Padding(
@@ -105,7 +115,7 @@ class DetalPage extends StatelessWidget {
                       children: [
                     TextSpan(
                         text: "Markasy : ", style: TextStyle(fontSize: 18)),
-                    TextSpan(text: mark)
+                    TextSpan(text: list[0].mark)
                   ])),
             ),
             Padding(
@@ -115,7 +125,7 @@ class DetalPage extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                       children: [
                     TextSpan(text: "Bahasy : ", style: TextStyle(fontSize: 18)),
-                    TextSpan(text: price)
+                    TextSpan(text: list[0].price.toString())
                   ])),
             ),
             Padding(
@@ -127,7 +137,7 @@ class DetalPage extends StatelessWidget {
                     TextSpan(
                         text: "Goýulan ýeri : ",
                         style: TextStyle(fontSize: 18)),
-                    TextSpan(text: place)
+                    TextSpan(text: list[0].place)
                   ])),
             ),
             Container(
@@ -148,7 +158,7 @@ class DetalPage extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(about),
+                    child: Text(list[0].about),
                   ),
                 )),
             Padding(
@@ -159,10 +169,10 @@ class DetalPage extends StatelessWidget {
                     "Habarlaşmak üçin : ",
                     style: TextStyle(fontSize: 18),
                   ),
-                  Text(phone),
+                  Text(list[0].phone),
                   IconButton(
                       onPressed: () {
-                        tellCall(phone);
+                        tellCall(list[0].phone);
                       },
                       icon: Icon(Icons.phone, color: Colors.green))
                 ],
