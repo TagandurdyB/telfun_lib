@@ -46,10 +46,10 @@ class MyDrawer extends StatelessWidget {
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                       /* Text("Baş sahypa",
+                        Text("Baş sahypa",
                             style: TextStyle(
                                 fontSize: 14,
-                                fontFamily: "ProximaSoftBold")),*/
+                                fontFamily: "ProximaSoftBold")),
 
                         Text(
                             UserLoginDetals.getIsLogin()
@@ -58,7 +58,8 @@ class MyDrawer extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: "ProximaSoftBold")),
-                        Text(UserProperties.getProperty("phone"),
+                        Text(UserLoginDetals.getIsLogin()?
+                        UserProperties.getProperty("phone"):"",
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400)),

@@ -27,7 +27,7 @@ class InCategory extends StatelessWidget {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-         // print("+++++Event_ID:${list[index].id}");
+          // print("+++++Event_ID:${list[index].id}");
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -58,14 +58,31 @@ class InCategory extends StatelessWidget {
         ],
         width: null,
         height: null,
+        shape: SWi * 0.04,
         child: Container(
-          color: Colors.white,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.circular(SWi * 0.035),
+            color: Colors.white,
+          ),
           margin: EdgeInsets.all(SWi * 0.005),
           width: SWi,
           height: SWi * 0.3,
           child: Stack(
             alignment: Alignment.centerRight,
             children: [
+              Positioned(
+                  right: 0,
+                  top: 0,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.bookmark_border,
+                        color: Color(0xff6C02FF),
+                      ),
+                    ),
+                  )),
               Positioned(
                 right: SWi * 0.1,
                 child: Container(
@@ -95,18 +112,19 @@ class InCategory extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 0,
+                left: SWi * 0.09,
                 child: Container(
                   // color: Colors.red,
-                  padding: EdgeInsets.all(SWi * 0.04),
+                  // padding: EdgeInsets.all(SWi * 0.04),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                           child: Text("${list[index].name}",
                               style: TextStyle(
-                                  fontSize: SWi * 0.04,
-                                  fontFamily: "NunitoRegular"))),
+                                  fontSize: SWi * 0.043,
+                                  fontFamily: "NunitoRegular",
+                                  fontWeight: FontWeight.w900))),
                       SizedBox(height: SWi * 0.01),
                       /*    Container(
                         child: Text("${list[index]["place"]}",
@@ -117,12 +135,23 @@ class InCategory extends StatelessWidget {
                       Container(
                         child: Text("${list[index].price} TMT",
                             style: TextStyle(
-                                fontSize: SWi * 0.045,
-                                fontFamily: "NunitoRegular",
-                                fontWeight: FontWeight.w900)),
+                                fontSize: SWi * 0.04,
+                                fontFamily: "NunitoRegular")),
                       ),
                     ],
                   ),
+                ),
+              ),
+              Positioned(
+                left: SWi * 0.09,
+                bottom: SWi * 0.01,
+                child: Container(
+                  child: Text(
+                      "${list[index].place}, ${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
+                      style: TextStyle(
+                          fontSize: SWi * 0.037,
+                          fontFamily: "NunitoRegular",
+                          fontWeight: FontWeight.w500)),
                 ),
               ),
             ],

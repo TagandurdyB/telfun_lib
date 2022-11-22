@@ -147,6 +147,7 @@ int id
   final int price;*/
     try{
       return ElemEventDetal(
+        data: DateTime.parse(_map["updated_at"]),
         images: _map["image"],
         name:_map["name"],
         price: int.parse(_map["price"]),
@@ -156,13 +157,14 @@ int id
         about: _map["about"],
       );
     }catch (_e){
-      print("+Convet_ERROR+: Be error from mapToElemEventDetal!!! :$_e");
+      print("+Convet_ERROR+: Be error from mapToElemEventDetal!!! :$_e ");
     }
   }
 
   Map<String,dynamic> elemEventDetalToMap(ElemEventDetal _elem) {
     try{
       return {
+        "data":_elem.data,
         "image": _elem.images,
         "name":_elem.name,
         "price": _elem.price,
@@ -181,6 +183,7 @@ int id
     // return ElemImg(image: _map["image"]);
     try{
      return ElemEvents(
+       data: DateTime.parse(_map["updated_at"]),
        id: _map["id"],
        name: _map["name"],
        about: _map["about"],
@@ -200,6 +203,7 @@ int id
     // return {"image": _elem.image};
     try{
     return {
+      "data":_elem.data,
       "id": _elem.id,
       "name": _elem.name,
       "about": _elem.about,

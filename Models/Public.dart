@@ -6,7 +6,7 @@ import 'package:telfun/ViewModels/ShPBDebug.dart';
 double SWi=0.0,SHe=0.0;
 int _select=0,_navBarSelect=0;
 List<DropDBid> filters=List.generate(10, (index) => DropDBid());
-int categoriId,_selectMarkId,_selectMarkIndex;
+int categoriId,categoriIndex=0,_selectMarkId,_selectMarkIndex;
 bool _canAddEvent=false;
 StreamController myStreamControler=StreamController();
 
@@ -45,6 +45,15 @@ class UsesVar extends ChangeNotifier {
   }
   List<int> getMark(){
     return [_selectMarkId,_selectMarkIndex];
+  }
+
+  void changeCategoryIndex(int _val){
+    categoriIndex=_val;
+    notifyListeners();
+  }
+
+  int getCategoryIndex(){
+    return categoriIndex;
   }
 
   void changeCanAdd(i) {

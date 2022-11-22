@@ -19,10 +19,12 @@ class ElemMark {
 
 class ElemEvents {
   final int id, price;
+  final DateTime data;
   final String name, phone, place, about, mark,public_image;
  // final List images;
   ElemEvents(
-      {this.price,
+      {this.data,
+        this.price,
       this.phone,
       this.place,
       this.about,
@@ -44,8 +46,9 @@ class ElemEventDetal {
   final List images;
   final String name,mark,place,about,phone;
   final int price;
+  final DateTime data;
 
-  ElemEventDetal({this.mark, this.place, this.about, this.phone, this.price,this.name,this.images});
+  ElemEventDetal( {this.data,this.mark, this.place, this.about, this.phone, this.price,this.name,this.images});
 }
 
 /*

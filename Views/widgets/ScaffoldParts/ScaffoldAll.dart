@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/Models/Public.dart';
 import 'MyAppBar.dart';
 import 'MyDrawer.dart';
+import 'MyFloatingActionButton.dart';
 import 'MyNavBar.dart';
 
 class ScaffoldAll extends StatelessWidget {
   final Widget body, title;
   final List<Tab> myTabs;
-  final bool IsAdd, IsUser, IsSideBar, IsTabBar, IsMain, EnableBotomMenu;
+  final Function onFloatTop;
+  final String phone;
+  final bool IsAdd,
+      IsUser,
+      IsSideBar,
+      IsTabBar,
+      IsMain,
+      EnableBotomMenu,
+      IsFloatBtn;
   final double topBarHeight;
   ScaffoldAll(
       {Key key,
@@ -20,7 +33,9 @@ class ScaffoldAll extends StatelessWidget {
       this.myTabs,
       this.topBarHeight = 0.15,
       this.IsMain = false,
-      this.EnableBotomMenu = false})
+      this.EnableBotomMenu = false,
+      this.IsFloatBtn = false,
+      this.onFloatTop, this.phone})
       : super(key: key);
 
 /*  List<Tab> myTabs = <Tab>[
@@ -36,14 +51,16 @@ class ScaffoldAll extends StatelessWidget {
           preferredSize: Size.fromHeight(SWi * topBarHeight),
           child: PreferredSize(
             child: MyAppBar(
-              IsSideBar: IsSideBar,
+                IsSideBar: IsSideBar,
                 myTabs: myTabs,
                 title: title != null ? title : telfun,
                 IsTabBar: IsTabBar,
                 IsUser: IsUser),
           )),
-     // drawer: IsSideBar ? MyDrawer(context: context) : null,
-       drawer: MyDrawer(context: context),
+      // drawer: IsSideBar ? MyDrawer(context: context) : null,
+      drawer: MyDrawer(context: context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: IsFloatBtn ? MyFloatingActionButton(phone: phone) : null,
       bottomNavigationBar: MyBottomNavBar(
         IsAdd: IsAdd,
         IsUser: IsUser,
@@ -52,20 +69,64 @@ class ScaffoldAll extends StatelessWidget {
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       //floatingActionButton: MyFloatingActionButton(),
       body: Builder(
-        builder:(context)=> Column(
+        builder: (context) => Column(
           children: [
             Visibility(
               visible: EnableBotomMenu,
-              child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 17),
-                    //  color: Colors.red,
-                    child: GestureDetector(
-                        onTap: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                        child: Icon(Icons.menu))),
-
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 17),
+                          //  color: Colors.red,
+                          child: GestureDetector(
+                              onTap: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              child: Icon(Icons.menu))),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+                        child: Text(
+                          "${EnableBotomMenu ? Get_Lists(apiName: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm : ""}",
+                          style: TextStyle(
+                              fontSize: SWi * 0.045,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.sort_by_alpha,
+                            color: Color(0xff8017FF),
+                            size: SWi * 0.07,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.bookmark,
+                            color: Color(0xff8017FF),
+                            size: SWi * 0.07,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Container(
@@ -76,13 +137,6 @@ class ScaffoldAll extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  FloatingActionButton MyFloatingActionButton() {
-    return FloatingActionButton(
-      onPressed: () {},
-      child: Icon(Icons.add),
     );
   }
 }

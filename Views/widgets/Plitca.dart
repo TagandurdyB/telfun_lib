@@ -19,10 +19,12 @@ class Categori extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+
         Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
         // Provider.of<UsesVar>(context, listen: false).Select(0);
         int categoriId =
             Get_Lists(apiName: ApiTags.categori).getList()[index].id;
+        Provider.of<UsesVar>(context,listen: false).changeCategoryIndex(index);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => Get_api(
                 URL: "$IP/api/category/$categoriId",
