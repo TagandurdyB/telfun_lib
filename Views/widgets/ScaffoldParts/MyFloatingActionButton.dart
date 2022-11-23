@@ -15,20 +15,19 @@ class MyFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImgBtn(
-      onTap: (){
+      onTap: () {
         // tellCall(list[0].phone);
-       // onTop;
+        // onTop;
         tellCall(phone);
       },
-      shape: SWi*0.02,
-      width: SWi*0.9,
-      height: SWi*0.1,
+      shape: SWi * 0.02,
+      width: SWi * 0.9,
+      height: SWi * 0.1,
       color: Color(0xff6900FE),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text("JAŇ ETMEK",style: TextStyle(color: Colors.white),),
+      child: Text(
+        "JAŇ ETMEK",
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
 }
-

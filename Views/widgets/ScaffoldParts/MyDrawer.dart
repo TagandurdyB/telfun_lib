@@ -88,6 +88,15 @@ class MyDrawer extends StatelessWidget {
                         },
                         icon: Icon(Icons.mode_night)),
                   ),
+                  DrawBarBtn(
+                    onTap: (context) {
+                      Provider.of<UsesVar>(context,listen: false).navBarSelect(0);
+                      Navigator.pushNamed(
+                          context, PageName.pageFavorite);
+                    },
+                    leading: Icon(Icons.bookmark),
+                    title: Text("Halanlarym"),
+                  ),
                   Visibility(
                       visible: UserLoginDetals.getIsLogin(),
                       child: DrawBarBtn(

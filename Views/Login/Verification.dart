@@ -173,7 +173,7 @@ paroly ýazyň.
             textColor: Colors.white,
             fontSize: 16.0,
           );*/
-          Post_Api(
+          API_Post(
                   URL: "$IP/api/register",
                   name: widget.name,
                   phone: "+993"+widget.phone,

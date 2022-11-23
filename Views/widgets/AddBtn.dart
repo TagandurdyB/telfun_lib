@@ -72,7 +72,7 @@ class _AddBtnState extends State<AddBtn> {
                       'name': controls[0].text,
                       "mark_id":DDBBase().getDate(DDBName.dDBMark).id.toString(),
                       "price": controls[1].text,
-                      "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
+                      "place": DDBBase().getDate(DDBName.dDBLocation).value,
                       "about": controls[2].text,
                     };
                     bool isUpload = await service.addImage(body, images);

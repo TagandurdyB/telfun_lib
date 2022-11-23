@@ -1,22 +1,22 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:telfun/Models/Public.dart';
-import '../Views/LogoPage.dart';
 import '/Models/connect.dart';
+import '../Views/LogoPage.dart';
+import '/Models/ApiService.dart';
 import 'ApiConverter.dart';
 import 'ShPBDebug.dart';
 
 //APILists ApiList;
 const String IP = "https://it.net.tm/telfun";
 
-class Get_api extends StatelessWidget {
+class API_Get extends StatelessWidget {
   final String URL;
   final Widget Return;
   final String ApiName;
   final Map Post;
   // final int LIndex;
-  Get_api({
+  API_Get({
     Key key,
     @required this.URL,
     @required this.Return,
@@ -25,16 +25,24 @@ class Get_api extends StatelessWidget {
     // @required this.LIndex,
   }) : super(key: key);
 
+
+  void cacher(String fileName,List list)async{
+    bool _isConnect=await isConnected();
+    if(_isConnect)
+    API().writeJson(fileName, ApiConverter(ApiName: fileName,MapList: list).maptoMap().toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: API(URL:URL,Post:Post).getDate(ApiName),
+        future: API(URL:URL).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
             print("Error Fail***");
           }
           if (ss.hasData) {
             ApiBase.addAll({ApiName: ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()});
+            cacher(ApiName,ss.data);
             return Return;
           } else {
             return Center(
@@ -110,10 +118,10 @@ class Get_Me {
   }
 }
 
-class Post_Api {
+class API_Post {
   final String URL, name, phone, pass;
 
-  Post_Api(
+  API_Post(
       {@required this.URL,
       @required this.name,
       @required this.phone,

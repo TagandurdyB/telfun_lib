@@ -59,15 +59,15 @@ class ScaffoldAll extends StatelessWidget {
           )),
       // drawer: IsSideBar ? MyDrawer(context: context) : null,
       drawer: MyDrawer(context: context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: IsFloatBtn ? MyFloatingActionButton(phone: phone) : null,
+     // floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
+     // floatingActionButton: IsFloatBtn ? MyFloatingActionButton(phone: phone) : null,
       bottomNavigationBar: MyBottomNavBar(
+        IsFloatBtn:IsFloatBtn,
         IsAdd: IsAdd,
         IsUser: IsUser,
         IsMain: IsMain,
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      //floatingActionButton: MyFloatingActionButton(),
       body: Builder(
         builder: (context) => Column(
           children: [

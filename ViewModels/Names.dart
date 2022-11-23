@@ -11,5 +11,8 @@ class ApiTags {
   static String mark = "mark";
   static String events = "events";
   static String model = "model";
-  static String eventDetal = "eventDetal";
+  static String detal = "eventDetal";
+}
+class JsonName{
+  static String favorite = "favorite";
 }

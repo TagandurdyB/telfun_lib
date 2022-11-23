@@ -194,7 +194,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                 DDBBase().getDate(DDBName.dDBModel).index]
                             .colors[index];
                         int code =
-                            int.parse("0xff${getlist["code"].substring(1)}");
+                            int.parse("0xff${getlist.code.substring(1)}");
                         return DDBEl(
                             child: Row(
                               children: [
@@ -209,12 +209,12 @@ class _AddNewPageState extends State<AddNewPage> {
                                   ],
                                 ),
                                 SizedBox(width: 10),
-                                Text(getlist["tm"]),
+                                Text(getlist.tm),
                               ],
                             ),
                             index: index,
-                            value: getlist["tm"],
-                            id: getlist["id"]);
+                            value: getlist.tm,
+                            id: getlist.id);
                       }),
                 onChanged: (DDBEl _element) {
                   setState(() {
@@ -261,7 +261,6 @@ class _AddNewPageState extends State<AddNewPage> {
                 padding: EdgeInsets.symmetric(vertical: SWi * 0.04),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Row(
                       children: [
@@ -293,12 +292,6 @@ class _AddNewPageState extends State<AddNewPage> {
                           Container(
                             width: SWi * 0.80,
                             child: MyInput(
-                              /*  reightWidget: Column(
-                                children: [
-                                  Icon(Icons.keyboard_arrow_up,size: 20),
-                                  Icon(Icons.keyboard_arrow_down,size: 20),
-                                ],
-                              ),*/
                               shape: true,
                               index: 1,
                               type: Type.num,
@@ -314,59 +307,12 @@ class _AddNewPageState extends State<AddNewPage> {
                               },
                             ),
                           ),
-                          /* Column(
-                            children: [
-                              IconButton( icon:Icon(Icons.keyboard_arrow_up,size: SWi*0.08),onPressed: (){
-                                controls[1].text=(int.parse(controls[1].text)+1).toString();
-                              },),
-                              IconButton( icon:Icon(Icons.keyboard_arrow_down,size: SWi*0.08),onPressed: (){
-                                controls[1].text=(int.parse(controls[1].text)-1).toString();
-                              },),
-                            ],
-                          )*/
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-              /* Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ImgBtn(
-                    width: SWi * 0.1,
-                    height: SWi * 0.1,
-                    shape: 10,
-                    color: Color(0xff5408BF),
-                    child: Icon(
-                      Icons.app_registration_rounded,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Barada",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              MyInput(
-                shape: true,
-                index: 2,
-                maxline: 3,
-                borderRad: 30,
-                hidden: "Bildirişiňiz barada maglumat ýazyň...",
-                label: "Bildiriş barada...",
-                onControl: (val, index) {
-                  //inputValues[index] = controls[index].text;
-                  // canOpenAddBtn(context);
-                },
-              ),*/
-              //   AddBtn()
               AddNewBtn()
             ],
           ),
@@ -453,7 +399,7 @@ class _AddNewPageState extends State<AddNewPage> {
                       "about": controls[2].text,*/
                       "user_id": UserProperties.getProperty("id"),
                       "place":
-                          DDBBase().getDate(DDBName.dDBLocation).id.toString(),
+                          DDBBase().getDate(DDBName.dDBLocation).value,
                       "price": controls[1].text,
                       "color_id":
                           DDBBase().getDate(DDBName.dDBColor).id.toString(),

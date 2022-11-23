@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
       } else {
         print(controls[0].text);
         print(controls[1].text);
-        bool canLogin = await Post_Api(
+        bool canLogin = await API_Post(
           URL: "$IP/api/login",
           //URL: "$IP/api/register",
           // name: "name124",

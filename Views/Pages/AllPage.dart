@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '/ViewModels/Routes.dart';
 
 class AllPage extends StatelessWidget {
+
   final int category_id;
   AllPage({this.category_id});
   @override

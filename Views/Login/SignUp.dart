@@ -75,7 +75,7 @@ class _SignUpFormState extends State<SignUpForm> {
       print("empety");
     }
     else {
-      bool isAlredyRegister = await Post_Api(
+      bool isAlredyRegister = await API_Post(
         URL: "$IP/api/control",
         //URL: "$IP/api/register",
         name: controls[0].text,

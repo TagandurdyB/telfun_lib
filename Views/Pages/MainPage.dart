@@ -18,16 +18,16 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Get_api(
+    return API_Get(
         URL: "$IP/api/images",
         ApiName: ApiTags.img,
-        Return: Get_api(
+        Return: API_Get(
             URL: "$IP/api/marks",
             ApiName: ApiTags.mark,
-            Return: Get_api(
+            Return: API_Get(
               URL: "$IP/api/model",
               ApiName: ApiTags.model,
-              Return: Get_api(
+              Return: API_Get(
                   URL: "$IP/api/categories",
                   ApiName: ApiTags.categori,
                   Return: Main()),

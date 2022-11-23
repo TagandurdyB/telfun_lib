@@ -1,3 +1,4 @@
+import '/Views/Pages/FavoritePage.dart';
 import '/Views/Pages/ModelPage.dart';
 import '/Views/Pages/DemoPage.dart';
 import '/Views/Login/LoginPage.dart';
@@ -20,6 +21,7 @@ class PageName {
   static String pageDetal = "/DetalPage";
   static String pageDemo = "/DetalPage";
   static String pageMark = "/MarkPage";
+  static String pageFavorite = "/FavoritePage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -32,5 +34,6 @@ class PageName {
     pageDetal: (context) => DetalPage(),
     pageDemo: (context) => DemoPage(),
     pageMark: (context) => ModelPage(),
+    pageFavorite: (context) => FavoritePage(),
   };
 }

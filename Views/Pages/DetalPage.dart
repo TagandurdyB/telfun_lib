@@ -34,13 +34,14 @@ class DetalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List list = Get_Lists(apiName: ApiTags.eventDetal).getList();
+    List list = Get_Lists(apiName: ApiTags.detal).getList();
     // print("++++++++++IMAGES:${list[0].images}");
     return ScaffoldAll(
       phone: list[0].phone,
       IsFloatBtn: true,
       body: Container(
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             Stack(children: [
               Column(
@@ -346,9 +347,7 @@ Positioned(
                     )),
               ),
             ),
-            SizedBox(
-              height: SWi * 0.15,
-            )
+
             /* Row(
               children: [
                 Expanded(

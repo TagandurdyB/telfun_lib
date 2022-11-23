@@ -8,6 +8,7 @@ import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import '/Views/Pages/DetalPage.dart';
 import '/Models/Public.dart';
+import 'favoriteBtn.dart';
 import 'imgBtn.dart';
 
 class InCategory extends StatelessWidget {
@@ -31,9 +32,9 @@ class InCategory extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Get_api(
+                builder: (context) => API_Get(
                     URL: "$IP/api/event/${list[index].id}",
-                    ApiName: ApiTags.eventDetal,
+                    ApiName: ApiTags.detal,
                     Return: DetalPage())),
           );
           /*      Navigator.push(
@@ -73,16 +74,7 @@ class InCategory extends StatelessWidget {
               Positioned(
                   right: 0,
                   top: 0,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.bookmark_border,
-                        color: Color(0xff6C02FF),
-                      ),
-                    ),
-                  )),
+                  child: FavoriteBtn(favorite: list[0].favorite,)),
               Positioned(
                 right: SWi * 0.1,
                 child: Container(
