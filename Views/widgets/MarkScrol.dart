@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/Models/Public.dart';
@@ -24,7 +24,7 @@ class _MarkScrolState extends State<MarkScrol> {
         physics: BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: List.generate(
-            Get_Lists(apiName:ApiTags.mark).getList().length ?? 0,
+            Get_Lists(listTag:ApiTags.mark).getList().length ?? 0,
             (index) => Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: SWi * 0.01, horizontal: SWi * 0.02),
@@ -54,7 +54,7 @@ class _MarkScrolState extends State<MarkScrol> {
                             print("i am working");
                             Provider.of<UsesVar>(context, listen: false)
                                 .changeMark(
-                                Get_Lists(apiName:ApiTags.mark).getList()[index].id,
+                                Get_Lists(listTag:ApiTags.mark).getList()[index].id,
                                     index);
                           },
                           child: ClipRRect(
@@ -73,7 +73,7 @@ class _MarkScrolState extends State<MarkScrol> {
                                         color: Colors.grey,
                                       ))),
                               imageUrl:
-                                  "$IP/storage/${Get_Lists(apiName:ApiTags.mark).getList()[index].image}",
+                                  "$IP/storage/${Get_Lists(listTag:ApiTags.mark).getList()[index].image}",
                               fit: BoxFit.cover,
                             ),
                           ),

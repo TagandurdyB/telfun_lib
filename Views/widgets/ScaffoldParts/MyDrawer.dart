@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
-import 'package:telfun/Views/Pages/MainPage.dart';
 
 import '../DrawBarBtn.dart';
 
@@ -46,11 +45,6 @@ class MyDrawer extends StatelessWidget {
                   Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text("Baş sahypa",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: "ProximaSoftBold")),
-
                         Text(
                             UserLoginDetals.getIsLogin()
                                 ? "${UserProperties.getProperty("name")}"
@@ -80,7 +74,7 @@ class MyDrawer extends StatelessWidget {
                       Navigator.pushNamedAndRemoveUntil(
                           context, PageName.pageMain, (route) => false);
                     },
-                    leading: Icon(Icons.home),
+                    leading:Icon(Icons.home,color: Color(0xff8016FE),),
                     title: Text("Baş sahypa"),
                     trailing: IconButton(
                         onPressed: () {

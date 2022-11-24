@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/Models/Public.dart';
 import 'MyAppBar.dart';
@@ -91,7 +92,7 @@ class ScaffoldAll extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: SWi * 0.03),
                         child: Text(
-                          "${EnableBotomMenu ? Get_Lists(apiName: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm : ""}",
+                          "${EnableBotomMenu ? Get_Lists(listTag: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm : ""}",
                           style: TextStyle(
                               fontSize: SWi * 0.045,
                               fontWeight: FontWeight.w600),
@@ -116,10 +117,15 @@ class ScaffoldAll extends StatelessWidget {
                         padding: EdgeInsets.all(0),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.bookmark,
-                            color: Color(0xff8017FF),
-                            size: SWi * 0.07,
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.pushNamed(context, PageName.pageFavorite);
+                            },
+                            child: Icon(
+                              Icons.bookmark,
+                              color: Color(0xff8017FF),
+                              size: SWi * 0.07,
+                            ),
                           ),
                         ),
                       )

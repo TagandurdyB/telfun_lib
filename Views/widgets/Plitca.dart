@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/Pages/AllPage.dart';
 import '/ViewModels/ApiDebuging.dart';
@@ -23,7 +23,7 @@ class Categori extends StatelessWidget {
         Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
         // Provider.of<UsesVar>(context, listen: false).Select(0);
         int categoriId =
-            Get_Lists(apiName: ApiTags.categori).getList()[index].id;
+            Get_Lists(listTag: ApiTags.categori).getList()[index].id;
         Provider.of<UsesVar>(context,listen: false).changeCategoryIndex(index);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => API_Get(

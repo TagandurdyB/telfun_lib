@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import '/ViewModels/ShPBDebug.dart';
+import 'Cacher.dart';
 import 'Public.dart';
 import 'connect.dart';
 
@@ -56,46 +57,24 @@ class API {
     return map;
   }
 
-  Future<File> getDirectory(String fileName) async {
-    var dir = await getTemporaryDirectory();
-    print("${dir.path}/$fileName.json");
-    File file = new File("${dir.path}/$fileName.json");
-    return file;
-  }
+
 
   Future<List> getDate(String fileName) async {
     bool _isConnect = await isConnected();
     if (_isConnect) {
-        final response = await http.get(Uri.parse(URL));
-        if (response.statusCode == 200) {
-          print("Loading from API...");
-         // writeJson(fileName, response.body);
-          return json.decode(response.body);
-        }
+      final response = await http.get(Uri.parse(URL));
+      if (response.statusCode == 200) {
+        print("Loading from API...");
+        // writeJson(fileName, response.body);
+        return json.decode(response.body);
+      }
     } else {
       print('not connected');
-      File file = await getDirectory(fileName);
+      File file = await Cacher.getDirectory(fileName);
       if (file.existsSync()) {
         print("Loading from local...");
-        return readJson(fileName);
+        return Cacher.readJson(fileName);
       }
-    }
-  }
-
-  void writeJson(String fileName, String body) async{
-    File file = await getDirectory(fileName);
-   // print("+++++++++++++******$fileName Json--:$body}");
-    file.writeAsStringSync(body, flush: true, mode: FileMode.write);
-  }
-
-  readJson(String fileName) async{
-    File file = await getDirectory(fileName);
-    String jsonDate;
-    if(file.existsSync()) {
-      jsonDate = file.readAsStringSync();
-      return json.decode(jsonDate);
-    } else {
-      return null;
     }
   }
 
@@ -126,4 +105,4 @@ class API {
   }
 }
 
-Map ApiBase = {};
+

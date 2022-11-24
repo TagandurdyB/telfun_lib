@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
 import 'package:telfun/Models/DDBBase.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/Views/widgets/MyDropdown.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/ViewModels/Names.dart';
@@ -99,9 +99,9 @@ if (d==0&&imageOk){
                       hidden: "Bölümler",
                       icon: Icons.category,
                       items: List.generate(
-                          Get_Lists(apiName:ApiTags.categori).getList().length ?? 0,
+                          Get_Lists(listTag:ApiTags.categori).getList().length ?? 0,
                               (index) {
-                            var getlist = Get_Lists(apiName:ApiTags.categori).getList()[index];
+                            var getlist = Get_Lists(listTag:ApiTags.categori).getList()[index];
                             return DDBEl(value: getlist.tm, id: getlist.id,index: index);
                           }),
                     ),
@@ -113,10 +113,10 @@ if (d==0&&imageOk){
                       icon: Icons.bookmark,
                       tag: DDBName.dDBMark,
                       items: List.generate(
-                          Get_Lists(apiName:ApiTags.mark).getList().length ?? 0,
+                          Get_Lists(listTag:ApiTags.mark).getList().length ?? 0,
                               (index) {
                             var getlist =
-                            Get_Lists(apiName:ApiTags.mark).getList()[index];
+                            Get_Lists(listTag:ApiTags.mark).getList()[index];
                             return DDBEl(
                                 value: getlist.name, id: getlist.id,index: index);
                           }),

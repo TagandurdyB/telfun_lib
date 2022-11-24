@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:telfun/Models/Public.dart';
+import '/Models/Base.dart';
+import '/Models/Cacher.dart';
 import '/Models/connect.dart';
-import '../Views/LogoPage.dart';
 import '/Models/ApiService.dart';
-import 'ApiConverter.dart';
+import 'MapConverter.dart';
 import 'ShPBDebug.dart';
 
 //APILists ApiList;
@@ -16,33 +15,36 @@ class API_Get extends StatelessWidget {
   final String ApiName;
   final Map Post;
   // final int LIndex;
-  API_Get({
-    Key key,
-    @required this.URL,
-    @required this.Return,
-    @required this.ApiName,
-     this.Post
-    // @required this.LIndex,
-  }) : super(key: key);
+  API_Get(
+      {Key key,
+      @required this.URL,
+      @required this.Return,
+      @required this.ApiName,
+      this.Post
+      // @required this.LIndex,
+      })
+      : super(key: key);
 
-
-  void cacher(String fileName,List list)async{
-    bool _isConnect=await isConnected();
-    if(_isConnect)
-    API().writeJson(fileName, ApiConverter(ApiName: fileName,MapList: list).maptoMap().toString());
+  void cacher(String fileName, List list) async {
+    bool _isConnect = await isConnected();
+    if (_isConnect)
+      Cacher.writeJson(fileName,
+          MapConverter(ApiName: fileName, MapList: list).maptoMap().toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: API(URL:URL).getDate(ApiName),
+        future: API(URL: URL).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
             print("Error Fail***");
           }
           if (ss.hasData) {
-            ApiBase.addAll({ApiName: ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()});
-            cacher(ApiName,ss.data);
+            Base().add({
+              ApiName: MapConverter(ApiName: ApiName, MapList: ss.data).toElem()
+            });
+            cacher(ApiName, ss.data);
             return Return;
           } else {
             return Center(
@@ -55,7 +57,11 @@ class API_Get extends StatelessWidget {
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.yellow,Color(0xff6911B0), Colors.red])),
+                            colors: [
+                          Colors.yellow,
+                          Color(0xff6911B0),
+                          Colors.red
+                        ])),
                     child: Container(child: CircularProgressIndicator())));
           }
         });
@@ -76,7 +82,7 @@ class Get_apiStream extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final stream = API(URL:URL).getDateStream();
+    final stream = API(URL: URL).getDateStream();
     return StreamBuilder(
         stream: stream,
         builder: (ctx, ss) {
@@ -84,10 +90,11 @@ class Get_apiStream extends StatelessWidget {
             print("Error Fail***");
           }
           if (ss.hasData) {
-          //  print("++++++++++++++++++++++++++++++Snapshot:${ss.data}");
+            //  print("++++++++++++++++++++++++++++++Snapshot:${ss.data}");
             // ApiBase[ApiName]=ss.data;
-            print("+*+*+*Convert:${ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()}");
-            ApiBase.addAll({ApiName: ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()});
+            print(
+                "+*+*+*Convert:${MapConverter(ApiName: ApiName, MapList: ss.data).toElem()}");
+            //  ApiBase.addAll({ApiName: ApiConverter(ApiName: ApiName,MapList: ss.data).toElem()});
             return Return;
           } else {
             return Center(
@@ -96,11 +103,12 @@ class Get_apiStream extends StatelessWidget {
                     height: double.infinity,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: Color(0xff6911B0),
-                        /*gradient: LinearGradient(
+                      color: Color(0xff6911B0),
+                      /*gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                            colors: [Colors.yellow,Color(0xff6911B0), Colors.red])*/),
+                            colors: [Colors.yellow,Color(0xff6911B0), Colors.red])*/
+                    ),
                     child: Container(child: CircularProgressIndicator())));
           }
         });
@@ -112,7 +120,7 @@ class Get_Me {
 
   Get_Me({this.URL, this.token});
   check() async {
-    var ss = await API(URL:URL).getBerarer(token);
+    var ss = await API(URL: URL).getBerarer(token);
     print("isban: ${ss["isban"]}");
     return ss["isban"];
   }
@@ -129,7 +137,8 @@ class API_Post {
 
   //if you aren't in base then send firebase sms
   Future<bool> IsRegister() async {
-    Map<String, dynamic> map = await API(URL:URL).Register([name, phone, pass]);
+    Map<String, dynamic> map =
+        await API(URL: URL).Register([name, phone, pass]);
     return map["status"];
     print("+++*** $map");
   }
@@ -146,7 +155,8 @@ class API_Post {
 
   //if sms code true you are login
   void addRegister() async {
-    Map<String, dynamic> map = await API(URL:URL).Register([name, phone, pass]);
+    Map<String, dynamic> map =
+        await API(URL: URL).Register([name, phone, pass]);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     print("***${UserLoginDetals.getIsLogin()}");
@@ -156,7 +166,7 @@ class API_Post {
   }
 
   Future<bool> IsLogin() async {
-    Map<String, dynamic> map = await API(URL:URL).Login([phone, pass]);
+    Map<String, dynamic> map = await API(URL: URL).Login([phone, pass]);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     if (map["status"]) {
@@ -167,5 +177,3 @@ class API_Post {
     return map["status"];
   }
 }
-
-

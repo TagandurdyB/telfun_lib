@@ -13,6 +13,6 @@ class ApiTags {
   static String model = "model";
   static String detal = "eventDetal";
 }
-class JsonName{
+class JsonTags{
   static String favorite = "favorite";
 }

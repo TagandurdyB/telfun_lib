@@ -179,7 +179,7 @@ paroly ýazyň.
                   phone: "+993"+widget.phone,
                   pass: widget.pass)
               .addRegister();
-          Provider.of<UsesVar>(context,listen: false).navBarSelect(1);
+          Provider.of<UsesVar>(context,listen: false).navBarSelect(0);
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Container(
                 decoration: BoxDecoration(

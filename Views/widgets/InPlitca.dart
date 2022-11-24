@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Routes.dart';
@@ -74,7 +74,7 @@ class InCategory extends StatelessWidget {
               Positioned(
                   right: 0,
                   top: 0,
-                  child: FavoriteBtn(favorite: list[0].favorite,)),
+                  child: FavoriteBtn(favorite: list[0].favorite,index: index,)),
               Positioned(
                 right: SWi * 0.1,
                 child: Container(

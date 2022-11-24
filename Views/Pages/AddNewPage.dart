@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/DDBBase.dart';
-import '/ViewModels/ApiConverter.dart';
+import '/ViewModels/MapConverter.dart';
 import '/ViewModels/ApiElements.dart';
 import '/ViewModels/Names.dart';
 import '/ViewModels/ShPBDebug.dart';
@@ -60,10 +60,10 @@ class _AddNewPageState extends State<AddNewPage> {
                 ),
                 tag: DDBName.dDBCategory,
                 items: List.generate(
-                    Get_Lists(apiName: ApiTags.categori).getList().length ?? 0,
+                    Get_Lists(listTag: ApiTags.categori).getList().length ?? 0,
                     (index) {
                   ElemCategory getlist =
-                      Get_Lists(apiName: ApiTags.categori).getList()[index];
+                      Get_Lists(listTag: ApiTags.categori).getList()[index];
                   return DDBEl(value: getlist.tm, id: getlist.id, index: index);
                 }),
                 onChanged: (DDBEl _element) {
@@ -96,10 +96,10 @@ class _AddNewPageState extends State<AddNewPage> {
                 items: DDBBase().getDate(DDBName.dDBCategory).index == -1
                     ? [DDBEl(id: 0, index: -1, value: "")]
                     : List.generate(
-                        Get_Lists(apiName: ApiTags.mark).getList().length ?? 0,
+                        Get_Lists(listTag: ApiTags.mark).getList().length ?? 0,
                         (index) {
                         ElemMark getlist =
-                            Get_Lists(apiName: ApiTags.mark).getList()[index];
+                            Get_Lists(listTag: ApiTags.mark).getList()[index];
                         return DDBEl(
                             value: getlist.name, id: getlist.id, index: index);
                       }),
@@ -134,7 +134,7 @@ class _AddNewPageState extends State<AddNewPage> {
                     : DDBBase().getDate(DDBName.dDBMark).index == -1
                         ? [DDBEl(id: 0, index: -1, value: "")]
                         : List.generate(
-                            Get_Lists(apiName: ApiTags.model)
+                            Get_Lists(listTag: ApiTags.model)
                                     .getList()
                                     .where((element) =>
                                         element.category_id == DDCategory.id &&
@@ -143,7 +143,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                     .length ??
                                 0, (index) {
                             ElemModel getlist =
-                                Get_Lists(apiName: ApiTags.model)
+                                Get_Lists(listTag: ApiTags.model)
                                     .getList()
                                     .where((element) =>
                                         element.category_id == DDCategory.id &&
@@ -183,13 +183,13 @@ class _AddNewPageState extends State<AddNewPage> {
                 items: DDBBase().getDate(DDBName.dDBModel).index == -1
                     ? [DDBEl(id: 0, index: -1, value: "")]
                     : List.generate(
-                        Get_Lists(apiName: ApiTags.model)
+                        Get_Lists(listTag: ApiTags.model)
                                 .getList()[
                                     DDBBase().getDate(DDBName.dDBModel).index]
                                 .colors
                                 .length ??
                             0, (index) {
-                        var getlist = Get_Lists(apiName: ApiTags.model)
+                        var getlist = Get_Lists(listTag: ApiTags.model)
                             .getList()[
                                 DDBBase().getDate(DDBName.dDBModel).index]
                             .colors[index];

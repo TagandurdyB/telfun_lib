@@ -15,6 +15,9 @@ void callTel(String num) async {
 }
 
 class LoginPage extends StatelessWidget {
+  final int index;
+
+  LoginPage({this.index=0});
   //const LoginPage({Key? key}) : super(key: key);
   String _empetySMS = "Doly we dogry ýazyň!";
 
@@ -53,7 +56,7 @@ class LoginPage extends StatelessWidget {
         ).IsLogin();
         print("***canLogin = $canLogin");
         if (canLogin) {
-          Provider.of<UsesVar>(context, listen: false).navBarSelect(1);
+          Provider.of<UsesVar>(context, listen: false).navBarSelect(index);
           //Provider.of<UsesVar>(context,listen: false).changeLogin(true);
           UserLoginDetals.saveLogin(true);
           Navigator.popUntil(context, ModalRoute.withName(PageName.pageMain));

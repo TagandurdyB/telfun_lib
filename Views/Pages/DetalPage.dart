@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
@@ -34,7 +34,7 @@ class DetalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List list = Get_Lists(apiName: ApiTags.detal).getList();
+    List list = Get_Lists(listTag: ApiTags.detal).getList();
     // print("++++++++++IMAGES:${list[0].images}");
     return ScaffoldAll(
       phone: list[0].phone,
@@ -102,7 +102,7 @@ Positioned(
       shape: SWi*0.1,
       color: Colors.white,
       boxShadow: [BoxShadow(offset: Offset(0,2.5),color: Color(0xffD7BFFC),blurRadius: 2.5)],
-      child:  Icon(Icons.bookmark,size: SWi*0.09,color: Color(0xff6A00FF)),),
+      child:  Icon(Icons.bookmark_border,size: SWi*0.09,color: Color(0xff6A00FF)),),
     )
             ]),
 
@@ -242,7 +242,7 @@ Positioned(
                       child: Text("Bölümi"),
                     ),
                     Text(
-                        "${Get_Lists(apiName: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm}"),
+                        "${Get_Lists(listTag: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm}"),
                   ]),
                   TableRow(children: [
                     Padding(

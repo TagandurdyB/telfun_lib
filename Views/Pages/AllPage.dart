@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:telfun/ViewModels/ApiConverter.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 import '/Views/widgets/MarkScrol.dart';
@@ -17,7 +17,7 @@ class AllPage extends StatelessWidget {
   AllPage({this.category_id});
   @override
   Widget build(BuildContext context) {
-    List list = Get_Lists(apiName: ApiTags.events).getList();
+    List list = Get_Lists(listTag: ApiTags.events).getList();
     return ScaffoldAll(
       EnableBotomMenu: true,
       body: ListView(
@@ -67,7 +67,7 @@ class AllPage extends StatelessWidget {
           ]),
 
           Visibility(
-            visible: Get_Lists(apiName: ApiTags.mark).getList().length > 0,
+            visible: Get_Lists(listTag: ApiTags.mark).getList().length > 0,
             child: MarkScrol(),
           ),
           //
