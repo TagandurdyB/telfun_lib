@@ -89,7 +89,7 @@ class _MyVarificationState extends State<MyVarification> {
               //  color: Colors.red,
               child: FittedBox(
                 fit: BoxFit.contain,
-                child: Text("Dorulama"),
+                child: Text("Tassyklama"),
               ),
             ),
           ),
@@ -111,7 +111,7 @@ paroly ýazyň.
               ),
             ),
           ),
-          SizedBox(height: SHe * 0.03),
+          SizedBox(height: SHe * 0.05),
           EnterOTP(),
           /* Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,7 +122,7 @@ paroly ýazyň.
           ),*/
           SizedBox(height: SHe * 0.02),
           Card(
-            color: Color(0xff81A5FB),
+            color: Color(0xff5807B6),
             child: ListTile(
               onTap: () {
                 String _code = "";
@@ -185,7 +185,7 @@ paroly ýazyň.
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadiusDirectional.circular(10),
-                  color: Colors.blue[700],
+                  color: Color(0xff5807B6),
                 ),
                 height: 50,
                 alignment: Alignment.center,

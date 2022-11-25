@@ -129,7 +129,7 @@ class LoginPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
-                  color: Colors.blue,
+                  color: Color(0xff5807B6),
                   child: Builder(
                     builder: (context) => ListTile(
                       onTap: () {
@@ -158,7 +158,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, PageName.pageSignUp);
                         },
-                        child: Text("Hasap döret")),
+                        child: Text("Hasap döret",style: TextStyle(color: Color(0xff5807B6)),)),
                   ],
                 ),
               )
@@ -180,7 +180,7 @@ class MyInput extends StatefulWidget {
       {this.index = 0,
       this.hidden = "",
       this.type = Type.text,
-      this.onControl});
+      this.onControl, bool shape});
   @override
   _MyInputState createState() => _MyInputState();
 }

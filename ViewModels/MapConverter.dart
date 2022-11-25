@@ -312,21 +312,20 @@ class localConverter {
 /////////////////////////////////////////////////////////////
   ElemEvents mapToElemEvents(Map _map) {
     try {
-      print("+++++++++++*+*+*+*${_map["is_new"]}");
-      if (!_map["is_new"])
+      if (_map["is_new"] == null)
         return ElemEvents(
           data: DateTime.parse(_map["updated_at"]),
           id: _map["id"],
           name: _map["name"],
           //about: _map["about"],
           //  images: _map["image"],
-          mark: _map["mark"]["name"],
-          phone: _map["user"]["phone"],
+          // mark: _map["mark"]["name"],
+          // phone: _map["user"]["phone"],
           place: _map["place"],
           price: int.parse(_map["price"]),
           public_image: _map["public_image"],
         );
-      else
+      else if (_map["is_new"])
         return ElemEvents(
           is_new: true,
           data: DateTime.parse(_map["updated_at"]),
@@ -339,6 +338,20 @@ class localConverter {
           place: _map["place"],
           price: int.parse(_map["price"]),
           public_image: _map["product"]["public_image"],
+        );
+      else
+        return ElemEvents(
+          is_new: false,
+          data: DateTime.parse(_map["updated_at"]),
+          id: _map["id"],
+          name: _map["name"],
+          //about: _map["about"],
+          //  images: _map["image"],
+          // mark: _map["mark"]["name"],
+          // phone: _map["user"]["phone"],
+          place: _map["place"],
+          price: int.parse(_map["price"]),
+          public_image: _map["public_image"],
         );
     } catch (_e) {
       print("+Convet_ERROR+: Be error from mapToElemEvents!!! :$_e");

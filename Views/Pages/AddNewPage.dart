@@ -20,16 +20,23 @@ class AddNewPage extends StatefulWidget {
 }
 
 class _AddNewPageState extends State<AddNewPage> {
-  int modelIndex;
-  DDBEl DDColor = DDBEl(index: -1),
-      DDCategory = DDBEl(index:-1,value: "Bölümler"),
-      DDMark = DDBEl(index:-1,value: "Marka", id: 0),
-      DDModel = DDBEl(index:-1,value: "Model"),
-      DDPlace = DDBEl(index:-1,value: "Ýerleşýän ýeri");
+  DDBEl DDColor, DDCategory, DDMark, DDModel, DDPlace;
   final TextStyle enable =
           TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
       disable = TextStyle(color: Colors.grey);
-  //List models=Get_Lists().getList(Get_Lists.model).where((element) => element["mark_id"]==DDMark.id);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DDColor = DDBEl(index: -1);
+    DDCategory = DDBEl(index: -1, value: "Bölümler");
+    DDMark = DDBEl(index: -1, value: "Marka", id: 0);
+    DDModel = DDBEl(index: -1, value: "Model");
+    DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
+    setState(() {
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -334,11 +341,11 @@ class _AddNewPageState extends State<AddNewPage> {
 
   void canOpenAddBtn(BuildContext context) {
     int d = 0;
-    if(DDPlace.index==-1) d++;
-    if(DDCategory.index==-1) d++;
-    if(DDColor.index==-1) d++;
-    if(DDMark.index==-1) d++;
-    if(DDModel.index==-1) d++;
+    if (DDPlace.index == -1) d++;
+    if (DDCategory.index == -1) d++;
+    if (DDColor.index == -1) d++;
+    if (DDMark.index == -1) d++;
+    if (DDModel.index == -1) d++;
     if (controls[1].text == "") d++;
     if (d == 0) {
       Provider.of<UsesVar>(context, listen: false).changeCanAdd(true);
@@ -387,8 +394,8 @@ class _AddNewPageState extends State<AddNewPage> {
               child: MaterialButton(
                 onPressed: () async {
                   if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
-                      _isUpload = true;
-                      _about = true;
+                    _isUpload = true;
+                    _about = true;
                     Map body = {
                       /*   "category_id": DDBBase().getDate(DDBName.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
@@ -398,8 +405,7 @@ class _AddNewPageState extends State<AddNewPage> {
                       "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,*/
                       "user_id": UserProperties.getProperty("id"),
-                      "place":
-                          DDBBase().getDate(DDBName.dDBLocation).value,
+                      "place": DDBBase().getDate(DDBName.dDBLocation).value,
                       "price": controls[1].text,
                       "color_id":
                           DDBBase().getDate(DDBName.dDBColor).id.toString(),
@@ -412,8 +418,8 @@ class _AddNewPageState extends State<AddNewPage> {
                       controls.forEach((element) {
                         element.text = "";
                       });
-                        _isUpload = false;
-                        _about = false;
+                      _isUpload = false;
+                      _about = false;
                       MySnack(
                               textColor: Colors.white,
                               message: "Bildiriş ugradyldy",
@@ -438,7 +444,7 @@ class _AddNewPageState extends State<AddNewPage> {
                               message: "Maglumatlary doly giriziň!")
                           .pushSnack(context);
                     }
-                      setState(() {});
+                    setState(() {});
                   } else {}
                 },
                 height: 50,

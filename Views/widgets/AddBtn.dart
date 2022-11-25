@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/DDBBase.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ShPBDebug.dart';
@@ -28,32 +29,7 @@ class _AddBtnState extends State<AddBtn> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Visibility(
-          visible: _isUpload,
-          child: Column(
-            children: [
-              CircularProgressIndicator(color: Colors.grey[400]),
-              Container(
-                  padding: EdgeInsets.all(8),
-                  child: Text(
-                    "Bildirişiňiz goşulýança garaşyň.",
-                    style: TextStyle(fontSize: 20, color: Colors.blue[900]),
-                    textAlign: TextAlign.center,
-                  )),
-            ],
-          ),
-        ),
-        Visibility(
-          visible: _about,
-          child: Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                "Bildirişiňizi goşanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
-                    "Şol sebäpden garaşmagyňyzy haýyş edýäris. ",
-                style: TextStyle(fontSize: 18, color: Colors.blue),
-                textAlign: TextAlign.center,
-              )),
-        ),
+
         Padding(
           padding:  EdgeInsets.symmetric(horizontal: SWi*0.2),
           child: Builder(
@@ -66,6 +42,45 @@ class _AddBtnState extends State<AddBtn> {
                       _isUpload = true;
                       _about = true;
                     });
+                    PopUppWidget(
+                       /* actionsTeam: [
+                          ActionsTeam(text: "",func: (){})
+                        ],*/
+                        isPopEnable: false,
+                        title: "",
+                        content: Container(
+                          width: 200,
+                          // color: Colors.red,
+                          child: Column(children: [
+                            Visibility(
+                              visible: _isUpload,
+                              child: Column(
+                                children: [
+                                  CircularProgressIndicator(color: Colors.grey[400]),
+                                  Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: Text(
+                                        "Bildirişiňiz goşulýança garaşyň.",
+                                        style: TextStyle(fontSize: 20, color: Colors.blue[900]),
+                                        textAlign: TextAlign.center,
+                                      )),
+                                ],
+                              ),
+                            ),
+                            Visibility(
+                              visible: _about,
+                              child: Container(
+                                  padding: EdgeInsets.all(8),
+                                  child: Text(
+                                    "Bildirişiňizi goşanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
+                                        "Şol sebäpden garaşmagyňyzy haýyş edýäris. ",
+                                    style: TextStyle(fontSize: 18, color: Colors.blue),
+                                    textAlign: TextAlign.center,
+                                  )),
+                            ),
+                          ],),
+                        )
+                    ).popup(context);
                     Map<String, String> body = {
                       "category_id": DDBBase().getDate(DDBName.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
@@ -97,12 +112,14 @@ class _AddBtnState extends State<AddBtn> {
                               message: "Tassyklanmagyna garaşyň!",
                               textBgColor: Colors.orange[700])
                               .pushSnack(context));
+                      Navigator.pop(context);
                       Provider.of<UsesVar>(context, listen: false)
                           .navBarSelect(0);
                     } else {
                       setState(() {
                         _isUpload = false;
                       });
+                      Navigator.pop(context);
                       MySnack(
                           textColor: Colors.white,
                           textBgColor: Colors.red,

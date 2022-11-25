@@ -33,7 +33,7 @@ class AddPage extends StatelessWidget {
                             .Select(0);
                       },
                       child: Text(
-                        "Täze",
+                        "Ulanylan",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     )),
@@ -44,9 +44,10 @@ class AddPage extends StatelessWidget {
                       onPressed: () {
                         Provider.of<UsesVar>(context, listen: false)
                             .Select(1);
+
                       },
                       child: Text(
-                        "Ulanylan",
+                        "Täze",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     )),
@@ -74,8 +75,8 @@ class AddPage extends StatelessWidget {
           ),
           Expanded(
             child: TabViewer(childs: [
-              AddNewPage(),
               AddOldPage(),
+              AddNewPage(),
             ]),
           )
           /* RangeSlider(

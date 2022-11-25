@@ -88,7 +88,7 @@ class MyDrawer extends StatelessWidget {
                       Navigator.pushNamed(
                           context, PageName.pageFavorite);
                     },
-                    leading: Icon(Icons.bookmark),
+                    leading: Icon(Icons.bookmark,color: Color(0xff7262DF)),
                     title: Text("Halanlarym"),
                   ),
                   Visibility(
@@ -98,10 +98,10 @@ class MyDrawer extends StatelessWidget {
                       Provider.of<UsesVar>(context,listen: false).navBarSelect(2);
                       Navigator.popUntil(context, ModalRoute.withName(PageName.pageMain));
                     },
-                    leading: Icon(Icons.account_box_sharp),
+                    leading: Icon(Icons.account_box_sharp,color: Color(0xff7262DF)),
                     title: Text("Şahsy sahypa"),
                   )),
-                  Visibility(
+                /*  Visibility(
                     visible: UserLoginDetals.getIsLogin(),
                     child: DrawBarBtn(
                       onTap: (context) {
@@ -111,7 +111,7 @@ class MyDrawer extends StatelessWidget {
                       leading: Icon(Icons.desktop_mac_outlined),
                       title: Text("Demo page"),
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),

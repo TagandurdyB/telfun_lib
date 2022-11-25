@@ -23,10 +23,15 @@ void main() async {
   runApp(ChangeNotifierProvider<UsesVar>(
       create: (BuildContext context) => UsesVar(), child: MyApp()));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.white,
       statusBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark));
+  ),
+  );
+ // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+      //systemNavigatisonBarIconBrightness: Brightness.dark));
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 }
 

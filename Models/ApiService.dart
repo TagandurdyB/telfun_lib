@@ -73,7 +73,9 @@ class API {
       File file = await Cacher.getDirectory(fileName);
       if (file.existsSync()) {
         print("Loading from local...");
+        print("cach map:${await Cacher.readJson(fileName)}");
         return Cacher.readJson(fileName);
+
       }
     }
   }

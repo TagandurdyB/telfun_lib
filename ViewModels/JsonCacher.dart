@@ -73,7 +73,7 @@ class JsonListCacher {
     print("I am hear 4");
     if (file.existsSync()) {
       print("I am hear 5");
-      List _list = Cacher.readJson(jsonName);
+      List _list = await Cacher.readJson(jsonName);
       print("readJson:+++++:$_list");
       _result=_list;
     }else{

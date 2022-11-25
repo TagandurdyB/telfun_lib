@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
+import 'package:telfun/Views/widgets/ReadyInput.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
-
-import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({Key key}) : super(key: key);
@@ -202,8 +203,34 @@ class MyProfil extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
                   leading: ImgBtn(
-                    /*  onTap: () =>
-                          Navigator.pushNamed(context, PageName.pageFavorite),*/
+                      onTap: () =>
+                          PopUppWidget(
+                              title: "Ad",
+                              content: MyInput(
+                                shape: true,
+                                index: 3,
+                                borderRad: 20,
+                                hidden: "Adyňyzy ýazyň...",
+                                label: "Täze ad",
+                                /* onControl: (val, index) {
+                          },*/
+                              ),
+                              actionsTeam: [
+                                ActionsTeam(func: () {}, text: "Ýatyr"),
+                                ActionsTeam(
+                                    func: () {
+                                      ///////change name from api
+                                      ///////
+                                      ShPUser(
+                                          id: int.parse(UserProperties.getProperty("id")),
+                                          name: controls[3].text,
+                                          phone: UserProperties.getProperty("phone"),
+                                          isban: int.parse(UserProperties.getProperty("isban")),
+                                          token: UserProperties.getProperty("token")).sava();
+                                      Navigator.pushNamedAndRemoveUntil(context,PageName.pageMain, (route) => route.isFirst);
+                                    }, text: "Üýtget",
+                                    isPopEnable: false),
+                              ]).popup(context),
                       width: SWi * 0.11,
                       height: SWi * 0.11,
                       shape: SWi * 0.02,
@@ -220,15 +247,40 @@ class MyProfil extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
                   leading: ImgBtn(
-                    /*  onTap: () =>
-                          Navigator.pushNamed(context, PageName.pageFavorite),*/
+                      onTap: () =>
+                        PopUppWidget(
+                            title: "Parol",
+                            content: MyInput(
+                              shape: true,
+                              index: 4,
+                              borderRad: 20,
+                              hidden: "Paroly ýazyň...",
+                              label: "Täze Parol",
+                              /* onControl: (val, index) {
+                          },*/
+                            ),
+                            actionsTeam: [
+                              ActionsTeam(func: () {}, text: "Ýatyr"),
+                              ActionsTeam(
+                                  func: () {
+                                    ///////change pass from api
+                                    ///////
+                                    Navigator.pushNamedAndRemoveUntil(context,PageName.pageMain, (route) => route.isFirst);
+                                  }, text: "Üýtget",
+                                  isPopEnable: false),
+                            ]).popup(context),
+
                       width: SWi * 0.11,
                       height: SWi * 0.11,
                       shape: SWi * 0.02,
                       color: Color(0xff5408BF),
                       child: Padding(
-                        padding:  EdgeInsets.only(top: SWi*0.02),
-                        child: Text("***",style: TextStyle(color: Colors.white,fontSize: SWi*0.05),),
+                        padding: EdgeInsets.only(top: SWi * 0.02),
+                        child: Text(
+                          "***",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: SWi * 0.05),
+                        ),
                       )),
                   title: Text(
                     "Paroly üýtgetmek",

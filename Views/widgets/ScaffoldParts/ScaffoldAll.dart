@@ -63,6 +63,7 @@ class ScaffoldAll extends StatelessWidget {
      // floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
      // floatingActionButton: IsFloatBtn ? MyFloatingActionButton(phone: phone) : null,
       bottomNavigationBar: MyBottomNavBar(
+        phone: phone,
         IsFloatBtn:IsFloatBtn,
         IsAdd: IsAdd,
         IsUser: IsUser,

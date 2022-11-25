@@ -11,8 +11,9 @@ import 'MyFloatingActionButton.dart';
 
 class MyBottomNavBar extends StatefulWidget {
   final bool IsAdd, IsUser, IsMain, IsFloatBtn;
+  final String phone;
   const MyBottomNavBar(
-      {Key key, this.IsAdd, this.IsUser, this.IsMain, this.IsFloatBtn})
+      {Key key, this.IsAdd, this.IsUser, this.IsMain, this.IsFloatBtn, this.phone})
       : super(key: key);
 
   @override
@@ -28,7 +29,9 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
       mainAxisSize: MainAxisSize.min,
       children: [
         widget.IsFloatBtn
-            ? MyFloatingActionButton()
+            ? MyFloatingActionButton(
+          phone: widget.phone,
+        )
             : SizedBox(),
         Container(
           //padding: EdgeInsets.all(8),
@@ -56,6 +59,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                   if (UserLoginDetals.getIsLogin() && index == 1) {
                     Provider.of<UsesVar>(context, listen: false)
                         .navBarSelect(1);
+                    Provider.of<UsesVar>(context,listen: false).Select(0);
                     if (!widget.IsMain)
                       Navigator.popUntil(
                           context, ModalRoute.withName(PageName.pageMain));
@@ -66,9 +70,11 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                   } else if (widget.IsMain) {
                     Provider.of<UsesVar>(context, listen: false)
                         .navBarSelect(index);
+                    Provider.of<UsesVar>(context,listen: false).Select(0);
                   } else {
                     Provider.of<UsesVar>(context, listen: false)
                         .navBarSelect(index);
+                    Provider.of<UsesVar>(context,listen: false).Select(0);
                     Navigator.popUntil(context, (rout) => rout.isFirst);
                   }
                 });

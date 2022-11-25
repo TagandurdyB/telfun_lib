@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '/Models/Base.dart';
 import '/Models/Cacher.dart';
@@ -27,9 +29,13 @@ class API_Get extends StatelessWidget {
 
   void cacher(String fileName, List list) async {
     bool _isConnect = await isConnected();
-    if (_isConnect)
+    var _data = jsonDecode(list.toString());
+
+    print("casdkasmdlks :${_data}");
+    if (_isConnect){
       Cacher.writeJson(fileName,
-          MapConverter(ApiName: fileName, MapList: list).maptoMap().toString());
+          MapConverter(ApiName: fileName, MapList: list).maptoMap());
+    }
   }
 
   @override

@@ -16,7 +16,7 @@ class SignUpPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Içeri gir")),
+              child: Text("Içeri gir",style: TextStyle(color: Color(0xff5807B6)),)),
         ],
         brightness: Brightness.light,
         backgroundColor: Colors.white,
@@ -144,7 +144,7 @@ class _SignUpFormState extends State<SignUpForm> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
-            color: Colors.blue,
+            color: Color(0xff5807B6),
             child: Builder(
               builder: (context) => ListTile(
                 onTap: CreateFunc,
@@ -171,7 +171,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Içeri gir")),
+                  child: Text("Içeri gir",style: TextStyle(color: Color(0xff5807B6)),)),
             ],
           ),
         )
