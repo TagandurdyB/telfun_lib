@@ -5,6 +5,8 @@ class ImgBtn extends StatelessWidget {
   final String bgImg;
   final Color color;
   final onTap;
+  final double borderWidth;
+  final Color borderColor;
   final Widget child;
   final bool ISsCircle;
   final List<Color> colors;
@@ -20,7 +22,9 @@ class ImgBtn extends StatelessWidget {
       this.bgImg,
       this.shape = 0,
       this.ISsCircle = false,
-      this.boxShadow});
+      this.boxShadow,
+      this.borderWidth,
+      this.borderColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +74,11 @@ class ImgBtn extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadiusDirectional.circular(shape),
+              border: borderWidth == null
+                  ? null
+                  : Border.all(width: borderWidth, color: borderColor),
+              borderRadius: BorderRadius.all(Radius.circular(shape) //
+                  ),
               color: color,
               gradient: LinearGradient(
                 begin: Alignment.topLeft,

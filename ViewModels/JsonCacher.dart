@@ -7,14 +7,14 @@ class JsonListCacher {
   JsonListCacher({this.jsonName});
 
   void save(List list) {
-    Cacher.writeJson(jsonName, list.toString());
+    Cacher.writeJson(jsonName, jsonEncode(list));
   }
 
   Future<bool> addSaved(Map _map) async {
     print("FavoriteBtn add:$_map");
     bool _added;
     print("i em hear 1 +++");
-    List<Map> _list = await load();
+    List _list = await load();
     print("i em hear 2 +++");
     if (_list.isEmpty) {
       print("isEmpety +++");
@@ -41,9 +41,8 @@ class JsonListCacher {
   }
 
   Future<bool> removeSaved(Map _map) async {
-    print("FavoriteBtn remove:$_map");
     bool _removed;
-    List<Map> _list = await load();
+    List _list = await load();
     if (_list.isEmpty) {
       _removed = false;
     } else {
@@ -66,19 +65,15 @@ class JsonListCacher {
     return _removed;
   }
 
-  Future<List<Map>> load() async {
-    print("I am hear 3");
+  Future<List> load() async {
     File file = await Cacher.getDirectory(jsonName);
-    List<Map> _result;
-    print("I am hear 4");
+    List _result;
     if (file.existsSync()) {
-      print("I am hear 5");
       List _list = await Cacher.readJson(jsonName);
-      print("readJson:+++++:$_list");
+      print("Loading Finished Sucsses!");
       _result=_list;
     }else{
-      print("I am hear 6");
-      print("seve+++:");
+      print("Saved favorite Json!");
       save([]);
       _result=[];
     }

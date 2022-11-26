@@ -29,12 +29,10 @@ class API_Get extends StatelessWidget {
 
   void cacher(String fileName, List list) async {
     bool _isConnect = await isConnected();
-    var _data = jsonDecode(list.toString());
-
-    print("casdkasmdlks :${_data}");
-    if (_isConnect){
-      Cacher.writeJson(fileName,
-          MapConverter(ApiName: fileName, MapList: list).maptoMap());
+    if (_isConnect) {
+      String _body = jsonEncode(
+          MapConverter(ApiName: fileName, MapList: (list)).maptoMap());
+      Cacher.writeJson(fileName, _body);
     }
   }
 
@@ -53,24 +51,24 @@ class API_Get extends StatelessWidget {
             cacher(ApiName, ss.data);
             return Return;
           } else {
-            return Center(
-                child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        //color: Colors.red,
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                          Colors.yellow,
-                          Color(0xff6911B0),
-                          Colors.red
-                        ])),
-                    child: Container(child: CircularProgressIndicator())));
+            return loadingApi();
           }
         });
+  }
+
+  Widget loadingApi() {
+    return Center(
+        child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                //color: Colors.red,
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.yellow, Color(0xff6911B0), Colors.red])),
+            child: Container(child: CircularProgressIndicator())));
   }
 }
 

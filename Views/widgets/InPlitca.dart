@@ -28,10 +28,15 @@ class InCategory extends StatelessWidget {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-          // print("+++++Event_ID:${list[index].id}");
+          print("In Category ID: ${list[index].id}");
+          print("In Category is_new: ${list[index].is_new}");
           Navigator.push(
             context,
-            MaterialPageRoute(
+              list[index].is_new? MaterialPageRoute(
+                  builder: (context) => API_Get(
+                      URL: "$IP/api/new/${list[index].id}",
+                      ApiName: ApiTags.detal,
+                      Return: DetalPage())): MaterialPageRoute(
                 builder: (context) => API_Get(
                     URL: "$IP/api/event/${list[index].id}",
                     ApiName: ApiTags.detal,

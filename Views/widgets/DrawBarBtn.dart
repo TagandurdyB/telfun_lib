@@ -3,6 +3,7 @@ import '/Models/Public.dart';
 
 class DrawBarBtn extends StatelessWidget {
   Widget leading, title, trailing;
+  double titleLeft;
   double width;
   Color color;
   Function onTap;
@@ -10,6 +11,7 @@ class DrawBarBtn extends StatelessWidget {
       {@required this.leading,
       @required this.title,
       @required this.trailing,
+        this.titleLeft,
       this.onTap,
       this.color = Colors.transparent,
       this.width = double.infinity});
@@ -37,7 +39,9 @@ class DrawBarBtn extends StatelessWidget {
               height: SWi * 0.17,
             ),
             Positioned(child: leading, left: 2),
-            Positioned(child: title),
+            Positioned(
+                left: titleLeft,
+                child: title),
             Positioned(child: trailing, right: 2),
           ],
         ),

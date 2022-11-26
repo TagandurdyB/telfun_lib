@@ -42,12 +42,6 @@ class _FavoriteBtnState extends State<FavoriteBtn> {
       width: SWi * 0.1,
       height: SWi * 0.1,
       color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-            color: widget.favorite ? Color(0xff8016FE) : Colors.white,
-            offset: Offset(0, 3),
-            blurRadius: 5)
-      ],
       child: Icon(
         widget.favorite ? Icons.bookmark : Icons.bookmark_border,
         color: Color(0xff6C02FF),

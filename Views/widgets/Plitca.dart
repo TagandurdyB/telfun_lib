@@ -25,6 +25,7 @@ class Categori extends StatelessWidget {
         int categoriId =
             Get_Lists(listTag: ApiTags.categori).getList()[index].id;
         Provider.of<UsesVar>(context,listen: false).changeCategoryIndex(index);
+        print("CategoryID:$categoriId");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => API_Get(
                 URL: "$IP/api/category/$categoriId",

@@ -1,3 +1,5 @@
+import '/Views/Pages/ShopPage.dart';
+import '/Views/Pages/AboutPage.dart';
 import '/Views/Pages/FavoritePage.dart';
 import '/Views/Pages/ModelPage.dart';
 import '/Views/Pages/DemoPage.dart';
@@ -22,6 +24,8 @@ class PageName {
   static String pageDemo = "/DetalPage";
   static String pageMark = "/MarkPage";
   static String pageFavorite = "/FavoritePage";
+  static String pageAbout = "/AboutPage";
+  static String pageShop = "/ShopPage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -35,5 +39,7 @@ class PageName {
     pageDemo: (context) => DemoPage(),
     pageMark: (context) => ModelPage(),
     pageFavorite: (context) => FavoritePage(),
+    pageAbout: (context) => AboutPage(),
+    pageShop: (context) => ShopPage()
   };
 }

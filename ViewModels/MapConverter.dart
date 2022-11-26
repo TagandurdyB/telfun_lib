@@ -295,7 +295,7 @@ class localConverter {
   Map<String, dynamic> mapToMapEventDetal(Map _map) {
     try {
       return {
-        "data": DateTime.parse(_map["updated_at"]),
+        "data": _map["updated_at"],
         "images": _map["image"],
         "name": _map["name"],
         "price": int.parse(_map["price"]),
@@ -312,7 +312,7 @@ class localConverter {
 /////////////////////////////////////////////////////////////
   ElemEvents mapToElemEvents(Map _map) {
     try {
-      if (_map["is_new"] == null)
+    /*  if (_map["is_new"] == null)
         return ElemEvents(
           data: DateTime.parse(_map["updated_at"]),
           id: _map["id"],
@@ -325,11 +325,11 @@ class localConverter {
           price: int.parse(_map["price"]),
           public_image: _map["public_image"],
         );
-      else if (_map["is_new"])
+      else */if (_map["is_new"])
         return ElemEvents(
           is_new: true,
           data: DateTime.parse(_map["updated_at"]),
-          id: _map["products_id"],
+          id: _map["id"],
           name: _map["product"]["name"],
           //about: _map["about"],
           //  images: _map["image"],
@@ -341,7 +341,6 @@ class localConverter {
         );
       else
         return ElemEvents(
-          is_new: false,
           data: DateTime.parse(_map["updated_at"]),
           id: _map["id"],
           name: _map["name"],
@@ -361,23 +360,10 @@ class localConverter {
   Map elemEventsToMap(ElemEvents _elem) {
     // return {"image": _elem.image};
     try {
-      if (!_elem.is_new)
-        return {
-          "data": _elem.data,
-          "id": _elem.id,
-          "name": _elem.name,
-          // "about": _elem.about,
-          //  "images": _elem.images,
-          "mark": _elem.mark,
-          "phone": _elem.phone,
-          "place": _elem.place,
-          "price": _elem.price,
-          "public_image": _elem.public_image,
-        };
-      else
+      if (_elem.is_new)
         return {
           "is_new": true,
-          "data": _elem.data,
+          "data": _elem.data.toString(),
           "id": _elem.id,
           "name": _elem.name,
           // "about": _elem.about,
@@ -388,6 +374,18 @@ class localConverter {
           "price": _elem.price,
           "public_image": _elem.public_image,
         };
+      else return {
+        "data": _elem.data.toString(),
+        "id": _elem.id,
+        "name": _elem.name,
+        // "about": _elem.about,
+        //  "images": _elem.images,
+        "mark": _elem.mark,
+        "phone": _elem.phone,
+        "place": _elem.place,
+        "price": _elem.price,
+        "public_image": _elem.public_image,
+      };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from elemEventsToMap!!! :$_e");
     }
@@ -396,32 +394,45 @@ class localConverter {
   Map mapToMapEvents(Map _map) {
     // return {"image": _elem.image};
     try {
-      if (!_map["is_new"])
+      /*if (_map["is_new"] == null)
         return {
           "data": DateTime.parse(_map["updated_at"]),
           "id": _map["id"],
           "name": _map["name"],
-          //"about": _map["about"],
-          //  "images": _map["image"],
-          "mark": _map["mark"]["name"],
-          "phone": _map["user"]["phone"],
+          //about: _map["about"],
+          //  images: _map["image"],
+          // mark: _map["mark"]["name"],
+          // phone: _map["user"]["phone"],
           "place": _map["place"],
           "price": int.parse(_map["price"]),
           "public_image": _map["public_image"],
         };
-      else
+      else*/ if (_map["is_new"])
         return {
           "is_new": true,
-          "data": DateTime.parse(_map["updated_at"]),
+          "data": _map["updated_at"],
           "id": _map["products_id"],
           "name": _map["product"]["name"],
-          //"about": _map["about"],
-          //  "images": _map["image"],
-          // "mark": _map["mark"]["name"],
-          // "phone": _map["user"]["phone"],
+          //about: _map["about"],
+          //  images: _map["image"],
+          // mark: _map["mark"]["name"],
+          // phone: _map["user"]["phone"],
           "place": _map["place"],
           "price": int.parse(_map["price"]),
           "public_image": _map["product"]["public_image"],
+        };
+      else
+        return {
+          "data": _map["updated_at"],
+          "id": _map["id"],
+          "name": _map["name"],
+          //about: _map["about"],
+          //  images: _map["image"],
+          // mark: _map["mark"]["name"],
+          // phone: _map["user"]["phone"],
+          "place": _map["place"],
+          "price": int.parse(_map["price"]),
+          "public_image": _map["public_image"],
         };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from mapToMapEvents!!! :$_e");
