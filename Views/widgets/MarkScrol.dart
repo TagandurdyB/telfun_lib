@@ -9,6 +9,8 @@ import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 class MarkScrol extends StatefulWidget {
+  final Function onTab;
+  MarkScrol({this.onTab});
   @override
   State<MarkScrol> createState() => _MarkScrolState();
 }
@@ -56,6 +58,8 @@ class _MarkScrolState extends State<MarkScrol> {
                                 .changeMark(
                                 Get_Lists(listTag:ApiTags.mark).getList()[index].id,
                                     index);
+                            if(widget.onTab!=null)
+                            widget.onTab();
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(SWi * 0.01),

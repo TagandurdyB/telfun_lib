@@ -39,6 +39,8 @@ class MapConverter {
         list.add(localConverter().mapToElemEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToElemCategory(_val));
+      } else if (_name == JsonTags.favorite) {
+        list.add(localConverter().mapToFavorite(_val));
       }
     }
     return list;
@@ -60,6 +62,8 @@ class MapConverter {
         list.add(localConverter().elemMarkToMap(ElemList[i]));
       } else if (_name == ApiTags.model) {
         list.add(localConverter().elemModelToMap(ElemList[i]));
+      }else if (_name == JsonTags.favorite) {
+        list.add(localConverter().favoriteToMap(ElemList[i]));
       }
     }
     return list;
@@ -312,7 +316,7 @@ class localConverter {
 /////////////////////////////////////////////////////////////
   ElemEvents mapToElemEvents(Map _map) {
     try {
-    /*  if (_map["is_new"] == null)
+      /*  if (_map["is_new"] == null)
         return ElemEvents(
           data: DateTime.parse(_map["updated_at"]),
           id: _map["id"],
@@ -325,7 +329,8 @@ class localConverter {
           price: int.parse(_map["price"]),
           public_image: _map["public_image"],
         );
-      else */if (_map["is_new"])
+      else */
+      if (_map["is_new"])
         return ElemEvents(
           is_new: true,
           data: DateTime.parse(_map["updated_at"]),
@@ -374,18 +379,19 @@ class localConverter {
           "price": _elem.price,
           "public_image": _elem.public_image,
         };
-      else return {
-        "data": _elem.data.toString(),
-        "id": _elem.id,
-        "name": _elem.name,
-        // "about": _elem.about,
-        //  "images": _elem.images,
-        "mark": _elem.mark,
-        "phone": _elem.phone,
-        "place": _elem.place,
-        "price": _elem.price,
-        "public_image": _elem.public_image,
-      };
+      else
+        return {
+          "data": _elem.data.toString(),
+          "id": _elem.id,
+          "name": _elem.name,
+          // "about": _elem.about,
+          //  "images": _elem.images,
+          "mark": _elem.mark,
+          "phone": _elem.phone,
+          "place": _elem.place,
+          "price": _elem.price,
+          "public_image": _elem.public_image,
+        };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from elemEventsToMap!!! :$_e");
     }
@@ -407,7 +413,8 @@ class localConverter {
           "price": int.parse(_map["price"]),
           "public_image": _map["public_image"],
         };
-      else*/ if (_map["is_new"])
+      else*/
+      if (_map["is_new"])
         return {
           "is_new": true,
           "data": _map["updated_at"],
@@ -476,6 +483,44 @@ class localConverter {
     }
   }
 /////////////////////////////////////////////////////////////
+
+  ElemEvents mapToFavorite(Map _map) {
+    try {
+      return ElemEvents(
+        id: _map["id"],
+        data: DateTime.parse(_map["data"]),
+        place: _map["place"],
+        price: _map["price"],
+        public_image: _map["public_image"],
+        name: _map["name"],
+        index: _map["index"],
+        favorite: true,
+        //favorite: true
+          );
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToFavorite!!! :$_e");
+    }
+  }
+
+  Map favoriteToMap(ElemEvents _elem) {
+    try {
+      return {
+        "id": _elem.id,
+        "data": _elem.data.toString(),
+        "place": _elem.place,
+        "price": _elem.price,
+        "public_image": _elem.public_image,
+        "name": _elem.name,
+        "index":_elem.index,
+        "favorite":true,
+        //"favorite": true
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from favoriteToMap!!! :$_e");
+    }
+  }
+/////////////////////////////////////////////////////////////
+
 }
 
 class Get_Lists {

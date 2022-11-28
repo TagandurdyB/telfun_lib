@@ -10,33 +10,42 @@ import 'imgBtn.dart';
 
 class FavoriteBtn extends StatefulWidget {
   bool favorite;
+  final Function onTop;
   final int index;
-  FavoriteBtn({this.favorite, this.index});
+  FavoriteBtn({this.onTop,this.favorite, this.index});
   @override
   State<FavoriteBtn> createState() => _FavoriteBtnState();
 }
 
+
+
 class _FavoriteBtnState extends State<FavoriteBtn> {
+
+  void funcFavorite(){
+    Map _map = localConverter().elemEventsToMap(
+        Get_Lists(listTag: ApiTags.events).getList()[widget.index]);
+    _map.addAll({"index":widget.index});
+    if (widget.favorite) {
+      JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
+    } else {
+      JsonListCacher(jsonName: JsonTags.favorite).addSaved(_map);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ImgBtn(
-      onTap: () {
+      onTap: () async{
+      await funcFavorite();
         setState(() {
-          if (widget.favorite) {
-            Map _map = localConverter().elemEventsToMap(
-                Get_Lists(listTag: ApiTags.events).getList()[widget.index]);
-          //  print("_MAp++++:$_map");
-              JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
-
-          } else {
-            Map _map = localConverter().elemEventsToMap(
-                Get_Lists(listTag: ApiTags.events).getList()[widget.index]);
-          //  print("_MAp++++:$_map");
-              JsonListCacher(jsonName: JsonTags.favorite).addSaved(_map);
-          }
-          //  JsonListCacher(jsonName: JsonName.favorite)
+         /* Get_Lists(isApi: false, listTag: JsonTags.favorite).getList().forEach((element) {
+            print(
+                "FaworiteListElem:+++:${element.name}");
+          });*/
           widget.favorite = !widget.favorite;
         });
+        if(widget.onTop!=null)
+        widget.onTop();
       },
       shape: SWi * 0.1,
       width: SWi * 0.1,

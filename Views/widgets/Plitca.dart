@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/Pages/AllPage.dart';
@@ -30,8 +31,11 @@ class Categori extends StatelessWidget {
             builder: (context) => API_Get(
                 URL: "$IP/api/category/$categoriId",
                 ApiName: ApiTags.events,
-                Return: AllPage(
-                  category_id: categoriId,
+                Return: Json_Get(
+                  jsonName: JsonTags.favorite,
+                 Return: AllPage(
+                    category_id: categoriId,
+                  ),
                 ))));
       },
       child: Container(

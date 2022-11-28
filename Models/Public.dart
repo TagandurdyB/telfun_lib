@@ -6,7 +6,7 @@ import 'package:telfun/ViewModels/ShPBDebug.dart';
 double SWi=0.0,SHe=0.0;
 int _select=0,_navBarSelect=0;
 List<DropDBid> filters=List.generate(10, (index) => DropDBid());
-int categoriId,categoriIndex=0,_selectMarkId,_selectMarkIndex;
+int categoriId,categoriIndex=0,_selectMarkId=0,_selectMarkIndex=-1;
 bool _canAddEvent=false;
 StreamController myStreamControler=StreamController();
 

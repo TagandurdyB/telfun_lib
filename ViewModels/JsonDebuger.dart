@@ -16,7 +16,7 @@ class Json_Get extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List>(
+    return FutureBuilder(
         future: JsonListCacher(jsonName: jsonName).getDate(),
         builder: (ctx, ss) {
           if (ss.hasError) {

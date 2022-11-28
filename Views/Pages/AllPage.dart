@@ -11,13 +11,29 @@ import '/Views/widgets/Search.dart';
 import 'package:provider/provider.dart';
 import '/ViewModels/Routes.dart';
 
-class AllPage extends StatelessWidget {
+class AllPage extends StatefulWidget {
 
   final int category_id;
   AllPage({this.category_id});
+
+  @override
+  _AllPageState createState() => _AllPageState();
+}
+
+class _AllPageState extends State<AllPage> {
+  List list;
+
   @override
   Widget build(BuildContext context) {
-    List list = Get_Lists(listTag: ApiTags.events).getList();
+    List favorites=Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
+    List events=Get_Lists(listTag: ApiTags.events).getList();
+    if(favorites.isNotEmpty)
+ favorites.forEach((element) {
+   events[element.index].favorite=true;
+ });
+    list=events;
+    print("fjksdhfidkfhsdfhksajdkds-----${list[0].mark}");
+
     return ScaffoldAll(
       EnableBotomMenu: true,
       body: ListView(
@@ -68,7 +84,13 @@ class AllPage extends StatelessWidget {
 
           Visibility(
             visible: Get_Lists(listTag: ApiTags.mark).getList().length > 0,
-            child: MarkScrol(),
+            child: MarkScrol(
+              onTab: (){
+                setState(() {
+                  //list=list.where((element) => element.);
+                });
+              },
+            ),
           ),
           //
           Container(

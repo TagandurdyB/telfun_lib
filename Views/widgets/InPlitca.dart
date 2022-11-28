@@ -12,10 +12,12 @@ import 'favoriteBtn.dart';
 import 'imgBtn.dart';
 
 class InCategory extends StatelessWidget {
+  final Function favoriteFunc;
   List list;
   final int index;
 
   InCategory({
+    this.favoriteFunc,
     this.list,
     @required this.index,
   });
@@ -79,7 +81,9 @@ class InCategory extends StatelessWidget {
               Positioned(
                   right: 0,
                   top: 0,
-                  child: FavoriteBtn(favorite: list[0].favorite,index: index,)),
+                  child: FavoriteBtn(
+                    onTop: favoriteFunc,
+                    favorite: list[index].favorite,index: index,)),
               Positioned(
                 right: SWi * 0.1,
                 child: Container(

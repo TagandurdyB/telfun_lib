@@ -25,16 +25,19 @@ class ElemModel {
 }
 
 class ElemEvents {
-  final int id, price;
-  final bool favorite;
+  final int id, price, index, mark_id, category_id;
+  bool favorite;
   final bool is_new;
   final DateTime data;
   final List images;
   final String name, phone, place, about, mark, public_image;
   //final List images;
   ElemEvents(
-      {this.favorite = false,
-      this.is_new=false,
+      {this.mark_id,
+      this.category_id,
+      this.index = -1,
+      this.favorite = false,
+      this.is_new = false,
       this.data,
       this.price,
       this.phone,

@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:telfun/Models/Base.dart';
+
 import '/Models/Cacher.dart';
+import 'MapConverter.dart';
 
 class JsonListCacher {
   final String jsonName;
@@ -10,19 +13,22 @@ class JsonListCacher {
     Cacher.writeJson(jsonName, jsonEncode(list));
   }
 
+  void addBase(List _list){
+    Base(isAPI: false).add({
+      jsonName:
+      MapConverter(JsonName: jsonName, MapList:_list).toElem()
+    });
+  }
+
   Future<bool> addSaved(Map _map) async {
-    print("FavoriteBtn add:$_map");
     bool _added;
-    print("i em hear 1 +++");
     List _list = await load();
-    print("i em hear 2 +++");
     if (_list.isEmpty) {
-      print("isEmpety +++");
       _list.add(_map);
       save(_list);
+      addBase(_list);
       _added = true;
     } else {
-      print("Else +++");
       bool _canAdd = true;
       for (int i = 0; i < _list.length; i++) {
         if (_list[i]["id"] == _map["id"]) {
@@ -33,9 +39,11 @@ class JsonListCacher {
       if (_canAdd) {
         _list.add(_map);
         save(_list);
+        addBase(_list);
         _added = true;
-      } else
+      } else{
         _added = false;
+       }
       return _added;
     }
   }
@@ -58,6 +66,7 @@ class JsonListCacher {
       if (_canRemove) {
         _list.removeAt(_index);
         save(_list);
+        addBase(_list);
         _removed = true;
       } else
         _removed = false;
@@ -73,7 +82,7 @@ class JsonListCacher {
       print("Loading Finished Sucsses!");
       _result=_list;
     }else{
-      print("Saved favorite Json!");
+      print("Saved Json!");
       save([]);
       _result=[];
     }
