@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import '/ViewModels/Routes.dart';
 
 class AllPage extends StatefulWidget {
-
   final int category_id;
   AllPage({this.category_id});
 
@@ -22,18 +21,47 @@ class AllPage extends StatefulWidget {
 
 class _AllPageState extends State<AllPage> {
   List list;
+  List favorites, events;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    events = Get_Lists(listTag: ApiTags.events).getList();
+    watchAll();
+  }
+
+  void watchAll() {
+    favorites = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
+    if (favorites.isNotEmpty) {
+      List _events = events;
+/*      _events.forEach((element) {
+        favorites.forEach((elementFavorite) {
+          if(element.id==elementFavorite.id)
+            _events[element.index].favorite = true;
+        });
+      });*/
+      for (int i = 0; i < _events.length; i++) {
+        for (int j = 0; j < favorites.length; j++) {
+          if (favorites[j].id == _events[i].id) {
+            _events[i].favorite = true;
+          }
+        }
+      }
+      _events.forEach((element) {
+        print("favorite IsNot empety!!! ${element.favorite}");
+      });
+      list = _events;
+    } else {
+      events.forEach((element) {
+        print("favorite empety!!! ${element.favorite}");
+      });
+      list = events;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    List favorites=Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
-    List events=Get_Lists(listTag: ApiTags.events).getList();
-    if(favorites.isNotEmpty)
- favorites.forEach((element) {
-   events[element.index].favorite=true;
- });
-    list=events;
-    print("fjksdhfidkfhsdfhksajdkds-----${list[0].mark}");
-
     return ScaffoldAll(
       EnableBotomMenu: true,
       body: ListView(
@@ -42,27 +70,35 @@ class _AllPageState extends State<AllPage> {
           SearchBtn(),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Container(
-                padding: EdgeInsets.only(left: SWi * 0.06),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, PageName.pageMark);
-                  },
-                  child: Text("Markalar",
-                      style: TextStyle(
-                          fontSize: SWi * 0.05,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black)),
-                )),
+              padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+              alignment: Alignment.centerRight,
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, PageName.pageMark);
+                },
+                child: Text("Markalar",
+                    style: TextStyle(
+                        fontSize: SWi * 0.05,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black)),
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.black, width: 2),
+                  shape: StadiumBorder(),
+                ),
+              ),
+            ),
             //  SortBtn(),
             Container(
               padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
               alignment: Alignment.centerRight,
               child: OutlinedButton(
                 onPressed: () {
+                  watchAll();
+                  setState(() {});
                   Provider.of<UsesVar>(context, listen: false)
                       .changeMark(-1, -1);
                 },
-                child: Text("Hemmesini görmek",
+                child: Text("Ählisi",
                     style: TextStyle(
                         color: Provider.of<UsesVar>(context).getMark()[1] == -1
                             ? Color(0xff9747FF)
@@ -85,9 +121,16 @@ class _AllPageState extends State<AllPage> {
           Visibility(
             visible: Get_Lists(listTag: ApiTags.mark).getList().length > 0,
             child: MarkScrol(
-              onTab: (){
-                setState(() {
-                  //list=list.where((element) => element.);
+              onTab: () {
+                List _list = events
+                    .where((element) =>
+                        element.mark_id ==
+                        Provider.of<UsesVar>(context, listen: false)
+                            .getMark()[0])
+                    .toList();
+                list = _list;
+                Future.delayed(Duration(milliseconds: 50)).then((value) {
+                  setState(() {});
                 });
               },
             ),

@@ -4,6 +4,19 @@ class ElemImg {
   ElemImg({this.image});
 }
 
+class ElemPlace {
+  final String name;
+  final List etraps;
+final int id;
+  ElemPlace({this.etraps, this.id, this.name});
+}
+
+class ElemEtrap {
+  final String name;
+  final int id;
+  ElemEtrap({ this.id,this.name});
+}
+
 class ElemCategory {
   final String tm, image;
   final int id, count;

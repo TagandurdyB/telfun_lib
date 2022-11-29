@@ -148,7 +148,7 @@ class InCategory extends StatelessWidget {
                 bottom: SWi * 0.01,
                 child: Container(
                   child: Text(
-                      "${list[index].place}, ${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
+                      "${Get_Lists(listTag: ApiTags.place).getList()[int.parse(list[index].place)-1].name}, ${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
                       style: TextStyle(
                           fontSize: SWi * 0.037,
                           fontFamily: "NunitoRegular",

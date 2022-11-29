@@ -45,8 +45,9 @@ class API_Get extends StatelessWidget {
             print("Error Fail***");
           }
           if (ss.hasData) {
+            List _mapL=MapConverter(ApiName: ApiName, MapList: ss.data).maptoMap();
             Base().add({
-              ApiName: MapConverter(ApiName: ApiName, MapList: ss.data).toElem()
+              ApiName: MapConverter(ApiName: ApiName, MapList: _mapL).toElem()
             });
             cacher(ApiName, ss.data);
             return Return;

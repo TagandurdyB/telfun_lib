@@ -230,7 +230,7 @@ class MyProfil extends StatelessWidget {
                                       Navigator.pushNamedAndRemoveUntil(context,PageName.pageMain, (route) => route.isFirst);
                                     }, text: "Üýtget",
                                     isPopEnable: false),
-                              ]).popup(context),
+                              ]).popUpCupertino(context),
                       width: SWi * 0.11,
                       height: SWi * 0.11,
                       shape: SWi * 0.02,
@@ -268,7 +268,7 @@ class MyProfil extends StatelessWidget {
                                     Navigator.pushNamedAndRemoveUntil(context,PageName.pageMain, (route) => route.isFirst);
                                   }, text: "Üýtget",
                                   isPopEnable: false),
-                            ]).popup(context),
+                            ]).popUpCupertino(context),
 
                       width: SWi * 0.11,
                       height: SWi * 0.11,

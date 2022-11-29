@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import '/Models/Public.dart';
 import 'imgBtn.dart';
@@ -25,7 +27,23 @@ class _ModelState extends State<Model> {
       height: SWi * 0.4,
 color: Color(0xffF6F2FA),
 //colors: [Colors.deepPurple,Colors.blue],
-      child: Image.network("$IP/storage/${widget.image}"),
+      child: CachedNetworkImage(
+        cacheManager: CacheManager(Config("marks",
+            stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+        key: UniqueKey(),
+        placeholder: (context, url) =>
+            Center(child: CircularProgressIndicator()),
+        errorWidget: (context, url, error) => Center(
+            child: FittedBox(
+                fit: BoxFit.cover,
+                child: Icon(
+                  Icons.photo,
+                  color: Colors.grey,
+                ))),
+        imageUrl:
+        "$IP/storage/${widget.image}",
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

@@ -28,9 +28,13 @@ class MainPage extends StatelessWidget {
               URL: "$IP/api/model",
               ApiName: ApiTags.model,
               Return: API_Get(
-                  URL: "$IP/api/categories",
-                  ApiName: ApiTags.categori,
-                  Return: Main()),
+                URL: "$IP/api/welayat",
+                ApiName: ApiTags.place,
+                Return: API_Get(
+                    URL: "$IP/api/categories",
+                    ApiName: ApiTags.categori,
+                    Return: Main()),
+              ),
             )));
   }
 }

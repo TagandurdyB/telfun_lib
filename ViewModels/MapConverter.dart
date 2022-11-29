@@ -39,7 +39,9 @@ class MapConverter {
         list.add(localConverter().mapToElemEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToElemCategory(_val));
-      } else if (_name == JsonTags.favorite) {
+      } else if (_name == ApiTags.place) {
+        list.add(localConverter().mapToElemPlace(_val));
+      }else if (_name == JsonTags.favorite) {
         list.add(localConverter().mapToFavorite(_val));
       }
     }
@@ -62,6 +64,8 @@ class MapConverter {
         list.add(localConverter().elemMarkToMap(ElemList[i]));
       } else if (_name == ApiTags.model) {
         list.add(localConverter().elemModelToMap(ElemList[i]));
+      }else if (_name == ApiTags.place) {
+        list.add(localConverter().elemPlaceToMap(ElemList[i]));
       }else if (_name == JsonTags.favorite) {
         list.add(localConverter().favoriteToMap(ElemList[i]));
       }
@@ -86,6 +90,8 @@ class MapConverter {
         list.add(localConverter().mapToMapEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToMapCategori(_val));
+      }else if (_name == ApiTags.place) {
+        list.add(localConverter().mapToMapPlace(_val));
       }
     }
     return list;
@@ -125,6 +131,92 @@ class localConverter {
   }
 
   /////////////////////////////////////////////////////////////
+  ElemPlace mapToElemPlace(Map _map) {
+    try {
+      List<ElemEtrap> _etraps = [];
+      _map["etraps"].forEach((val) {
+        _etraps.add(mapToElemEtrap(val));
+      });
+      return ElemPlace(
+        name: _map["name"],
+        id: _map["id"],
+        etraps: _etraps,
+      );
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToElemPlace!!! :$_e");
+    }
+  }
+
+  Map elemPlaceToMap(ElemPlace _elem) {
+    try {
+      List<Map> _etraps = [];
+      _elem.etraps.forEach((elm) {
+        _etraps.add(elemEtrapToMap(elm));
+      });
+      for (int _i; _i < _elem.etraps.length; _i++)
+        _etraps.add(elemEtrapToMap(_elem.etraps[_i]));
+      return {
+        "name": _elem.name,
+        "id": _elem.id,
+        "etraps":_etraps,
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from elemPlaceToMap!!! :$_e");
+    }
+  }
+
+  Map mapToMapPlace(Map _map) {
+    try {
+      List<Map> _etraps = [];
+      _map["etrap"].forEach((val) {
+        _etraps.add(mapToMapEtrap(val));
+      });
+
+      return {
+        "name": _map["name"],
+        "id": _map["id"],
+        "etraps": _etraps,
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToMapPlace!!! :$_e");
+    }
+  }
+
+  /////////////////////////////////////////////////////////////
+  ElemEtrap mapToElemEtrap(Map _map) {
+    try {
+      return ElemEtrap(
+        id: _map["id"],
+        name: _map["name"],
+      );
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToElemEtrap!!! :$_e");
+    }
+  }
+
+  Map elemEtrapToMap(ElemEtrap _elem) {
+    try {
+      return {
+        "id": _elem.id,
+        "name": _elem.name,
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from elemEtrapToMap!!! :$_e");
+    }
+  }
+
+  Map mapToMapEtrap(Map _map) {
+    try {
+      return {
+        "id": _map["id"],
+        "name": _map["name"],
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToMapEtrap!!! :$_e");
+    }
+  }
+/////////////////////////////////////////////////////////////
+
   ElemCategory mapToElemCategory(Map _map) {
     try {
       return ElemCategory(
@@ -260,7 +352,6 @@ class localConverter {
       print("+Convet_ERROR+: Be error from mapToMapColor!!! :$_e");
     }
   }
-
 /////////////////////////////////////////////////////////////
   ElemEvents mapToElemEventDetal(Map _map) {
     try {
@@ -330,7 +421,7 @@ class localConverter {
           public_image: _map["public_image"],
         );
       else */
-      if (_map["is_new"])
+      /*if (_map["is_new"])
         return ElemEvents(
           is_new: true,
           data: DateTime.parse(_map["updated_at"]),
@@ -344,16 +435,19 @@ class localConverter {
           price: int.parse(_map["price"]),
           public_image: _map["product"]["public_image"],
         );
-      else
+      else*/
+  //int _id=_map["mark_id"];
+  //print("ID:${_id}");
         return ElemEvents(
-          data: DateTime.parse(_map["updated_at"]),
+          data: DateTime.parse(_map["data"]),
           id: _map["id"],
           name: _map["name"],
+          mark_id: int.parse(_map["mark_id"]),
           //about: _map["about"],
           //  images: _map["image"],
           // mark: _map["mark"]["name"],
           // phone: _map["user"]["phone"],
-          place: _map["place"],
+          place: _map["place"].toString(),
           price: int.parse(_map["price"]),
           public_image: _map["public_image"],
         );
@@ -363,9 +457,8 @@ class localConverter {
   }
 
   Map elemEventsToMap(ElemEvents _elem) {
-    // return {"image": _elem.image};
     try {
-      if (_elem.is_new)
+     /* if (_elem.is_new)
         return {
           "is_new": true,
           "data": _elem.data.toString(),
@@ -379,17 +472,18 @@ class localConverter {
           "price": _elem.price,
           "public_image": _elem.public_image,
         };
-      else
+      else*/
         return {
           "data": _elem.data.toString(),
           "id": _elem.id,
           "name": _elem.name,
+          "mark_id": _elem.mark_id.toString(),
           // "about": _elem.about,
           //  "images": _elem.images,
-          "mark": _elem.mark,
-          "phone": _elem.phone,
+          //"mark": _elem.mark,
+         // "phone": _elem.phone,
           "place": _elem.place,
-          "price": _elem.price,
+          "price": _elem.price.toString(),
           "public_image": _elem.public_image,
         };
     } catch (_e) {
@@ -398,7 +492,6 @@ class localConverter {
   }
 
   Map mapToMapEvents(Map _map) {
-    // return {"image": _elem.image};
     try {
       /*if (_map["is_new"] == null)
         return {
@@ -414,7 +507,7 @@ class localConverter {
           "public_image": _map["public_image"],
         };
       else*/
-      if (_map["is_new"])
+/*      if (_map["is_new"])
         return {
           "is_new": true,
           "data": _map["updated_at"],
@@ -428,17 +521,18 @@ class localConverter {
           "price": int.parse(_map["price"]),
           "public_image": _map["product"]["public_image"],
         };
-      else
+      else*/
         return {
           "data": _map["updated_at"],
           "id": _map["id"],
           "name": _map["name"],
+          "mark_id": _map["mark_id"],
           //about: _map["about"],
           //  images: _map["image"],
           // mark: _map["mark"]["name"],
           // phone: _map["user"]["phone"],
           "place": _map["place"],
-          "price": int.parse(_map["price"]),
+          "price": _map["price"],
           "public_image": _map["public_image"],
         };
     } catch (_e) {
@@ -490,7 +584,7 @@ class localConverter {
         id: _map["id"],
         data: DateTime.parse(_map["data"]),
         place: _map["place"],
-        price: _map["price"],
+        price: int.parse(_map["price"]),
         public_image: _map["public_image"],
         name: _map["name"],
         index: _map["index"],
@@ -508,7 +602,7 @@ class localConverter {
         "id": _elem.id,
         "data": _elem.data.toString(),
         "place": _elem.place,
-        "price": _elem.price,
+        "price": _elem.price.toString(),
         "public_image": _elem.public_image,
         "name": _elem.name,
         "index":_elem.index,

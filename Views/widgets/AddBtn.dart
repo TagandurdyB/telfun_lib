@@ -80,14 +80,14 @@ class _AddBtnState extends State<AddBtn> {
                             ),
                           ],),
                         )
-                    ).popup(context);
+                    ).popUpCupertino(context);
                     Map<String, String> body = {
                       "category_id": DDBBase().getDate(DDBName.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
                       'name': controls[0].text,
                       "mark_id":DDBBase().getDate(DDBName.dDBMark).id.toString(),
                       "price": controls[1].text,
-                      "place": DDBBase().getDate(DDBName.dDBLocation).value,
+                      "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,
                     };
                     bool isUpload = await service.addImage(body, images);

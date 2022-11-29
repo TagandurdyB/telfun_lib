@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
 import 'package:telfun/Models/DDBBase.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/MyDropdown.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/ViewModels/Names.dart';
@@ -24,9 +24,9 @@ class AddOldPage extends StatefulWidget {
 
 class _AddOldPageState extends State<AddOldPage> {
   List<String> inputValues = ["", "", ""];
-  DDBEl  DDCategory, DDMark, DDPlace;
+  DDBEl DDCategory, DDMark, DDPlace;
   final TextStyle enable =
-  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+          TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
       disable = TextStyle(color: Colors.grey);
 
   @override
@@ -37,7 +37,6 @@ class _AddOldPageState extends State<AddOldPage> {
     DDMark = DDBEl(index: -1, value: "Marka", id: 0);
     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
   }
-
 
 /*void canOpenAddBtn(BuildContext context){
   int d=0;
@@ -95,7 +94,7 @@ if (d==0&&imageOk){
                     ),
                   ),
                   Container(
-                    padding:  EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     //welayats
                     child: DropDownBtnUnVal(
                       // hideText: widget.hidden,
@@ -116,7 +115,7 @@ if (d==0&&imageOk){
                       ),
                       tag: DDBName.dDBLocation,
                       items: [
-                        DDBEl(id: 1, index: 0, value: "Asgabat"),
+                        DDBEl(id: 1, index: 0, value: "Aşgabat"),
                         DDBEl(id: 2, index: 1, value: "Ahal"),
                         DDBEl(id: 3, index: 2, value: "Balkan"),
                         DDBEl(id: 4, index: 3, value: "Mary"),
@@ -124,17 +123,51 @@ if (d==0&&imageOk){
                         DDBEl(id: 6, index: 5, value: "Daşoguz"),
                       ],
                       onChanged: (DDBEl _element) {
-                        setState(() {
-                          DDPlace = _element;
-                          canOpenAddBtn(context);
-                        });
+                        DDPlace = _element;
+                        canOpenAddBtn(context);
+                        List _etraps= Get_Lists(listTag: ApiTags.place)
+                            .getList()[_element.id - 1]
+                            .etraps;
+                        if(_etraps.isNotEmpty) {
+                          PopUppWidget(
+                              content: Column(
+                                children: List.generate(
+                                    _etraps.length,
+                                        (index) =>
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            DDPlace.value +=
+                                            " ${_etraps[index].name}";
+                                            DDPlace.id = _etraps[index].id;
+                                            setState(() {});
+                                            print(
+                                                "value:${DDPlace
+                                                    .value}  id:${DDPlace
+                                                    .id} index:${DDPlace
+                                                    .index}");
+                                          },
+                                          child: Text(
+                                            "${_etraps[index].name}",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        )),
+                              ),
+                              title: "${_element.value} Etraplar:",
+                              centerTitle: true,
+                              bgColor: Colors.white)
+                              .popUp(context);
+                        }
+                        else{
+                          DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
+                        }
                       },
                     ),
                   ),
                   Container(
                     //welayats
-                    padding:  EdgeInsets.symmetric(horizontal: 8.0),
-                    child:DropDownBtnUnVal(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: DropDownBtnUnVal(
                       // hideText: widget.hidden,
                       // onTap:widget.onTop,
                       hint: Row(
@@ -153,12 +186,16 @@ if (d==0&&imageOk){
                       ),
                       tag: DDBName.dDBCategory,
                       items: List.generate(
-                          Get_Lists(listTag: ApiTags.categori).getList().length ?? 0,
-                              (index) {
-                            ElemCategory getlist =
-                            Get_Lists(listTag: ApiTags.categori).getList()[index];
-                            return DDBEl(value: getlist.tm, id: getlist.id, index: index);
-                          }),
+                          Get_Lists(listTag: ApiTags.categori)
+                                  .getList()
+                                  .length ??
+                              0, (index) {
+                        ElemCategory getlist =
+                            Get_Lists(listTag: ApiTags.categori)
+                                .getList()[index];
+                        return DDBEl(
+                            value: getlist.tm, id: getlist.id, index: index);
+                      }),
                       onChanged: (DDBEl _element) {
                         setState(() {
                           DDCategory = _element;
@@ -168,8 +205,8 @@ if (d==0&&imageOk){
                     ),
                   ),
                   Container(
-                    padding:  EdgeInsets.symmetric(horizontal: 8.0),
-                    child:  DropDownBtnUnVal(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: DropDownBtnUnVal(
                       // hideText: widget.hidden,
                       // onTap:widget.onTop,
                       hint: Row(
@@ -180,8 +217,9 @@ if (d==0&&imageOk){
                             child: Padding(
                                 padding: EdgeInsets.all(8),
                                 child: Text(DDMark.value,
-                                    style:
-                                    DDMark.value == "Marka" ? disable : enable)),
+                                    style: DDMark.value == "Marka"
+                                        ? disable
+                                        : enable)),
                           ),
                         ],
                       ),
@@ -189,13 +227,18 @@ if (d==0&&imageOk){
                       items: DDBBase().getDate(DDBName.dDBCategory).index == -1
                           ? [DDBEl(id: 0, index: -1, value: "")]
                           : List.generate(
-                          Get_Lists(listTag: ApiTags.mark).getList().length ?? 0,
-                              (index) {
-                            ElemMark getlist =
-                            Get_Lists(listTag: ApiTags.mark).getList()[index];
-                            return DDBEl(
-                                value: getlist.name, id: getlist.id, index: index);
-                          }),
+                              Get_Lists(listTag: ApiTags.mark)
+                                      .getList()
+                                      .length ??
+                                  0, (index) {
+                              ElemMark getlist =
+                                  Get_Lists(listTag: ApiTags.mark)
+                                      .getList()[index];
+                              return DDBEl(
+                                  value: getlist.name,
+                                  id: getlist.id,
+                                  index: index);
+                            }),
                       onChanged: (DDBEl _element) {
                         setState(() {
                           DDMark = _element;
@@ -204,9 +247,9 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
-
                   Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 8.0,vertical: SWi*0.015),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: SWi * 0.015),
                     child: AddImages(),
                   ),
                   Padding(
@@ -224,9 +267,8 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
-
                   AddBtn(inputValues: inputValues),
-                 /*    Column(children: [
+                  /*    Column(children: [
                     Text("${UserProperties.getProperty("id")}"),
                     Text("${UserProperties.getProperty("name")}"),
                     Text("${UserProperties.getProperty("phone")}"),
@@ -240,6 +282,7 @@ if (d==0&&imageOk){
       ),
     );
   }
+
   Widget selectIcon(IconData iconData) {
     return ImgBtn(
       width: SWi * 0.1,
@@ -265,7 +308,4 @@ if (d==0&&imageOk){
       Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
     }
   }
-
 }
-
-
