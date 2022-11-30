@@ -27,13 +27,10 @@ class API_Get extends StatelessWidget {
       })
       : super(key: key);
 
-  void cacher(String fileName, List list) async {
-    bool _isConnect = await isConnected();
-    if (_isConnect) {
-      String _body = jsonEncode(
-          MapConverter(ApiName: fileName, MapList: (list)).maptoMap());
-      Cacher.writeJson(fileName, _body);
-    }
+  void addBase(List _list){
+    Base().add({
+      ApiName: MapConverter(ApiName: ApiName, MapList: _list).toElem()
+    });
   }
 
   @override
@@ -45,12 +42,27 @@ class API_Get extends StatelessWidget {
             print("Error Fail***");
           }
           if (ss.hasData) {
-            List _mapL=MapConverter(ApiName: ApiName, MapList: ss.data).maptoMap();
-            Base().add({
-              ApiName: MapConverter(ApiName: ApiName, MapList: _mapL).toElem()
-            });
-            cacher(ApiName, ss.data);
-            return Return;
+           return FutureBuilder<bool>(
+               future:  isConnected(),
+               builder: (context,snapsh){
+             if(snapsh.hasError){
+               print("Error ******+*");
+             }
+             if(snapsh.hasData){
+               if (snapsh.data) {
+                 List _mapL =
+                 MapConverter(ApiName: ApiName, MapList: ss.data).maptoMap();
+                 addBase(_mapL);
+                 String _body = jsonEncode(_mapL);
+                 Cacher.writeJson(ApiName, _body);
+               }else{
+                 addBase(ss.data);
+               }
+               return Return;
+             }else{
+               return loadingApi();
+             }
+           });
           } else {
             return loadingApi();
           }
@@ -68,7 +80,7 @@ class API_Get extends StatelessWidget {
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.yellow, Color(0xff6911B0), Colors.red])),
+                    colors:[Colors.white, Color(0xff6911B0), Colors.white] /*[Colors.yellow, Color(0xff6911B0), Colors.red]*/)),
             child: Container(child: CircularProgressIndicator())));
   }
 }

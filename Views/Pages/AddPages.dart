@@ -44,7 +44,6 @@ class AddPage extends StatelessWidget {
                       onPressed: () {
                         Provider.of<UsesVar>(context, listen: false)
                             .Select(1);
-
                       },
                       child: Text(
                         "Täze",
@@ -76,7 +75,7 @@ class AddPage extends StatelessWidget {
           Expanded(
             child: TabViewer(childs: [
               AddOldPage(),
-              AddNewPage(),
+               AddNewPage(),
             ]),
           )
           /* RangeSlider(

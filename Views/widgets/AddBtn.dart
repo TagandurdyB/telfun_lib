@@ -29,12 +29,11 @@ class _AddBtnState extends State<AddBtn> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: SWi*0.2),
+          padding: EdgeInsets.symmetric(horizontal: SWi * 0.2),
           child: Builder(
             builder: (context) => ClipRRect(
-              borderRadius: BorderRadius.circular(SWi*0.05),
+              borderRadius: BorderRadius.circular(SWi * 0.05),
               child: MaterialButton(
                 onPressed: () async {
                   if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
@@ -42,8 +41,9 @@ class _AddBtnState extends State<AddBtn> {
                       _isUpload = true;
                       _about = true;
                     });
+                    FocusScope.of(context).unfocus();
                     PopUppWidget(
-                       /* actionsTeam: [
+                        /* actionsTeam: [
                           ActionsTeam(text: "",func: (){})
                         ],*/
                         isPopEnable: false,
@@ -51,43 +51,51 @@ class _AddBtnState extends State<AddBtn> {
                         content: Container(
                           width: 200,
                           // color: Colors.red,
-                          child: Column(children: [
-                            Visibility(
-                              visible: _isUpload,
-                              child: Column(
-                                children: [
-                                  CircularProgressIndicator(color: Colors.grey[400]),
-                                  Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Text(
-                                        "Bildirişiňiz goşulýança garaşyň.",
-                                        style: TextStyle(fontSize: 20, color: Colors.blue[900]),
-                                        textAlign: TextAlign.center,
-                                      )),
-                                ],
+                          child: Column(
+                            children: [
+                              Visibility(
+                                visible: _isUpload,
+                                child: Column(
+                                  children: [
+                                    CircularProgressIndicator(
+                                        color: Colors.grey[400]),
+                                    Container(
+                                        padding: EdgeInsets.all(8),
+                                        child: Text(
+                                          "Bildirişiňiz goşulýança garaşyň.",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.blue[900]),
+                                          textAlign: TextAlign.center,
+                                        )),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Visibility(
-                              visible: _about,
-                              child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Text(
-                                    "Bildirişiňizi goşanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
-                                        "Şol sebäpden garaşmagyňyzy haýyş edýäris. ",
-                                    style: TextStyle(fontSize: 18, color: Colors.blue),
-                                    textAlign: TextAlign.center,
-                                  )),
-                            ),
-                          ],),
-                        )
-                    ).popUpCupertino(context);
+                              Visibility(
+                                visible: _about,
+                                child: Container(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(
+                                      "Bildirişiňizi goşanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
+                                      "Şol sebäpden garaşmagyňyzy haýyş edýäris. ",
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.blue),
+                                      textAlign: TextAlign.center,
+                                    )),
+                              ),
+                            ],
+                          ),
+                        )).popUpCupertino(context);
                     Map<String, String> body = {
-                      "category_id": DDBBase().getDate(DDBName.dDBCategory).id.toString(),
+                      "category_id":
+                          DDBBase().getDate(DDBName.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
                       'name': controls[0].text,
-                      "mark_id":DDBBase().getDate(DDBName.dDBMark).id.toString(),
+                      "mark_id":
+                          DDBBase().getDate(DDBName.dDBMark).id.toString(),
                       "price": controls[1].text,
-                      "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
+                      "place":
+                          DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,
                     };
                     bool isUpload = await service.addImage(body, images);
@@ -98,20 +106,18 @@ class _AddBtnState extends State<AddBtn> {
                       setState(() {
                         _isUpload = false;
                         _about = false;
-                        images=[];
+                        images = [];
                       });
                       MySnack(
-                          textColor: Colors.white,
-                          message: "Bildiriş ugradyldy",
-                          textBgColor: Color(0xff5308BE))
-                          .pushSnack(context);
-                      Future.delayed(Duration(seconds: 3)).then((value) =>
-                          MySnack(
-                              sec: 4,
                               textColor: Colors.white,
-                              message: "Tassyklanmagyna garaşyň!",
-                              textBgColor: Colors.orange[700])
-                              .pushSnack(context));
+                              message: "Bildiriş ugradyldy",
+                              textBgColor: Color(0xff5308BE))
+                          .pushSnack(context);
+                      MySnack(
+                          sec: 4,
+                          textColor: Colors.white,
+                          message: "Tassyklanmagyna garaşyň!",
+                          textBgColor: Colors.orange[700]).pushSnack(context);
                       Navigator.pop(context);
                       Provider.of<UsesVar>(context, listen: false)
                           .navBarSelect(0);
@@ -121,9 +127,9 @@ class _AddBtnState extends State<AddBtn> {
                       });
                       Navigator.pop(context);
                       MySnack(
-                          textColor: Colors.white,
-                          textBgColor: Colors.red,
-                          message: "Maglumatlary doly giriziň!")
+                              textColor: Colors.white,
+                              textBgColor: Colors.red,
+                              message: "Maglumatlary doly giriziň!")
                           .pushSnack(context);
                     }
                   } else {}
@@ -134,7 +140,7 @@ class _AddBtnState extends State<AddBtn> {
                     : Colors.grey,
                 child: Text(
                   "Bildiriş goş",
-                  style: TextStyle(color: Colors.white,fontSize: SWi*0.05),
+                  style: TextStyle(color: Colors.white, fontSize: SWi * 0.05),
                 ),
               ),
             ),

@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/MapConverter.dart';
-import 'package:telfun/ViewModels/ApiDebuging.dart';
-import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/ViewModels/Routes.dart';
+import '/ViewModels/MapConverter.dart';
+import '/ViewModels/ApiDebuging.dart';
+import '/ViewModels/Names.dart';
 import '/Views/Pages/DetalPage.dart';
 import '/Models/Public.dart';
 import 'favoriteBtn.dart';
@@ -34,32 +32,22 @@ class InCategory extends StatelessWidget {
           print("In Category is_new: ${list[index].is_new}");
           Navigator.push(
             context,
-              list[index].is_new? MaterialPageRoute(
-                  builder: (context) => API_Get(
-                      URL: "$IP/api/new/${list[index].id}",
-                      ApiName: ApiTags.detal,
-                      Return: DetalPage())): MaterialPageRoute(
-                builder: (context) => API_Get(
-                    URL: "$IP/api/event/${list[index].id}",
-                    ApiName: ApiTags.detal,
-                    Return: DetalPage())),
-          );
-          /*      Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Get_api(
-                        URL: "$IP/api/event/${list[index]["id"]}",
-                        ApiName: ApiTags.eventDetal,
+            list[index].is_new
+                ? MaterialPageRoute(
+                    builder: (context) => API_Get(
+                        URL: "$IP/api/new/${list[index].id}",
+                        ApiName: ApiTags.detal,
                         Return: DetalPage(
-                          //  image: list[index]["image"],
-                          name: list[index]["name"],
-                          phone: list[index]["user"]["phone"],
-                          price: list[index]["price"],
-                          about: list[index]["about"],
-                          place: list[index]["place"],
-                          mark: list[index]["mark"]["name"],
-                        ),
-                      )));*/
+                            isfavorite: false/*list[index].favorite*/, index: index)))
+                : MaterialPageRoute(
+                    builder: (context) => API_Get(
+                        URL: "$IP/api/event/${list[index].id}",
+                        ApiName: ApiTags.detal,
+                        Return: DetalPage(
+                          isfavorite: false/*list[index].favorite*/,
+                          index: index,
+                        ))),
+          );
         },
         boxShadow: [
           BoxShadow(spreadRadius: 0, blurRadius: 5, color: Colors.grey)
@@ -83,7 +71,10 @@ class InCategory extends StatelessWidget {
                   top: 0,
                   child: FavoriteBtn(
                     onTop: favoriteFunc,
-                    favorite: list[index].favorite,index: index,)),
+                    favorite: list[index].favorite,
+                    index: list[index].index,
+                    radius: SWi * 0.1,
+                  )),
               Positioned(
                 right: SWi * 0.1,
                 child: Container(
@@ -145,14 +136,25 @@ class InCategory extends StatelessWidget {
               ),
               Positioned(
                 left: SWi * 0.09,
-                bottom: SWi * 0.01,
+                bottom: SWi * 0.001,
                 child: Container(
-                  child: Text(
-                      "${Get_Lists(listTag: ApiTags.place).getList()[int.parse(list[index].place)-1].name}, ${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
-                      style: TextStyle(
-                          fontSize: SWi * 0.037,
-                          fontFamily: "NunitoRegular",
-                          fontWeight: FontWeight.w500)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("${list[0].place}",
+                          style: TextStyle(
+                              fontSize: SWi * 0.037,
+                              fontFamily: "NunitoRegular",
+                              fontWeight: FontWeight.w500)),
+                      Text(
+                          "${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
+                          style: TextStyle(
+                              fontSize: SWi * 0.03,
+                              fontFamily: "NunitoRegular",
+                              fontWeight: FontWeight.w500)),
+                    ],
+                  ),
                 ),
               ),
             ],

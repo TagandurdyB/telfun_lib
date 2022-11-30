@@ -10,9 +10,11 @@ import 'imgBtn.dart';
 
 class FavoriteBtn extends StatefulWidget {
   bool favorite;
+  final List<BoxShadow> boxShadow;
   final Function onTop;
   final int index;
-  FavoriteBtn({this.onTop,this.favorite, this.index});
+  final double radius;
+  FavoriteBtn({this.radius=20,this.onTop,this.favorite, this.index, this.boxShadow});
   @override
   State<FavoriteBtn> createState() => _FavoriteBtnState();
 }
@@ -35,24 +37,22 @@ class _FavoriteBtnState extends State<FavoriteBtn> {
   @override
   Widget build(BuildContext context) {
     return ImgBtn(
+      boxShadow: widget.boxShadow,
       onTap: () async{
       await funcFavorite();
         setState(() {
-         /* Get_Lists(isApi: false, listTag: JsonTags.favorite).getList().forEach((element) {
-            print(
-                "FaworiteListElem:+++:${element.name}");
-          });*/
           widget.favorite = !widget.favorite;
         });
         if(widget.onTop!=null)
         widget.onTop();
       },
-      shape: SWi * 0.1,
-      width: SWi * 0.1,
-      height: SWi * 0.1,
+      shape:  widget.radius,
+      width:  widget.radius,
+      height:  widget.radius,
       color: Colors.white,
       child: Icon(
         widget.favorite ? Icons.bookmark : Icons.bookmark_border,
+        size: widget.radius*0.7,
         color: Color(0xff6C02FF),
       ),
     );

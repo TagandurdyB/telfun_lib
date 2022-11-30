@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/DDBBase.dart';
 import '/ViewModels/MapConverter.dart';
@@ -7,7 +8,6 @@ import '/ViewModels/ApiElements.dart';
 import '/ViewModels/Names.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Views/widgets/ScaffoldParts/MySnackBar.dart';
-import '/Views/widgets/MyDropdown.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Views/widgets/ReadyInput.dart';
@@ -21,26 +21,46 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State<AddNewPage> {
   DDBEl DDColor, DDCategory, DDMark, DDModel, DDPlace;
+  List<DropDownBtnUnVal> _DropDownBtnUnValList = [];
   final TextStyle enable =
           TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
       disable = TextStyle(color: Colors.grey);
+
+  List<DDBEl> _DDColorList = [];
+  //List<DDBEl> _DDCategoryList = [DDBEl(value: "", index: -1, id: 0)];
+  List<DDBEl> _DDMarkList = [];
+  List<DDBEl> _DDModelList = [];
+  List<DDBEl> _DDPlaceList = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    empet();
+  }
+
+  void empet() {
     DDColor = DDBEl(index: -1);
     DDCategory = DDBEl(index: -1, value: "Bölümler");
     DDMark = DDBEl(index: -1, value: "Marka", id: 0);
-    DDModel = DDBEl(index: -1, value: "Model");
+    DDModel = DDBEl(index: -1, value: "Model",id:0);
     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
-    setState(() {
-    });
+  }
+
+  List _modelList = [];
+  void modelFunc() {
+    _modelList = Get_Lists(listTag: ApiTags.model)
+        .getList()
+        .where((element) =>
+            element.category_id == DDCategory.id &&
+            element.mark_id == DDMark.id)
+        .toList();
+    print("sdasdhsi:${_modelList}");
   }
 
   @override
   Widget build(BuildContext context) {
-    // print("*****************${DropDownBase[DDBName.dDBModel]}");
+    modelFunc();
     return Container(
         padding: EdgeInsets.symmetric(horizontal: SWi * 0.08),
         //color: Colors.blue,
@@ -49,8 +69,6 @@ class _AddNewPageState extends State<AddNewPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DropDownBtnUnVal(
-                // hideText: widget.hidden,
-                // onTap:widget.onTop,
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -71,6 +89,7 @@ class _AddNewPageState extends State<AddNewPage> {
                     (index) {
                   ElemCategory getlist =
                       Get_Lists(listTag: ApiTags.categori).getList()[index];
+                 // print("LIst:${getlist.tm}");
                   return DDBEl(value: getlist.tm, id: getlist.id, index: index);
                 }),
                 onChanged: (DDBEl _element) {
@@ -120,8 +139,6 @@ class _AddNewPageState extends State<AddNewPage> {
                 },
               ),
               DropDownBtnUnVal(
-                // hideText: widget.hidden,
-                // onTap:widget.onTop,
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -136,26 +153,12 @@ class _AddNewPageState extends State<AddNewPage> {
                   ],
                 ),
                 tag: DDBName.dDBModel,
-                items: DDBBase().getDate(DDBName.dDBCategory).index == -1
+                items: DDCategory.index == -1
                     ? [DDBEl(id: 0, index: -1, value: "")]
-                    : DDBBase().getDate(DDBName.dDBMark).index == -1
+                    : DDMark.index == -1
                         ? [DDBEl(id: 0, index: -1, value: "")]
-                        : List.generate(
-                            Get_Lists(listTag: ApiTags.model)
-                                    .getList()
-                                    .where((element) =>
-                                        element.category_id == DDCategory.id &&
-                                        element.mark_id == DDMark.id)
-                                    .toList()
-                                    .length ??
-                                0, (index) {
-                            ElemModel getlist =
-                                Get_Lists(listTag: ApiTags.model)
-                                    .getList()
-                                    .where((element) =>
-                                        element.category_id == DDCategory.id &&
-                                        element.mark_id == DDMark.id)
-                                    .toList()[index];
+                        : List.generate(_modelList.length ?? 0, (index) {
+                            ElemModel getlist = _modelList[index];
                             return DDBEl(
                                 index: index,
                                 value: getlist.name,
@@ -208,7 +211,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                 ImgBtn(
                                   width: 30,
                                   height: 30,
-                                  color: Color(code),
+                                  color: getlist.toColor(),
                                   shape: 2,
                                   boxShadow: [
                                     BoxShadow(
@@ -250,7 +253,7 @@ class _AddNewPageState extends State<AddNewPage> {
                 ),
                 tag: DDBName.dDBLocation,
                 items: [
-                  DDBEl(id: 1, index: 0, value: "Asgabat"),
+                  DDBEl(id: 1, index: 0, value: "Aşgabat"),
                   DDBEl(id: 2, index: 1, value: "Ahal"),
                   DDBEl(id: 3, index: 2, value: "Balkan"),
                   DDBEl(id: 4, index: 3, value: "Mary"),
@@ -258,10 +261,39 @@ class _AddNewPageState extends State<AddNewPage> {
                   DDBEl(id: 6, index: 5, value: "Daşoguz"),
                 ],
                 onChanged: (DDBEl _element) {
-                  setState(() {
-                    DDPlace = _element;
-                    canOpenAddBtn(context);
-                  });
+                  DDPlace = _element;
+                  canOpenAddBtn(context);
+                  List _etraps = Get_Lists(listTag: ApiTags.place)
+                      .getList()[_element.id - 1]
+                      .etraps;
+                  if (_etraps.isNotEmpty) {
+                    PopUppWidget(
+                            content: Column(
+                              children: List.generate(
+                                  _etraps.length,
+                                  (index) => TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          DDPlace.value +=
+                                              " ${_etraps[index].name}";
+                                          DDPlace.id = _etraps[index].id;
+                                          setState(() {});
+                                          print(
+                                              "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
+                                        },
+                                        child: Text(
+                                          "${_etraps[index].name}",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      )),
+                            ),
+                            title: "${_element.value} Etraplar:",
+                            centerTitle: true,
+                            bgColor: Colors.white)
+                        .popUp(context);
+                  } else {
+                    DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
+                  }
                 },
               ),
               Container(
@@ -405,7 +437,8 @@ class _AddNewPageState extends State<AddNewPage> {
                       "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,*/
                       "user_id": UserProperties.getProperty("id"),
-                      "place": DDBBase().getDate(DDBName.dDBLocation).value,
+                      "place":
+                          DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "price": controls[1].text,
                       "color_id":
                           DDBBase().getDate(DDBName.dDBColor).id.toString(),
@@ -421,17 +454,10 @@ class _AddNewPageState extends State<AddNewPage> {
                       _isUpload = false;
                       _about = false;
                       MySnack(
-                              textColor: Colors.white,
-                              message: "Bildiriş ugradyldy",
-                              textBgColor: Color(0xff5308BE))
+                          textColor: Colors.white,
+                          message: "Bildiriş goşuldy!",
+                          textBgColor: Color(0xff6A11AF))
                           .pushSnack(context);
-                      Future.delayed(Duration(seconds: 3)).then((value) =>
-                          MySnack(
-                                  sec: 4,
-                                  textColor: Colors.white,
-                                  message: "Tassyklanmagyna garaşyň!",
-                                  textBgColor: Colors.orange[700])
-                              .pushSnack(context));
                       Provider.of<UsesVar>(context, listen: false)
                           .navBarSelect(0);
                     } else {

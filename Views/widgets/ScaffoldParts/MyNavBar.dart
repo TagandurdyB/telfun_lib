@@ -70,11 +70,9 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
                   } else if (widget.IsMain) {
                     Provider.of<UsesVar>(context, listen: false)
                         .navBarSelect(index);
-                    Provider.of<UsesVar>(context,listen: false).Select(0);
                   } else {
                     Provider.of<UsesVar>(context, listen: false)
                         .navBarSelect(index);
-                    Provider.of<UsesVar>(context,listen: false).Select(0);
                     Navigator.popUntil(context, (rout) => rout.isFirst);
                   }
                 });

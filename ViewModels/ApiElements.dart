@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class ElemImg {
   final String image;
 
@@ -7,14 +9,14 @@ class ElemImg {
 class ElemPlace {
   final String name;
   final List etraps;
-final int id;
+  final int id;
   ElemPlace({this.etraps, this.id, this.name});
 }
 
 class ElemEtrap {
   final String name;
   final int id;
-  ElemEtrap({ this.id,this.name});
+  ElemEtrap({this.id, this.name});
 }
 
 class ElemCategory {
@@ -40,13 +42,15 @@ class ElemModel {
 class ElemEvents {
   final int id, price, index, mark_id, category_id;
   bool favorite;
+  final ElemColor color;
   final bool is_new;
   final DateTime data;
   final List images;
   final String name, phone, place, about, mark, public_image;
   //final List images;
   ElemEvents(
-      {this.mark_id,
+      {this.color,
+      this.mark_id,
       this.category_id,
       this.index = -1,
       this.favorite = false,
@@ -67,4 +71,8 @@ class ElemColor {
   final int id;
   final String tm, ru, code;
   ElemColor({this.id, this.tm, this.ru, this.code});
+  Color toColor() {
+    int _code = int.parse("0xff${code.substring(1)}");
+    return Color(_code);
+  }
 }

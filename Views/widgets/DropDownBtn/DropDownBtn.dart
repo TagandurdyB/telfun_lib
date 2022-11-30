@@ -109,7 +109,8 @@ class _DropDownBtnUnValState extends State<DropDownBtnUnVal> {
         DropDownBase[widget.tag].index.toString(),*/
         onTap: (){
           setState(() {
-            widget.onTap;
+            if(widget.onTap!=null)
+            widget.onTap();
           });
         },
         //filters[widget.index].id.toString(),

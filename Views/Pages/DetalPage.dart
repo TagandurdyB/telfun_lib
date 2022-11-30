@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/JsonCacher.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/widgets/favoriteBtn.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
-class DetalPage extends StatelessWidget {
+class DetalPage extends StatefulWidget {
 /*  final String name, phone, price, place, about, mark;
   final List image;*/
-  final int /*index,*/ id;
+  final int /*index,*/ id, index;
+  final bool isfavorite;
   DetalPage(
-      {Key key,
+      {this.isfavorite = false,
+      this.index,
+      Key key,
       /*  @required this.image,
       this.name = "",
       this.phone = "",
@@ -28,16 +33,30 @@ class DetalPage extends StatelessWidget {
       this.id})
       : super(key: key);
 
+  @override
+  _DetalPageState createState() => _DetalPageState();
+}
+
+class _DetalPageState extends State<DetalPage> {
   void tellCall(String phone) async {
     launch("tel://$phone");
   }
 
+  dynamic list;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    list = Get_Lists(listTag: ApiTags.detal).getList()[0];
+  }
+
   @override
   Widget build(BuildContext context) {
-    List list = Get_Lists(listTag: ApiTags.detal).getList();
+    list = Get_Lists(listTag: ApiTags.detal).getList()[0];
     // print("++++++++++IMAGES:${list[0].images}");
     return ScaffoldAll(
-      phone: list[0].phone,
+      phone: list.phone,
       IsFloatBtn: true,
       body: Container(
         child: ListView(
@@ -48,64 +67,98 @@ class DetalPage extends StatelessWidget {
                 children: [
                   Container(
                       alignment: Alignment.center,
-                      // padding: EdgeInsets.all(8),
                       width: SWi,
                       height: SWi,
                       child: PageView.builder(
-                          itemCount: list[0].images.length, //image.length,
+                          itemCount: list.images.length, //image.length,
                           itemBuilder: (context, index) => ImgBtn(
-                            width: double.infinity,
-                            height: SWi,
-                            //  color: Colors.,
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Zoom(
-                                          images: list[0].images, index: index)));
-                            },
-                            shape: 30,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 10,
-                                  spreadRadius: 0)
-                            ],
-                            child: CachedNetworkImage(
-                              cacheManager: CacheManager(Config("events_detal",
-                                  stalePeriod: Duration(days: 15),
-                                  maxNrOfCacheObjects: 200)),
-                              key: UniqueKey(),
-                              placeholder: (context, url) =>
-                                  Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) => Center(
-                                  child: FittedBox(
-                                      fit: BoxFit.cover,
-                                      child: Icon(
-                                        Icons.photo,
-                                        color: Colors.grey,
-                                      ))),
-                              imageUrl:
-                              "$IP/storage/${list[0].images[index]["image"]}",
-                              fit: BoxFit.cover,
-                            ),
-                          ))),
+                                width: double.infinity,
+                                height: SWi,
+                                //  color: Colors.,
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Zoom(
+                                              images: list.images,
+                                              index: index)));
+                                },
+                                shape: 30,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 10,
+                                      spreadRadius: 0)
+                                ],
+                                child: CachedNetworkImage(
+                                  cacheManager: CacheManager(Config(
+                                      "events_detal",
+                                      stalePeriod: Duration(days: 15),
+                                      maxNrOfCacheObjects: 200)),
+                                  key: UniqueKey(),
+                                  placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) => Center(
+                                      child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Icon(
+                                            Icons.photo,
+                                            color: Colors.grey,
+                                          ))),
+                                  imageUrl:
+                                      "$IP/storage/${list.images[index]["image"]}",
+                                  fit: BoxFit.cover,
+                                ),
+                              ))),
                   eventProfil(list),
                 ],
               ),
-Positioned(
-    bottom: SWi*0.18,
-    right: SWi*0.1,
-    child: ImgBtn(
-      width: SWi*0.15,
-      height:  SWi*0.15,
-      shape: SWi*0.1,
-      color: Colors.white,
-      boxShadow: [BoxShadow(offset: Offset(0,2.5),color: Color(0xffD7BFFC),blurRadius: 2.5)],
-      child:  Icon(Icons.bookmark_border,size: SWi*0.09,color: Color(0xff6A00FF)),),
-    )
-            ]),
+              Positioned(
+                bottom: SWi * 0.18,
+                right: SWi * 0.1,
+                child: FavoriteBtn(
+                  index: widget.index,
+                  favorite: widget.isfavorite,
+                  radius: SWi * 0.15,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, widget.isfavorite ? 3 : 2.5),
+                        color: widget.isfavorite
+                            ? Color(0xff6900FE)
+                            : Color(0xffD7BFFC),
+                        blurRadius: widget.isfavorite ? 20 : 2.5)
+                  ],
+                ),
+                /*ImgBtn(
+                  onTap: (){
+                      Map _map = localConverter().elemEventsToMap(
+                          Get_Lists(listTag: ApiTags.events).getList()[list[0].index]);
+                      _map.addAll({"index":list[0].index});
+                      if (list[0].favorite) {
+                        JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
+                      } else {
+                        JsonListCacher(jsonName: JsonTags.favorite).addSaved(_map);
+                      }
+                      widget.favorite = !widget.favorite;
 
+                  },
+                  width: SWi * 0.15,
+                  height: SWi * 0.15,
+                  shape: SWi * 0.1,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, list[0].favorite?3:2.5),
+                        color: list[0].favorite?Color(0xff6900FE):Color(0xffD7BFFC),
+                        blurRadius: list[0].favorite?20:2.5)
+                  ],
+                  child: Icon(
+                      list[0].favorite ? Icons.bookmark : Icons.bookmark_border,
+                      size: SWi * 0.09,
+                      color: Color(0xff6A00FF)),
+                )*/
+              )
+            ]),
             EventDetal(list, context),
           ],
         ),
@@ -113,14 +166,13 @@ Positioned(
     );
   }
 
-  Widget eventProfil(List list){
-    return  ImgBtn(
+  Widget eventProfil(list) {
+    return ImgBtn(
       width: double.infinity,
       height: SWi * 0.25,
       color: Colors.white,
       boxShadow: [
-        BoxShadow(
-            color: Colors.grey, offset: Offset(0, 5), blurRadius: 5)
+        BoxShadow(color: Colors.grey, offset: Offset(0, 5), blurRadius: 5)
       ],
       child: Align(
         alignment: Alignment.centerLeft,
@@ -134,37 +186,34 @@ Positioned(
                   text: TextSpan(
                       style: TextStyle(color: Colors.black),
                       children: [
-                        // TextSpan(text: "Ady : ", style: TextStyle(fontSize: 18)),
-                        TextSpan(
-                            text: list[0].name,
-                            style: TextStyle(fontSize: 18))
-                      ])),
+                    // TextSpan(text: "Ady : ", style: TextStyle(fontSize: 18)),
+                    TextSpan(text: list.name, style: TextStyle(fontSize: 18))
+                  ])),
               RichText(
                   text: TextSpan(
                       style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
+                          color: Colors.black, fontWeight: FontWeight.w600),
                       children: [
-                        /*TextSpan(text: "Bahasy : ", style: TextStyle(fontSize: 18)),*/
-                        TextSpan(
-                            text: list[0].price.toString() + " TMT",
-                            style: TextStyle(fontSize: 16))
-                      ])),
+                    /*TextSpan(text: "Bahasy : ", style: TextStyle(fontSize: 18)),*/
+                    TextSpan(
+                        text: list.price.toString() + " TMT",
+                        style: TextStyle(fontSize: 16))
+                  ])),
               RichText(
                   text: TextSpan(
                       style: TextStyle(color: Colors.black),
                       children: [
-                        /* TextSpan(
+                    /* TextSpan(
                           text: "Goýulan ýeri : ",
                           style: TextStyle(fontSize: 18)),*/
-                        TextSpan(text: list[0].place)
-                      ])),
+                    TextSpan(text: list.place)
+                  ])),
               Row(children: [
                 /* TextSpan(
                           text: "Goýulan ýeri : ",
                           style: TextStyle(fontSize: 18)),*/
                 Text(
-                  "${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
+                  "${list.data.day}.${list.data.month}.${list.data.year}",
                   style: TextStyle(color: Colors.grey[700]),
                 ),
                 Container(
@@ -175,8 +224,7 @@ Positioned(
                     color: Colors.grey,
                   ),
                 ),
-                Text(" 435345",
-                    style: TextStyle(color: Colors.grey[700]))
+                Text(" 435345", style: TextStyle(color: Colors.grey[700]))
                 // TextSpan()
               ]),
             ],
@@ -186,15 +234,13 @@ Positioned(
     );
   }
 
-  Widget EventDetal(List list, BuildContext context) {
+  Widget EventDetal(list, BuildContext context) {
     return Container(
       // padding: EdgeInsets.all(16),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-
             /* Padding(
               padding: const EdgeInsets.all(8.0),
               child: RichText(
@@ -249,21 +295,34 @@ Positioned(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Marka"),
                     ),
-                    Text("${list[0].mark}"),
+                    Text("${list.mark}"),
                   ]),
                   TableRow(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Model"),
                     ),
-                    Text("${list[0].name}"),
+                    Text("${list.name}"),
                   ]),
                   TableRow(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text("Reňki"),
+                    Visibility(
+                      visible: list.is_new,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Reňki"),
+                      ),
                     ),
-                    Text("${list[0].name}"),
+                    Visibility(
+                        visible: list.is_new,
+                        child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
+                          Text(list.is_new ? "${list.color.tm}" : ""),
+                          ImgBtn(
+                            width: SWi * 0.05,
+                            height: SWi * 0.05,
+                            shape: SWi * 0.01,
+                            color: list.color.toColor(),
+                          )
+                        ])),
                   ]),
                   TableRow(children: [
                     Padding(
@@ -277,14 +336,14 @@ Positioned(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Ýeri"),
                     ),
-                    Text(list[0].place),
+                    Text(list.place),
                   ]),
                   TableRow(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Bahasy"),
                     ),
-                    Text("${list[0].price} TMT"),
+                    Text("${list.price} TMT"),
                   ]),
                   TableRow(children: [
                     Padding(
@@ -292,34 +351,19 @@ Positioned(
                       child: Text("Goýuldy"),
                     ),
                     Text(
-                        "${list[0].data.day}.${list[0].data.month}.${list[0].data.year}"),
+                        "${list.data.day}.${list.data.month}.${list.data.year}"),
                   ]),
                   TableRow(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Telefon belgisi"),
                     ),
-                    Text("${list[0].phone}"),
+                    Text("${list.phone}"),
                   ]),
-                  /*TableRow(children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child:  Text(
-                        "Barada : ",
-
-                      ),
-                    ),
-                    Text("")
-
-                  ]),*/
                 ],
               ),
             ),
             SizedBox(height: SWi * 0.05),
-            /* Container(
-              padding: EdgeInsets.symmetric(horizontal:SWi*0.),
-              //  alignment: Alignment.center,
-                child: ),*/
             ImgBtn(
               width: null,
               height: null,
@@ -331,9 +375,6 @@ Positioned(
               child: Align(
                 alignment: Alignment.center,
                 child: ImgBtn(
-                    /* boxShadow: [
-                   //   BoxShadow(color: Colors.blue, blurRadius: 1, spreadRadius: 0)
-                    ],*/
                     color: Colors.white,
                     width: SWi * 0.95,
                     height: null,
@@ -342,79 +383,11 @@ Positioned(
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(list[0].about),
+                        child: Text(list.about),
                       ),
                     )),
               ),
             ),
-
-            /* Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: SWi*0.02,vertical: SWi*0.01),
-                    child: ImgBtn(
-                      onTap: (){
-                        tellCall(list[0].phone);
-                      },
-                      shape: SWi*0.02,
-                      width: null,
-                      height: SWi*0.1,
-                      color: Color(0xff6900FE),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("JAŇ ETMEK",style: TextStyle(color: Colors.white),),
-                      ),
-                    ),
-                  ),
-                  // child: OutlinedButton(
-                  //   onPressed: () {
-                  //     Provider.of<UsesVar>(context, listen: false)
-                  //         .changeMark(-1, -1);
-                  //   },
-                  //   child: Text("Hemmesini görmek",
-                  //       style: TextStyle(
-                  //           color: Provider.of<UsesVar>(context).getMark()[1] == -1
-                  //               ? Color(0xff9747FF)
-                  //               : Colors.grey,
-                  //           fontSize: SWi * 0.035)),
-                  //   style: OutlinedButton.styleFrom(
-                  //     side: BorderSide(
-                  //         color: Provider.of<UsesVar>(context).getMark()[1] == -1
-                  //             ? Color(0xff9747FF)
-                  //             : Colors.grey,
-                  //         width: Provider.of<UsesVar>(context).getMark()[1] == -1
-                  //             ? 2
-                  //             : 1),
-                  //     shape: StadiumBorder(),
-                  //   ),
-                  // ),
-                ),
-              ],
-            ),*/
-
-            /* Row(
-              children: [
-                Container(
-                  //padding: EdgeInsets.all(SWi*0.02),
-                  child:
-                ClipRRect(
-                //  borderRadius: BorderRadius.circular(SWi*0.1),
-                  child: MaterialButton(
-
-                    onPressed: () {
-
-                    },
-                  //  height: SWi*0.09,
-                    color:  Color(0xff5408BF),
-                    child: Text(
-                      "JAŇ ETMEK",
-                      style: TextStyle(color: Colors.white,fontSize: SWi*0.05),
-                    ),
-                  ),
-                ),),
-              ],
-            )*/
           ]),
     );
   }

@@ -33,9 +33,7 @@ class Categori extends StatelessWidget {
                 ApiName: ApiTags.events,
                 Return: Json_Get(
                   jsonName: JsonTags.favorite,
-                 Return: AllPage(
-                    category_id: categoriId,
-                  ),
+                 Return: AllPage(),
                 ))));
       },
       child: Container(

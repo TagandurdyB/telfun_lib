@@ -28,11 +28,11 @@ class MainPage extends StatelessWidget {
               URL: "$IP/api/model",
               ApiName: ApiTags.model,
               Return: API_Get(
-                URL: "$IP/api/welayat",
-                ApiName: ApiTags.place,
+                URL: "$IP/api/categories",
+                ApiName: ApiTags.categori,
                 Return: API_Get(
-                    URL: "$IP/api/categories",
-                    ApiName: ApiTags.categori,
+                    URL: "$IP/api/welayat",
+                    ApiName: ApiTags.place,
                     Return: Main()),
               ),
             )));
@@ -50,10 +50,15 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> with SingleTickerProviderStateMixin {
   @override
   TabController selPage;
+  List<Widget> _listMain = [];
   @override
   void initState() {
     super.initState();
     selPage = TabController(vsync: this, length: 3);
+    _listMain = [
+      Slider_pro(),
+      Categories(),
+    ];
   }
 
   @override
@@ -62,18 +67,19 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  Widget build(BuildContext context) {
+  Future<void> _refresh() {
+    print("I am refreshing !!!");
+    return Future.delayed(Duration(seconds: 1)).then((value) => _listMain = [
+          Slider_pro(),
+          Categories(),
+        ]);
+  }
 
+  Widget build(BuildContext context) {
     // print(selPage);
     selPage.index = Provider.of<UsesVar>(context).witchNavBarSelect();
     return ScaffoldAll(
       IsSideBar: true,
-      /*  IsTabBar: Provider.of<UsesVar>(context).witchNavBarSelect()==1,
-        topBarHeight: Provider.of<UsesVar>(context).witchNavBarSelect()==1?0.25:0.15,
-      myTabs: [
-        Tab(text: 'Hemmesi'),
-        Tab(text: 'Model'),
-      ],*/
       IsMain: true,
       body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
@@ -82,20 +88,14 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
             Container(
               child: Container(
                 child: Container(
-                  child: ListView(
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      //MySlider1(),
-                      // MySlider(),
-                    /*  OutlinedButton(
-                        onPressed:(){
-                          Navigator.pushNamed(context, PageName.pageMark);
-                        },
-                        child: Text('Button'),
-                      ),*/
-                      Slider_pro(),
-                      Categories(),
-                    ],
+                  child: RefreshIndicator(
+                    backgroundColor: Color(0xff670FB1),
+                    color: Colors.white,
+                    onRefresh: _refresh,
+                    child: ListView(
+                      physics: BouncingScrollPhysics(),
+                      children: _listMain,
+                    ),
                   ),
                 ),
               ),
