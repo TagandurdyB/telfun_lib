@@ -142,13 +142,13 @@ class InCategory extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${list[0].place}",
+                      Text("${list[index].place}",
                           style: TextStyle(
                               fontSize: SWi * 0.037,
                               fontFamily: "NunitoRegular",
                               fontWeight: FontWeight.w500)),
                       Text(
-                          "${list[0].data.day}.${list[0].data.month}.${list[0].data.year}",
+                          "${list[index].data.day}.${list[index].data.month}.${list[index].data.year}",
                           style: TextStyle(
                               fontSize: SWi * 0.03,
                               fontFamily: "NunitoRegular",

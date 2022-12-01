@@ -324,13 +324,13 @@ class _DetalPageState extends State<DetalPage> {
                           )
                         ])),
                   ]),
-                  TableRow(children: [
+                  /*TableRow(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Ýyly"),
                     ),
                     Text("2022 .ý"),
-                  ]),
+                  ]),*/
                   TableRow(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),

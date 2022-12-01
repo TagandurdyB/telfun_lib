@@ -1,196 +1,110 @@
 import 'package:flutter/material.dart';
-import 'package:telfun/Models/DDBBase.dart';
-import '/ViewModels/Names.dart';
-import '/Views/widgets/DropDownBtn/DropDownBtn.dart';
 
 class DemoPage extends StatefulWidget {
   @override
-  _DemoPageState createState() => _DemoPageState();
+  State<DemoPage> createState() => _DemoPageState();
 }
 
 class _DemoPageState extends State<DemoPage> {
-  String Value;
-  String Valuee;
-  String valuee=DDBBase().getDate(DDBName.dDBLocation).value;
-  bool boolDrop=true;
-List<DropdownMenuItem<String>> menuItems=List();
+  bool _pinned = true;
+  bool _snap = false;
+  bool _floating = false;
 
-  Map web={
-    "1":"PHP0",
-    "2":"PHP1",
-    "3":"PHP2",
-  };
-  Map app={
-    "1":"Flutter0",
-    "2":"Flutter1",
-    "3":"Flutter2",
-  };
-  Map pc={
-    "1":"C",
-    "2":"C#",
-    "3":"C++",
-    "4":"C++2",
-  };
-
-  void populateWeb(){
-    for(String key in web.keys){
-      menuItems.add(
-        DropdownMenuItem(
-          value: web[key],
-          child: Text(web[key]),
-        )
-      );
-    }
-  }
-  void populateApp(){
-    for(String key in app.keys){
-      menuItems.add(
-          DropdownMenuItem(
-            value: app[key],
-            child: Text(app[key]),
-          )
-      );
-    }
-  }
-  void populatePC(){
-    for(String key in pc.keys){
-      menuItems.add(
-          DropdownMenuItem(
-            value: pc[key],
-            child: Text(pc[key]),
-          )
-      );
-    }
-  }
-
-  void valueChanged(String _value){
-    if(_value=="1") {
-      menuItems=[];
-      populateWeb();
-    }
-    if(_value=="2") {
-      menuItems=[];
-      populateApp();
-    }
-    if(_value=="3") {
-      menuItems=[];
-      populatePC();
-    }
-    setState(() {
-      Value=_value;
-      boolDrop=false;
-    });
-  }
-
-  void secondV(String _value){
-setState(() {
-  Valuee=_value;
-});
-  }
-
+// [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
+// turn can be placed in a [Scaffold.body].
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Demo Page"),
-        centerTitle: true,
-        backgroundColor: Colors.grey[900],
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.grey[800],
-        child: /*Column(
-          children: [
-            DropDownBtn(
-              onChanged:(String value){
-                setState(() {
-                  valuee=DDBBase().getDate(DDBName.dDBLocation).value;
-                });
-                print("${value}");
-              } ,
-              tag: DDBName.dDBLocation,
-              hideText: "salams",
-              items: [
-                DDBEl(id: 1, index: 0, value: "Asgabat"),
-                DDBEl(id: 2, index: 1, value: "Balkan"),
-                DDBEl(id: 3, index: 2, value: "Lebap"),
-                DDBEl(id: 4, index: 3, value: "Dasoguz"),
-                DDBEl(id: 5, index: 4, value: "Mary"),
-                DDBEl(id: 6, index: 5, value: "Ahal"),
-              ],
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: _pinned,
+            snap: _snap,
+            floating: _floating,
+            expandedHeight: 200.0,
+            flexibleSpace: const FlexibleSpaceBar(
+              title: Text('SliverAppBar',style: TextStyle(color: Colors.black),),
+              background: FlutterLogo(),
             ),
-            DropDownBtn(
-              onChanged:(String value){
-                setState(() {
-                  valuee=DDBBase().getDate(DDBName.dDBColor).value;
-                });
-                print("${value}");
-              } ,
-              tag: DDBName.dDBColor,
-              hideText: "salams",
-              items: [
-                DDBEl(id: 1, index: 0, value: "Asgabat"),
-                DDBEl(id: 2, index: 1, value: "Balkan"),
-                DDBEl(id: 3, index: 2, value: "Lebap"),
-                DDBEl(id: 4, index: 3, value: "Dasoguz"),
-                DDBEl(id: 5, index: 4, value: "Mary"),
-                DDBEl(id: 6, index: 5, value: "Ahal"),
-              ],
-            ),
-            DropDownBtn(
-              onChanged:(String value){
-                setState(() {
-                  valuee=DDBBase().getDate(DDBName.dDBModel).value;
-                });
-                print("${value}");
-              } ,
-              tag: DDBName.dDBModel,
-              hideText: "salams",
-              items: [
-                DDBEl(id: 1, index: 0, value: "Asgabat"),
-                DDBEl(id: 2, index: 1, value: "Balkan"),
-                DDBEl(id: 3, index: 2, value: "Lebap"),
-                DDBEl(id: 4, index: 3, value: "Dasoguz"),
-                DDBEl(id: 5, index: 4, value: "Mary"),
-                DDBEl(id: 6, index: 5, value: "Ahal"),
-              ],
-            ),
-            Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "${DDBBase().getDate(DDBName.dDBLocation).value}",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ))
-          ],
-        )*/
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          DropdownButton<String>(
-            value: Value,
-              items: [
-            DropdownMenuItem(child: Text("one"),value: "1"),
-            DropdownMenuItem(child: Text("Two"),value: "2"),
-            DropdownMenuItem(child: Text("Three"),value: "3"),
-          ],
-          onChanged: (_value)=>valueChanged(_value),
-            hint: Text("Seleck filter"),
           ),
-            DropdownButton<String>(
-            //  value: Value,
-              items: menuItems,
-              onChanged:boolDrop? null:(_value)=>secondV(_value),/*(_value){
-                setState(() {
-                  Value=_value;
-                });
-              },*/
-              hint: Text("Seleck color"),
-              disabledHint: Text("First select filter"),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 20,
+              child: Center(
+                child: Text('Scroll to see the SliverAppBar in effect.'),
+              ),
             ),
-            Text("${Value}"),
-            Text("${Valuee}"),
-        ],),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return Container(
+                  color: index.isOdd ? Colors.white : Colors.black12,
+                  height: 100.0,
+                  child: Center(
+                    child: Text('$index', textScaleFactor: 5),
+                  ),
+                );
+              },
+              childCount: 20,
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: OverflowBar(
+            overflowAlignment: OverflowBarAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('pinned'),
+                  Switch(
+                    onChanged: (bool val) {
+                      setState(() {
+                        _pinned = val;
+                      });
+                    },
+                    value: _pinned,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('snap'),
+                  Switch(
+                    onChanged: (bool val) {
+                      setState(() {
+                        _snap = val;
+                        // Snapping only applies when the app bar is floating.
+                        _floating = _floating || _snap;
+                      });
+                    },
+                    value: _snap,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text('floating'),
+                  Switch(
+                    onChanged: (bool val) {
+                      setState(() {
+                        _floating = val;
+                        _snap = _snap && _floating;
+                      });
+                    },
+                    value: _floating,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -117,7 +117,7 @@ class MyDrawer extends StatelessWidget {
                             color: Color(0xff6A00FF),
                             size: SWi * 0.08,
                           )),
-                      title: Text("Halanlarym"),
+                      title: Text("Bellänlerim"),
                     ),
                     Visibility(
                         visible: UserLoginDetals.getIsLogin(),
@@ -232,7 +232,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                     /////////////////////////////////////////////
                     Visibility(
-                      visible: false,
+                      visible: true,
                       child: DrawBarBtn(
                         titleLeft: SWi * 0.15,
                         onTap: (context) {

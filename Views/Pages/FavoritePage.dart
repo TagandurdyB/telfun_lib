@@ -35,7 +35,7 @@ class _FavoritePageState extends State<FavoritePage> {
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.all(SWi * 0.03),
               child: Text(
-                "Halanlarym",
+                "Bellänlerim",
                 style: TextStyle(
                     fontSize: SWi * 0.06, fontWeight: FontWeight.w600),
               )),
