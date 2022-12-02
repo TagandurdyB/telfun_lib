@@ -34,9 +34,26 @@ Widget telfun= ShaderMask(
   },
   child:  Text('Telfun',style:TextStyle(fontSize:SWi*0.06)),
 );
-
+List _event;
 TabController tabController;
 class UsesVar extends ChangeNotifier {
+
+
+
+  /////////////////////////////////////////
+  List getEvent(){
+    return _event;
+  }
+  void changeEvents(List _list){
+    _event=_list;
+    notifyListeners();
+  }
+  void changeEvent(_obj,index){
+    _event[index]=_obj;
+    notifyListeners();
+  }
+  /////////////////////////////////////////
+
 
   void changeMark(i,j) {
     _selectMarkId=i;

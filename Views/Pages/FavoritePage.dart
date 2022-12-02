@@ -8,9 +8,19 @@ import '/Views/widgets/InPlitca.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 import '/Models/Public.dart';
 
-class FavoritePage extends StatefulWidget {
+class FavoritePage extends StatelessWidget {
   @override
-  _FavoritePageState createState() => _FavoritePageState();
+  Widget build(BuildContext context) {
+    return Json_Get(
+      jsonName: JsonTags.favorite,
+      Return: ScaffoldAll(body: FavoriteView()),
+    );
+  }
+}
+
+class FavoriteView extends StatefulWidget {
+  @override
+  _FavoriteViewState createState() => _FavoriteViewState();
 }
 
 void removeElemJsonFavorite(ElemEvents _elem) {
@@ -18,48 +28,50 @@ void removeElemJsonFavorite(ElemEvents _elem) {
   JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
 }
 
-class _FavoritePageState extends State<FavoritePage> {
+class _FavoriteViewState extends State<FavoriteView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().forEach((element) {
+print("name:${element.name} is_new:${element.is_new}");
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    List _favorite =
-        Get_Lists(listTag: JsonTags.favorite, isApi: false).getList();
-/*    _favorite.forEach((element) {
-      print("*+*+*+***+*+*+*+*+*++*favoritePage:${element.name}");
-    });*/
-    return Json_Get(
-      jsonName: JsonTags.favorite,
-      Return: ScaffoldAll(
-          body: Column(
-        children: [
-          Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.all(SWi * 0.03),
-              child: Text(
-                "Bellänlerim",
-                style: TextStyle(
-                    fontSize: SWi * 0.06, fontWeight: FontWeight.w600),
-              )),
-          Expanded(
-            child: Container(
-              child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: _favorite.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        child: InCategory(
-                      index: index,
-                      list: _favorite,
-                      favoriteFunc: () async {
-                        removeElemJsonFavorite(_favorite[index]);
-                        await Future.delayed(Duration(milliseconds: 50))
-                            .then((value) => setState(() {}));
-                      },
-                    ));
-                  }),
-            ),
+    return Column(
+      children: [
+        Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.all(SWi * 0.03),
+            child: Text(
+              "Bellänlerim",
+              style: TextStyle(
+                  fontSize: SWi * 0.06, fontWeight: FontWeight.w600),
+            )),
+        Expanded(
+          child: Container(
+            child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
+                itemBuilder: (context, index) {
+                  return Container(
+                      child: InCategory(
+                       // index: index,
+                          obj: Get_Lists(listTag: JsonTags.favorite, isApi: false).getList()[index],
+                        //list: Get_Lists(listTag: JsonTags.favorite, isApi: false).getList(),
+                        favoriteFunc: () async {
+                          removeElemJsonFavorite(Get_Lists(listTag: JsonTags.favorite, isApi: false).getList()[index]);
+                          await Future.delayed(Duration(milliseconds: 50))
+                              .then((value) => setState(() {}));
+                        },
+                      ));
+                }),
           ),
-        ],
-      )),
+        ),
+      ],
     );
   }
 }

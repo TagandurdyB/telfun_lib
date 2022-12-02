@@ -13,19 +13,19 @@ import '/Views/Pages/SearchPage.dart';
 import '/Views/Pages/SetingsPage.dart';
 
 class PageName {
-  static String pageMain = "/MainPage";
-  static String pageSetting = "/SettingPage";
-  static String pageSearch = "/SearchPage";
-  static String pageLogo = "/LogoPage";
-  static String pageLogIn = "/LogIn";
-  static String pageSignUp = "/SignUp";
-  static String pageVerification = "/Verification";
-  static String pageDetal = "/DetalPage";
-  static String pageDemo = "/DetalPage";
-  static String pageMark = "/MarkPage";
-  static String pageFavorite = "/FavoritePage";
-  static String pageAbout = "/AboutPage";
-  static String pageShop = "/ShopPage";
+  static const String pageMain = "/MainPage";
+  static const String pageSetting = "/SettingPage";
+  static const String pageSearch = "/SearchPage";
+  static const String pageLogo = "/LogoPage";
+  static const String pageLogIn = "/LogIn";
+  static const String pageSignUp = "/SignUp";
+  static const String pageVerification = "/Verification";
+  static const String pageDetal = "/DetalPage";
+  static const String pageDemo = "/DetalPage";
+  static const String pageMark = "/MarkPage";
+  static const String pageFavorite = "/FavoritePage";
+  static const String pageAbout = "/AboutPage";
+  static const String pageShop = "/ShopPage";
 
   final routes = {
     pageMain: (context) => MainPage(),

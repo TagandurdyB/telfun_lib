@@ -555,6 +555,7 @@ class localConverter {
   ElemEvents mapToFavorite(Map _map) {
     try {
       return ElemEvents(
+        is_new: _map["is_new"],
         id: _map["id"],
         data: DateTime.parse(_map["data"]),
         place: _map["place"],
@@ -573,6 +574,7 @@ class localConverter {
   Map favoriteToMap(ElemEvents _elem) {
     try {
       return {
+        "is_new":_elem.is_new,
         "id": _elem.id,
         "data": _elem.data.toString(),
         "place": _elem.place,

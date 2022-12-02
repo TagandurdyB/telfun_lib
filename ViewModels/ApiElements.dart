@@ -65,6 +65,9 @@ class ElemEvents {
       this.id,
       this.name,
       this.public_image});
+  void changeFavorite(bool _is){
+    favorite=_is;
+  }
 }
 
 class ElemColor {

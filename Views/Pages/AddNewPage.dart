@@ -43,7 +43,7 @@ class _AddNewPageState extends State<AddNewPage> {
     DDColor = DDBEl(index: -1);
     DDCategory = DDBEl(index: -1, value: "Bölümler");
     DDMark = DDBEl(index: -1, value: "Marka", id: 0);
-    DDModel = DDBEl(index: -1, value: "Model",id:0);
+    DDModel = DDBEl(index: -1, value: "Model", id: 0);
     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
   }
 
@@ -55,8 +55,19 @@ class _AddNewPageState extends State<AddNewPage> {
             element.category_id == DDCategory.id &&
             element.mark_id == DDMark.id)
         .toList();
-    print("sdasdhsi:${_modelList}");
   }
+
+ // List _colors=[];
+/*  void colorFunc() {
+    _colors = Get_Lists(listTag: ApiTags.model)
+        .getList()
+        .where((element) => element.id == DDModel.id)
+        .toList()[0]
+        .colors;
+    _colors.forEach((element) {
+      print("sdasdhsi:${element.tm}");
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +100,7 @@ class _AddNewPageState extends State<AddNewPage> {
                     (index) {
                   ElemCategory getlist =
                       Get_Lists(listTag: ApiTags.categori).getList()[index];
-                 // print("LIst:${getlist.tm}");
+                  // print("LIst:${getlist.tm}");
                   return DDBEl(value: getlist.tm, id: getlist.id, index: index);
                 }),
                 onChanged: (DDBEl _element) {
@@ -173,8 +184,6 @@ class _AddNewPageState extends State<AddNewPage> {
                 },
               ),
               DropDownBtnUnVal(
-                // hideText: widget.hidden,
-                // onTap:widget.onTop,
                 tag: DDBName.dDBColor,
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -190,21 +199,21 @@ class _AddNewPageState extends State<AddNewPage> {
                     DDColor.index == -1 ? Container() : DDColor.child,
                   ],
                 ),
-                items: DDBBase().getDate(DDBName.dDBModel).index == -1
+                items: DDModel.index == -1
                     ? [DDBEl(id: 0, index: -1, value: "")]
                     : List.generate(
                         Get_Lists(listTag: ApiTags.model)
-                                .getList()[
-                                    DDBBase().getDate(DDBName.dDBModel).index]
+                                .getList()
+                                .where((element) => element.id == DDModel.id)
+                                .toList()[0]
                                 .colors
                                 .length ??
                             0, (index) {
-                        var getlist = Get_Lists(listTag: ApiTags.model)
-                            .getList()[
-                                DDBBase().getDate(DDBName.dDBModel).index]
+                        var getlist =   Get_Lists(listTag: ApiTags.model)
+                            .getList()
+                            .where((element) => element.id == DDModel.id)
+                            .toList()[0]
                             .colors[index];
-                        int code =
-                            int.parse("0xff${getlist.code.substring(1)}");
                         return DDBEl(
                             child: Row(
                               children: [
@@ -261,7 +270,6 @@ class _AddNewPageState extends State<AddNewPage> {
                   DDBEl(id: 6, index: 5, value: "Daşoguz"),
                 ],
                 onChanged: (DDBEl _element) {
-                  DDPlace = _element;
                   canOpenAddBtn(context);
                   List _etraps = Get_Lists(listTag: ApiTags.place)
                       .getList()[_element.id - 1]
@@ -274,8 +282,8 @@ class _AddNewPageState extends State<AddNewPage> {
                                   (index) => TextButton(
                                         onPressed: () {
                                           Navigator.pop(context);
-                                          DDPlace.value +=
-                                              " ${_etraps[index].name}";
+                                          DDPlace.value =
+                                              "${_element.value} ${_etraps[index].name}";
                                           DDPlace.id = _etraps[index].id;
                                           setState(() {});
                                           print(
@@ -454,9 +462,9 @@ class _AddNewPageState extends State<AddNewPage> {
                       _isUpload = false;
                       _about = false;
                       MySnack(
-                          textColor: Colors.white,
-                          message: "Bildiriş goşuldy!",
-                          textBgColor: Color(0xff6A11AF))
+                              textColor: Colors.white,
+                              message: "Bildiriş goşuldy!",
+                              textBgColor: Color(0xff6A11AF))
                           .pushSnack(context);
                       Provider.of<UsesVar>(context, listen: false)
                           .navBarSelect(0);

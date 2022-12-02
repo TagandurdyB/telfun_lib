@@ -123,7 +123,6 @@ if (d==0&&imageOk){
                         DDBEl(id: 6, index: 5, value: "Daşoguz"),
                       ],
                       onChanged: (DDBEl _element) {
-                        DDPlace = _element;
                         canOpenAddBtn(context);
                         List _etraps= Get_Lists(listTag: ApiTags.place)
                             .getList()[_element.id - 1]
@@ -137,8 +136,8 @@ if (d==0&&imageOk){
                                         TextButton(
                                           onPressed: () {
                                             Navigator.pop(context);
-                                            DDPlace.value +=
-                                            " ${_etraps[index].name}";
+                                            DDPlace.value =
+                                            "${_element.value} ${_etraps[index].name}";
                                             DDPlace.id = _etraps[index].id;
                                             setState(() {});
                                             print(

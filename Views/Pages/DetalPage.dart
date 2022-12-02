@@ -18,8 +18,11 @@ class DetalPage extends StatefulWidget {
   final List image;*/
   final int /*index,*/ id, index;
   final bool isfavorite;
+  final ElemEvents obj;
   DetalPage(
-      {this.isfavorite = false,
+      {
+        this.obj,
+        this.isfavorite = false,
       this.index,
       Key key,
       /*  @required this.image,
@@ -117,17 +120,13 @@ class _DetalPageState extends State<DetalPage> {
                 bottom: SWi * 0.18,
                 right: SWi * 0.1,
                 child: FavoriteBtn(
+                  obj:widget.obj,
                   index: widget.index,
                   favorite: widget.isfavorite,
                   radius: SWi * 0.15,
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, widget.isfavorite ? 3 : 2.5),
-                        color: widget.isfavorite
-                            ? Color(0xff6900FE)
-                            : Color(0xffD7BFFC),
-                        blurRadius: widget.isfavorite ? 20 : 2.5)
-                  ],
+                  enableShadow: true,
+                  boxShadowActivColor: Color(0xff6900FE),
+                  boxShadowPacivColor: Color(0xffD7BFFC),
                 ),
                 /*ImgBtn(
                   onTap: (){
@@ -314,15 +313,17 @@ class _DetalPageState extends State<DetalPage> {
                     ),
                     Visibility(
                         visible: list.is_new,
-                        child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
-                          Text(list.is_new ? "${list.color.tm}" : ""),
-                          ImgBtn(
-                            width: SWi * 0.05,
-                            height: SWi * 0.05,
-                            shape: SWi * 0.01,
-                            color: list.color.toColor(),
-                          )
-                        ])),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(list.is_new ? "${list.color.tm}" : ""),
+                              ImgBtn(
+                                width: SWi * 0.05,
+                                height: SWi * 0.05,
+                                shape: SWi * 0.01,
+                                color: list.color.toColor(),
+                              )
+                            ])),
                   ]),
                   /*TableRow(children: [
                     Padding(

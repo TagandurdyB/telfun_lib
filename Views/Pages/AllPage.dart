@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
@@ -18,65 +19,71 @@ class AllPage extends StatefulWidget {
 
 class _AllPageState extends State<AllPage> {
   List list;
-  List favorites, events = [];
+  List favorites = [], product, _events = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    events = Get_Lists(listTag: ApiTags.events)
-            .getList() /*.forEach((element) {
-       events.addAll(element);
-     })*/
-        ;
-    print("initState");
-    watchAll(events);
+    /*events=Get_Lists(listTag: ApiTags.events)
+        .getList().map((e) => e.index=).toList();*/
+    _events = new Get_Lists(listTag: ApiTags.events).getList();
+    print("initState=========================");
+    _events.forEach((element) {
+      print(
+          "elemName:${element.name}  elemId:${element.id} elemFavorite:${element.favorite}");
+    });
+    print("===================================");
+    fillFavorite(new Get_Lists(listTag: ApiTags.events).getList());
   }
 
-  void watchAll(List _val) {
+  void fillFavorite(List _val) {
     favorites = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
+
+    // Provider.of<Events>(context,listen: false).changeEvents(Get_Lists(listTag: ApiTags.events).getList());
+    List _events2 = _val;
     if (favorites.isNotEmpty) {
-      List _events = _val;
-      /*favorites.forEach((element) {
-        if(element.index<_events.length)
-          if(_events[element.index].id==element.id)
-          _events[element.index].favorite = true;
-      });*/
-/*      _events.forEach((element) {
-        favorites.forEach((elementFavorite) {
-          if(element.id==elementFavorite.id)
-            _events[element.index].favorite = true;
-        });
-      });*/
-      for (int i = 0; i < _events.length; i++) {
-        for (int j = 0; j < favorites.length; j++) {
-          if (favorites[j].id == _events[i].id) {
-            _events[i].favorite = true;
+      for (int i = 0; i < _events2.length; i++) {
+        List _favorite = favorites;
+        for (int j = 0; j < _favorite.length; j++) {
+          if (_favorite[j].id == _events2[i].id) {
+            _events2[i].changeFavorite(true);
+            _favorite.removeAt(j);
+            break;
           }
         }
       }
-      print("favorite IsNot empety!!!");
-      _events.forEach((element) {
-        print("${element.favorite}  ${element.name}  ${element.id}");
+     // Provider.of<UsesVar>(context,listen: false).changeEvents(_events2);
+      print("1=========================");
+      Get_Lists(listTag: ApiTags.events).getList().forEach((element) {
+        print(
+            "elemName:${element.name}  elemId:${element.id} elemFavorite:${element.favorite}");
       });
-      list = _events;
+      print("===================================");
+
+      print("favorite IsNot empety!!!");
+      /* _events.forEach((element) {
+        print("${element.favorite}  ${element.name}  ${element.id}");
+      });*/
+      list = _events2;
     } else {
       print("favorite empety!!!");
-      events.forEach((element) {
+      /*events.forEach((element) {
         print("${element.favorite}  ${element.name}  ${element.id}");
-      });
-      list = events;
+      });*/
+      list = _events;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    events.forEach((element) {
-      print("sajkdah Is_new:${element.is_new}   id:${element.id}");
-    });
+    // _events.forEach((element) {
+    //   print(
+    //       "sajkdah Is_new:${element.is_new}   id:${element.id}  favorite:${element.favorite}");
+    // });
     return ScaffoldAll(
       EnableBotomMenu: true,
-     appBarBottom: SearchBtn(),
+      appBarBottom: SearchBtn(),
       topBarHeight: 0.33,
       body: CustomScrollView(physics: BouncingScrollPhysics(), slivers: [
         ////////////////////////////////////////////////
@@ -85,101 +92,116 @@ class _AllPageState extends State<AllPage> {
           pinned: false,
           snap: false,
           floating: false,
-          expandedHeight: SWi*0.54,
-          flexibleSpace:  FlexibleSpaceBar(
+          expandedHeight: SWi * 0.54,
+          flexibleSpace: FlexibleSpaceBar(
             background: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
-                  alignment: Alignment.centerRight,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, PageName.pageMark);
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+                        alignment: Alignment.centerRight,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, PageName.pageMark);
+                          },
+                          child: Text("Markalar",
+                              style: TextStyle(
+                                  fontSize: SWi * 0.05,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.black)),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: Colors.black, width: 2),
+                            shape: StadiumBorder(),
+                          ),
+                        ),
+                      ),
+                      //  SortBtn(),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+                        alignment: Alignment.centerRight,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            fillFavorite(_events);
+                            Future.delayed(Duration(milliseconds: 1000))
+                                .then((value) => setState(() {}));
+                            Provider.of<UsesVar>(context, listen: false)
+                                .changeMark(-1, -1);
+                          },
+                          child: Text("Ählisi",
+                              style: TextStyle(
+                                  color: Provider.of<UsesVar>(context)
+                                              .getMark()[1] ==
+                                          -1
+                                      ? Color(0xff9747FF)
+                                      : Colors.grey,
+                                  fontSize: SWi * 0.035)),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                                color: Provider.of<UsesVar>(context)
+                                            .getMark()[1] ==
+                                        -1
+                                    ? Color(0xff9747FF)
+                                    : Colors.grey,
+                                width: Provider.of<UsesVar>(context)
+                                            .getMark()[1] ==
+                                        -1
+                                    ? 2
+                                    : 1),
+                            shape: StadiumBorder(),
+                          ),
+                        ),
+                      ),
+                    ]),
+                Visibility(
+                  visible:
+                      Get_Lists(listTag: ApiTags.mark).getList().length > 0,
+                  child: MarkScrol(
+                    onTab: () {
+                      List _list = _events
+                          .where((element) =>
+                              element.mark_id ==
+                              Provider.of<UsesVar>(context, listen: false)
+                                  .getMark()[0])
+                          .toList();
+                      fillFavorite(_list);
+                      //list = _list;
+                      Future.delayed(Duration(milliseconds: 50))
+                          .then((value) {
+                        setState(() {});
+                      });
                     },
-                    child: Text("Markalar",
+                  ),
+                ),
+                Container(
+                    //color: Colors.red,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SWi * 0.06, vertical: SWi * 0.05),
+                    child: Text("Bildirişler",
                         style: TextStyle(
                             fontSize: SWi * 0.05,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black)),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.black, width: 2),
-                      shape: StadiumBorder(),
-                    ),
-                  ),
-                ),
-                //  SortBtn(),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
-                  alignment: Alignment.centerRight,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      watchAll(events);
-                      setState(() {});
-                      Provider.of<UsesVar>(context, listen: false).changeMark(-1, -1);
-                    },
-                    child: Text("Ählisi",
-                        style: TextStyle(
-                            color: Provider.of<UsesVar>(context).getMark()[1] == -1
-                                ? Color(0xff9747FF)
-                                : Colors.grey,
-                            fontSize: SWi * 0.035)),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                          color: Provider.of<UsesVar>(context).getMark()[1] == -1
-                              ? Color(0xff9747FF)
-                              : Colors.grey,
-                          width: Provider.of<UsesVar>(context).getMark()[1] == -1
-                              ? 2
-                              : 1),
-                      shape: StadiumBorder(),
-                    ),
-                  ),
-                ),
-              ]),
-              Visibility(
-                visible: Get_Lists(listTag: ApiTags.mark).getList().length > 0,
-                child: MarkScrol(
-                  onTab: () {
-                    List _list = events
-                        .where((element) =>
-                    element.mark_id ==
-                        Provider.of<UsesVar>(context, listen: false).getMark()[0])
-                        .toList();
-                    watchAll(_list);
-                    //list = _list;
-                    Future.delayed(Duration(milliseconds: 50)).then((value) {
-                      setState(() {});
-                    });
-                  },
-                ),
-              ),
-              Container(
-                //color: Colors.red,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SWi * 0.06, vertical: SWi * 0.05),
-                  child: Text("Bildirişler",
-                      style: TextStyle(
-                          fontSize: SWi * 0.05, fontWeight: FontWeight.w800))),
-            ],),
+                            fontWeight: FontWeight.w800))),
+              ],
+            ),
           ),
         ),
         ////////////////////////////////////////////////
         SliverList(
-         // alignment: Alignment.center,
+          // alignment: Alignment.center,
           //height: 100,
           // width: 100,
           delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index)=>
-            InCategory(
-              list: list,
-              index: index,
+            (BuildContext context, int index) => InCategory(
+             // list: Provider.of<UsesVar>(context).getEvent(),
+             // index: index,
+              obj: list[index],
             ),
-        childCount: list.length,
-                   ),
+            childCount: list.length,
+          ),
         ),
-
+        ////////////////////////////////////////////////
       ]),
     );
   }

@@ -1,7 +1,8 @@
 import '/Models/SharedPref.dart';
 
 SharedPLogin UserLoginDetals = SharedPLogin();
-ShPUser UserProperties = ShPUser();
+ShPUser
+UserProperties = ShPUser();
 
 class ShPUser {
   final int id, isban;

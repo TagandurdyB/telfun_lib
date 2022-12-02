@@ -76,7 +76,7 @@ class JsonListCacher {
 
   Future<List> load() async {
     File file = await Cacher.getDirectory(jsonName);
-    List _result;
+    List _result=[];
     if (file.existsSync()) {
       List _list = await Cacher.readJson(jsonName);
       print("Loading Finished Sucsses!");

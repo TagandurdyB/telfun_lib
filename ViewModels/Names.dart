@@ -1,19 +1,19 @@
 class DDBName {
-  static String dDBLocation = "tagLocation";
-  static String dDBMark = "tagMark";
-  static String dDBCategory = "tagCategories";
-  static String dDBModel = "tagModel";
-  static String dDBColor = "tagColor";
+  static const String dDBLocation = "tagLocation";
+  static const String dDBMark = "tagMark";
+  static const String dDBCategory = "tagCategories";
+  static const String dDBModel = "tagModel";
+  static const String dDBColor = "tagColor";
 }
 class ApiTags {
-  static String img = "img";
-  static String categori = "category";
-  static String mark = "mark";
-  static String events = "events";
-  static String model = "model";
-  static String detal = "eventDetal";
-  static String place="welavats";
+  static const String img = "img";
+  static const String categori = "category";
+  static const String mark = "mark";
+  static const String events = "events";
+  static const String model = "model";
+  static const String detal = "eventDetal";
+  static const String place="welavats";
 }
 class JsonTags{
-  static String favorite = "favorite";
+  static const String favorite = "favorite";
 }

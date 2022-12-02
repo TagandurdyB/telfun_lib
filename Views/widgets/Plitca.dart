@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
@@ -20,12 +21,11 @@ class Categori extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
         Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
         // Provider.of<UsesVar>(context, listen: false).Select(0);
         int categoriId =
             Get_Lists(listTag: ApiTags.categori).getList()[index].id;
-        Provider.of<UsesVar>(context,listen: false).changeCategoryIndex(index);
+        Provider.of<UsesVar>(context, listen: false).changeCategoryIndex(index);
         print("CategoryID:$categoriId");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => API_Get(
@@ -33,7 +33,7 @@ class Categori extends StatelessWidget {
                 ApiName: ApiTags.events,
                 Return: Json_Get(
                   jsonName: JsonTags.favorite,
-                 Return: AllPage(),
+                  Return: AllPage(),
                 ))));
       },
       child: Container(
