@@ -285,6 +285,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                           DDPlace.value =
                                               "${_element.value} ${_etraps[index].name}";
                                           DDPlace.id = _etraps[index].id;
+                                          DDPlace.index=0;
                                           setState(() {});
                                           print(
                                               "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");

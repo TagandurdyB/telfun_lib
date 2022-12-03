@@ -68,6 +68,15 @@ class ElemEvents {
   void changeFavorite(bool _is){
     favorite=_is;
   }
+
+  List<int> idList(List objList) {
+    List<int> _list = objList.map((e) => e.id).toList().cast<int>();
+    return _list;
+  }
+  List<int> markIdList(List objList) {
+    List<int> _list = objList.map((e) => e.mark_id).toList().cast<int>();
+    return _list;
+  }
 }
 
 class ElemColor {

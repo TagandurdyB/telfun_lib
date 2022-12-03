@@ -1,8 +1,10 @@
+import 'package:telfun/Views/Pages/Demo/Menue.dart';
+
 import '/Views/Pages/ShopPage.dart';
 import '/Views/Pages/AboutPage.dart';
 import '/Views/Pages/FavoritePage.dart';
 import '/Views/Pages/ModelPage.dart';
-import '/Views/Pages/DemoPage.dart';
+import '../Views/Pages/Demo/Sliver/DemoSliver.dart';
 import '/Views/Login/LoginPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
@@ -36,7 +38,7 @@ class PageName {
     pageSignUp: (context) => SignUpPage(),
     pageVerification: (context) => VerificationPage(),
     pageDetal: (context) => DetalPage(),
-    pageDemo: (context) => DemoPage(),
+    pageDemo: (context) => DemoMenue(),
     pageMark: (context) => ModelPage(),
     pageFavorite: (context) => FavoritePage(),
     pageAbout: (context) => AboutPage(),

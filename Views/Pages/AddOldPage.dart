@@ -139,6 +139,7 @@ if (d==0&&imageOk){
                                             DDPlace.value =
                                             "${_element.value} ${_etraps[index].name}";
                                             DDPlace.id = _etraps[index].id;
+                                            DDPlace.index=0;
                                             setState(() {});
                                             print(
                                                 "value:${DDPlace

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
@@ -18,69 +19,42 @@ class AllPage extends StatefulWidget {
 }
 
 class _AllPageState extends State<AllPage> {
-  List list;
-  List favorites = [], product, _events = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    /*events=Get_Lists(listTag: ApiTags.events)
-        .getList().map((e) => e.index=).toList();*/
-    _events = new Get_Lists(listTag: ApiTags.events).getList();
-    print("initState=========================");
-    _events.forEach((element) {
-      print(
-          "elemName:${element.name}  elemId:${element.id} elemFavorite:${element.favorite}");
-    });
-    print("===================================");
-    fillFavorite(new Get_Lists(listTag: ApiTags.events).getList());
-  }
+  List list = [];
 
   void fillFavorite(List _val) {
-    favorites = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
-
-    // Provider.of<Events>(context,listen: false).changeEvents(Get_Lists(listTag: ApiTags.events).getList());
-    List _events2 = _val;
-    if (favorites.isNotEmpty) {
-      for (int i = 0; i < _events2.length; i++) {
-        List _favorite = favorites;
+    final favoriteProvider = Provider.of<EventsFavoritProvid>(context);
+    //List _events=eventProvider.objs;*/
+    if (favoriteProvider.objs.isNotEmpty) {
+      for (int i = 0; i < _val.length; i++) {
+        List _favorite = favoriteProvider.objs;
         for (int j = 0; j < _favorite.length; j++) {
-          if (_favorite[j].id == _events2[i].id) {
-            _events2[i].changeFavorite(true);
+          if (_favorite[j].id == _val[i].id) {
+            _val[i].changeFavorite(true);
             _favorite.removeAt(j);
             break;
           }
         }
       }
-     // Provider.of<UsesVar>(context,listen: false).changeEvents(_events2);
-      print("1=========================");
-      Get_Lists(listTag: ApiTags.events).getList().forEach((element) {
-        print(
-            "elemName:${element.name}  elemId:${element.id} elemFavorite:${element.favorite}");
-      });
-      print("===================================");
-
-      print("favorite IsNot empety!!!");
-      /* _events.forEach((element) {
-        print("${element.favorite}  ${element.name}  ${element.id}");
-      });*/
-      list = _events2;
+      list = _val;
     } else {
-      print("favorite empety!!!");
-      /*events.forEach((element) {
-        print("${element.favorite}  ${element.name}  ${element.id}");
-      });*/
-      list = _events;
+      final eventProvider = Provider.of<EventsProvid>(context);
+      list = eventProvider.objs;
     }
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //fillFavorite(new Get_Lists(listTag: ApiTags.events).getList());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // _events.forEach((element) {
-    //   print(
-    //       "sajkdah Is_new:${element.is_new}   id:${element.id}  favorite:${element.favorite}");
-    // });
+    final provider = Provider.of<EventsFavoritProvid>(context);
+    final eventProvider = Provider.of<EventsProvid>(context);
+    final markProvider = Provider.of<UsesVar>(context);
+    fillFavorite(eventProvider.objs);
     return ScaffoldAll(
       EnableBotomMenu: true,
       appBarBottom: SearchBtn(),
@@ -97,84 +71,26 @@ class _AllPageState extends State<AllPage> {
             background: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
-                        alignment: Alignment.centerRight,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, PageName.pageMark);
-                          },
-                          child: Text("Markalar",
-                              style: TextStyle(
-                                  fontSize: SWi * 0.05,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black)),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: Colors.black, width: 2),
-                            shape: StadiumBorder(),
-                          ),
-                        ),
-                      ),
-                      //  SortBtn(),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
-                        alignment: Alignment.centerRight,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            fillFavorite(_events);
-                            Future.delayed(Duration(milliseconds: 1000))
-                                .then((value) => setState(() {}));
-                            Provider.of<UsesVar>(context, listen: false)
-                                .changeMark(-1, -1);
-                          },
-                          child: Text("Ählisi",
-                              style: TextStyle(
-                                  color: Provider.of<UsesVar>(context)
-                                              .getMark()[1] ==
-                                          -1
-                                      ? Color(0xff9747FF)
-                                      : Colors.grey,
-                                  fontSize: SWi * 0.035)),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                                color: Provider.of<UsesVar>(context)
-                                            .getMark()[1] ==
-                                        -1
-                                    ? Color(0xff9747FF)
-                                    : Colors.grey,
-                                width: Provider.of<UsesVar>(context)
-                                            .getMark()[1] ==
-                                        -1
-                                    ? 2
-                                    : 1),
-                            shape: StadiumBorder(),
-                          ),
-                        ),
-                      ),
-                    ]),
+                TopMark(context),
                 Visibility(
                   visible:
                       Get_Lists(listTag: ApiTags.mark).getList().length > 0,
                   child: MarkScrol(
                     onTab: () {
-                      List _list = _events
+                      /*  List _list = eventProvider.objs
                           .where((element) =>
                               element.mark_id ==
                               Provider.of<UsesVar>(context, listen: false)
                                   .getMark()[0])
                           .toList();
-                      fillFavorite(_list);
-                      //list = _list;
-                      Future.delayed(Duration(milliseconds: 50))
-                          .then((value) {
+                     // fillFavorite(_list);
+                      Future.delayed(Duration(milliseconds: 50)).then((value) {
                         setState(() {});
-                      });
+                      });*/
                     },
                   ),
                 ),
+                ////////////////////////////////////////////////
                 Container(
                     //color: Colors.red,
                     padding: EdgeInsets.symmetric(
@@ -189,21 +105,84 @@ class _AllPageState extends State<AllPage> {
         ),
         ////////////////////////////////////////////////
         SliverList(
-          // alignment: Alignment.center,
-          //height: 100,
-          // width: 100,
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) => InCategory(
-             // list: Provider.of<UsesVar>(context).getEvent(),
-             // index: index,
-              obj: list[index],
-            ),
-            childCount: list.length,
-          ),
+              (BuildContext context, int index) {
+            final int _mark_id = markProvider.getMark()[0];
+            return InCategory(
+              // list: Provider.of<UsesVar>(context).getEvent(),
+              // index: index,
+              obj: _mark_id == 0
+                  ? eventProvider.objs[index]
+                  : eventProvider.sortWithMarks(_mark_id)[
+                      index], //  Get_Lists(listTag: ApiTags.events).getList()[index],
+              isFavorite: _mark_id == 0
+                  ? provider.isExist(eventProvider.objs[index])
+                  : provider
+                      .isExist(eventProvider.sortWithMarks(_mark_id)[index]),
+              // isFavorite: true,
+            );
+          },
+              childCount: markProvider.getMark()[0] == 0
+                  ? eventProvider.objs.length
+                  : eventProvider
+                      .sortWithMarks(markProvider.getMark()[0])
+                      .length //Get_Lists(listTag: ApiTags.events).getList().length,
+              ),
         ),
         ////////////////////////////////////////////////
       ]),
     );
+  }
+
+  Row TopMark(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+        alignment: Alignment.centerRight,
+        child: OutlinedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, PageName.pageMark);
+          },
+          child: Text("Markalar",
+              style: TextStyle(
+                  fontSize: SWi * 0.05,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black)),
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(color: Colors.black, width: 2),
+            shape: StadiumBorder(),
+          ),
+        ),
+      ),
+      //  SortBtn(),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+        alignment: Alignment.centerRight,
+        child: OutlinedButton(
+          onPressed: () {
+            //  fillFavorite(_events);
+            Future.delayed(Duration(milliseconds: 1000))
+                .then((value) => setState(() {}));
+            Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
+          },
+          child: Text("Ählisi",
+              style: TextStyle(
+                  color: Provider.of<UsesVar>(context).getMark()[1] == -1
+                      ? Color(0xff9747FF)
+                      : Colors.grey,
+                  fontSize: SWi * 0.035)),
+          style: OutlinedButton.styleFrom(
+            side: BorderSide(
+                color: Provider.of<UsesVar>(context).getMark()[1] == -1
+                    ? Color(0xff9747FF)
+                    : Colors.grey,
+                width:
+                    Provider.of<UsesVar>(context).getMark()[1] == -1 ? 2 : 1),
+            shape: StadiumBorder(),
+          ),
+        ),
+      ),
+    ]);
   }
 }
 

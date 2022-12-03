@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/JsonCacher.dart';
 import 'package:telfun/ViewModels/Names.dart';
@@ -31,6 +33,8 @@ class FavoriteBtn extends StatefulWidget {
 
 class _FavoriteBtnState extends State<FavoriteBtn> {
   void funcFavorite() {
+    final provider=Provider.of<EventsFavoritProvid>(context,listen: false);
+    provider.tongleFavorite(widget.obj);
     Map _map = localConverter().elemEventsToMap(widget.obj);
     // _map.addAll({"index":widget.index});
     if (widget.favorite) {
@@ -42,7 +46,6 @@ class _FavoriteBtnState extends State<FavoriteBtn> {
 
   @override
   Widget build(BuildContext context) {
-    print("+++++++favoriteBTN:${widget.favorite}");
     return ImgBtn(
       boxShadow: widget.enableShadow
           ? [

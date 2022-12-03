@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/Views/Pages/DetalPage.dart';
 import '/Views/Login/SignUp.dart';
@@ -19,19 +20,28 @@ void main() async {
   await Firebase.initializeApp();
   await UserLoginDetals.createSharedPObj();
   await UserProperties.create();
- // await ShPUser().create();
-  runApp(ChangeNotifierProvider<UsesVar>(
-      create: (BuildContext context) => UsesVar(), child: MyApp()));
+  // await ShPUser().create();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<UsesVar>(
+          create: (BuildContext context) => UsesVar()),
+      ChangeNotifierProvider<EventsFavoritProvid>(
+          create: (BuildContext context) => EventsFavoritProvid()),
+      ChangeNotifierProvider<EventsProvid>(
+          create: (BuildContext context) => EventsProvid()),
+    ],
+    child: MyApp(),
+  ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarIconBrightness: Brightness.dark,
+    SystemUiOverlayStyle(
+      systemNavigationBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.white,
       statusBarColor: Colors.white,
-  ),
+    ),
   );
- // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-      //systemNavigatisonBarIconBrightness: Brightness.dark));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  //systemNavigatisonBarIconBrightness: Brightness.dark));
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 }
 
@@ -40,8 +50,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // SPref login is true or false loading
 //UserLoginDetals.saveLogin(false);
-UserLoginDetals.loadIsLogin();
-UserProperties.loading();
+    UserLoginDetals.loadIsLogin();
+    UserProperties.loading();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -51,14 +61,14 @@ UserProperties.loading();
           labelStyle: TextStyle(color: Color(0xffAD88DF)),
           hintStyle: TextStyle(color: Color(0xffAD88DF)),
           focusedBorder: OutlineInputBorder(
-           //   borderRadius: BorderRadius.all(Radius.circular(60)),
+              //   borderRadius: BorderRadius.all(Radius.circular(60)),
               borderSide: BorderSide(color: Color(0xff5308BE))),
           enabledBorder: OutlineInputBorder(
-           //   borderRadius: BorderRadius.all(Radius.circular(60)),
+              //   borderRadius: BorderRadius.all(Radius.circular(60)),
               borderSide: BorderSide(color: Color(0xffAD88DF))),
         ),
         primarySwatch: Colors.blue,
-        canvasColor:  Colors.white,//Color(0xffF0EBFF),
+        canvasColor: Colors.white, //Color(0xffF0EBFF),
         appBarTheme: AppBarTheme(
             color: Colors.white,
             iconTheme: IconThemeData(
@@ -66,7 +76,7 @@ UserProperties.loading();
             )),
       ),
       initialRoute: PageName.pageLogo,
-      routes: PageName().routes ,
+      routes: PageName().routes,
     );
   }
 }

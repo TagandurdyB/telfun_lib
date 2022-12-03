@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DemoPage extends StatefulWidget {
+class DemoSliverPage extends StatefulWidget {
   @override
-  State<DemoPage> createState() => _DemoPageState();
+  State<DemoSliverPage> createState() => _DemoSliverPageState();
 }
 
-class _DemoPageState extends State<DemoPage> {
+class _DemoSliverPageState extends State<DemoSliverPage> {
   bool _pinned = true;
   bool _snap = false;
   bool _floating = false;

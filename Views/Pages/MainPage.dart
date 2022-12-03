@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import '../../ViewModels/ApiElements.dart';
@@ -51,9 +52,11 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
   @override
   TabController selPage;
   List<Widget> _listMain = [];
+
   @override
   void initState() {
     super.initState();
+
     selPage = TabController(vsync: this, length: 3);
     _listMain = [
       Slider_pro(),
@@ -77,6 +80,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
 
   Widget build(BuildContext context) {
     // print(selPage);
+
     selPage.index = Provider.of<UsesVar>(context).witchNavBarSelect();
     return ScaffoldAll(
       IsSideBar: true,

@@ -10,19 +10,26 @@ import '/Models/Public.dart';
 import 'favoriteBtn.dart';
 import 'imgBtn.dart';
 
-class InCategory extends StatelessWidget {
+class InCategory extends StatefulWidget {
   final Function favoriteFunc;
   List list;
   final ElemEvents obj;
   final int index;
+  final bool isFavorite;
 
   InCategory({
+    this.isFavorite=false,
     this.obj,
     this.favoriteFunc,
     this.list,
     @required this.index,
   });
 
+  @override
+  _InCategoryState createState() => _InCategoryState();
+}
+
+class _InCategoryState extends State<InCategory> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,28 +38,28 @@ class InCategory extends StatelessWidget {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-          print("In Category ID: ${obj.id}");
-          print("In Category is_new: ${obj.is_new}");
-          print("In Category favorite: ${obj.favorite}");
+          print("In Category ID: ${widget.obj.id}");
+          print("In Category is_new: ${widget.obj.is_new}");
+          print("In Category favorite: ${widget.obj.favorite}");
           Navigator.push(
             context,
-            obj.is_new
+            widget.obj.is_new
                 ? MaterialPageRoute(
                     builder: (context) => API_Get(
-                        URL: "$IP/api/new/${obj.id}",
+                        URL: "$IP/api/new/${widget.obj.id}",
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
-                          obj: obj,
-                            isfavorite: obj.favorite /*list[index].favorite*/,
-                            index: index)))
+                          obj: widget.obj,
+                            isfavorite: widget.obj.favorite /*list[index].favorite*/,
+                            index: widget.index)))
                 : MaterialPageRoute(
                     builder: (context) => API_Get(
-                        URL: "$IP/api/event/${obj.id}",
+                        URL: "$IP/api/event/${widget.obj.id}",
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
-                          obj: obj,
-                          isfavorite: obj.favorite /*list[index].favorite*/,
-                          index: index,
+                          obj: widget.obj,
+                          isfavorite: widget.obj.favorite /*list[index].favorite*/,
+                          index: widget.index,
                         ))),
           );
         },
@@ -77,10 +84,10 @@ class InCategory extends StatelessWidget {
                   right: 0,
                   top: 0,
                   child: FavoriteBtn(
-                    onTop: favoriteFunc,
-                    favorite: obj.favorite,
-                    obj: obj,
-                    index: index,
+                    onTop: widget.favoriteFunc,
+                    favorite: widget.isFavorite,
+                    obj: widget.obj,
+                    index: widget.index,
                     radius: SWi * 0.1,
                   )),
               Positioned(
@@ -106,7 +113,7 @@ class InCategory extends StatelessWidget {
                               Icons.photo,
                               color: Colors.grey,
                             ))),
-                    imageUrl: "$IP/storage/${obj.public_image}",
+                    imageUrl: "$IP/storage/${widget.obj.public_image}",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -120,7 +127,7 @@ class InCategory extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          child: Text("${obj.name}",
+                          child: Text("${widget.obj.name}",
                               style: TextStyle(
                                   fontSize: SWi * 0.043,
                                   fontFamily: "NunitoRegular",
@@ -133,7 +140,7 @@ class InCategory extends StatelessWidget {
                                 fontFamily: "Itim")),
                       ),*/
                       Container(
-                        child: Text("${obj.price} TMT",
+                        child: Text("${widget.obj.price} TMT",
                             style: TextStyle(
                                 fontSize: SWi * 0.04,
                                 fontFamily: "NunitoRegular")),
@@ -150,13 +157,13 @@ class InCategory extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${obj.place}",
+                      Text("${widget.obj.place}",
                           style: TextStyle(
                               fontSize: SWi * 0.037,
                               fontFamily: "NunitoRegular",
                               fontWeight: FontWeight.w500)),
                       Text(
-                          "${obj.data.day}.${obj.data.month}.${obj.data.year}",
+                          "${widget.obj.data.day}.${widget.obj.data.month}.${widget.obj.data.year}",
                           style: TextStyle(
                               fontSize: SWi * 0.03,
                               fontFamily: "NunitoRegular",
