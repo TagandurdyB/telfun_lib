@@ -1,74 +1,96 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/Models/Public.dart';
-import 'package:telfun/ViewModels/Routes.dart';
-import 'package:telfun/ViewModels/ShPBDebug.dart';
-import 'package:telfun/Views/widgets/Dialog.dart';
-import 'package:telfun/Views/widgets/ReadyInput.dart';
-import 'package:telfun/Views/widgets/imgBtn.dart';
+import 'package:telfun/ViewModels/ApiDebuging.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/JsonDebuger.dart';
+import 'package:telfun/ViewModels/MapConverter.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/UserProvider.dart';
+import 'package:telfun/Views/Pages/ProductPage.dart';
+import '/Models/Public.dart';
+import '/ViewModels/Routes.dart';
+import '/ViewModels/ShPBDebug.dart';
+import '/Views/widgets/Dialog.dart';
+import '/Views/widgets/ReadyInput.dart';
+import '/Views/widgets/imgBtn.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      spreadRadius: 0,
-                      blurRadius: 5,
-                      offset: Offset(0, 5),
-                      color: Colors.grey)
-                ],
-                color: Colors.white,
-              ),
-              height: 100,
-              width: SWi,
-              padding: EdgeInsets.symmetric(horizontal: SWi * 0.07),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+    return API_Get(
+      URL: "$IP/api/all/${UserProperties.getProperty("id")}",
+      ApiName: ApiTags.all,
+      Return: API_Get(
+        URL: "$IP/api/success/${UserProperties.getProperty("id")}",
+        ApiName: ApiTags.product,
+        Return: API_Get(
+          URL: "$IP/api/onproses/${UserProperties.getProperty("id")}",
+          ApiName: ApiTags.prosses,
+          Return: Json_Get(
+            jsonName: JsonTags.favorite,
+            Return: Container(
+              child: Column(
                 children: [
-                  CircleAvatar(
-                    child: Text(
-                      "${UserProperties.getProperty("name")[0].toUpperCase()}",
-                      style:
-                          TextStyle(fontSize: SWi * 0.06, color: Colors.white),
+                  Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 0,
+                              blurRadius: 5,
+                              offset: Offset(0, 5),
+                              color: Colors.grey)
+                        ],
+                        color: Colors.white,
+                      ),
+                      height: 100,
+                      width: SWi,
+                      padding: EdgeInsets.symmetric(horizontal: SWi * 0.07),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            child: Text(
+                              "${UserProperties.getProperty("name")[0].toUpperCase()}",
+                              style: TextStyle(
+                                  fontSize: SWi * 0.06, color: Colors.white),
+                            ),
+                            radius: SWi * 0.06,
+                            backgroundColor: Color(0xff5408BF),
+                          ),
+                          SizedBox(width: SWi * 0.05),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${UserProperties.getProperty("name")}",
+                                style: TextStyle(fontSize: SWi * 0.05),
+                              ),
+                              Text(
+                                "${UserProperties.getProperty("phone")}",
+                                style: TextStyle(fontSize: SWi * 0.037),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                  Expanded(
+                    child: ListView(
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        // Container(width: SWi, height: 100, color: Colors.transparent),
+                        MyProfil(),
+                      ],
                     ),
-                    radius: SWi * 0.06,
-                    backgroundColor: Color(0xff5408BF),
-                  ),
-                  SizedBox(width: SWi * 0.05),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${UserProperties.getProperty("name")}",
-                        style: TextStyle(fontSize: SWi * 0.05),
-                      ),
-                      Text(
-                        "${UserProperties.getProperty("phone")}",
-                        style: TextStyle(fontSize: SWi * 0.037),
-                      ),
-                    ],
                   ),
                 ],
-              )),
-          Expanded(
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              children: [
-                // Container(width: SWi, height: 100, color: Colors.transparent),
-                MyProfil(),
-              ],
+              ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -85,9 +107,8 @@ class MyProfil extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
             child: ListTile(
+              onTap: () => Navigator.pushNamed(context, PageName.pageFavorite),
               leading: ImgBtn(
-                  onTap: () =>
-                      Navigator.pushNamed(context, PageName.pageFavorite),
                   width: SWi * 0.11,
                   height: SWi * 0.11,
                   shape: SWi * 0.02,
@@ -98,7 +119,9 @@ class MyProfil extends StatelessWidget {
                 style: TextStyle(
                     fontSize: SWi * 0.045, fontWeight: FontWeight.w600),
               ),
-              trailing: Text("0"),
+              trailing: Text(
+                  "${Provider.of<EventsFavoritProvid>(context).objs.length}"),
+              //Text("${Provider.of<EventsFavoritProvid>(context).objs.length}"),
             ),
           ),
         ),
@@ -120,6 +143,14 @@ class MyProfil extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProductPage(
+                                title: "Ähli bildirişlerim",
+                                objs:
+                                    Provider.of<UserProvider>(context).allObjs,
+                              ))),
                   leading: ImgBtn(
                       width: SWi * 0.11,
                       height: SWi * 0.11,
@@ -130,12 +161,21 @@ class MyProfil extends StatelessWidget {
                     "Ähli",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  trailing: Text(
+                      "${Provider.of<UserProvider>(context).allObjs.length}"),
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProductPage(
+                                title: "Ullanylan Bildirişlerim",
+                                objs: Provider.of<UserProvider>(context)
+                                    .oldObjs,
+                              ))),
                   leading: ImgBtn(
                       width: SWi * 0.11,
                       height: SWi * 0.11,
@@ -146,12 +186,20 @@ class MyProfil extends StatelessWidget {
                     "Ulanylan",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  trailing: Text("${Provider.of<UserProvider>(context).oldObjs.length}"),
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProductPage(
+                                title: "Täze Bildirişlerim",
+                                objs: Provider.of<UserProvider>(context)
+                                    .newObjs,
+                              ))),
                   leading: ImgBtn(
                       width: SWi * 0.11,
                       height: SWi * 0.11,
@@ -162,12 +210,20 @@ class MyProfil extends StatelessWidget {
                     "Täze",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  trailing: Text("${Provider.of<UserProvider>(context).newObjs.length}"),
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
+                  onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ProductPage(
+                                title: "Tassyklanmagyna Garaşylýan",
+                                objs: Provider.of<UserProvider>(context)
+                                    .prossesObjs,
+                              ))),
                   leading: ImgBtn(
                       width: SWi * 0.11,
                       height: SWi * 0.11,
@@ -178,7 +234,8 @@ class MyProfil extends StatelessWidget {
                     "Garaşylýan",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  trailing: Text(
+                      "${Provider.of<UserProvider>(context).prossesObjs.length}"),
                 ),
               ),
             ],
@@ -203,8 +260,7 @@ class MyProfil extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
                   leading: ImgBtn(
-                      onTap: () =>
-                          PopUppWidget(
+                      onTap: () => PopUppWidget(
                               title: "Ad",
                               content: MyInput(
                                 shape: true,
@@ -222,13 +278,24 @@ class MyProfil extends StatelessWidget {
                                       ///////change name from api
                                       ///////
                                       ShPUser(
-                                          id: int.parse(UserProperties.getProperty("id")),
-                                          name: controls[3].text,
-                                          phone: UserProperties.getProperty("phone"),
-                                          isban: int.parse(UserProperties.getProperty("isban")),
-                                          token: UserProperties.getProperty("token")).sava();
-                                      Navigator.pushNamedAndRemoveUntil(context,PageName.pageMain, (route) => route.isFirst);
-                                    }, text: "Üýtget",
+                                              id: int.parse(
+                                                  UserProperties.getProperty(
+                                                      "id")),
+                                              name: controls[3].text,
+                                              phone: UserProperties.getProperty(
+                                                  "phone"),
+                                              isban: int.parse(
+                                                  UserProperties.getProperty(
+                                                      "isban")),
+                                              token: UserProperties.getProperty(
+                                                  "token"))
+                                          .sava();
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          PageName.pageMain,
+                                          (route) => route.isFirst);
+                                    },
+                                    text: "Üýtget",
                                     isPopEnable: false),
                               ]).popUpCupertino(context),
                       width: SWi * 0.11,
@@ -240,36 +307,38 @@ class MyProfil extends StatelessWidget {
                     "Ady üýtgetmek",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  //trailing: Text("0"),
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
                   leading: ImgBtn(
-                      onTap: () =>
-                        PopUppWidget(
-                            title: "Parol",
-                            content: MyInput(
-                              shape: true,
-                              index: 4,
-                              borderRad: 20,
-                              hidden: "Paroly ýazyň...",
-                              label: "Täze Parol",
-                              /* onControl: (val, index) {
+                      onTap: () => PopUppWidget(
+                              title: "Parol",
+                              content: MyInput(
+                                shape: true,
+                                index: 4,
+                                borderRad: 20,
+                                hidden: "Paroly ýazyň...",
+                                label: "Täze Parol",
+                                /* onControl: (val, index) {
                           },*/
-                            ),
-                            actionsTeam: [
-                              ActionsTeam(func: () {}, text: "Ýatyr"),
-                              ActionsTeam(
-                                  func: () {
-                                    ///////change pass from api
-                                    ///////
-                                    Navigator.pushNamedAndRemoveUntil(context,PageName.pageMain, (route) => route.isFirst);
-                                  }, text: "Üýtget",
-                                  isPopEnable: false),
-                            ]).popUpCupertino(context),
-
+                              ),
+                              actionsTeam: [
+                                ActionsTeam(func: () {}, text: "Ýatyr"),
+                                ActionsTeam(
+                                    func: () {
+                                      ///////change pass from api
+                                      ///////
+                                      Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          PageName.pageMain,
+                                          (route) => route.isFirst);
+                                    },
+                                    text: "Üýtget",
+                                    isPopEnable: false),
+                              ]).popUpCupertino(context),
                       width: SWi * 0.11,
                       height: SWi * 0.11,
                       shape: SWi * 0.02,
@@ -286,7 +355,7 @@ class MyProfil extends StatelessWidget {
                     "Paroly üýtgetmek",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  //trailing: Text("0"),
                 ),
               ),
               Container(
@@ -309,7 +378,7 @@ class MyProfil extends StatelessWidget {
                     "Ulgamdan çykmak",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("0"),
+                  //trailing: Text("0"),
                 ),
               ),
             ],

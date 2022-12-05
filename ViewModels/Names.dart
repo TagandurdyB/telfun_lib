@@ -13,6 +13,9 @@ class ApiTags {
   static const String model = "model";
   static const String detal = "eventDetal";
   static const String place="welavats";
+  static const String product="product";
+  static const String prosses="prosses";
+  static const String all="all";
 }
 class JsonTags{
   static const String favorite = "favorite";

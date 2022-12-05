@@ -41,15 +41,16 @@ class Json_Get extends StatelessWidget {
             height: double.infinity,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              //color: Colors.red,
-                gradient: LinearGradient(
+              color: Colors.white,
+               /* gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.yellow,
-                      Color(0xff6911B0),
-                      Colors.red
-                    ])),
+                     // Colors.yellow,
+                     // Color(0xff6911B0),
+                     // Colors.red
+                    ]),*/
+            ),
             child: Container(child: CircularProgressIndicator())));
   }
 }

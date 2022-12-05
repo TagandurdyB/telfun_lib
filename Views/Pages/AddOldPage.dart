@@ -267,7 +267,7 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
-                  AddBtn(inputValues: inputValues),
+                  AddBtn(inputValues: inputValues,place_id: DDPlace.id),
                   /*    Column(children: [
                     Text("${UserProperties.getProperty("id")}"),
                     Text("${UserProperties.getProperty("name")}"),

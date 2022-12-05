@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/SharedPref.dart';
 import '/Models/Public.dart';
@@ -133,6 +134,20 @@ class LoginPage extends StatelessWidget {
                   child: Builder(
                     builder: (context) => ListTile(
                       onTap: () {
+                        PopUppWidget(
+                          title: "Garaşyň",
+                          content: Column(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                            Container(child: Text("Hasap Gözlenýär!",
+                              style: TextStyle(fontSize: 20, color: Colors.blue[700]),),),
+                            Container(child: Text("Bu hasabyň döredilip döredilmedigi barlanylýar.",
+                              style: TextStyle(fontSize: 18, color: Colors.black),textAlign: TextAlign.center,))
+
+                          ],)
+                        ).popUp(context);
                         canLogin(context);
                       },
                       title: Center(

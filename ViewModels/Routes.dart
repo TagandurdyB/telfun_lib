@@ -1,10 +1,9 @@
-import 'package:telfun/Views/Pages/Demo/Menue.dart';
-
+import '/Views/Pages/Demo/Menue.dart';
+import '/Views/Pages/ProductPage.dart';
 import '/Views/Pages/ShopPage.dart';
 import '/Views/Pages/AboutPage.dart';
 import '/Views/Pages/FavoritePage.dart';
 import '/Views/Pages/ModelPage.dart';
-import '../Views/Pages/Demo/Sliver/DemoSliver.dart';
 import '/Views/Login/LoginPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
@@ -28,6 +27,7 @@ class PageName {
   static const String pageFavorite = "/FavoritePage";
   static const String pageAbout = "/AboutPage";
   static const String pageShop = "/ShopPage";
+  static const String pageProduct = "/ProductPage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -42,6 +42,7 @@ class PageName {
     pageMark: (context) => ModelPage(),
     pageFavorite: (context) => FavoritePage(),
     pageAbout: (context) => AboutPage(),
-    pageShop: (context) => ShopPage()
+    pageShop: (context) => ShopPage(),
+    pageProduct:(context)=>ProductPage(),
   };
 }

@@ -19,15 +19,24 @@ class ModelPage extends StatelessWidget {
         children: [
           SortBtn(),
           Padding(
-            padding: EdgeInsets.only(top: SWi * 0.05),
+            padding: EdgeInsets.only(top: SWi * 0.02),
             child: Center(
               child: Wrap(
                 runSpacing: SWi * 0.05,
                 spacing: SWi * 0.09,
                 children: List.generate(
-                    Get_Lists(listTag:ApiTags.mark).getList()
-                    .length ?? 0,
-                    (index) => Model(image: Get_Lists(listTag:ApiTags.mark).getList()[index].image)),
+                    Get_Lists(listTag: ApiTags.mark).getList().length ?? 0,
+                    (index) => Model(
+                          image: Get_Lists(listTag: ApiTags.mark)
+                              .getList()[index]
+                              .image,
+                      name: Get_Lists(listTag: ApiTags.mark)
+                          .getList()[index]
+                          .name,
+                      mark_id: Get_Lists(listTag: ApiTags.mark)
+                          .getList()[index]
+                          .id,
+                        )),
               ),
             ),
           )

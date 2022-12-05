@@ -1,15 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/ViewModels/ApiDebuging.dart';
-import '/ViewModels/Routes.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Models/Public.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 class LogoPage extends StatelessWidget {
-  //const ({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Logo();
@@ -17,11 +16,11 @@ class LogoPage extends StatelessWidget {
 }
 
 class Logo extends StatefulWidget {
-  //const LogoPage({Key? key}) : super(key: key);
-
   @override
   _LogoState createState() => _LogoState();
 }
+
+int _counter = 0;
 
 class _LogoState extends State<Logo> {
   @override
@@ -44,6 +43,7 @@ class _LogoState extends State<Logo> {
       IsBlock();
     } else
       print("Not Login!");
+    StartTimer();
 /*    Post_Api(
       URL: "$IP/api/login",
       //URL: "$IP/api/register",
@@ -55,12 +55,33 @@ class _LogoState extends State<Logo> {
       //  name: "salam"
     ).IsLogin();*/
     // print("is login ? $islogin");
-    Future.delayed(Duration(seconds: 3)).then((value) =>
-        Navigator.of(context).pushReplacementNamed(PageName.pageMain));
+    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
   }
+
+   Timer timer;
+int _second=5;
+  void StartTimer(){
+    timer=Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if(_second>0)
+        _second--;
+        if(_second==0){
+          timer.cancel();
+          Navigator.of(context).pushReplacementNamed(PageName.pageMain);
+        }
+      });
+    });
+/*    if(Provider.of<UsesVar>(context).count!=4)
+      Future.delayed(Duration(seconds: 5)).then((value) =>
+          Navigator.of(context).pushReplacementNamed(PageName.pageMain));*/
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<UsesVar>(context,listen: false);
     SWi = MediaQuery.of(context).size.width;
     SHe = MediaQuery.of(context).size.height;
     print(SWi);
@@ -71,62 +92,110 @@ class _LogoState extends State<Logo> {
       ),
       body: Container(
         color: Colors.white,
-        /*decoration: BoxDecoration(
-          //color: Colors.black,
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xffFEC002),
-                Color(0xffC544FF),
-                Color(0xff5700FD)
-              ]),
-        ),*/
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  width: SWi * 0.9,
-                  height: SWi * 0.9,
-                  decoration: BoxDecoration(
-                    // color: Colors.red,
-                    image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: ExactAssetImage("assets/logo.png")),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+                left: 1,
+                top: 1,
+                child: ImgBtn(
+                    color: Colors.transparent,
+                    onTap: () {
+                      setState(() {
+                        if (_counter == 0){
+                          provider.changeCount(1);
+                          _counter = 1;}
+                        else {
+                          _counter = 0;
+                          provider.changeCount(0);
+                        }
+                      });
+                      print("1");
+                    })),
+            Positioned(
+                right: 1,
+                top: 1,
+                child: ImgBtn(
+                    color: Colors.transparent,
+                    onTap: () {
+                  setState(() {
+                    if (_counter == 1) {
+                      _counter = 2;
+                      provider.changeCount(2);
+                    }
+                    else {
+                      _counter = 0;
+                      provider.changeCount(0);
+                    }
+                  });
+                  print("2");
+                })),
+            Positioned(left: 1, bottom: 1, child: ImgBtn(
+                color: Colors.transparent,
+                onTap: () {
+              setState(() {
+                if (_counter == 2) {
+                  _counter = 3;
+                  provider.changeCount(3);
+                }
+                else{
+                  _counter = 0;
+                  provider.changeCount(0);
+                }
+              });
+              print("3");
+            })),
+            Positioned(right: 1, bottom: 1, child: ImgBtn(
+                color: Colors.transparent,
+                onTap: () {
+              setState(() {
+                if (_counter == 3){
+                  _counter = 4;
+                  provider.changeCount(4);
+                }
+                else{
+                  _counter = 0;
+                  provider.changeCount(0);
+                }
+              });
+              timer.cancel();
+              print("4");
+            })),
+            Visibility(
+              visible: _counter==4,
+              child: Positioned(
+                  top: 1,
+                  child: ImgBtn(
+                    color: Colors.white,
+                    onTap: () {
+                      Navigator.of(context).pushReplacementNamed(PageName.pageMain);
+                    },
+                    width: SWi,
+                    child: Text(
+                      "Tagandurdy Bayremdurdyyew Mekanowic",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: SWi*0.04),
+                    ),
                   )),
-              SizedBox(height: 50),
-            ],
-          ),
-
-          /* child: Container(
-            decoration: BoxDecoration(
-                //color: Colors.black,
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.red, Colors.blue]),
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadiusDirectional.circular(30)),
-            width: SWi * 0.9,
-            height: SWi * 0.3,
-            alignment: Alignment.center,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadiusDirectional.circular(20)),
-              width: SWi * 0.85,
-              height: SWi * 0.25,
-              alignment: Alignment.center,
-              child: Text('Telfun',
-                  style: TextStyle(
-                      fontSize: SWi * 0.2,
-                      fontFamily: "Soft",
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white)),
             ),
-          ),*/
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: SWi * 0.9,
+                      height: SWi * 0.9,
+                      decoration: BoxDecoration(
+                        // color: Colors.red,
+                        image: DecorationImage(
+                            fit: BoxFit.contain,
+                            image: ExactAssetImage("assets/logo.png")),
+                      )),
+                  SizedBox(height: 50),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

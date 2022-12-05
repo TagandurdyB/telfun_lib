@@ -12,16 +12,12 @@ class EventsProvid extends ChangeNotifier {
     notifyListeners();
   }
 
-/*  void tongleFavorite(ElemEvents obj) {
-    if (isExist(obj)) {
-      _objs.remove(obj);
-    } else {
-      _objs.add(obj);
-    }
-    notifyListeners();
-  }*/
   List sortWithMarks(int mark_id) {
-    List _list = _objs.where((element) => element.mark_id == mark_id).toList();
+    List _list;
+    if(mark_id==0)
+     _list = _objs;
+    else
+      _list = _objs.where((element) => element.mark_id == mark_id).toList();
     return _list;
   }
 

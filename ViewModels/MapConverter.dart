@@ -35,7 +35,7 @@ class MapConverter {
         list.add(localConverter().mapToElemMark(_val));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToElemEventDetal(_val));
-      } else if (_name == ApiTags.events) {
+      } else if (_name == ApiTags.events||_name==ApiTags.all||_name == ApiTags.product||_name==ApiTags.prosses) {
         list.add(localConverter().mapToElemEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToElemCategory(_val));
@@ -56,7 +56,7 @@ class MapConverter {
         list.add(localConverter().elemImgToMap(ElemList[i]));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().elemCategoryToMap(ElemList[i]));
-      } else if (_name == ApiTags.events) {
+      } else if (_name == ApiTags.events||_name==ApiTags.all||_name == ApiTags.product||_name==ApiTags.prosses) {
         list.add(localConverter().elemEventsToMap(ElemList[i]));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().elemEventDetalToMap(ElemList[i]));
@@ -87,7 +87,7 @@ class MapConverter {
         list.add(localConverter().mapToMapMark(_val));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToMapEventDetal(_val));
-      } else if (_name == ApiTags.events) {
+      } else if (_name == ApiTags.events||_name==ApiTags.all||_name == ApiTags.product||_name==ApiTags.prosses) {
         list.add(localConverter().mapToMapEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToMapCategori(_val));
@@ -513,7 +513,6 @@ class localConverter {
       print("+Convet_ERROR+: Be error from mapToMapEvents!!! :$_e");
     }
   }
-
 /////////////////////////////////////////////////////////////
   ElemMark mapToElemMark(Map _map) {
     try {

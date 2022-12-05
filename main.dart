@@ -8,6 +8,7 @@ import 'package:telfun/Views/Pages/DetalPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
 import '/Views/Login/LoginPage.dart';
+import 'ViewModels/UserProvider.dart';
 import 'Views/LogoPage.dart';
 import '/Views/Pages/SetingsPage.dart';
 import '/Models/Public.dart';
@@ -29,6 +30,8 @@ void main() async {
           create: (BuildContext context) => EventsFavoritProvid()),
       ChangeNotifierProvider<EventsProvid>(
           create: (BuildContext context) => EventsProvid()),
+      ChangeNotifierProvider<UserProvider>(
+          create: (BuildContext context) => UserProvider()),
     ],
     child: MyApp(),
   ));

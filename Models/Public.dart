@@ -36,9 +36,14 @@ Widget telfun= ShaderMask(
 );
 List _event;
 TabController tabController;
+
 class UsesVar extends ChangeNotifier {
-
-
+int _count=0;
+int get count=>_count;
+void changeCount(int i){
+   _count=i;
+  notifyListeners();
+}
 
   /////////////////////////////////////////
   List getEvent(){

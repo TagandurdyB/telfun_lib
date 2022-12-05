@@ -12,7 +12,8 @@ import 'ReadyInput.dart';
 import 'ScaffoldParts/MySnackBar.dart';
 
 class AddBtn extends StatefulWidget {
-  const AddBtn({Key key, @required this.inputValues}) : super(key: key);
+  final int place_id;
+  const AddBtn({Key key, @required this.inputValues, this.place_id}) : super(key: key);
 
   final List<String> inputValues;
 
@@ -94,8 +95,8 @@ class _AddBtnState extends State<AddBtn> {
                       "mark_id":
                           DDBBase().getDate(DDBName.dDBMark).id.toString(),
                       "price": controls[1].text,
-                      "place":
-                          DDBBase().getDate(DDBName.dDBLocation).id.toString(),
+                      "place":widget.place_id.toString(),
+                         // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,
                     };
                     bool isUpload = await service.addImage(body, images);

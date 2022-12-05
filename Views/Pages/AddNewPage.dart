@@ -289,6 +289,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                           setState(() {});
                                           print(
                                               "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
+                                          print("place_ID:${DDBBase().getDate(DDBName.dDBLocation).id.toString()}");
                                         },
                                         child: Text(
                                           "${_etraps[index].name}",
@@ -434,6 +435,7 @@ class _AddNewPageState extends State<AddNewPage> {
               borderRadius: BorderRadius.circular(SWi * 0.05),
               child: MaterialButton(
                 onPressed: () async {
+                  print("place_ID:${DDBBase().getDate(DDBName.dDBLocation).id.toString()}");
                   if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
                     _isUpload = true;
                     _about = true;
@@ -446,8 +448,8 @@ class _AddNewPageState extends State<AddNewPage> {
                       "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,*/
                       "user_id": UserProperties.getProperty("id"),
-                      "place":
-                          DDBBase().getDate(DDBName.dDBLocation).id.toString(),
+                      "place": DDPlace.id.toString(),
+                         // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "price": controls[1].text,
                       "color_id":
                           DDBBase().getDate(DDBName.dDBColor).id.toString(),

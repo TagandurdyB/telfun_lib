@@ -54,7 +54,8 @@ class _AllPageState extends State<AllPage> {
     final provider = Provider.of<EventsFavoritProvid>(context);
     final eventProvider = Provider.of<EventsProvid>(context);
     final markProvider = Provider.of<UsesVar>(context);
-    fillFavorite(eventProvider.objs);
+    // fillFavorite(eventProvider.objs);
+    eventProvider.changeEventList(Get_Lists(listTag: ApiTags.events).getList());
     return ScaffoldAll(
       EnableBotomMenu: true,
       appBarBottom: SearchBtn(),
@@ -111,22 +112,16 @@ class _AllPageState extends State<AllPage> {
             return InCategory(
               // list: Provider.of<UsesVar>(context).getEvent(),
               // index: index,
-              obj: _mark_id == 0
-                  ? eventProvider.objs[index]
-                  : eventProvider.sortWithMarks(_mark_id)[
-                      index], //  Get_Lists(listTag: ApiTags.events).getList()[index],
-              isFavorite: _mark_id == 0
-                  ? provider.isExist(eventProvider.objs[index])
-                  : provider
-                      .isExist(eventProvider.sortWithMarks(_mark_id)[index]),
+              obj: eventProvider.sortWithMarks(_mark_id)[
+                  index], //  Get_Lists(listTag: ApiTags.events).getList()[index],
+              isFavorite: provider
+                  .isExist(eventProvider.sortWithMarks(_mark_id)[index]),
               // isFavorite: true,
             );
           },
-              childCount: markProvider.getMark()[0] == 0
-                  ? eventProvider.objs.length
-                  : eventProvider
-                      .sortWithMarks(markProvider.getMark()[0])
-                      .length //Get_Lists(listTag: ApiTags.events).getList().length,
+              childCount: eventProvider
+                  .sortWithMarks(markProvider.getMark()[0])
+                  .length //Get_Lists(listTag: ApiTags.events).getList().length,
               ),
         ),
         ////////////////////////////////////////////////
