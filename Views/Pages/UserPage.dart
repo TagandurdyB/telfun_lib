@@ -82,7 +82,10 @@ class UserPage extends StatelessWidget {
                       physics: BouncingScrollPhysics(),
                       children: [
                         // Container(width: SWi, height: 100, color: Colors.transparent),
-                        MyProfil(),
+                        Builder(builder: (context) {
+                        //  Provider.of<UserProvider>(context).fillProfile();
+                          return MyProfil();
+                        }),
                       ],
                     ),
                   ),
@@ -162,7 +165,7 @@ class MyProfil extends StatelessWidget {
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
                   trailing: Text(
-                      "${Provider.of<UserProvider>(context).allObjs.length}"),
+                      "${Get_Lists(listTag: ApiTags.all).getList().length}"),
                 ),
               ),
               Container(
@@ -173,8 +176,8 @@ class MyProfil extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => ProductPage(
                                 title: "Ullanylan Bildirişlerim",
-                                objs: Provider.of<UserProvider>(context)
-                                    .oldObjs,
+                                objs:
+                                    Provider.of<UserProvider>(context).oldObjs,
                               ))),
                   leading: ImgBtn(
                       width: SWi * 0.11,
@@ -186,7 +189,8 @@ class MyProfil extends StatelessWidget {
                     "Ulanylan",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("${Provider.of<UserProvider>(context).oldObjs.length}"),
+                  trailing: Text(
+                      "${Get_Lists(listTag: ApiTags.product).getList().where((element) => !element.is_new).length}"),
                 ),
               ),
               Container(
@@ -197,8 +201,8 @@ class MyProfil extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => ProductPage(
                                 title: "Täze Bildirişlerim",
-                                objs: Provider.of<UserProvider>(context)
-                                    .newObjs,
+                                objs:
+                                    Provider.of<UserProvider>(context).newObjs,
                               ))),
                   leading: ImgBtn(
                       width: SWi * 0.11,
@@ -210,7 +214,8 @@ class MyProfil extends StatelessWidget {
                     "Täze",
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
-                  trailing: Text("${Provider.of<UserProvider>(context).newObjs.length}"),
+                  trailing: Text(
+                      "${Get_Lists(listTag: ApiTags.product).getList().where((element) => element.is_new).length}"),
                 ),
               ),
               Container(
@@ -235,7 +240,7 @@ class MyProfil extends StatelessWidget {
                     style: TextStyle(fontSize: SWi * 0.045),
                   ),
                   trailing: Text(
-                      "${Provider.of<UserProvider>(context).prossesObjs.length}"),
+                      "${/*Provider.of<UserProvider>(context).prossesObjs.length*/ Get_Lists(listTag: ApiTags.prosses).getList().length}"),
                 ),
               ),
             ],

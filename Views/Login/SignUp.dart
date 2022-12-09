@@ -84,7 +84,7 @@ class _SignUpFormState extends State<SignUpForm> {
       ).IsRegister();
       print("**isAlredyRegister = $isAlredyRegister");
       if (isAlredyRegister) {
-        loginWithPhone();
+          loginWithPhone();
       } else {
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Container(

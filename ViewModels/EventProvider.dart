@@ -36,8 +36,8 @@ class EventsFavoritProvid extends ChangeNotifier {
   List _objs = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
   List get objs => _objs;
 
-  void fillObjsWithFavorite(List _list) {
-    if (_list != null) _objs = _list;
+  void fillObjsWithFavorite() {
+     _objs = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
     notifyListeners();
   }
 

@@ -56,6 +56,7 @@ class _AllPageState extends State<AllPage> {
     final markProvider = Provider.of<UsesVar>(context);
     // fillFavorite(eventProvider.objs);
     eventProvider.changeEventList(Get_Lists(listTag: ApiTags.events).getList());
+    provider.fillObjsWithFavorite();
     return ScaffoldAll(
       EnableBotomMenu: true,
       appBarBottom: SearchBtn(),

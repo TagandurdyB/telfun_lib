@@ -30,7 +30,9 @@ class FavoriteBtn extends StatefulWidget {
 
 class _FavoriteBtnState extends State<FavoriteBtn> {
   void funcFavorite() {
-    Map _map = localConverter().elemEventsToMap(widget.obj);
+    print("I dsklfjskdl favorite 1");
+    Map _map = localConverter().favoriteToMap(widget.obj);
+    print("I dsklfjskdl favorite 2");
     // _map.addAll({"index":widget.index});
     if (widget.favorite) {
       JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);

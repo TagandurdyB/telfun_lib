@@ -50,7 +50,7 @@ class _InCategoryState extends State<InCategory> {
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
                           obj: widget.obj,
-                            isfavorite: widget.obj.favorite /*list[index].favorite*/,
+                            isfavorite: widget.isFavorite /*list[index].favorite*/,
                             index: widget.index)))
                 : MaterialPageRoute(
                     builder: (context) => API_Get(
@@ -58,7 +58,7 @@ class _InCategoryState extends State<InCategory> {
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
                           obj: widget.obj,
-                          isfavorite: widget.obj.favorite /*list[index].favorite*/,
+                          isfavorite: widget.isFavorite /*list[index].favorite*/,
                           index: widget.index,
                         ))),
           );
@@ -72,6 +72,12 @@ class _InCategoryState extends State<InCategory> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(SWi * 0.035),
+         /* gradient: LinearGradient(
+            colors: [
+              Colors.yellow[300],
+              Colors.white
+            ]
+          )*/
             color: Colors.white,
           ),
           margin: EdgeInsets.all(SWi * 0.005),
@@ -84,7 +90,7 @@ class _InCategoryState extends State<InCategory> {
                   right: 0,
                   top: 0,
                   child: FavoriteBtn(
-                    onTop: widget.favoriteFunc,
+                   // onTop: widget.favoriteFunc,
                     favorite: widget.isFavorite,
                     obj: widget.obj,
                     index: widget.index,
@@ -118,6 +124,7 @@ class _InCategoryState extends State<InCategory> {
                   ),
                 ),
               ),
+
               Positioned(
                 left: SWi * 0.09,
                 child: Container(
@@ -145,11 +152,22 @@ class _InCategoryState extends State<InCategory> {
                                 fontSize: SWi * 0.04,
                                 fontFamily: "NunitoRegular")),
                       ),
+                      Text("${widget.obj.place}",
+                          style: TextStyle(
+                              fontSize: SWi * 0.037,
+                              fontFamily: "NunitoRegular",
+                              fontWeight: FontWeight.w500)),
+                      Text(
+                          "${widget.obj.data.day}.${widget.obj.data.month}.${widget.obj.data.year}",
+                          style: TextStyle(
+                              fontSize: SWi * 0.03,
+                              fontFamily: "NunitoRegular",
+                              fontWeight: FontWeight.w500)),
                     ],
                   ),
                 ),
               ),
-              Positioned(
+            /*  Positioned(
                 left: SWi * 0.09,
                 bottom: SWi * 0.001,
                 child: Container(
@@ -171,7 +189,7 @@ class _InCategoryState extends State<InCategory> {
                     ],
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

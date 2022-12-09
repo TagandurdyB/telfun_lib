@@ -56,8 +56,13 @@ class _DetalPageState extends State<DetalPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("Detal favorite:=${widget.isfavorite}");
     list = Get_Lists(listTag: ApiTags.detal).getList()[0];
     // print("++++++++++IMAGES:${list[0].images}");
+    // final provider=Provider.of<>(context);
+    // final eventProvider=Provider.of<>(context);
+    // final markProvider=Provider.of<>(context);
+    // final int _mark_id = markProvider.getMark()[0];
     return ScaffoldAll(
       phone: list.phone,
       IsFloatBtn: true,

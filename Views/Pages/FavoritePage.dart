@@ -13,7 +13,6 @@ import '/Models/Public.dart';
 class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Json_Get(
       jsonName: JsonTags.favorite,
       Return: ScaffoldAll(body: FavoriteView()),
@@ -22,7 +21,6 @@ class FavoritePage extends StatelessWidget {
 }
 
 class FavoriteView extends StatelessWidget {
-
   void removeElemJsonFavorite(ElemEvents _elem) {
     Map _map = localConverter().favoriteToMap(_elem);
     JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
@@ -46,11 +44,10 @@ class FavoriteView extends StatelessWidget {
           child: Container(
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: objs.length, //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
+                itemCount: objs
+                    .length, //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
                 itemBuilder: (context, index) {
-                  print("i am hear 5");
                   final ElemEvents _obj = objs[index];
-                  print("i am hear 6 ${_obj.name}");
                   return Container(
                       child: InCategory(
                     // index: index,
@@ -58,13 +55,8 @@ class FavoriteView extends StatelessWidget {
                     isFavorite: true, //provider.isExist(_obj),
                     //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList()[index],
                     //list: Get_Lists(listTag: JsonTags.favorite, isApi: false).getList(),
-                    favoriteFunc: ()  {
-                      removeElemJsonFavorite(
-                          /* Get_Lists(listTag: JsonTags.favorite, isApi: false)
-                              .getList()[index]*/
-                          _obj);
-                      /* await Future.delayed(Duration(milliseconds: 50))
-                          .then((value) => setState(() {}));*/
+                    favoriteFunc: () {
+                      removeElemJsonFavorite(_obj);
                     },
                   ));
                 }),
