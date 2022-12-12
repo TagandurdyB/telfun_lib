@@ -358,6 +358,7 @@ class localConverter {
   ElemEvents mapToElemEventDetal(Map _map) {
     try {
       return ElemEvents(
+        view: _map["view"],
         color: ElemColor(
             id: _map["color"]["id"],
             tm: _map["color"]["tm"],
@@ -390,6 +391,7 @@ class localConverter {
   Map<String, dynamic> elemEventDetalToMap(ElemEvents _elem) {
     try {
       return {
+        "view":_elem.view,
         "color": {
           "id": _elem.color.id,
           "tm": _elem.color.tm,
@@ -413,12 +415,18 @@ class localConverter {
 
   Map<String, dynamic> mapToMapEventDetal(Map _map) {
     try {
-      if (_map["is_new"] == 0)
+      bool _is_new=_map["is_new"]==0?false:true;
         return {
-          "is_new": false,
+          "view":_map["view"],
+          "is_new":_is_new,
           "data": _map["updated_at"],
           "images": _map["image"],
-          "color": {"code": "#ff0000", "tm": "", "ru": "", "id": 0},
+          "color": _is_new?{
+            "tm":_map["color"]["tm"],
+            "ru":_map["color"]["ru"],
+            "id":_map["color"]["id"],
+            "code":_map["color"]["code"],
+          }:{"code": "#ff0000", "tm": "", "ru": "", "id": 0},
           "name": _map["name"],
           "price": _map["price"].toString(),
           "place": _map["welayat"],
@@ -426,25 +434,6 @@ class localConverter {
           "mark": _map["mark"]["name"],
           "about": _map["about"],
         };
-      else {
-        return {
-          "is_new": true,
-          "color": {
-            "tm":_map["color"]["tm"],
-            "ru":_map["color"]["ru"],
-            "id":_map["color"]["id"],
-            "code":_map["color"]["code"],
-          },
-          "data": _map["updated_at"],
-          "images": _map["image"],
-          "name": _map["name"],
-          "price": _map["price"].toString(),
-          "place": _map["welayat"],
-          "phone": _map["user_phone"],
-          "mark": _map["mark"]["name"] /*_map["mark"]["name"]*/,
-          "about": _map["about"],
-        };
-      }
     } catch (_e) {
       print("+Convet_ERROR+: Be error from mapToMapEventDetal!!! :$_e");
     }

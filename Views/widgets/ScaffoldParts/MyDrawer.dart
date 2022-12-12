@@ -232,7 +232,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                     /////////////////////////////////////////////
                     Visibility(
-                      visible: false,
+                      visible: true,
                       child: DrawBarBtn(
                         titleLeft: SWi * 0.15,
                         onTap: (context) {

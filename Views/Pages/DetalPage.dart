@@ -228,7 +228,7 @@ class _DetalPageState extends State<DetalPage> {
                     color: Colors.grey,
                   ),
                 ),
-                Text(" 435345", style: TextStyle(color: Colors.grey[700]))
+                Text(" ${list.view}", style: TextStyle(color: Colors.grey[700]))
                 // TextSpan()
               ]),
             ],

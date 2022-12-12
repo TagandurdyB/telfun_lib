@@ -40,7 +40,7 @@ class ElemModel {
 }
 
 class ElemEvents {
-  final int id, price, index, mark_id, category_id;
+  final int id, price, index, mark_id, category_id,view;
   bool favorite;
   final ElemColor color;
   final bool is_new;
@@ -49,7 +49,9 @@ class ElemEvents {
   final String name, phone, place, about, mark, public_image;
   //final List images;
   ElemEvents(
-      {this.color,
+      {
+        this.view,
+        this.color,
       this.mark_id,
       this.category_id,
       this.index = -1,
