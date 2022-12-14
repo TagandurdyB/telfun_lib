@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/Models/Public.dart';
 import '/Models/DDBBase.dart';
 
 
@@ -91,36 +92,39 @@ class _DropDownBtnUnValState extends State<DropDownBtnUnVal> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton(
-        hint: widget.hideText==null?widget.hint!=null?widget.hint:null:Container(
-          child: Text(
-            widget.hideText,
-            style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700),
-            textAlign: TextAlign.end,
+    return Padding(
+      padding:  EdgeInsets.symmetric(vertical: SWi*0.02),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton(
+          hint: widget.hideText==null?widget.hint!=null?widget.hint:null:Container(
+            child: Text(
+              widget.hideText,
+              style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700),
+              textAlign: TextAlign.end,
+            ),
           ),
+          isExpanded: true,
+          items: widget.items.map((val) {
+            return DropdownMenuItem(
+                child: val.child==null?Text(val.value):val.child, value: val.index.toString());
+          }).toList(),
+        /*  value: DropDownBase[widget.tag]==null?dropdownValue:
+          DropDownBase[widget.tag].index.toString(),*/
+          onTap: (){
+            setState(() {
+              if(widget.onTap!=null)
+              widget.onTap();
+            });
+          },
+          //filters[widget.index].id.toString(),
+          onChanged: (String newVal) {
+            if(int.parse(newVal)>widget.items.length-1)newVal=widget.items.last.index.toString();
+            setState(() {
+              DropDownBase.addAll({widget.tag:widget.items[int.parse(newVal)]});
+              widget.onChanged(widget.items[int.parse(newVal)]);
+            });
+          },
         ),
-        isExpanded: true,
-        items: widget.items.map((val) {
-          return DropdownMenuItem(
-              child: val.child==null?Text(val.value):val.child, value: val.index.toString());
-        }).toList(),
-      /*  value: DropDownBase[widget.tag]==null?dropdownValue:
-        DropDownBase[widget.tag].index.toString(),*/
-        onTap: (){
-          setState(() {
-            if(widget.onTap!=null)
-            widget.onTap();
-          });
-        },
-        //filters[widget.index].id.toString(),
-        onChanged: (String newVal) {
-          if(int.parse(newVal)>widget.items.length-1)newVal=widget.items.last.index.toString();
-          setState(() {
-            DropDownBase.addAll({widget.tag:widget.items[int.parse(newVal)]});
-            widget.onChanged(widget.items[int.parse(newVal)]);
-          });
-        },
       ),
     );
   }

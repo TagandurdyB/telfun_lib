@@ -21,48 +21,24 @@ class AllPage extends StatefulWidget {
 class _AllPageState extends State<AllPage> {
   List list = [];
 
-  void fillFavorite(List _val) {
-    final favoriteProvider = Provider.of<EventsFavoritProvid>(context);
-    //List _events=eventProvider.objs;*/
-    if (favoriteProvider.objs.isNotEmpty) {
-      for (int i = 0; i < _val.length; i++) {
-        List _favorite = favoriteProvider.objs;
-        for (int j = 0; j < _favorite.length; j++) {
-          if (_favorite[j].id == _val[i].id) {
-            _val[i].changeFavorite(true);
-            _favorite.removeAt(j);
-            break;
-          }
-        }
-      }
-      list = _val;
-    } else {
-      final eventProvider = Provider.of<EventsProvid>(context);
-      list = eventProvider.objs;
-    }
-  }
+  var provider , eventProvider ,markProvider ;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //fillFavorite(new Get_Lists(listTag: ApiTags.events).getList());
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<EventsFavoritProvid>(context,listen: false).reload();
+      Provider.of<EventsProvid>(context,listen: false).reLoad();
+    });
   }
-  var provider , eventProvider ,markProvider ;
- /* void demoTest(BuildContext context)async{
 
-    await
-  }*/
 
   @override
   Widget build(BuildContext context) {
-   // demoTest(context);
-    // fillFavorite(eventProvider.objs);
     provider = Provider.of<EventsFavoritProvid>(context);
     eventProvider = Provider.of<EventsProvid>(context);
-    markProvider = Provider.of<UsesVar>(context);
-    eventProvider.changeEventList(Get_Lists(listTag: ApiTags.events).getList());
-     provider.fillObjsWithFavorite();
+     markProvider = Provider.of<UsesVar>(context);
     return ScaffoldAll(
       isSliver: true,
       EnableBotomMenu: true,

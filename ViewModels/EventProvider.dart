@@ -7,8 +7,8 @@ class EventsProvid extends ChangeNotifier {
   List _objs = Get_Lists(listTag: ApiTags.events).getList();
   List get objs => _objs;
 
-  void changeEventList(List _list) {
-    if (_list != null) _objs = _list;
+  void reLoad() {
+    _objs = Get_Lists(listTag: ApiTags.events).getList();
     notifyListeners();
   }
 
@@ -36,7 +36,7 @@ class EventsFavoritProvid extends ChangeNotifier {
   List _objs = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
   List get objs => _objs;
 
-  void fillObjsWithFavorite() {
+  void reload() {
      _objs = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
     notifyListeners();
   }

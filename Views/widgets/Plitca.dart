@@ -79,7 +79,7 @@ class Categori extends StatelessWidget {
                       padding: EdgeInsets.all(SWi * 0.02),
                       alignment: Alignment.bottomLeft,
                       child: Text(
-                        "Bildirişler : (${list[index].count})",
+                        "Bildirişler : ${list[index].count}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,

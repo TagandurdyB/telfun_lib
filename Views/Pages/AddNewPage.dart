@@ -80,10 +80,73 @@ class _AddNewPageState extends State<AddNewPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DropDownBtnUnVal(
+                // hideText: widget.hidden,
+                // onTap:widget.onTop,
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    selectIcon(Icons.category),
+                    selectIcon(Icons.location_on_outlined),
+                    Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(DDPlace.value,
+                              style: DDPlace.value == "Ýerleşýän ýeri"
+                                  ? disable
+                                  : enable)),
+                    ),
+                  ],
+                ),
+                tag: DDBName.dDBLocation,
+                items: [
+                  DDBEl(id: 1, index: 0, value: "Aşgabat"),
+                  DDBEl(id: 2, index: 1, value: "Ahal"),
+                  DDBEl(id: 3, index: 2, value: "Balkan"),
+                  DDBEl(id: 4, index: 3, value: "Mary"),
+                  DDBEl(id: 5, index: 4, value: "Lebap"),
+                  DDBEl(id: 6, index: 5, value: "Daşoguz"),
+                ],
+                onChanged: (DDBEl _element) {
+                  canOpenAddBtn(context);
+                  List _etraps = Get_Lists(listTag: ApiTags.place)
+                      .getList()[_element.id - 1]
+                      .etraps;
+                  if (_etraps.isNotEmpty) {
+                    PopUppWidget(
+                        content: Column(
+                          children: List.generate(
+                              _etraps.length,
+                                  (index) => TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  DDPlace.value =
+                                  "${_element.value} ${_etraps[index].name}";
+                                  DDPlace.id = _etraps[index].id;
+                                  DDPlace.index=0;
+                                  setState(() {});
+                                  print(
+                                      "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
+                                  print("place_ID:${DDBBase().getDate(DDBName.dDBLocation).id.toString()}");
+                                },
+                                child: Text(
+                                  "${_etraps[index].name}",textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              )),
+                        ),
+                        title: "${_element.value} Etraplar:",
+                        centerTitle: true,
+                        bgColor: Colors.white)
+                        .popUp(context);
+                  } else {
+                    DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
+                  }
+                },
+              ),
+              DropDownBtnUnVal(
+                hint: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    selectIcon(Icons.view_list),
                     Expanded(
                       child: Padding(
                           padding: EdgeInsets.all(8),
@@ -119,7 +182,7 @@ class _AddNewPageState extends State<AddNewPage> {
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    selectIcon(Icons.bookmark),
+                    selectIcon(Icons.phone_android_rounded),
                     Expanded(
                       child: Padding(
                           padding: EdgeInsets.all(8),
@@ -153,7 +216,7 @@ class _AddNewPageState extends State<AddNewPage> {
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    selectIcon(Icons.view_in_ar_sharp),
+                    selectIcon(Icons.label),
                     Expanded(
                       child: Padding(
                           padding: EdgeInsets.all(8),
@@ -243,69 +306,6 @@ class _AddNewPageState extends State<AddNewPage> {
                   });
                 },
               ),
-              DropDownBtnUnVal(
-                // hideText: widget.hidden,
-                // onTap:widget.onTop,
-                hint: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    selectIcon(Icons.location_on_outlined),
-                    Expanded(
-                      child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text(DDPlace.value,
-                              style: DDPlace.value == "Ýerleşýän ýeri"
-                                  ? disable
-                                  : enable)),
-                    ),
-                  ],
-                ),
-                tag: DDBName.dDBLocation,
-                items: [
-                  DDBEl(id: 1, index: 0, value: "Aşgabat"),
-                  DDBEl(id: 2, index: 1, value: "Ahal"),
-                  DDBEl(id: 3, index: 2, value: "Balkan"),
-                  DDBEl(id: 4, index: 3, value: "Mary"),
-                  DDBEl(id: 5, index: 4, value: "Lebap"),
-                  DDBEl(id: 6, index: 5, value: "Daşoguz"),
-                ],
-                onChanged: (DDBEl _element) {
-                  canOpenAddBtn(context);
-                  List _etraps = Get_Lists(listTag: ApiTags.place)
-                      .getList()[_element.id - 1]
-                      .etraps;
-                  if (_etraps.isNotEmpty) {
-                    PopUppWidget(
-                            content: Column(
-                              children: List.generate(
-                                  _etraps.length,
-                                  (index) => TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          DDPlace.value =
-                                              "${_element.value} ${_etraps[index].name}";
-                                          DDPlace.id = _etraps[index].id;
-                                          DDPlace.index=0;
-                                          setState(() {});
-                                          print(
-                                              "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
-                                          print("place_ID:${DDBBase().getDate(DDBName.dDBLocation).id.toString()}");
-                                        },
-                                        child: Text(
-                                          "${_etraps[index].name}",
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                      )),
-                            ),
-                            title: "${_element.value} Etraplar:",
-                            centerTitle: true,
-                            bgColor: Colors.white)
-                        .popUp(context);
-                  } else {
-                    DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
-                  }
-                },
-              ),
               Container(
                 padding: EdgeInsets.symmetric(vertical: SWi * 0.04),
                 child: Column(
@@ -332,33 +332,36 @@ class _AddNewPageState extends State<AddNewPage> {
                             ),
                           ),
                         ),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: SWi*0.02),
+                              width: SWi * 0.36,
+                              child: MyInput(
+                                shape: true,
+                                index: 1,
+                                type: Type.num,
+                                // borderRad: 60,
+                                hidden: "Bahasy manatda",
+                                label: "Bahasy manatda",
+                                onControl: (val, index) {
+                                  setState(() {
+                                    canOpenAddBtn(context);
+                                  });
+                                  // inputValues[index] = controls[index].text;
+                                  // canOpenAddBtn(context);
+                                },
+                              ),
+                            ),
+                            Text("TMT",style: TextStyle(
+                              color: Colors.black,
+                              fontSize:SWi*0.1
+                            ),),
+                          ],
+                        ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: SWi * 0.80,
-                            child: MyInput(
-                              shape: true,
-                              index: 1,
-                              type: Type.num,
-                              // borderRad: 60,
-                              hidden: "Bahasy manatda",
-                              label: "Bahasy manatda",
-                              onControl: (val, index) {
-                                setState(() {
-                                  canOpenAddBtn(context);
-                                });
-                                // inputValues[index] = controls[index].text;
-                                // canOpenAddBtn(context);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+
                   ],
                 ),
               ),

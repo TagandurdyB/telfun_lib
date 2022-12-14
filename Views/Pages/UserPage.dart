@@ -83,7 +83,7 @@ class UserPage extends StatelessWidget {
                       children: [
                         // Container(width: SWi, height: 100, color: Colors.transparent),
                         Builder(builder: (context) {
-                        //  Provider.of<UserProvider>(context).fillProfile();
+                          //  Provider.of<UserProvider>(context).fillProfile();
                           return MyProfil();
                         }),
                       ],
@@ -108,6 +108,7 @@ class MyProfil extends StatelessWidget {
       children: [
         Card(
           child: Container(
+            margin: EdgeInsets.symmetric(vertical: SWi * 0.02),
             padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
             child: ListTile(
               onTap: () => Navigator.pushNamed(context, PageName.pageFavorite),
@@ -143,105 +144,48 @@ class MyProfil extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                     horizontal: SWi * 0.1, vertical: SWi * 0.05),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
-                child: ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                                title: "Ähli bildirişlerim",
-                                objs:
-                                    Provider.of<UserProvider>(context).allObjs,
-                              ))),
-                  leading: ImgBtn(
-                      width: SWi * 0.11,
-                      height: SWi * 0.11,
-                      shape: SWi * 0.02,
-                      color: Color(0xff5408BF),
-                      child: Icon(Icons.all_inbox, color: Colors.white)),
-                  title: Text(
-                    "Ähli",
-                    style: TextStyle(fontSize: SWi * 0.045),
-                  ),
-                  trailing: Text(
-                      "${Get_Lists(listTag: ApiTags.all).getList().length}"),
-                ),
+              iconBox(
+                "Ähli bildirişlerim",
+                "Ähli",
+                Icons.all_inbox,
+                //Provider.of<UserProvider>(context).allObjs,
+                Get_Lists(listTag: ApiTags.all).getList(),
+                Get_Lists(listTag: ApiTags.all).getList().length,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
-                child: ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                                title: "Ullanylan Bildirişlerim",
-                                objs:
-                                    Provider.of<UserProvider>(context).oldObjs,
-                              ))),
-                  leading: ImgBtn(
-                      width: SWi * 0.11,
-                      height: SWi * 0.11,
-                      shape: SWi * 0.02,
-                      color: Color(0xff5408BF),
-                      child: Icon(Icons.label, color: Colors.white)),
-                  title: Text(
-                    "Ulanylan",
-                    style: TextStyle(fontSize: SWi * 0.045),
-                  ),
-                  trailing: Text(
-                      "${Get_Lists(listTag: ApiTags.product).getList().where((element) => !element.is_new).length}"),
-                ),
+              iconBox(
+                "Ullanylan Bildirişlerim",
+                "Ulanylan",
+                Icons.label,
+                //Provider.of<UserProvider>(context).oldObjs,
+                Get_Lists(listTag: ApiTags.product)
+                    .getList()
+                    .where((element) => !element.is_new)
+                    .toList(),
+                Get_Lists(listTag: ApiTags.product)
+                    .getList()
+                    .where((element) => !element.is_new)
+                    .length,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
-                child: ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                                title: "Täze Bildirişlerim",
-                                objs:
-                                    Provider.of<UserProvider>(context).newObjs,
-                              ))),
-                  leading: ImgBtn(
-                      width: SWi * 0.11,
-                      height: SWi * 0.11,
-                      shape: SWi * 0.02,
-                      color: Color(0xff5408BF),
-                      child: Icon(Icons.fiber_new, color: Colors.white)),
-                  title: Text(
-                    "Täze",
-                    style: TextStyle(fontSize: SWi * 0.045),
-                  ),
-                  trailing: Text(
-                      "${Get_Lists(listTag: ApiTags.product).getList().where((element) => element.is_new).length}"),
-                ),
+              iconBox(
+                "Täze Bildirişlerim",
+                "Täze",
+                Icons.fiber_new,
+                //Provider.of<UserProvider>(context).newObjs,
+                Get_Lists(listTag: ApiTags.product)
+                    .getList()
+                    .where((element) => element.is_new).toList(),
+                Get_Lists(listTag: ApiTags.product)
+                    .getList()
+                    .where((element) => element.is_new)
+                    .length,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
-                child: ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                                title: "Tassyklanmagyna Garaşylýan",
-                                objs: Provider.of<UserProvider>(context)
-                                    .prossesObjs,
-                              ))),
-                  leading: ImgBtn(
-                      width: SWi * 0.11,
-                      height: SWi * 0.11,
-                      shape: SWi * 0.02,
-                      color: Color(0xff5408BF),
-                      child: Icon(Icons.timer, color: Colors.white)),
-                  title: Text(
-                    "Garaşylýan",
-                    style: TextStyle(fontSize: SWi * 0.045),
-                  ),
-                  trailing: Text(
-                      "${/*Provider.of<UserProvider>(context).prossesObjs.length*/ Get_Lists(listTag: ApiTags.prosses).getList().length}"),
-                ),
+              iconBox(
+                "Tassyklanmagyna Garaşylýan",
+                "Garaşylýan",
+                Icons.timer,
+                //Provider.of<UserProvider>(context).prossesObjs,
+                Get_Lists(listTag: ApiTags.prosses).getList(),
+                Get_Lists(listTag: ApiTags.prosses).getList().length,
               ),
             ],
           ),
@@ -264,50 +208,41 @@ class MyProfil extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
-                  leading: ImgBtn(
-                      onTap: () => PopUppWidget(
-                              title: "Ad",
-                              content: MyInput(
-                                shape: true,
-                                index: 3,
-                                borderRad: 20,
-                                hidden: "Adyňyzy ýazyň...",
-                                label: "Täze ad",
-                                /* onControl: (val, index) {
+                  onTap: () => PopUppWidget(
+                      title: "Ad",
+                      content: MyInput(
+                        shape: true,
+                        index: 3,
+                        borderRad: 20,
+                        hidden: "Adyňyzy ýazyň...",
+                        label: "Täze ad",
+                        /* onControl: (val, index) {
                           },*/
-                              ),
-                              actionsTeam: [
-                                ActionsTeam(func: () {}, text: "Ýatyr"),
-                                ActionsTeam(
-                                    func: () {
-                                      ///////change name from api
-                                      ///////
-                                      ShPUser(
-                                              id: int.parse(
-                                                  UserProperties.getProperty(
-                                                      "id")),
-                                              name: controls[3].text,
-                                              phone: UserProperties.getProperty(
-                                                  "phone"),
-                                              isban: int.parse(
-                                                  UserProperties.getProperty(
-                                                      "isban")),
-                                              token: UserProperties.getProperty(
-                                                  "token"))
-                                          .sava();
-                                      Navigator.pushNamedAndRemoveUntil(
-                                          context,
-                                          PageName.pageMain,
-                                          (route) => route.isFirst);
-                                    },
-                                    text: "Üýtget",
-                                    isPopEnable: false),
-                              ]).popUpCupertino(context),
-                      width: SWi * 0.11,
-                      height: SWi * 0.11,
-                      shape: SWi * 0.02,
-                      color: Color(0xff5408BF),
-                      child: Icon(Icons.edit, color: Colors.white)),
+                      ),
+                      actionsTeam: [
+                        ActionsTeam(func: () {}, text: "Ýatyr"),
+                        ActionsTeam(
+                            func: () {
+                              ///////change name from api
+                              ///////
+                              ShPUser(
+                                      id: int.parse(
+                                          UserProperties.getProperty("id")),
+                                      name: controls[3].text,
+                                      phone:
+                                          UserProperties.getProperty("phone"),
+                                      isban: int.parse(
+                                          UserProperties.getProperty("isban")),
+                                      token:
+                                          UserProperties.getProperty("token"))
+                                  .sava();
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  PageName.pageMain, (route) => route.isFirst);
+                            },
+                            text: "Üýtget",
+                            isPopEnable: false),
+                      ]).popUpCupertino(context),
+                  leading: iconBloc(Icons.edit),
                   title: Text(
                     "Ady üýtgetmek",
                     style: TextStyle(fontSize: SWi * 0.045),
@@ -316,34 +251,33 @@ class MyProfil extends StatelessWidget {
                 ),
               ),
               Container(
+                margin: EdgeInsets.symmetric(vertical: SWi * 0.02),
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
-                  leading: ImgBtn(
-                      onTap: () => PopUppWidget(
-                              title: "Parol",
-                              content: MyInput(
-                                shape: true,
-                                index: 4,
-                                borderRad: 20,
-                                hidden: "Paroly ýazyň...",
-                                label: "Täze Parol",
-                                /* onControl: (val, index) {
+                  onTap: () => PopUppWidget(
+                      title: "Parol",
+                      content: MyInput(
+                        shape: true,
+                        index: 4,
+                        borderRad: 20,
+                        hidden: "Paroly ýazyň...",
+                        label: "Täze Parol",
+                        /* onControl: (val, index) {
                           },*/
-                              ),
-                              actionsTeam: [
-                                ActionsTeam(func: () {}, text: "Ýatyr"),
-                                ActionsTeam(
-                                    func: () {
-                                      ///////change pass from api
-                                      ///////
-                                      Navigator.pushNamedAndRemoveUntil(
-                                          context,
-                                          PageName.pageMain,
-                                          (route) => route.isFirst);
-                                    },
-                                    text: "Üýtget",
-                                    isPopEnable: false),
-                              ]).popUpCupertino(context),
+                      ),
+                      actionsTeam: [
+                        ActionsTeam(func: () {}, text: "Ýatyr"),
+                        ActionsTeam(
+                            func: () {
+                              ///////change pass from api
+                              ///////
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  PageName.pageMain, (route) => route.isFirst);
+                            },
+                            text: "Üýtget",
+                            isPopEnable: false),
+                      ]).popUpCupertino(context),
+                  leading: ImgBtn(
                       width: SWi * 0.11,
                       height: SWi * 0.11,
                       shape: SWi * 0.02,
@@ -366,19 +300,14 @@ class MyProfil extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
                 child: ListTile(
-                  leading: ImgBtn(
-                      onTap: () {
-                        UserProperties.erase();
-                        Provider.of<UsesVar>(context, listen: false)
-                            .navBarSelect(0);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, PageName.pageMain, (route) => false);
-                      },
-                      width: SWi * 0.11,
-                      height: SWi * 0.11,
-                      shape: SWi * 0.02,
-                      color: Color(0xff5408BF),
-                      child: Icon(Icons.logout, color: Colors.white)),
+                  onTap: () {
+                    UserProperties.erase();
+                    Provider.of<UsesVar>(context, listen: false)
+                        .navBarSelect(0);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, PageName.pageMain, (route) => false);
+                  },
+                  leading: iconBloc(Icons.logout),
                   title: Text(
                     "Ulgamdan çykmak",
                     style: TextStyle(fontSize: SWi * 0.045),
@@ -389,20 +318,43 @@ class MyProfil extends StatelessWidget {
             ],
           ),
         ),
-        /*Card(
-          child: Column(
-            children: [
-              ListTile(leading: Text("Sargytlar")),
-              ListTile(leading: Text("Ähli"), trailing: Text("0")),
-              ListTile(leading: Text("Garaşylýan"), trailing: Text("0")),
-              ListTile(leading: Text("Tölege garaşylýan"), trailing: Text("0")),
-              ListTile(
-                  leading: Text("Ugradylmaga garaşylýan"), trailing: Text("0")),
-              ListTile(leading: Text("Ugradylan"), trailing: Text("0")),
-            ],
-          ),
-        ),*/
       ],
+    );
+  }
+
+  Widget iconBox(String titleProduct, String title, IconData icon,
+      List<dynamic> objs, int sum) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
+      margin: EdgeInsets.symmetric(vertical: SWi * 0.01),
+      child: Builder(
+        builder: (context) => ListTile(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProductPage(
+                        title: titleProduct,
+                        objs: objs,
+                      ))),
+          leading: iconBloc(icon),
+          title: Text(
+            title,
+            style: TextStyle(fontSize: SWi * 0.045),
+          ),
+          trailing: Text("${sum}"),
+        ),
+      ),
+    );
+  }
+
+  Widget iconBloc(IconData icon) {
+    return Container(
+      child: ImgBtn(
+          width: SWi * 0.11,
+          height: SWi * 0.11,
+          shape: SWi * 0.02,
+          color: Color(0xff5408BF),
+          child: Icon(icon, color: Colors.white)),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:telfun/Views/Pages/DetalPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
 import '/Views/Login/LoginPage.dart';
+import 'Demo/Provider update API/provider/todo_provider.dart';
 import 'ViewModels/UserProvider.dart';
 import 'Views/LogoPage.dart';
 import '/Views/Pages/SetingsPage.dart';
@@ -24,6 +25,10 @@ void main() async {
   // await ShPUser().create();
   runApp(MultiProvider(
     providers: [
+      ///////////////////////////////////////////////
+      ChangeNotifierProvider<ToDoProvider>(
+          create: (BuildContext context) => ToDoProvider()),
+      ///////////////////////////////////////////////
       ChangeNotifierProvider<UsesVar>(
           create: (BuildContext context) => UsesVar()),
       ChangeNotifierProvider<EventsFavoritProvid>(

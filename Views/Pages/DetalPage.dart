@@ -19,8 +19,10 @@ class DetalPage extends StatefulWidget {
   final int /*index,*/ id, index;
   final bool isfavorite;
   final ElemEvents obj;
+  final String place;
   DetalPage(
       {
+        this.place="Näbelli ýer",
         this.obj,
         this.isfavorite = false,
       this.index,
@@ -210,7 +212,7 @@ class _DetalPageState extends State<DetalPage> {
                     /* TextSpan(
                           text: "Goýulan ýeri : ",
                           style: TextStyle(fontSize: 18)),*/
-                    TextSpan(text: list.place)
+                    TextSpan(text: widget.place)
                   ])),
               Row(children: [
                 /* TextSpan(
@@ -342,7 +344,7 @@ class _DetalPageState extends State<DetalPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Ýeri"),
                     ),
-                    Text(list.place),
+                    Text(widget.place),
                   ]),
                   TableRow(children: [
                     Padding(

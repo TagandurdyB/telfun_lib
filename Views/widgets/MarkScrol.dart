@@ -41,13 +41,14 @@ class _MarkScrolState extends State<MarkScrol> {
                             blurRadius: 2,
                             offset: Offset(0, 3))
                       ],
-                      color: Provider.of<UsesVar>(context).getMark()[1] == index
+                     color: Colors.white,
+                     /* color: Provider.of<UsesVar>(context).getMark()[1] == index
                           ? Color(0xff9747FF)
-                          : Colors.grey,
+                          : Colors.grey,*/
                       shape: SWi * 0.03,
                       width: SWi * 0.21,
                       child: Padding(
-                        padding: EdgeInsets.all(SWi * 0.005),
+                        padding: EdgeInsets.all(SWi * 0.01),
                         child: ImgBtn(
                           color: Colors.white,
                           shape: SWi * 0.027,

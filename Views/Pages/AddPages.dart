@@ -57,7 +57,7 @@ class AddPage extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(
                       left: SWi *
-                          (Provider.of<UsesVar>(context, listen: false)
+                          (Provider.of<UsesVar>(context)
                                       .witchSelect() *
                                   0.4 +
                               0.1) /*0.1-0.5*/),

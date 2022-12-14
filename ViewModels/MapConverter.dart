@@ -35,7 +35,10 @@ class MapConverter {
         list.add(localConverter().mapToElemMark(_val));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToElemEventDetal(_val));
-      } else if (_name == ApiTags.events||_name==ApiTags.all||_name == ApiTags.product||_name==ApiTags.prosses) {
+      } else if (_name == ApiTags.events ||
+          _name == ApiTags.all ||
+          _name == ApiTags.product ||
+          _name == ApiTags.prosses) {
         list.add(localConverter().mapToElemEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToElemCategory(_val));
@@ -56,7 +59,10 @@ class MapConverter {
         list.add(localConverter().elemImgToMap(ElemList[i]));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().elemCategoryToMap(ElemList[i]));
-      } else if (_name == ApiTags.events||_name==ApiTags.all||_name == ApiTags.product||_name==ApiTags.prosses) {
+      } else if (_name == ApiTags.events ||
+          _name == ApiTags.all ||
+          _name == ApiTags.product ||
+          _name == ApiTags.prosses) {
         list.add(localConverter().elemEventsToMap(ElemList[i]));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().elemEventDetalToMap(ElemList[i]));
@@ -87,7 +93,10 @@ class MapConverter {
         list.add(localConverter().mapToMapMark(_val));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToMapEventDetal(_val));
-      } else if (_name == ApiTags.events||_name==ApiTags.all||_name == ApiTags.product||_name==ApiTags.prosses) {
+      } else if (_name == ApiTags.events ||
+          _name == ApiTags.all ||
+          _name == ApiTags.product ||
+          _name == ApiTags.prosses) {
         list.add(localConverter().mapToMapEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToMapCategori(_val));
@@ -391,7 +400,7 @@ class localConverter {
   Map<String, dynamic> elemEventDetalToMap(ElemEvents _elem) {
     try {
       return {
-        "view":_elem.view,
+        "view": _elem.view,
         "color": {
           "id": _elem.color.id,
           "tm": _elem.color.tm,
@@ -415,25 +424,27 @@ class localConverter {
 
   Map<String, dynamic> mapToMapEventDetal(Map _map) {
     try {
-      bool _is_new=_map["is_new"]==0?false:true;
-        return {
-          "view":_map["view"],
-          "is_new":_is_new,
-          "data": _map["updated_at"],
-          "images": _map["image"],
-          "color": _is_new?{
-            "tm":_map["color"]["tm"],
-            "ru":_map["color"]["ru"],
-            "id":_map["color"]["id"],
-            "code":_map["color"]["code"],
-          }:{"code": "#ff0000", "tm": "", "ru": "", "id": 0},
-          "name": _map["name"],
-          "price": _map["price"].toString(),
-          "place": _map["welayat"],
-          "phone": _map["user_phone"],
-          "mark": _map["mark"]["name"],
-          "about": _map["about"],
-        };
+      bool _is_new = _map["is_new"] == 0 ? false : true;
+      return {
+        "view": _map["view"],
+        "is_new": _is_new,
+        "data": _map["updated_at"],
+        "images": _map["image"],
+        "color": _is_new
+            ? {
+                "tm": _map["color"]["tm"],
+                "ru": _map["color"]["ru"],
+                "id": _map["color"]["id"],
+                "code": _map["color"]["code"],
+              }
+            : {"code": "#ff0000", "tm": "", "ru": "", "id": 0},
+        "name": _map["name"],
+        "price": _map["price"].toString(),
+        "place": _map["welayat"],
+        "phone": _map["user_phone"],
+        "mark": _map["mark"]["name"],
+        "about": _map["about"],
+      };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from mapToMapEventDetal!!! :$_e");
     }
@@ -453,6 +464,7 @@ class localConverter {
         // mark: _map["mark"]["name"],
         // phone: _map["user"]["phone"],
         place: _map["place"],
+        etrap: ElemEtrap(name: _map["etrap"]["name"], id: _map["etrap"]["id"]),
         price: int.parse(_map["price"]),
         public_image: _map["public_image"],
       );
@@ -473,6 +485,7 @@ class localConverter {
         //  "images": _elem.images,
         //"mark": _elem.mark,
         // "phone": _elem.phone,
+        "etrap": {"name": _elem.etrap.name, "id": _elem.etrap.id},
         "place": _elem.place,
         "price": _elem.price.toString(),
         "public_image": _elem.public_image,
@@ -494,6 +507,9 @@ class localConverter {
         //  images: _map["image"],
         // mark: _map["mark"]["name"],
         // phone: _map["user"]["phone"],
+        "etrap": _map["etrap"] != null
+            ? {"name": _map["etrap"]["name"], "id": _map["etrap"]["id"]}
+            : {"name": "Näbelli ýer", "id": 0},
         "place": _map["welayat"],
         "price": _map["price"],
         "public_image": _map["public_image"],
@@ -502,6 +518,7 @@ class localConverter {
       print("+Convet_ERROR+: Be error from mapToMapEvents!!! :$_e");
     }
   }
+
 /////////////////////////////////////////////////////////////
   ElemMark mapToElemMark(Map _map) {
     try {
@@ -562,7 +579,7 @@ class localConverter {
   Map favoriteToMap(ElemEvents _elem) {
     try {
       return {
-        "is_new":_elem.is_new,
+        "is_new": _elem.is_new,
         "id": _elem.id,
         "data": _elem.data.toString(),
         "place": _elem.place,

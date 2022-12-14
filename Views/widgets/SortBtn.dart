@@ -129,7 +129,7 @@ class _SortBtnState extends State<SortBtn> {
       height: null,
       color: Colors.transparent,
       onTap: () {
-        PopUppWidget(
+       /* PopUppWidget(
           centerTitle: true,
           title: "Yzygiderlik",
           content: Column(
@@ -163,7 +163,7 @@ class _SortBtnState extends State<SortBtn> {
               )
             ],
           ),
-        ).popUp(context);
+        ).popUp(context);*/
       },
     );
   }

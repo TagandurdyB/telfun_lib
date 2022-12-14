@@ -17,6 +17,14 @@ class ElemEtrap {
   final String name;
   final int id;
   ElemEtrap({this.id, this.name});
+
+   String shortName(){
+    if(name.length>15){
+      return name.substring(0,15)+"...";
+    }
+    return name;
+  }
+
 }
 
 class ElemCategory {
@@ -47,9 +55,11 @@ class ElemEvents {
   final DateTime data;
   final List images;
   final String name, phone, place, about, mark, public_image;
+  final ElemEtrap etrap;
   //final List images;
   ElemEvents(
       {
+        this.etrap,
         this.view,
         this.color,
       this.mark_id,

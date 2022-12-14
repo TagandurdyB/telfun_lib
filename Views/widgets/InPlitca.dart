@@ -18,7 +18,7 @@ class InCategory extends StatefulWidget {
   final bool isFavorite;
 
   InCategory({
-    this.isFavorite=false,
+    this.isFavorite = false,
     this.obj,
     this.favoriteFunc,
     this.list,
@@ -32,6 +32,12 @@ class InCategory extends StatefulWidget {
 class _InCategoryState extends State<InCategory> {
   @override
   Widget build(BuildContext context) {
+   final String _place= widget.obj.etrap.shortName() != "Ähli"
+        ? "${widget.obj.place} / ${widget.obj.etrap.shortName()}"
+        : "${widget.obj.place}";
+   final String _place2= widget.obj.etrap.shortName() != "Ähli"
+       ? "${widget.obj.place} / ${widget.obj.etrap.name}"
+       : "${widget.obj.place}";
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: SWi * 0.02, vertical: SWi * 0.017),
@@ -49,16 +55,20 @@ class _InCategoryState extends State<InCategory> {
                         URL: "$IP/api/new/${widget.obj.id}",
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
-                          obj: widget.obj,
-                            isfavorite: widget.isFavorite /*list[index].favorite*/,
+                          place: _place2,
+                            obj: widget.obj,
+                            isfavorite:
+                                widget.isFavorite /*list[index].favorite*/,
                             index: widget.index)))
                 : MaterialPageRoute(
                     builder: (context) => API_Get(
                         URL: "$IP/api/event/${widget.obj.id}",
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
+                          place: _place2,
                           obj: widget.obj,
-                          isfavorite: widget.isFavorite /*list[index].favorite*/,
+                          isfavorite:
+                              widget.isFavorite /*list[index].favorite*/,
                           index: widget.index,
                         ))),
           );
@@ -72,7 +82,7 @@ class _InCategoryState extends State<InCategory> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(SWi * 0.035),
-         /* gradient: LinearGradient(
+            /* gradient: LinearGradient(
             colors: [
               Colors.yellow[300],
               Colors.white
@@ -90,7 +100,7 @@ class _InCategoryState extends State<InCategory> {
                   right: 0,
                   top: 0,
                   child: FavoriteBtn(
-                   // onTop: widget.favoriteFunc,
+                    // onTop: widget.favoriteFunc,
                     favorite: widget.isFavorite,
                     obj: widget.obj,
                     index: widget.index,
@@ -124,7 +134,6 @@ class _InCategoryState extends State<InCategory> {
                   ),
                 ),
               ),
-
               Positioned(
                 left: SWi * 0.09,
                 child: Container(
@@ -140,23 +149,20 @@ class _InCategoryState extends State<InCategory> {
                                   fontFamily: "NunitoRegular",
                                   fontWeight: FontWeight.w900))),
                       SizedBox(height: SWi * 0.01),
-                      /*    Container(
-                        child: Text("${list[index]["place"]}",
-                            style: TextStyle(
-                                fontSize: SWi * 0.04,
-                                fontFamily: "Itim")),
-                      ),*/
                       Container(
                         child: Text("${widget.obj.price} TMT",
                             style: TextStyle(
                                 fontSize: SWi * 0.04,
                                 fontFamily: "NunitoRegular")),
                       ),
-                      Text("${widget.obj.place}",
+                      SizedBox(height: SWi * 0.01),
+                      Text(
+                          _place,
                           style: TextStyle(
                               fontSize: SWi * 0.037,
                               fontFamily: "NunitoRegular",
                               fontWeight: FontWeight.w500)),
+                      SizedBox(height: SWi * 0.01),
                       Text(
                           "${widget.obj.data.day}.${widget.obj.data.month}.${widget.obj.data.year}",
                           style: TextStyle(
@@ -167,7 +173,7 @@ class _InCategoryState extends State<InCategory> {
                   ),
                 ),
               ),
-            /*  Positioned(
+              /*  Positioned(
                 left: SWi * 0.09,
                 bottom: SWi * 0.001,
                 child: Container(

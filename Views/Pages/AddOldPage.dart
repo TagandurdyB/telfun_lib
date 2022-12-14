@@ -69,7 +69,7 @@ if (d==0&&imageOk){
                     child: MyInput(
                       shape: true,
                       index: 0,
-                      borderRad: 60,
+                      borderRad: SWi*0.03,
                       hidden: "Bildirişiň adyny ýazyň...",
                       label: "Bildirişiň ady...",
                       onControl: (val, index) {
@@ -84,7 +84,7 @@ if (d==0&&imageOk){
                       shape: true,
                       index: 1,
                       type: Type.num,
-                      borderRad: 60,
+                      borderRad: SWi*0.03,
                       hidden: "Bildirişiň bahasyny ýazyň...",
                       label: "Bahasy...",
                       onControl: (val, index) {
@@ -148,7 +148,7 @@ if (d==0&&imageOk){
                                                     .index}");
                                           },
                                           child: Text(
-                                            "${_etraps[index].name}",
+                                            "${_etraps[index].name}",textAlign: TextAlign.center,
                                             style: TextStyle(fontSize: 20),
                                           ),
                                         )),
@@ -173,7 +173,8 @@ if (d==0&&imageOk){
                       hint: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          selectIcon(Icons.category),
+                          selectIcon(Icons.view_list),
+                          //selectIcon(Icons.account_tree_rounded),
                           Expanded(
                             child: Padding(
                                 padding: EdgeInsets.all(8),
@@ -212,7 +213,7 @@ if (d==0&&imageOk){
                       hint: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          selectIcon(Icons.bookmark),
+                          selectIcon(Icons.phone_android_rounded),
                           Expanded(
                             child: Padding(
                                 padding: EdgeInsets.all(8),
@@ -258,7 +259,7 @@ if (d==0&&imageOk){
                       shape: true,
                       index: 2,
                       maxline: 3,
-                      borderRad: 30,
+                      borderRad: SWi*0.03,
                       hidden: "Bildirişiňiz barada maglumat ýazyň...",
                       label: "Bildiriş barada...",
                       onControl: (val, index) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/Views/Pages/Demo/FavoriteProvider/favoritePage.dart';
+import '/Demo/FavoriteProvider/favoritePage.dart';
 
 import 'favoriteProvider.dart';
 

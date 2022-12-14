@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/Views/Pages/Demo/FavoriteProvider/favoriteProvider.dart';
+import '/Demo/FavoriteProvider/favoriteProvider.dart';
 
 class FavoriteDemoPage extends StatelessWidget {
   @override

@@ -16,7 +16,10 @@ class SignUpPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Içeri gir",style: TextStyle(color: Color(0xff5807B6)),)),
+              child: Text(
+                "Içeri gir",
+                style: TextStyle(color: Color(0xff5807B6)),
+              )),
         ],
         brightness: Brightness.light,
         backgroundColor: Colors.white,
@@ -45,17 +48,18 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  String _empetySMS = "Doly we dogry ýazyň!";
+  String _empetySMS = "Doly we dogry ýazyň!",
+      _textdetail = "Parolyňyz 6 belgiden az blmaly däl!";
   FirebaseAuth auth = FirebaseAuth.instance;
-  bool otpVisibility = false;
+  bool otpVisibility = false,_showdetail=false;
   User user;
   String verificationID = "";
 
-   CreateFunc() async{
+  CreateFunc() async {
     var _contr = controls.where((element) => element.text == "");
     if (_contr.isNotEmpty ||
         controls[2].text != controls[3].text ||
-        controls[1].text.length < 8) {
+        controls[2].text.length < 6) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Container(
             decoration: BoxDecoration(
@@ -72,9 +76,14 @@ class _SignUpFormState extends State<SignUpForm> {
             )),
         backgroundColor: Colors.white,
       ));
+      if (controls[2].text.length < 6) {
+        _showdetail=true;
+        setState(() {});
+      }
       print("empety");
-    }
-    else {
+    } else {
+      _showdetail=false;
+      setState(() {});
       bool isAlredyRegister = await API_Post(
         URL: "$IP/api/control",
         //URL: "$IP/api/register",
@@ -84,7 +93,7 @@ class _SignUpFormState extends State<SignUpForm> {
       ).IsRegister();
       print("**isAlredyRegister = $isAlredyRegister");
       if (isAlredyRegister) {
-          loginWithPhone();
+        loginWithPhone();
       } else {
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Container(
@@ -131,14 +140,24 @@ class _SignUpFormState extends State<SignUpForm> {
           hidden: "Telefon belgiňiz",
           type: Type.tel,
         ),
+        Visibility(
+          visible: _showdetail,
+          child: Container(
+            child: Text(
+              _textdetail,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.orange[800], fontSize: 20),
+            ),
+          ),
+        ),
         MyInput(
           index: 2,
-          hidden: "Paraolyňyz",
+          hidden: "Parolyňyz",
           type: Type.pass,
         ),
         MyInput(
           index: 3,
-          hidden: "Paraolyňyz(dogrylama)",
+          hidden: "Parolyňyz (dogrylama)",
           type: Type.pass,
         ),
         Padding(
@@ -171,7 +190,10 @@ class _SignUpFormState extends State<SignUpForm> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Içeri gir",style: TextStyle(color: Color(0xff5807B6)),)),
+                  child: Text(
+                    "Içeri gir",
+                    style: TextStyle(color: Color(0xff5807B6)),
+                  )),
             ],
           ),
         )

@@ -57,7 +57,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
               onTap: (index) {
                 setState(() {
                   if (UserLoginDetals.getIsLogin() && index == 1) {
-                    Provider.of<UsesVar>(context, listen: false)
+                    Provider.of<UsesVar>(context,listen: false)
                         .navBarSelect(1);
                     Provider.of<UsesVar>(context,listen: false).Select(0);
                     if (!widget.IsMain)

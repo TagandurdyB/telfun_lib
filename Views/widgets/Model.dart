@@ -20,55 +20,66 @@ class Model extends StatefulWidget {
   _ModelState createState() => _ModelState();
 }
 
+
 class _ModelState extends State<Model> {
+
+  Widget cacheImg(){
+    return  CachedNetworkImage(
+      cacheManager: CacheManager(Config("marks",
+          stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+      key: UniqueKey(),
+      placeholder: (context, url) =>
+          Center(child: CircularProgressIndicator()),
+      errorWidget: (context, url, error) => Center(
+          child: FittedBox(
+              fit: BoxFit.fill,
+              child: Icon(
+                Icons.photo,
+                color: Colors.grey,
+              ))),
+      imageUrl: "$IP/storage/${widget.image}",
+      fit: BoxFit.contain,
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final eventProvid=Provider.of<EventsProvid>(context);
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        ImgBtn(
-          onTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ProductPage(
-            title: widget.name,
-            objs: eventProvid.sortWithMarks(widget.mark_id),
-          ))),
-          boxShadow: [
-            BoxShadow(
-                spreadRadius: 0,
-                blurRadius: 3,
-                offset: Offset(1, 3),
-                color: Colors.grey),
-            BoxShadow(
-                spreadRadius: 0,
-                blurRadius: 3,
-                offset: Offset(-1, 3),
-                color: Colors.grey)
-          ],
-          shape: SWi * 0.03,
-          width: SWi * 0.35,
-          height: SWi * 0.45,
-          color: Color(0xffF6F2FA),
-//colors: [Colors.deepPurple,Colors.blue],
-          child: CachedNetworkImage(
-            cacheManager: CacheManager(Config("marks",
-                stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
-            key: UniqueKey(),
-            placeholder: (context, url) =>
-                Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => Center(
-                child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: Icon(
-                      Icons.photo,
-                      color: Colors.grey,
-                    ))),
-            imageUrl: "$IP/storage/${widget.image}",
-            fit: BoxFit.cover,
-          ),
-        ),
-        Positioned(bottom: 1, child: Container(child: Text("${widget.name}"))),
+    return ImgBtn(
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ProductPage(
+        img: cacheImg(),
+        title: widget.name,
+        objs: eventProvid.sortWithMarks(widget.mark_id),
+      ))),
+      boxShadow: [
+        BoxShadow(
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: Offset(1, 3),
+            color: Colors.grey),
+        BoxShadow(
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: Offset(-1, 3),
+            color: Colors.grey)
       ],
+      shape: SWi * 0.03,
+      width: SWi * 0.35,
+      height: SWi * 0.38,
+      color: Color(0xffF6F2FA),
+      child: Column(
+        children: [
+          Container(
+            width: SWi*0.3,
+            height: SWi*0.3,
+            padding: EdgeInsets.all(SWi*0.02),
+            child:cacheImg(),
+          ),
+          Container(child: Text("${widget.name}",style: TextStyle(fontSize: SWi*0.03,fontWeight: FontWeight.w600),textAlign: TextAlign.center)),
+        ],
+      ),
     );
   }
 }
