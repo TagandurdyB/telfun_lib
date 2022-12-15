@@ -46,13 +46,22 @@ class _ModelState extends State<Model> {
   @override
   Widget build(BuildContext context) {
     final eventProvid=Provider.of<EventsProvid>(context);
+    final providerVar=Provider.of<UsesVar>(context);
     return ImgBtn(
-      onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProductPage(
-        img: cacheImg(),
-        title: widget.name,
-        objs: eventProvid.sortWithMarks(widget.mark_id),
-      ))),
+      onTap: ()
+      {
+        //Provider.of<UsesVar>(context,listen: false).changeMark(widget.mark_id,-1);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductPage(
+                      img: cacheImg(),
+                      title: widget.name,
+                      mark_id: widget.mark_id,
+                      objs: eventProvid.sortWithMarks(
+                          widget.mark_id, providerVar.sortNum),
+                    )));
+      },
       boxShadow: [
         BoxShadow(
             spreadRadius: 0,

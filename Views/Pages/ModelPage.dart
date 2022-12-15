@@ -17,11 +17,6 @@ class ModelPage extends StatelessWidget {
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-/*          Container(
-            color: Colors.red,
-            width: double.infinity,
-              alignment: Alignment.centerRight,
-              child: SortBtn()),*/
           Padding(
             padding: EdgeInsets.only(top: SWi * 0.02),
             child: Center(

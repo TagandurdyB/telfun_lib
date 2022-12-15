@@ -14,14 +14,15 @@ class ProductPage extends StatelessWidget {
   final String title;
   final List objs;
   final Widget img;
+  final int mark_id;
 
-  const ProductPage({Key key, this.title, this.objs, this.img}) : super(key: key);
+  const ProductPage({Key key, this.title, this.objs, this.img, this.mark_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldAll(
         EnableBotomMenu: true,
-        body: ProductView(title: title,objs: objs,img: img,));
+        body: ProductView(title: title,objs: objs,img: img,mark_id: mark_id,));
   }
 }
 
@@ -29,13 +30,15 @@ class ProductView extends StatelessWidget {
   final String title;
   final List objs;
   final Widget img;
+  final int mark_id;
 
-  const ProductView({Key key, this.title, this.objs, this.img}) : super(key: key);
+  const ProductView({Key key, this.title, this.objs, this.img, this.mark_id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //final provider = Provider.of<UserProvider>(context);
-    //final List objs = provider.allObjs;
+    final provider = Provider.of<EventsFavoritProvid>(context);
+    final eventProvider = Provider.of<EventsProvid>(context);
+    final markProvider = Provider.of<UsesVar>(context);
     return Column(
       children: [
         Container(
@@ -49,7 +52,7 @@ class ProductView extends StatelessWidget {
                     height: 40,
                     child: img),*/
                 Text(
-                    title,//"Ähli bildirişlerim",
+                    title,
                   style:
                   TextStyle(fontSize: SWi * 0.06, fontWeight: FontWeight.w600),
                 ),
@@ -59,16 +62,22 @@ class ProductView extends StatelessWidget {
           child: Container(
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: objs.length, //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
+                itemCount: eventProvider
+                    .sortWithMarks(mark_id,markProvider.sortNum)
+                    .length, //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
                 itemBuilder: (context, index) {
-                  print("i am hear 5");
-                  final ElemEvents _obj = objs[index];
-                  print("i am hear 6 ${_obj.name}");
+                 // final int _mark_id = markProvider.getMark()[0];
+                  final int _sort_num=markProvider.sortNum;
                   return Container(
                       child: InCategory(
-                        obj: _obj,
-                        isFavorite: _obj.favorite,
-                      ));
+                      // list: Provider.of<UsesVar>(context).getEvent(),
+                      // index: index,
+                      obj: eventProvider.sortWithMarks(mark_id,_sort_num)[
+                  index], //  Get_Lists(listTag: ApiTags.events).getList()[index],
+                  isFavorite:
+                  provider.isExist(eventProvider.sortWithMarks(mark_id,_sort_num)[index]),
+                  // isFavorite: true,
+                  ));
                 }),
           ),
         ),

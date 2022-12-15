@@ -21,87 +21,78 @@ class AllPage extends StatefulWidget {
 class _AllPageState extends State<AllPage> {
   List list = [];
 
-  var provider , eventProvider ,markProvider ;
+  var provider;
+  var eventProvider;
+  var markProvider;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<EventsFavoritProvid>(context,listen: false).reload();
-      Provider.of<EventsProvid>(context,listen: false).reLoad();
+      Provider.of<EventsFavoritProvid>(context, listen: false).reload();
+      Provider.of<EventsProvid>(context, listen: false).reLoad();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     provider = Provider.of<EventsFavoritProvid>(context);
     eventProvider = Provider.of<EventsProvid>(context);
-     markProvider = Provider.of<UsesVar>(context);
+    markProvider = Provider.of<UsesVar>(context);
     return ScaffoldAll(
       isSliver: true,
       EnableBotomMenu: true,
       appBarBottom: SearchBtn(),
       topBarHeight: 0.33,
-        ////////////////////////////////////////////////
-       sliverBody: SizedBox(
-           height : SWi * 0.54,
-           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-               TopMark(context),
-               Visibility(
-                 visible:
-                 Get_Lists(listTag: ApiTags.mark).getList().length > 0,
-                 child: MarkScrol(
-                   onTab: () {
-                     /*  List _list = eventProvider.objs
-                         .where((element) =>
-                             element.mark_id ==
-                             Provider.of<UsesVar>(context, listen: false)
-                                 .getMark()[0])
-                         .toList();
-                    // fillFavorite(_list);
-                     Future.delayed(Duration(milliseconds: 50)).then((value) {
-                       setState(() {});
-                     });*/
-                   },
-                 ),
-               ),
-               ////////////////////////////////////////////////
-               Container(
-                 //color: Colors.red,
-                   padding: EdgeInsets.symmetric(
-                       horizontal: SWi * 0.06, vertical: SWi * 0.05),
-                   child: Text("Bildirişler",
-                       style: TextStyle(
-                           fontSize: SWi * 0.05,
-                           fontWeight: FontWeight.w800))),
-             ],
-           ),
-         ),
-        ////////////////////////////////////////////////
-       sliverList: SliverList(
-          delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                final int _mark_id = markProvider.getMark()[0];
-                return InCategory(
-                  // list: Provider.of<UsesVar>(context).getEvent(),
-                  // index: index,
-                  obj: eventProvider.sortWithMarks(_mark_id)[
-                  index], //  Get_Lists(listTag: ApiTags.events).getList()[index],
-                  isFavorite: provider
-                      .isExist(eventProvider.sortWithMarks(_mark_id)[index]),
-                  // isFavorite: true,
-                );
-              },
-              childCount: eventProvider
-                  .sortWithMarks(markProvider.getMark()[0])
-                  .length //Get_Lists(listTag: ApiTags.events).getList().length,
-          ),
+      ////////////////////////////////////////////////
+      sliverBody: SizedBox(
+        height: SWi * 0.54,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TopMark(context),
+            Visibility(
+              visible: Get_Lists(listTag: ApiTags.mark).getList().length > 0,
+              child: MarkScrol(),
+            ),
+            ////////////////////////////////////////////////
+            Container(
+                //color: Colors.red,
+                padding: EdgeInsets.symmetric(
+                    horizontal: SWi * 0.06, vertical: SWi * 0.05),
+                child: Text("Bildirişler",
+                    style: TextStyle(
+                        fontSize: SWi * 0.05, fontWeight: FontWeight.w800))),
+          ],
         ),
-        ////////////////////////////////////////////////
+      ),
+      ////////////////////////////////////////////////
+      sliverList: SliverList(
+        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          final int _mark_id = markProvider.getMark()[0];
+          final int _sort_num = markProvider.sortNum;
+          List _list = eventProvider.sortWithMarks(_mark_id, _sort_num);
+       /*   if (_sort_num == 0) {
+            _list = eventProvider.sortWithMarks(_mark_id, _sort_num);
+          } else if (_sort_num == 1) {
+            _list.sort((a, b) => a.price.compareTo(b.price));
+          } else if (_sort_num == 2) {
+            _list.sort((a, b) => a.price.compareTo(b.price));
+            _list = _list.reversed.toList();
+          }*/
+          final obj = _list[index];
+          return InCategory(
+            obj: obj,
+            isFavorite: provider.isExist(obj),
+          );
+        },
+            childCount: eventProvider
+                .sortWithMarks(markProvider.getMark()[0], markProvider.sortNum)
+                .length //Get_Lists(listTag: ApiTags.events).getList().length,
+            ),
+      ),
+      ////////////////////////////////////////////////
     );
   }
 

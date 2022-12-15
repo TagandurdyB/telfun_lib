@@ -29,6 +29,7 @@ class API {
     }).then((response) {
       if (response.statusCode == 200) {
         map = json.decode(response.body);
+        print("request:${map}");
       } else {
         print("ERROR! you can't regiseter. Bicause you alrady sing up  :(");
         map = {"status": false};

@@ -21,16 +21,9 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State<AddNewPage> {
   DDBEl DDColor, DDCategory, DDMark, DDModel, DDPlace;
-  List<DropDownBtnUnVal> _DropDownBtnUnValList = [];
   final TextStyle enable =
           TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
       disable = TextStyle(color: Colors.grey);
-
-  List<DDBEl> _DDColorList = [];
-  //List<DDBEl> _DDCategoryList = [DDBEl(value: "", index: -1, id: 0)];
-  List<DDBEl> _DDMarkList = [];
-  List<DDBEl> _DDModelList = [];
-  List<DDBEl> _DDPlaceList = [];
 
   @override
   void initState() {
@@ -56,18 +49,6 @@ class _AddNewPageState extends State<AddNewPage> {
             element.mark_id == DDMark.id)
         .toList();
   }
-
- // List _colors=[];
-/*  void colorFunc() {
-    _colors = Get_Lists(listTag: ApiTags.model)
-        .getList()
-        .where((element) => element.id == DDModel.id)
-        .toList()[0]
-        .colors;
-    _colors.forEach((element) {
-      print("sdasdhsi:${element.tm}");
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +110,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                 },
                                 child: Text(
                                   "${_etraps[index].name}",textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: SWi*0.033),
                                 ),
                               )),
                         ),
@@ -336,7 +317,7 @@ class _AddNewPageState extends State<AddNewPage> {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: SWi*0.02),
-                              width: SWi * 0.36,
+                              width: SWi * 0.4,
                               child: MyInput(
                                 shape: true,
                                 index: 1,
@@ -355,7 +336,8 @@ class _AddNewPageState extends State<AddNewPage> {
                             ),
                             Text("TMT",style: TextStyle(
                               color: Colors.black,
-                              fontSize:SWi*0.1
+                              fontSize:SWi*0.08,
+                              fontFamily: "Itim"
                             ),),
                           ],
                         ),

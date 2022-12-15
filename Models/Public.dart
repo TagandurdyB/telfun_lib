@@ -38,10 +38,10 @@ List _event;
 TabController tabController;
 
 class UsesVar extends ChangeNotifier {
-  bool _isASC=true;
-  bool get isASC=>_isASC;
-  void changeASC(bool _is){
-    _isASC=_is;
+  int _sortNum=0;
+  int get sortNum=>_sortNum;
+  void changeSort(int _num){
+    _sortNum=_num;
     notifyListeners();
   }
 

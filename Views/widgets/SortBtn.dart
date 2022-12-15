@@ -129,81 +129,71 @@ class _SortBtnState extends State<SortBtn> {
       height: null,
       color: Colors.transparent,
       onTap: () {
-       /* PopUppWidget(
+        PopUppWidget(
           centerTitle: true,
-          title: "Yzygiderlik",
+          title: "Tertipleşdirme",
           content: Column(
             children: [
-              isReverse(),
-              Divider(color: Colors.purple[800]),
-              Row(
-                children: [
-                  Divider(height: 2, color: Colors.black),
-                  //  SizedBox(),
-                ],
-              ),
-              Row(children: [
-                Icon(Icons.add),
-                Text("salam"),
-              ]),
-              Row(children: [
-                Icon(Icons.add),
-                Text("salam"),
-              ]),
-              DropDownBtn(
-                tag: DDBName.dDBLocation,
-                onChanged: (index,val){
-                  setState(() {
-                  });
-                },
-                items: [
-                  DDBEl(id: 12,value: "123",index: 1),
-                  DDBEl(id: 11,value: "1234",index: 2),
-                ],
-              )
+              sortGroup(),
+
             ],
           ),
-        ).popUp(context);*/
+        ).popUp(context);
       },
     );
   }
 
-  Column isReverse() {
+  Column sortGroup() {
     //final provider=Provider.of<UsesVar>(context);
-    bool _isDEC=false;
+   // bool _isDEC=false;
+    final provider=Provider.of<UsesVar>(context,listen: false);
     return Column(
               children: [
                 Row(children: [
                   ImgBtn(
-                    child: Icon(Icons.arrow_circle_up,
-                        size: 40, color:!_isDEC?Colors.grey[400]:Colors.purple),
+                    child: Icon(provider.sortNum!=0?Icons.adjust_outlined:Icons.album_outlined,
+                        size: 40, color:provider.sortNum!=0? Colors.grey[400]:Colors.purple),
                     onTap: () {
-                      setState(() {
-                        _isDEC=true;
-                      });
+                      print("0");
+                     provider.changeSort(0);
+                     Navigator.pop(context);
                     },
-                    width: SWi * 0.2,
+                    width: null,
                     height: SWi * 0.15,
                     color: Colors.transparent,
                   ),
-                  Text("Köpden Aza", style: TextStyle(fontSize: SWi * 0.045)),
+                  Text("  Asyl tertip", style: TextStyle(fontSize: SWi * 0.04)),
                 ]),
                 Row(children: [
                   ImgBtn(
-                    child: Icon(Icons.arrow_circle_down,
-                        size: 40, color:_isDEC? Colors.grey[400]:Colors.purple),
+                    child: Icon(provider.sortNum!=1?Icons.adjust_outlined:Icons.album_outlined,
+                        size: 40, color:provider.sortNum!=1?Colors.grey[400]:Colors.purple),
                     onTap: () {
-                      print("salam");
-                      setState(() {
-                        _isDEC=false;
-                      });
+                      provider.changeSort(1);
+                      Navigator.pop(context);
                     },
-                    width: SWi * 0.2,
+                    width: null,
                     height: SWi * 0.15,
                     color: Colors.transparent,
                   ),
-                  Text("Azdan Köpe", style: TextStyle(fontSize: SWi * 0.045)),
+                  Text("  Arzandan gymmada", style: TextStyle(fontSize: SWi * 0.04)),
                 ]),
+                Row(children: [
+                  ImgBtn(
+                    child: Icon(provider.sortNum!=2?Icons.adjust_outlined:Icons.album_outlined,
+                        size: 40, color:provider.sortNum!=2? Colors.grey[400]:Colors.purple),
+                    onTap: () {
+                      print("salam");
+                      provider.changeSort(2);
+                      Navigator.pop(context);
+                    },
+                    width: null,
+                    height: SWi * 0.15,
+                    color: Colors.transparent,
+                  ),
+                  Text("  Gymmatdan arzana", style: TextStyle(fontSize: SWi * 0.04)),
+                ]),
+
               ],
             );
   }
