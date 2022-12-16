@@ -304,10 +304,9 @@ class _AddNewPageState extends State<AddNewPage> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: SWi * 0.02),
                         Container(
                           child: Text(
-                            "Bahasy:",
+                            "  Bahasy:",
                             style: TextStyle(
                               fontSize: SWi * 0.04,
                             ),

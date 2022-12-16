@@ -190,7 +190,8 @@ class MyDrawer extends StatelessWidget {
                     DrawBarBtn(
                       titleLeft: SWi * 0.15,
                       onTap: (context) {
-                        launch("tel://+99365000000");
+                       Navigator.pushNamed(context, PageName.pageChat);
+                        // launch("tel://+99365000000");
                       },
                       leading: ImgBtn(
                           shape: SWi * 0.02,
@@ -200,7 +201,7 @@ class MyDrawer extends StatelessWidget {
                           height: SWi * 0.11,
                           color: Colors.white,
                           child: Icon(
-                            Icons.phone,
+                            Icons.sms,
                             color: Color(0xff6A00FF),
                             size: SWi * 0.08,
                           )),

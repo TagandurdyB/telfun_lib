@@ -1,3 +1,5 @@
+import '/Views/Pages/SmsPage.dart';
+
 import '/Demo/Menue.dart';
 import '/Views/Pages/ProductPage.dart';
 import '/Views/Pages/ShopPage.dart';
@@ -28,6 +30,7 @@ class PageName {
   static const String pageAbout = "/AboutPage";
   static const String pageShop = "/ShopPage";
   static const String pageProduct = "/ProductPage";
+  static const String pageChat = "/ChatPage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -43,6 +46,7 @@ class PageName {
     pageFavorite: (context) => FavoritePage(),
     pageAbout: (context) => AboutPage(),
     pageShop: (context) => ShopPage(),
-    pageProduct:(context)=>ProductPage(),
+    pageProduct: (context) => ProductPage(),
+    pageChat: (context) => ChatPage(),
   };
 }

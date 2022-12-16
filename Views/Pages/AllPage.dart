@@ -103,6 +103,7 @@ class _AllPageState extends State<AllPage> {
         alignment: Alignment.centerRight,
         child: OutlinedButton(
           onPressed: () {
+            Provider.of<UsesVar>(context,listen: false).changeSort(0);
             Navigator.pushNamed(context, PageName.pageMark);
           },
           child: Text("Markalar",
