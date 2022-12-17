@@ -1,3 +1,6 @@
+import 'package:telfun/Views/Pages/AddShopPage.dart';
+import 'package:telfun/Views/Pages/InModelPage.dart';
+
 import '/Views/Pages/SmsPage.dart';
 
 import '/Demo/Menue.dart';
@@ -31,6 +34,7 @@ class PageName {
   static const String pageShop = "/ShopPage";
   static const String pageProduct = "/ProductPage";
   static const String pageChat = "/ChatPage";
+  static const String pageAddShop = "/AddShopPage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -48,5 +52,6 @@ class PageName {
     pageShop: (context) => ShopPage(),
     pageProduct: (context) => ProductPage(),
     pageChat: (context) => ChatPage(),
+    pageAddShop:(context)=>AddShopPage(),
   };
 }

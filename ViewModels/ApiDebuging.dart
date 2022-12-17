@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:telfun/Models/ChatElement.dart';
 import '/Models/Base.dart';
 import '/Models/Cacher.dart';
 import '/Models/connect.dart';
@@ -76,15 +77,15 @@ class API_Get extends StatelessWidget {
             height: double.infinity,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: Colors.white,
-               /* gradient: LinearGradient(
+              color: Colors.white,
+              /* gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
                   Colors.white,
                   Color(0xff6911B0),
                   Colors.white
-                ] *//*[Colors.yellow, Color(0xff6911B0), Colors.red]*//*)*/
+                ] */ /*[Colors.yellow, Color(0xff6911B0), Colors.red]*/ /*)*/
             ),
             child: Container(child: CircularProgressIndicator())));
   }
@@ -198,4 +199,23 @@ class API_Post {
     }
     return map["status"];
   }
+
+  Future<bool> sendSMS(String _message) async {
+    Map<String, dynamic> map = await API(URL: URL).POST({
+      "name": UserProperties.getProperty("name"),
+      "email": "User${UserProperties.getProperty("name")}@gmail.com",
+      "phone": "${UserProperties.getProperty("phone")}",
+      "text": _message,
+    });
+    return map["status"];
+    print("+++*** $map");
+  }
+
+/*  Future<bool> shop_add(Map _message) async {
+    Map<String, dynamic> map = await API(URL: URL).POST({
+
+    });
+    return map["status"];
+    print("+++*** $map");
+  }*/
 }

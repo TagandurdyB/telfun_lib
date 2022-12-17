@@ -308,7 +308,7 @@ class _AddNewPageState extends State<AddNewPage> {
                           child: Text(
                             "  Bahasy:",
                             style: TextStyle(
-                              fontSize: SWi * 0.04,
+                              fontSize: SWi * 0.03,
                             ),
                           ),
                         ),
@@ -316,7 +316,7 @@ class _AddNewPageState extends State<AddNewPage> {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: SWi*0.02),
-                              width: SWi * 0.4,
+                              width: SWi * 0.53,
                               child: MyInput(
                                 shape: true,
                                 index: 1,
@@ -335,7 +335,7 @@ class _AddNewPageState extends State<AddNewPage> {
                             ),
                             Text("TMT",style: TextStyle(
                               color: Colors.black,
-                              fontSize:SWi*0.08,
+                              fontSize:SWi*0.04,
                               fontFamily: "Itim"
                             ),),
                           ],

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/ChatProvider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/Views/Pages/DetalPage.dart';
@@ -37,6 +38,8 @@ void main() async {
           create: (BuildContext context) => EventsProvid()),
       ChangeNotifierProvider<UserProvider>(
           create: (BuildContext context) => UserProvider()),
+      ChangeNotifierProvider<SMSProvider>(
+          create: (BuildContext context) => SMSProvider()),
     ],
     child: MyApp(),
   ));

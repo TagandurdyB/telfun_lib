@@ -10,35 +10,32 @@ import 'package:telfun/ViewModels/UserProvider.dart';
 import 'package:telfun/Views/widgets/InPlitca.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
-class ProductPage extends StatelessWidget {
+class InModelPage extends StatelessWidget {
   final String title;
-  final List objs;
   final Widget img;
   final int mark_id;
 
-  const ProductPage({Key key, this.title, this.objs, this.img, this.mark_id})
+  const InModelPage({Key key, this.title, this.img, this.mark_id})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScaffoldAll(
         EnableBotomMenu: true,
-        body: ProductView(
+        body: InModelView(
           title: title,
-          objs: objs,
           img: img,
           mark_id: mark_id,
         ));
   }
 }
 
-class ProductView extends StatelessWidget {
+class InModelView extends StatelessWidget {
   final String title;
-  final List objs;
   final Widget img;
   final int mark_id;
 
-  const ProductView({Key key, this.title, this.objs, this.img, this.mark_id})
+  const InModelView({Key key, this.title, this.img, this.mark_id})
       : super(key: key);
 
   @override
@@ -69,21 +66,19 @@ class ProductView extends StatelessWidget {
           child: Container(
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: objs .length /*eventProvider
+                itemCount: eventProvider
                     .sortWithMarks(mark_id,markProvider.sortNum)
-                    .length*/
-                , //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
+                    .length
+                ,
                 itemBuilder: (context, index) {
-                  // final int _mark_id = markProvider.getMark()[0];
                   final int _sort_num = markProvider.sortNum;
+                  final obj=eventProvider
+                      .sortWithMarks(mark_id,_sort_num)[index];
                   return Container(
                       child: InCategory(
-                    // list: Provider.of<UsesVar>(context).getEvent(),
-                    // index: index,
-                    obj: objs[index], //  Get_Lists(listTag: ApiTags.events).getList()[index],
-                    isFavorite: provider.isExist(objs[index]),
-                    // isFavorite: true,
-                  ));
+                        obj: obj,
+                        isFavorite: provider.isExist(obj),
+                      ));
                 }),
           ),
         ),

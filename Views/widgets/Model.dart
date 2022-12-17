@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/Views/Pages/InModelPage.dart';
 import 'package:telfun/Views/Pages/ProductPage.dart';
 
 import '/Models/Public.dart';
@@ -54,12 +55,10 @@ class _ModelState extends State<Model> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProductPage(
+                builder: (context) => InModelPage(
                       img: cacheImg(),
                       title: widget.name,
                       mark_id: widget.mark_id,
-                      objs: eventProvid.sortWithMarks(
-                          widget.mark_id, providerVar.sortNum),
                     )));
       },
       boxShadow: [

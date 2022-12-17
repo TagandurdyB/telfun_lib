@@ -20,6 +20,22 @@ class API {
       this.list,*/
       );
 
+
+  Future<Map> POST(Map _map)async{
+    Map<String, dynamic> map;
+    await http.post(Uri.parse(URL), body: _map).then((response) {
+      if (response.statusCode == 200) {
+        map = json.decode(response.body);
+        print("request:${map}");
+      } else {
+        print("ERROR! you can't regiseter. Bicause you alrady sing up  :(");
+        map = {"status": false};
+      }
+    });
+    return map;
+  }
+
+
   Register(List list) async {
     Map<String, dynamic> map;
     await http.post(Uri.parse(URL), body: {

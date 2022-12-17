@@ -187,6 +187,27 @@ class MyDrawer extends StatelessWidget {
                           )),
                       title: Text("Dükanlar"),
                     ),
+                    Visibility(
+                        visible: UserLoginDetals.getIsLogin(),
+                        child: DrawBarBtn(
+                      titleLeft: SWi * 0.15,
+                      onTap: (context) {
+                        Navigator.pushNamed(context, PageName.pageAddShop);
+                      },
+                      leading: ImgBtn(
+                          shape: SWi * 0.02,
+                          borderColor: Color(0xff9245FF),
+                          borderWidth: SWi * 0.003,
+                          width: SWi * 0.11,
+                          height: SWi * 0.11,
+                          color: Colors.white,
+                          child: Icon(
+                            Icons.add_business,
+                            color: Color(0xff6A00FF),
+                            size: SWi * 0.08,
+                          )),
+                      title: Text("Dükan goş"),
+                    )),
                     DrawBarBtn(
                       titleLeft: SWi * 0.15,
                       onTap: (context) {
