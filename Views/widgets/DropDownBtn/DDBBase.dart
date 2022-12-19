@@ -8,7 +8,7 @@ class DDBEl {
 }
 
 class DDBBase {
-  DDBEl getDate(String tag) {
+  static DDBEl getDate(String tag) {
     if (DropDownBase[tag] == null)
       return DDBEl(index: -1, id: 0, value: "NULL");
     else {
@@ -16,11 +16,11 @@ class DDBBase {
     }
   }
 
-  void changeDate(DDBEl val,String tag) {
+  static void changeDate(String tag,DDBEl val) {
     DropDownBase.addAll({tag:val});
   }
 
-  void eraseDate(String tag) {
+  static void eraseDate(String tag) {
     DropDownBase.addAll({tag:DDBEl(value: "NULL",index: -1,id: 0)});
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
 import '/ViewModels/MapConverter.dart';
 import '/ViewModels/ApiDebuging.dart';
@@ -44,6 +45,7 @@ class _InCategoryState extends State<InCategory> {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
+          Provider.of<UsesVar>(context,listen: false).changeSort(0);
           print("In Category ID: ${widget.obj.id}");
           print("In Category is_new: ${widget.obj.is_new}");
           print("In Category favorite: ${widget.obj.favorite}");
@@ -143,7 +145,7 @@ class _InCategoryState extends State<InCategory> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          child: Text("${widget.obj.name}",
+                          child: Text("${widget.obj.shortName()}",
                               style: TextStyle(
                                   fontSize: SWi * 0.043,
                                   fontFamily: "NunitoRegular",

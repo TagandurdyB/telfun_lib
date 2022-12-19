@@ -31,6 +31,7 @@ class AddPage extends StatelessWidget {
                       onPressed: () {
                         Provider.of<UsesVar>(context, listen: false)
                             .Select(0);
+                        Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
                       },
                       child: Text(
                         "Ulanylan",
@@ -44,6 +45,7 @@ class AddPage extends StatelessWidget {
                       onPressed: () {
                         Provider.of<UsesVar>(context, listen: false)
                             .Select(1);
+                        Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
                       },
                       child: Text(
                         "Täze",

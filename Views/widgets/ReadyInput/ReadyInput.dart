@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:telfun/Models/Public.dart';
+
+import 'RIBase.dart';
 
 enum Type { tel, pass, text, num, email }
-List<TextEditingController> controls =
-    List.generate(10, (index) => TextEditingController());
+/*List<TextEditingController> controls =
+    List.generate(10, (index) => TextEditingController());*/
 
-class MyInput extends StatefulWidget {
+class ReadyInput extends StatefulWidget {
   final int index, maxline;
-  final String hidden, label;
+  final String hidden, label,tag;
   final bool shape;
   final double borderRad;
   final Type type;
-  final Function onControl;
+  final Function onControl,suffixFunc;
   final Widget reightWidget;
-  MyInput(
-      {this.index = 0,
+  ReadyInput(
+      {this.suffixFunc,
+        this.tag,
+        this.index = 0,
       this.hidden = "",
       this.shape = false,
       this.type = Type.text,
@@ -23,18 +29,21 @@ class MyInput extends StatefulWidget {
       this.maxline = 1,
       this.reightWidget});
   @override
-  _MyInputState createState() => _MyInputState();
+  _ReadyInputState createState() => _ReadyInputState();
 }
 
-class _MyInputState extends State<MyInput> {
+class _ReadyInputState extends State<ReadyInput> {
   @override
   void initState() {
     if (widget.type == Type.num) {
-      controls[widget.index] = TextEditingController(text: "0");
+      RIBase.changeDate(widget.tag,TextEditingController(text:"0"));
+      //controls[widget.index] = TextEditingController(text: "0");
+    }else{
+      RIBase.changeDate(widget.tag,TextEditingController(text:""));
     }
-    controls.forEach((element) {
+/*    controls.forEach((element) {
       element.text = "";
-    });
+    });*/
 /*    if (controls.length < widget.index + 1) {
       controls.add(TextEditingController());
     }*/
@@ -64,7 +73,7 @@ class _MyInputState extends State<MyInput> {
         cursorColor: Color(0xff5308BE),
         maxLines: widget.maxline,
         onChanged: (value) {
-          widget.onControl(value, widget.index);
+          widget.onControl(value, widget.tag/*widget.index*/);
         },
         maxLength: widget.type == Type.tel ? 8 : null,
         obscureText: widget.type == Type.pass ? true : false,
@@ -77,14 +86,17 @@ class _MyInputState extends State<MyInput> {
                     : widget.type == Type.email
                         ? TextInputType.emailAddress
                         : TextInputType.numberWithOptions(),
-        controller: controls[widget.index],
+        controller: RIBase.getControl(widget.tag),//controls[widget.index],
         decoration: InputDecoration(
             prefix: widget.type == Type.tel ? Text("+993") : null,
             hintText: widget.hidden != "" ? widget.hidden : "",
             labelText: widget.label != "" ? widget.label : "",
             suffix: GestureDetector(
                 onTap: () {
-                  controls[widget.index].clear();
+                RIBase.eraseDate(widget.tag);
+                  //  controls[widget.index].clear();
+                if(widget.suffixFunc!=null)
+                  widget.suffixFunc();
                 },
                 child: widget.reightWidget ?? Icon(Icons.cancel))),
       ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/Models/DDBBase.dart';
+import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/MyDropdown.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/ViewModels/Names.dart';
 import '/Views/widgets/AddBtn.dart';
@@ -14,7 +15,7 @@ import '../widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/Public.dart';
 import '/Models/service.dart';
 import '/Views/widgets/AddImg.dart';
-import '/Views/widgets/ReadyInput.dart';
+import '../widgets/ReadyInput/ReadyInput.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 class AddOldPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class AddOldPage extends StatefulWidget {
 }
 
 class _AddOldPageState extends State<AddOldPage> {
-  List<String> inputValues = ["", "", ""];
+ // List<String> inputValues = ["", "", ""];
   DDBEl DDCategory, DDMark, DDPlace;
   final TextStyle enable =
           TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
@@ -66,29 +67,31 @@ if (d==0&&imageOk){
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: MyInput(
+                    child: ReadyInput(
                       shape: true,
-                      index: 0,
+                     // index: 0,
+                      tag: RITags.rIName,
                       borderRad: SWi*0.03,
                       hidden: "Bildirişiň adyny ýazyň...",
                       label: "Bildirişiň ady...",
                       onControl: (val, index) {
-                        inputValues[index] = controls[index].text;
+                        //inputValues[index] = controls[index].text;
                         canOpenAddBtn(context);
                       },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: MyInput(
+                    child: ReadyInput(
                       shape: true,
-                      index: 1,
+                     // index: 1,
+                      tag: RITags.rIPrice,
                       type: Type.num,
                       borderRad: SWi*0.03,
                       hidden: "Bildirişiň bahasyny ýazyň...",
                       label: "Bahasy...",
                       onControl: (val, index) {
-                        inputValues[index] = controls[index].text;
+                        //inputValues[index] = controls[index].text;
                         canOpenAddBtn(context);
                       },
                     ),
@@ -113,7 +116,7 @@ if (d==0&&imageOk){
                           ),
                         ],
                       ),
-                      tag: DDBName.dDBLocation,
+                      tag: DDBTags.dDBLocation,
                       items: [
                         DDBEl(id: 1, index: 0, value: "Aşgabat"),
                         DDBEl(id: 2, index: 1, value: "Ahal"),
@@ -185,7 +188,7 @@ if (d==0&&imageOk){
                           ),
                         ],
                       ),
-                      tag: DDBName.dDBCategory,
+                      tag: DDBTags.dDBCategory,
                       items: List.generate(
                           Get_Lists(listTag: ApiTags.categori)
                                   .getList()
@@ -224,8 +227,8 @@ if (d==0&&imageOk){
                           ),
                         ],
                       ),
-                      tag: DDBName.dDBMark,
-                      items: DDBBase().getDate(DDBName.dDBCategory).index == -1
+                      tag: DDBTags.dDBMark,
+                      items: DDBBase.getDate(DDBTags.dDBCategory).index == -1
                           ? [DDBEl(id: 0, index: -1, value: "")]
                           : List.generate(
                               Get_Lists(listTag: ApiTags.mark)
@@ -255,20 +258,21 @@ if (d==0&&imageOk){
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: MyInput(
+                    child: ReadyInput(
                       shape: true,
-                      index: 2,
+                     // index: 2,
+                      tag: RITags.rIAbout,
                       maxline: 3,
                       borderRad: SWi*0.03,
                       hidden: "Bildirişiňiz barada maglumat ýazyň...",
                       label: "Bildiriş barada...",
                       onControl: (val, index) {
-                        inputValues[index] = controls[index].text;
+                        //inputValues[index] = controls[index].text;
                         canOpenAddBtn(context);
                       },
                     ),
                   ),
-                  AddBtn(inputValues: inputValues,place_id: DDPlace.id),
+                  AddBtn(place_id: DDPlace.id),
                   /*    Column(children: [
                     Text("${UserProperties.getProperty("id")}"),
                     Text("${UserProperties.getProperty("name")}"),
@@ -302,7 +306,10 @@ if (d==0&&imageOk){
     if (DDPlace.index == -1) d++;
     if (DDCategory.index == -1) d++;
     if (DDMark.index == -1) d++;
-    if (controls[1].text == "") d++;
+   // if (controls[1].text == "") d++;
+    if(RIBase.getText(RITags.rIName)=="")d++;
+    if(RIBase.getText(RITags.rIPrice)=="")d++;
+    if(RIBase.getText(RITags.rIAbout)=="")d++;
     if (d == 0) {
       Provider.of<UsesVar>(context, listen: false).changeCanAdd(true);
     } else {

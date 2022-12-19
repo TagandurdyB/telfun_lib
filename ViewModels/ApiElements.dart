@@ -89,6 +89,14 @@ class ElemEvents {
     List<int> _list = objList.map((e) => e.mark_id).toList().cast<int>();
     return _list;
   }
+
+  String shortName(){
+    if(name.length>19){
+      return name.substring(0,19)+"...";
+    }
+    return name;
+  }
+
 }
 
 class ElemColor {

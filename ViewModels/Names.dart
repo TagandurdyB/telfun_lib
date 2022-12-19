@@ -1,9 +1,17 @@
-class DDBName {
+class DDBTags {
   static const String dDBLocation = "tagLocation";
   static const String dDBMark = "tagMark";
   static const String dDBCategory = "tagCategories";
   static const String dDBModel = "tagModel";
   static const String dDBColor = "tagColor";
+}
+class RITags {
+  static const String rIPrice = "tagPrice";
+  static const String rIName = "tagName";
+  static const String rIAbout = "tagAbout";
+  static const String rIChat = "tagChat";
+  static const String rIUserName = "tagUserName";
+  static const String rIUserPass = "tagUserPass";
 }
 class ApiTags {
   static const String img = "img";

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/Views/widgets/AddShopBtn.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/Models/DDBBase.dart';
+import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/MyDropdown.dart';
@@ -17,7 +19,7 @@ import '../widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/Public.dart';
 import '/Models/service.dart';
 import '/Views/widgets/AddImg.dart';
-import '/Views/widgets/ReadyInput.dart';
+import '../widgets/ReadyInput/ReadyInput.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 class AddShopPage extends StatefulWidget {
@@ -26,7 +28,6 @@ class AddShopPage extends StatefulWidget {
 }
 
 class _AddShopPageState extends State<AddShopPage> {
-  List<String> inputValues = ["", "", ""];
   DDBEl DDCategory, DDMark, DDPlace;
   final TextStyle enable =
   TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
@@ -70,14 +71,18 @@ if (d==0&&imageOk){
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MyInput(
+                      child: ReadyInput(
                         shape: true,
-                        index: 0,
+                        suffixFunc: (){
+                          Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
+                        },
+                        //index: 0,
+                        tag: RITags.rIName,
                         borderRad: SWi*0.03,
                         hidden: "Dükanyň adyny ýazyň...",
                         label: "Dükanyň ady...",
                         onControl: (val, index) {
-                          inputValues[index] = controls[index].text;
+                          //inputValues[index] = controls[index].text;
                           canOpenAddBtn(context);
                         },
                       ),
@@ -102,7 +107,7 @@ if (d==0&&imageOk){
                             ),
                           ],
                         ),
-                        tag: DDBName.dDBLocation,
+                        tag: DDBTags.dDBLocation,
                         items: [
                           DDBEl(id: 1, index: 0, value: "Aşgabat"),
                           DDBEl(id: 2, index: 1, value: "Ahal"),
@@ -160,20 +165,24 @@ if (d==0&&imageOk){
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MyInput(
+                      child: ReadyInput(
                         shape: true,
-                        index: 2,
+                        suffixFunc: (){
+                          Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
+                        },
+                        //index: 2,
+                        tag: RITags.rIAbout,
                         maxline: 3,
                         borderRad: SWi*0.03,
                         hidden: "Dükanyňyz barada maglumat ýazyň...",
                         label: "Dükanyňyz barada...",
                         onControl: (val, index) {
-                          inputValues[index] = controls[index].text;
+                          //inputValues[index] = controls[index].text;
                           canOpenAddBtn(context);
                         },
                       ),
                     ),
-                    AddBtn(inputValues: inputValues,place_id: DDPlace.id),
+                    AddShopBtn(),
                     /*    Column(children: [
                       Text("${UserProperties.getProperty("id")}"),
                       Text("${UserProperties.getProperty("name")}"),
@@ -206,8 +215,11 @@ if (d==0&&imageOk){
   void canOpenAddBtn(BuildContext context) {
     int d = 0;
     if (DDPlace.index == -1) d++;
-    if (controls[1].text == "") d++;
-    if (controls[2].text == "") d++;
+    if(RIBase.getText(RITags.rIName)=="")d++;
+    if(RIBase.getText(RITags.rIAbout)=="")d++;
+    //if(RIBase.getText(RITags.rIPrice)=="")d++;
+    //if (controls[1].text == "") d++;
+    //if (controls[2].text == "") d++;
     if (d == 0) {
       Provider.of<UsesVar>(context, listen: false).changeCanAdd(true);
     } else {

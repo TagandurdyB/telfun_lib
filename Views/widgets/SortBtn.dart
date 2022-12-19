@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/Models/DDBBase.dart';
+import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/Names.dart';
 
@@ -149,50 +149,56 @@ class _SortBtnState extends State<SortBtn> {
     final provider=Provider.of<UsesVar>(context,listen: false);
     return Column(
               children: [
-                Row(children: [
-                  ImgBtn(
-                    child: Icon(provider.sortNum!=0?Icons.adjust_outlined:Icons.album_outlined,
-                        size: 40, color:provider.sortNum!=0? Colors.grey[400]:Colors.purple),
-                    onTap: () {
-                      print("0");
-                     provider.changeSort(0);
-                     Navigator.pop(context);
-                    },
-                    width: null,
-                    height: SWi * 0.15,
-                    color: Colors.transparent,
+                ImgBtn(
+                  child: Row(
+                    children: [
+                      Icon(provider.sortNum!=0?Icons.adjust_outlined:Icons.album_outlined,
+                          size: 40, color:provider.sortNum!=0? Colors.grey[400]:Colors.purple),
+                      Text("  Asyl tertip", style: TextStyle(fontSize: SWi * 0.04)),
+                    ],
                   ),
-                  Text("  Asyl tertip", style: TextStyle(fontSize: SWi * 0.04)),
-                ]),
-                Row(children: [
-                  ImgBtn(
-                    child: Icon(provider.sortNum!=1?Icons.adjust_outlined:Icons.album_outlined,
-                        size: 40, color:provider.sortNum!=1?Colors.grey[400]:Colors.purple),
-                    onTap: () {
-                      provider.changeSort(1);
-                      Navigator.pop(context);
-                    },
-                    width: null,
-                    height: SWi * 0.15,
-                    color: Colors.transparent,
+                  onTap: () {
+                    print("0");
+                   provider.changeSort(0);
+                   Navigator.pop(context);
+                  },
+                  width: null,
+                  height: SWi * 0.15,
+                  color: Colors.transparent,
+                ),
+                ImgBtn(
+                  child: Row(
+                    children: [
+                      Icon(provider.sortNum!=1?Icons.adjust_outlined:Icons.album_outlined,
+                          size: 40, color:provider.sortNum!=1?Colors.grey[400]:Colors.purple),
+                      Text("  Arzandan gymmada", style: TextStyle(fontSize: SWi * 0.04)),
+                    ],
                   ),
-                  Text("  Arzandan gymmada", style: TextStyle(fontSize: SWi * 0.04)),
-                ]),
-                Row(children: [
-                  ImgBtn(
-                    child: Icon(provider.sortNum!=2?Icons.adjust_outlined:Icons.album_outlined,
-                        size: 40, color:provider.sortNum!=2? Colors.grey[400]:Colors.purple),
-                    onTap: () {
-                      print("salam");
-                      provider.changeSort(2);
-                      Navigator.pop(context);
-                    },
-                    width: null,
-                    height: SWi * 0.15,
-                    color: Colors.transparent,
+                  onTap: () {
+                    provider.changeSort(1);
+                    Navigator.pop(context);
+                  },
+                  width: null,
+                  height: SWi * 0.15,
+                  color: Colors.transparent,
+                ),
+                ImgBtn(
+                  child: Row(
+                    children: [
+                      Icon(provider.sortNum!=2?Icons.adjust_outlined:Icons.album_outlined,
+                          size: 40, color:provider.sortNum!=2? Colors.grey[400]:Colors.purple),
+                      Text("  Gymmatdan arzana", style: TextStyle(fontSize: SWi * 0.04)),
+                    ],
                   ),
-                  Text("  Gymmatdan arzana", style: TextStyle(fontSize: SWi * 0.04)),
-                ]),
+                  onTap: () {
+                    print("salam");
+                    provider.changeSort(2);
+                    Navigator.pop(context);
+                  },
+                  width: null,
+                  height: SWi * 0.15,
+                  color: Colors.transparent,
+                ),
 
               ],
             );

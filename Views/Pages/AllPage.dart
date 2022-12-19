@@ -47,7 +47,7 @@ class _AllPageState extends State<AllPage> {
       topBarHeight: 0.33,
       ////////////////////////////////////////////////
       sliverBody: SizedBox(
-        height: SWi * 0.54,
+        height: SWi * 0.545,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

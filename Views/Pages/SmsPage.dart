@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:telfun/Models/ChatElement.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/ChatProvider.dart';
-import 'package:telfun/Views/widgets/ReadyInput.dart';
+import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
+import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
@@ -157,9 +159,10 @@ class _ChatPageState extends State<ChatPage> {
       children: [
         Container(
           width: SWi * 0.73,
-          child: MyInput(
+          child: ReadyInput(
             shape: true,
-            index: 7,
+            //index: 7,
+            tag: RITags.rIChat,
             borderRad: SWi * 0.04,
             hidden: "Habar ýaz...",
             label: "Habarlaş",
@@ -178,9 +181,9 @@ class _ChatPageState extends State<ChatPage> {
                   isSend: true,
                   id: 1,
                   date: DateTime.now(),
-                  message: "${controls[7].text}"));
-                API_Post(URL: "$IP/api/sendmsg").sendSMS(controls[7].text);
-                controls[7].clear();
+                  message: "${RIBase.getText(RITags.rIChat)/*controls[7].text*/}"));
+                API_Post(URL: "$IP/api/sendmsg").sendSMS(RIBase.getText(RITags.rIChat));
+                RIBase.eraseDate(RITags.rIChat);
              Future.delayed(Duration(milliseconds: 50)).then((value) => goBottom());
             },
             child: Icon(

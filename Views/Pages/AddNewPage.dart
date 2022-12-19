@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
-import '/Models/DDBBase.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
+import '../widgets/DropDownBtn/DDBBase.dart';
 import '/ViewModels/MapConverter.dart';
 import '/ViewModels/ApiElements.dart';
 import '/ViewModels/Names.dart';
@@ -10,7 +11,7 @@ import '/ViewModels/ShPBDebug.dart';
 import '/Views/widgets/ScaffoldParts/MySnackBar.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
-import '/Views/widgets/ReadyInput.dart';
+import '../widgets/ReadyInput/ReadyInput.dart';
 import '/Views/widgets/imgBtn.dart';
 import '/Models/service.dart';
 
@@ -22,8 +23,8 @@ class AddNewPage extends StatefulWidget {
 class _AddNewPageState extends State<AddNewPage> {
   DDBEl DDColor, DDCategory, DDMark, DDModel, DDPlace;
   final TextStyle enable =
-          TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-      disable = TextStyle(color: Colors.grey);
+          TextStyle(color: Colors.black, fontWeight: FontWeight.w600,fontSize: SWi * 0.03,),
+      disable = TextStyle(color: Colors.grey, fontSize: SWi * 0.03,);
 
   @override
   void initState() {
@@ -77,7 +78,7 @@ class _AddNewPageState extends State<AddNewPage> {
                     ),
                   ],
                 ),
-                tag: DDBName.dDBLocation,
+                tag: DDBTags.dDBLocation,
                 items: [
                   DDBEl(id: 1, index: 0, value: "Aşgabat"),
                   DDBEl(id: 2, index: 1, value: "Ahal"),
@@ -106,7 +107,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                   setState(() {});
                                   print(
                                       "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
-                                  print("place_ID:${DDBBase().getDate(DDBName.dDBLocation).id.toString()}");
+                                  print("place_ID:${DDBBase.getDate(DDBTags.dDBLocation).id.toString()}");
                                 },
                                 child: Text(
                                   "${_etraps[index].name}",textAlign: TextAlign.center,
@@ -138,7 +139,7 @@ class _AddNewPageState extends State<AddNewPage> {
                     ),
                   ],
                 ),
-                tag: DDBName.dDBCategory,
+                tag: DDBTags.dDBCategory,
                 items: List.generate(
                     Get_Lists(listTag: ApiTags.categori).getList().length ?? 0,
                     (index) {
@@ -173,8 +174,8 @@ class _AddNewPageState extends State<AddNewPage> {
                     ),
                   ],
                 ),
-                tag: DDBName.dDBMark,
-                items: DDBBase().getDate(DDBName.dDBCategory).index == -1
+                tag: DDBTags.dDBMark,
+                items: DDBBase.getDate(DDBTags.dDBCategory).index == -1
                     ? [DDBEl(id: 0, index: -1, value: "")]
                     : List.generate(
                         Get_Lists(listTag: ApiTags.mark).getList().length ?? 0,
@@ -207,7 +208,7 @@ class _AddNewPageState extends State<AddNewPage> {
                     ),
                   ],
                 ),
-                tag: DDBName.dDBModel,
+                tag: DDBTags.dDBModel,
                 items: DDCategory.index == -1
                     ? [DDBEl(id: 0, index: -1, value: "")]
                     : DDMark.index == -1
@@ -228,7 +229,7 @@ class _AddNewPageState extends State<AddNewPage> {
                 },
               ),
               DropDownBtnUnVal(
-                tag: DDBName.dDBColor,
+                tag: DDBTags.dDBColor,
                 hint: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -307,39 +308,36 @@ class _AddNewPageState extends State<AddNewPage> {
                         Container(
                           child: Text(
                             "  Bahasy:",
-                            style: TextStyle(
-                              fontSize: SWi * 0.03,
+                            style: enable,
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: SWi*0.02),
+                            width: SWi * 0.53,
+                            child: ReadyInput(
+                              shape: true,
+                              //index: 1,
+                              tag: RITags.rIPrice,
+                              type: Type.num,
+                              // borderRad: 60,
+                              hidden: "Bahasy manatda",
+                              label: "Bahasy manatda",
+                              onControl: (val, index) {
+                                setState(() {
+                                  canOpenAddBtn(context);
+                                });
+                                // inputValues[index] = controls[index].text;
+                                // canOpenAddBtn(context);
+                              },
                             ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: SWi*0.02),
-                              width: SWi * 0.53,
-                              child: MyInput(
-                                shape: true,
-                                index: 1,
-                                type: Type.num,
-                                // borderRad: 60,
-                                hidden: "Bahasy manatda",
-                                label: "Bahasy manatda",
-                                onControl: (val, index) {
-                                  setState(() {
-                                    canOpenAddBtn(context);
-                                  });
-                                  // inputValues[index] = controls[index].text;
-                                  // canOpenAddBtn(context);
-                                },
-                              ),
-                            ),
-                            Text("TMT",style: TextStyle(
-                              color: Colors.black,
-                              fontSize:SWi*0.04,
-                              fontFamily: "Itim"
-                            ),),
-                          ],
-                        ),
+                        Text("TMT",style: TextStyle(
+                          color: Colors.black,
+                          fontSize:SWi*0.04,
+                          fontFamily: "Itim"
+                        ),),
                       ],
                     ),
 
@@ -372,7 +370,7 @@ class _AddNewPageState extends State<AddNewPage> {
     if (DDColor.index == -1) d++;
     if (DDMark.index == -1) d++;
     if (DDModel.index == -1) d++;
-    if (controls[1].text == "") d++;
+    if (RIBase.getText(RITags.rIPrice)/*controls[1].text*/ == "") d++;
     if (d == 0) {
       Provider.of<UsesVar>(context, listen: false).changeCanAdd(true);
     } else {
@@ -381,7 +379,7 @@ class _AddNewPageState extends State<AddNewPage> {
   }
 
   Widget AddNewBtn() {
-    Service service = Service();
+    Service service = Service(Url: '$IP/api/add');
     bool _about = false, _isUpload = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -419,7 +417,7 @@ class _AddNewPageState extends State<AddNewPage> {
               borderRadius: BorderRadius.circular(SWi * 0.05),
               child: MaterialButton(
                 onPressed: () async {
-                  print("place_ID:${DDBBase().getDate(DDBName.dDBLocation).id.toString()}");
+                  print("place_ID:${DDBBase.getDate(DDBTags.dDBLocation).id.toString()}");
                   if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
                     _isUpload = true;
                     _about = true;
@@ -434,18 +432,18 @@ class _AddNewPageState extends State<AddNewPage> {
                       "user_id": UserProperties.getProperty("id"),
                       "place": DDPlace.id.toString(),
                          // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
-                      "price": controls[1].text,
+                      "price": RIBase.getText(RITags.rIPrice),//controls[1].text,
                       "color_id":
-                          DDBBase().getDate(DDBName.dDBColor).id.toString(),
+                          DDBBase.getDate(DDBTags.dDBColor).id.toString(),
                       "products_id":
-                          DDBBase().getDate(DDBName.dDBModel).id.toString(),
+                          DDBBase.getDate(DDBTags.dDBModel).id.toString(),
                     };
                     bool isUpload =
                         await service.addNewEvent(body, "$IP/api/new_add");
                     if (isUpload) {
-                      controls.forEach((element) {
+                /*      controls.forEach((element) {
                         element.text = "";
-                      });
+                      });*/
                       _isUpload = false;
                       _about = false;
                       MySnack(

@@ -8,11 +8,12 @@ import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/UserProvider.dart';
 import 'package:telfun/Views/Pages/ProductPage.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import '/Models/Public.dart';
 import '/ViewModels/Routes.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Views/widgets/Dialog.dart';
-import '/Views/widgets/ReadyInput.dart';
+import '../widgets/ReadyInput/ReadyInput.dart';
 import '/Views/widgets/imgBtn.dart';
 
 class UserPage extends StatelessWidget {
@@ -210,9 +211,10 @@ class MyProfil extends StatelessWidget {
                 child: ListTile(
                   onTap: () => PopUppWidget(
                       title: "Ad",
-                      content: MyInput(
+                      content: ReadyInput(
                         shape: true,
-                        index: 3,
+                        //index: 3,
+                        tag: RITags.rIUserName,
                         borderRad: 20,
                         hidden: "Adyňyzy ýazyň...",
                         label: "Täze ad",
@@ -228,7 +230,7 @@ class MyProfil extends StatelessWidget {
                               ShPUser(
                                       id: int.parse(
                                           UserProperties.getProperty("id")),
-                                      name: controls[3].text,
+                                      name: RIBase.getText(RITags.rIUserName),//controls[3].text,
                                       phone:
                                           UserProperties.getProperty("phone"),
                                       isban: int.parse(
@@ -256,9 +258,10 @@ class MyProfil extends StatelessWidget {
                 child: ListTile(
                   onTap: () => PopUppWidget(
                       title: "Parol",
-                      content: MyInput(
+                      content: ReadyInput(
                         shape: true,
-                        index: 4,
+                        tag: RITags.rIUserPass,
+                        //index: 4,
                         borderRad: 20,
                         hidden: "Paroly ýazyň...",
                         label: "Täze Parol",

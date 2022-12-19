@@ -7,14 +7,16 @@ import 'package:path/path.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 class Service {
+  final String Url;
+  Service({this.Url});
   Future<bool> addImage(Map<String, String> body, List<File> filepath) async {
     if (filepath[0] == null) return false;
     print("I am hear 1");
-    String addimageUrl = '$IP/api/add';
+    //String addimageUrl = '$IP/api/add';
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
     };
-    var request = http.MultipartRequest('POST', Uri.parse(addimageUrl));
+    var request = http.MultipartRequest('POST', Uri.parse(Url));
     request.headers.addAll(headers);
     request.fields.addAll(body);
 
@@ -71,37 +73,5 @@ class Service {
     });
     return check;
   }
-
-
-  Future<bool> shop_add(Map<String, String> body, List<File> filepath) async {
-    if (filepath[0] == null) return false;
-    print("I am hear 1");
-    String addimageUrl = '$IP/api/add';
-    Map<String, String> headers = {
-      'Content-Type': 'multipart/form-data',
-    };
-    var request = http.MultipartRequest('POST', Uri.parse(addimageUrl));
-    request.headers.addAll(headers);
-    request.fields.addAll(body);
-    List<MultipartFile> newList = new List<MultipartFile>();
-    for (int i = 0; i < filepath.length; i++) {
-      var multipartFile =  await http.MultipartFile.fromPath('image[]', filepath[i].path);
-      newList.add(multipartFile);
-    }
-    request.files.addAll(newList);
-    print("I am hear 2  ${filepath.toString()}");
-    var response = await request.send();
-    print("+*+${response.statusCode}");
-    if (response.statusCode == 200) {
-      print("${response.statusCode}");
-      print("${response.stream.bytesToString()}");
-      return true;
-    } else {
-      print("${response.statusCode}");
-      print("${body.toString()}");
-      return false;
-    }
-  }
-
 
 }

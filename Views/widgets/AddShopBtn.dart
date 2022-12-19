@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
-import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/Views/widgets/Dialog.dart';
-import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
-import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
+import '/ViewModels/ApiDebuging.dart';
+import '/Views/widgets/DropDownBtn/DDBBase.dart';
+import '/ViewModels/Names.dart';
+import '/Views/widgets/Dialog.dart';
+import '/Views/widgets/ReadyInput/RIBase.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Models/service.dart';
 import 'AddImg.dart';
 import 'ScaffoldParts/MySnackBar.dart';
 
-class AddBtn extends StatefulWidget {
-  final int place_id;
-  const AddBtn({Key key, @required this.inputValues, this.place_id}) : super(key: key);
-
-  final List<String> inputValues;
-
+class AddShopBtn extends StatefulWidget {
   @override
-  _AddBtnState createState() => _AddBtnState();
+  _AddShopBtnState createState() => _AddShopBtnState();
 }
 
-class _AddBtnState extends State<AddBtn> {
-  Service service = Service();
+class _AddShopBtnState extends State<AddShopBtn> {
+  Service service = Service(Url: '$IP/api/shop_add');
   bool _about = false, _isUpload = false;
 
   @override
@@ -87,16 +82,15 @@ class _AddBtnState extends State<AddBtn> {
                             ],
                           ),
                         )).popUpCupertino(context);
+                    /*
+           *** Text("image"),
+            Text("place"),
+            Text("phone"),
+            Text("about"),*/
                     Map<String, String> body = {
-                      "category_id":
-                          DDBBase.getDate(DDBTags.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
-                      'name': RIBase.getText(RITags.rIName),//controls[0].text,
-                      "mark_id":
-                          DDBBase.getDate(DDBTags.dDBMark).id.toString(),
-                      "price": RIBase.getText(RITags.rIPrice),//controls[1].text,
+                      'name': RIBase.getText(RITags.rIName),
                       "place":DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
-                         // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": RIBase.getText(RITags.rIAbout),//controls[2].text,
                     };
                     bool isUpload = await service.addImage(body, images);
