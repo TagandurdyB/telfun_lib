@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:telfun/Models/Base.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 
 import 'JsonCacher.dart';
 import 'MapConverter.dart';
@@ -41,7 +42,7 @@ class Json_Get extends StatelessWidget {
             height: double.infinity,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: ThemeProvided().colorCanvas,
                /* gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

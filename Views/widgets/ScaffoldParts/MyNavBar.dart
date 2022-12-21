@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/Login/LoginPage.dart';
 import 'package:telfun/Views/Pages/MainPage.dart';
 import '/Views/Pages/AddOldPage.dart';
@@ -48,9 +49,9 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             child: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
-              backgroundColor: Colors.white,
-              selectedItemColor: Color(0xffC944F6),
-              unselectedItemColor: Colors.grey[700],
+              backgroundColor: ThemeProvided().colorCanvas,
+              selectedItemColor: ThemeProvided().colorNavBarSelectIcon,
+              unselectedItemColor: ThemeProvided().colorNavBarUnSelectIcon,
               currentIndex: Provider.of<UsesVar>(context)
                   .witchNavBarSelect(), //selectIndex,
               iconSize: SWi * 0.09,

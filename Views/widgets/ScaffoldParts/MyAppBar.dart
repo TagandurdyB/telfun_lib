@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/Models/Public.dart';
-import '/Views/Pages/SearchPage.dart';
+import '/Views/Pages/FilterPage.dart';
 import '/Views/Pages/SetingsPage.dart';
 
 class MyAppBar extends StatefulWidget {
@@ -44,6 +45,7 @@ class _MyAppBarState extends State<MyAppBar>
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      brightness: Provider.of<ThemeProvided>(context).ststusBrightness,
 leading: !widget.IsSideBar?BackButton():null,
      /////////////////////////////////////
       bottom: widget.IsTabBar
@@ -68,7 +70,7 @@ leading: !widget.IsSideBar?BackButton():null,
 /*      shape: RoundedRectangleBorder(
           borderRadius:
           BorderRadius.vertical(bottom: Radius.circular(SWi * 0.08))),*/
-      backgroundColor: Colors.white,
+      backgroundColor: ThemeProvided().colorCanvas,
       title: widget.title,
       centerTitle: true,
 /*      actions: [

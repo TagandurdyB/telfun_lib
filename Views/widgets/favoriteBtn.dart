@@ -5,6 +5,7 @@ import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/JsonCacher.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 
 import 'imgBtn.dart';
 
@@ -67,7 +68,7 @@ class _FavoriteBtnState extends State<FavoriteBtn> {
       shape: widget.radius,
       width: widget.radius,
       height: widget.radius,
-      color: Colors.white,
+      color: ThemeProvided().colorCanvas,
       child: Icon(
         widget.favorite ? Icons.bookmark : Icons.bookmark_border,
         size: widget.radius * 0.7,

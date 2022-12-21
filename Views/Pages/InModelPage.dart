@@ -67,13 +67,13 @@ class InModelView extends StatelessWidget {
             child: ListView.builder(
                 physics: BouncingScrollPhysics(),
                 itemCount: eventProvider
-                    .sortWithMarks(mark_id,markProvider.sortNum)
+                    .sortWithMarks(mark_id,markProvider.sortNum,markProvider.getSearch)
                     .length
                 ,
                 itemBuilder: (context, index) {
                   final int _sort_num = markProvider.sortNum;
                   final obj=eventProvider
-                      .sortWithMarks(mark_id,_sort_num)[index];
+                      .sortWithMarks(mark_id,_sort_num,markProvider.getSearch)[index];
                   return Container(
                       child: InCategory(
                         obj: obj,

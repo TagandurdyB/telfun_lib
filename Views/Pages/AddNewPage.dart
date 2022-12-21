@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
@@ -22,9 +23,8 @@ class AddNewPage extends StatefulWidget {
 
 class _AddNewPageState extends State<AddNewPage> {
   DDBEl DDColor, DDCategory, DDMark, DDModel, DDPlace;
-  final TextStyle enable =
-          TextStyle(color: Colors.black, fontWeight: FontWeight.w600,fontSize: SWi * 0.03,),
-      disable = TextStyle(color: Colors.grey, fontSize: SWi * 0.03,);
+
+  final TextStyle disable=ThemeProvided().styleDisable,enable=ThemeProvided().styleEnable;
 
   @override
   void initState() {
@@ -323,7 +323,7 @@ class _AddNewPageState extends State<AddNewPage> {
                               // borderRad: 60,
                               hidden: "Bahasy manatda",
                               label: "Bahasy manatda",
-                              onControl: (val, index) {
+                              onChange: (val, index) {
                                 setState(() {
                                   canOpenAddBtn(context);
                                 });
@@ -333,11 +333,7 @@ class _AddNewPageState extends State<AddNewPage> {
                             ),
                           ),
                         ),
-                        Text("TMT",style: TextStyle(
-                          color: Colors.black,
-                          fontSize:SWi*0.04,
-                          fontFamily: "Itim"
-                        ),),
+                        Text("TMT",style: ThemeProvided().styleUserPage),
                       ],
                     ),
 
@@ -418,7 +414,7 @@ class _AddNewPageState extends State<AddNewPage> {
               child: MaterialButton(
                 onPressed: () async {
                   print("place_ID:${DDBBase.getDate(DDBTags.dDBLocation).id.toString()}");
-                  if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
+                  if (Provider.of<UsesVar>(context, listen: false).canAdd) {
                     _isUpload = true;
                     _about = true;
                     Map body = {
@@ -467,7 +463,7 @@ class _AddNewPageState extends State<AddNewPage> {
                   } else {}
                 },
                 height: 50,
-                color: Provider.of<UsesVar>(context, listen: false).canAdd()
+                color: Provider.of<UsesVar>(context, listen: false).canAdd
                     ? Color(0xff5408BF)
                     : Colors.grey,
                 child: Text(

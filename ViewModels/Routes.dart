@@ -15,7 +15,7 @@ import '/Views/Login/Verification.dart';
 import '/Views/LogoPage.dart';
 import '/Views/Pages/DetalPage.dart';
 import '/Views/Pages/MainPage.dart';
-import '/Views/Pages/SearchPage.dart';
+import '/Views/Pages/FilterPage.dart';
 import '/Views/Pages/SetingsPage.dart';
 
 class PageName {

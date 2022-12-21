@@ -14,7 +14,7 @@ class ReadyInput extends StatefulWidget {
   final bool shape;
   final double borderRad;
   final Type type;
-  final Function onControl,suffixFunc;
+  final Function onChange,suffixFunc;
   final Widget reightWidget;
   ReadyInput(
       {this.suffixFunc,
@@ -23,7 +23,7 @@ class ReadyInput extends StatefulWidget {
       this.hidden = "",
       this.shape = false,
       this.type = Type.text,
-      this.onControl,
+      this.onChange,
       this.borderRad = 20,
       this.label = "",
       this.maxline = 1,
@@ -56,16 +56,18 @@ class _ReadyInputState extends State<ReadyInput> {
     return Theme(
       data: ThemeData(
         inputDecorationTheme: InputDecorationTheme(
+          border: InputBorder.none,
+          floatingLabelBehavior:FloatingLabelBehavior.never,
           labelStyle: TextStyle(color: Color(0xffAD88DF)),
           hintStyle: TextStyle(color: Color(0xffAD88DF)),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: widget.shape?OutlineInputBorder(
             borderRadius:
           BorderRadius.all(Radius.circular(widget.borderRad)),
-              borderSide: BorderSide(color: Color(0xff5308BE))),
-          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xff5308BE))):null,
+          enabledBorder: widget.shape?OutlineInputBorder(
               borderRadius:
               BorderRadius.all(Radius.circular(widget.borderRad)),
-              borderSide: BorderSide(color: Color(0xffAD88DF))),
+              borderSide: BorderSide(color: Color(0xffAD88DF))):null,
         ),
       ),
       child: TextFormField(
@@ -73,7 +75,7 @@ class _ReadyInputState extends State<ReadyInput> {
         cursorColor: Color(0xff5308BE),
         maxLines: widget.maxline,
         onChanged: (value) {
-          widget.onControl(value, widget.tag/*widget.index*/);
+          widget.onChange(value, widget.tag/*widget.index*/);
         },
         maxLength: widget.type == Type.tel ? 8 : null,
         obscureText: widget.type == Type.pass ? true : false,

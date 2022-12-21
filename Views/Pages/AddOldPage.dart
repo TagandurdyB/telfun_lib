@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
@@ -27,8 +28,8 @@ class _AddOldPageState extends State<AddOldPage> {
  // List<String> inputValues = ["", "", ""];
   DDBEl DDCategory, DDMark, DDPlace;
   final TextStyle enable =
-          TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-      disable = TextStyle(color: Colors.grey);
+          ThemeProvided().styleEnable,
+      disable = ThemeProvided().styleDisable;
 
   @override
   void initState() {
@@ -74,7 +75,7 @@ if (d==0&&imageOk){
                       borderRad: SWi*0.03,
                       hidden: "Bildirişiň adyny ýazyň...",
                       label: "Bildirişiň ady...",
-                      onControl: (val, index) {
+                      onChange: (val, index) {
                         //inputValues[index] = controls[index].text;
                         canOpenAddBtn(context);
                       },
@@ -90,7 +91,7 @@ if (d==0&&imageOk){
                       borderRad: SWi*0.03,
                       hidden: "Bildirişiň bahasyny ýazyň...",
                       label: "Bahasy...",
-                      onControl: (val, index) {
+                      onChange: (val, index) {
                         //inputValues[index] = controls[index].text;
                         canOpenAddBtn(context);
                       },
@@ -266,7 +267,7 @@ if (d==0&&imageOk){
                       borderRad: SWi*0.03,
                       hidden: "Bildirişiňiz barada maglumat ýazyň...",
                       label: "Bildiriş barada...",
-                      onControl: (val, index) {
+                      onChange: (val, index) {
                         //inputValues[index] = controls[index].text;
                         canOpenAddBtn(context);
                       },

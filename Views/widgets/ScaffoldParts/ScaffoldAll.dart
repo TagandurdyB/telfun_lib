@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '../Dialog.dart';
 import '../SortBtn.dart';
@@ -100,76 +101,80 @@ class ScaffoldAll extends StatelessWidget {
     );
   }
 
-  Column telfunAppBar() {
-    return Column(
-      children: [
-        MyAppBar(
-            //  bottom: appBarBottom,
-            IsSideBar: IsSideBar,
-            myTabs: myTabs,
-            title: title != null ? title : telfun,
-            IsTabBar: IsTabBar,
-            IsUser: IsUser),
-        Builder(
-          builder: (context) => Visibility(
-            visible: EnableBotomMenu,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+  Container telfunAppBar() {
+    return Container(
+      color: ThemeProvided().colorCanvas,
+      child: Column(
+        children: [
+          MyAppBar(
+              //  bottom: appBarBottom,
+              IsSideBar: IsSideBar,
+              myTabs: myTabs,
+              title: title != null ? title : telfun,
+              IsTabBar: IsTabBar,
+              IsUser: IsUser),
+          Builder(
+            builder: (context) => Visibility(
+              visible: EnableBotomMenu,
+              child: Container(
+                color: ThemeProvided().colorCanvas,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                        alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(left: 17),
-                        //  color: Colors.red,
-                        child: GestureDetector(
-                            onTap: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                            child: Icon(Icons.menu))),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: SWi * 0.03),
-                      child: Text(
-                        "${EnableBotomMenu ? Get_Lists(listTag: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm : ""}",
-                        style: TextStyle(
-                            fontSize: SWi * 0.045, fontWeight: FontWeight.w600),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.only(left: 17),
+                            //  color: Colors.red,
+                            child: GestureDetector(
+                                onTap: () {
+                                  Scaffold.of(context).openDrawer();
+                                },
+                                child: Icon(Icons.menu,color: ThemeProvided().colorAppBarIcon,))),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: SWi * 0.03),
+                          child: Text(
+                            "${EnableBotomMenu ? Get_Lists(listTag: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm : ""}",
+                            style: TextStyle(
+                                fontSize: SWi * 0.045, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SortBtn(),
+                        Container(
+                          padding: EdgeInsets.all(0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, PageName.pageFavorite);
+                              },
+                              child: Icon(
+                                Icons.bookmark,
+                                color: Color(0xff8017FF),
+                                size: SWi * 0.07,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    SortBtn(),
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(context, PageName.pageFavorite);
-                          },
-                          child: Icon(
-                            Icons.bookmark,
-                            color: Color(0xff8017FF),
-                            size: SWi * 0.07,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
-        ),
-        PreferredSize(
-          child: Visibility(
-              visible: appBarBottom != null, child: appBarBottom ?? SizedBox()),
-        ),
-      ],
+          PreferredSize(
+            child: Visibility(
+                visible: appBarBottom != null, child: appBarBottom ?? SizedBox()),
+          ),
+        ],
+      ),
     );
   }
 }
-
-

@@ -32,7 +32,7 @@ class _AddShopBtnState extends State<AddShopBtn> {
               borderRadius: BorderRadius.circular(SWi * 0.05),
               child: MaterialButton(
                 onPressed: () async {
-                  if (Provider.of<UsesVar>(context, listen: false).canAdd()) {
+                  if (Provider.of<UsesVar>(context, listen: false).canAdd) {
                     setState(() {
                       _isUpload = true;
                       _about = true;
@@ -130,7 +130,7 @@ class _AddShopBtnState extends State<AddShopBtn> {
                   } else {}
                 },
                 height: 50,
-                color: Provider.of<UsesVar>(context, listen: false).canAdd()
+                color: Provider.of<UsesVar>(context, listen: false).canAdd
                     ? Color(0xff5408BF)
                     : Colors.grey,
                 child: Text(

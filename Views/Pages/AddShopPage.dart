@@ -81,7 +81,7 @@ if (d==0&&imageOk){
                         borderRad: SWi*0.03,
                         hidden: "Dükanyň adyny ýazyň...",
                         label: "Dükanyň ady...",
-                        onControl: (val, index) {
+                        onChange: (val, index) {
                           //inputValues[index] = controls[index].text;
                           canOpenAddBtn(context);
                         },
@@ -176,7 +176,7 @@ if (d==0&&imageOk){
                         borderRad: SWi*0.03,
                         hidden: "Dükanyňyz barada maglumat ýazyň...",
                         label: "Dükanyňyz barada...",
-                        onControl: (val, index) {
+                        onChange: (val, index) {
                           //inputValues[index] = controls[index].text;
                           canOpenAddBtn(context);
                         },

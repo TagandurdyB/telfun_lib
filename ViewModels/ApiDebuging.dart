@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:telfun/Models/ChatElement.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/Models/Base.dart';
 import '/Models/Cacher.dart';
 import '/Models/connect.dart';
@@ -77,7 +78,7 @@ class API_Get extends StatelessWidget {
             height: double.infinity,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: ThemeProvided().colorCanvas,
               /* gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

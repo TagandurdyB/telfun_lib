@@ -4,6 +4,7 @@ import 'package:telfun/ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 import '/Views/widgets/MarkScrol.dart';
 import '/Views/widgets/InPlitca.dart';
@@ -21,10 +22,6 @@ class AllPage extends StatefulWidget {
 class _AllPageState extends State<AllPage> {
   List list = [];
 
-  var provider;
-  var eventProvider;
-  var markProvider;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,9 +34,9 @@ class _AllPageState extends State<AllPage> {
 
   @override
   Widget build(BuildContext context) {
-    provider = Provider.of<EventsFavoritProvid>(context);
-    eventProvider = Provider.of<EventsProvid>(context);
-    markProvider = Provider.of<UsesVar>(context);
+   final  provider = Provider.of<EventsFavoritProvid>(context);
+   final eventProvider = Provider.of<EventsProvid>(context);
+   final markProvider = Provider.of<UsesVar>(context);
     return ScaffoldAll(
       isSliver: true,
       EnableBotomMenu: true,
@@ -72,7 +69,7 @@ class _AllPageState extends State<AllPage> {
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           final int _mark_id = markProvider.getMark()[0];
           final int _sort_num = markProvider.sortNum;
-          List _list = eventProvider.sortWithMarks(_mark_id, _sort_num);
+          List _list = eventProvider.sortWithMarks(_mark_id, _sort_num,markProvider.getSearch);
        /*   if (_sort_num == 0) {
             _list = eventProvider.sortWithMarks(_mark_id, _sort_num);
           } else if (_sort_num == 1) {
@@ -88,7 +85,7 @@ class _AllPageState extends State<AllPage> {
           );
         },
             childCount: eventProvider
-                .sortWithMarks(markProvider.getMark()[0], markProvider.sortNum)
+                .sortWithMarks(markProvider.getMark()[0], markProvider.sortNum,markProvider.getSearch)
                 .length //Get_Lists(listTag: ApiTags.events).getList().length,
             ),
       ),
@@ -110,9 +107,9 @@ class _AllPageState extends State<AllPage> {
               style: TextStyle(
                   fontSize: SWi * 0.05,
                   fontWeight: FontWeight.w800,
-                  color: Colors.black)),
+                  color: ThemeProvided().colorText)),
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: Colors.black, width: 2),
+            side: BorderSide(color: ThemeProvided().colorText, width: 2),
             shape: StadiumBorder(),
           ),
         ),

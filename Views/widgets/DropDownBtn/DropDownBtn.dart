@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/Models/Public.dart';
 import 'DDBBase.dart';
 
@@ -125,15 +126,14 @@ class _DropDownBtnUnValState extends State<DropDownBtnUnVal> {
               : Container(
                   child: Text(
                     widget.hideText,
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w700),
+                    style: ThemeProvided().styleEnable,
                     textAlign: TextAlign.end,
                   ),
                 ),
           isExpanded: true,
           items: widget.items.map((val) {
             return DropdownMenuItem(
-                child: val.child == null ? Text(val.value) : val.child,
+                child: val.child == null ? Text(val.value,style: ThemeProvided().styleDisable,) : val.child,
                 value: val.index.toString());
           }).toList(),
           /*  value: DropDownBase[widget.tag]==null?dropdownValue:

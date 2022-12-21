@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ChatProvider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/Pages/DetalPage.dart';
 import '/Views/Login/SignUp.dart';
 import '/Views/Login/Verification.dart';
@@ -16,13 +17,14 @@ import '/Views/Pages/SetingsPage.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ShPBDebug.dart';
 import '/Views/Pages/MainPage.dart';
-import '/Views/Pages/SearchPage.dart';
+import '/Views/Pages/FilterPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await UserLoginDetals.createSharedPObj();
   await UserProperties.create();
+  await ShPValues().create();
   // await ShPUser().create();
   runApp(MultiProvider(
     providers: [
@@ -40,19 +42,12 @@ void main() async {
           create: (BuildContext context) => UserProvider()),
       ChangeNotifierProvider<SMSProvider>(
           create: (BuildContext context) => SMSProvider()),
+      ChangeNotifierProvider<ThemeProvided>(
+          create: (BuildContext context) => ThemeProvided()),
     ],
     child: MyApp(),
   ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      systemNavigationBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      statusBarColor: Colors.white,
-    ),
-  );
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-  //systemNavigatisonBarIconBrightness: Brightness.dark));
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 }
 
@@ -66,8 +61,14 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Telfun App',
       theme: ThemeData(
+          textTheme: TextTheme(
+            bodyText2: TextStyle(),
+          ).apply(
+            bodyColor: Provider.of<ThemeProvided>(context).colorText,
+            // displayColor: Colors.blue,
+          ),
         inputDecorationTheme: InputDecorationTheme(
           labelStyle: TextStyle(color: Color(0xffAD88DF)),
           hintStyle: TextStyle(color: Color(0xffAD88DF)),
@@ -79,11 +80,11 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide(color: Color(0xffAD88DF))),
         ),
         primarySwatch: Colors.blue,
-        canvasColor: Colors.white, //Color(0xffF0EBFF),
+        canvasColor: Provider.of<ThemeProvided>(context).colorCanvas, //Color(0xffF0EBFF),
         appBarTheme: AppBarTheme(
             color: Colors.white,
             iconTheme: IconThemeData(
-              color: Color(0xff7163DF),
+              color: Provider.of<ThemeProvided>(context).colorAppBarIcon,
             )),
       ),
       initialRoute: PageName.pageLogo,

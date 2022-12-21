@@ -18,7 +18,7 @@ class SharedPBase {
   }
 
   void loadShPUser() {
-      _UserDetals = _SPUserDetals.getStringList("UserValue")?? [];
+    _UserDetals = _SPUserDetals.getStringList("UserValue")?? [];
   }
 
   List<String> getUserDetals() {

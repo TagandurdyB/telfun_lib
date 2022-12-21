@@ -6,6 +6,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/Public.dart';
 
@@ -26,9 +27,7 @@ class _Slider_proState extends State<Slider_pro> {
             height: SWi * 0.5,
             decoration: BoxDecoration(
                 borderRadius: BorderRadiusDirectional.circular(SWi * 0.05),
-                boxShadow: [
-                  BoxShadow(color: Colors.grey, spreadRadius: 0, blurRadius: 10)
-                ],
+                boxShadow: ThemeProvided().shadowSlider,
                 color: Colors.transparent),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(SWi * 0.05),

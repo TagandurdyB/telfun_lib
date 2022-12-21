@@ -5,6 +5,7 @@ import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/Pages/AllPage.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Views/Pages/CategoriPage.dart';
@@ -21,6 +22,7 @@ class Categori extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Provider.of<UsesVar>(context,listen: false).changeSort(0);
         Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
         // Provider.of<UsesVar>(context, listen: false).Select(0);
         int categoriId =
@@ -39,9 +41,7 @@ class Categori extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(SWi * 0.05),
-            boxShadow: [
-              BoxShadow(color: Colors.grey, spreadRadius: 0, blurRadius: 10)
-            ],
+            boxShadow:Provider.of<ThemeProvided>(context).shadowSlider,
             color: Color(0xff7262DF),
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -68,7 +68,7 @@ class Categori extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       // color: Colors.red,
                       child: Text("${list[index].tm}",
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: "ProximaSoftBold",

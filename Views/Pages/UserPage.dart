@@ -6,6 +6,7 @@ import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/ViewModels/UserProvider.dart';
 import 'package:telfun/Views/Pages/ProductPage.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
@@ -44,7 +45,7 @@ class UserPage extends StatelessWidget {
                               offset: Offset(0, 5),
                               color: Colors.grey)
                         ],
-                        color: Colors.white,
+                        color: ThemeProvided().colorCanvas,
                       ),
                       height: 100,
                       width: SWi,
@@ -108,6 +109,7 @@ class MyProfil extends StatelessWidget {
     return Column(
       children: [
         Card(
+          color: ThemeProvided().colorCanvas,
           child: Container(
             margin: EdgeInsets.symmetric(vertical: SWi * 0.02),
             padding: EdgeInsets.symmetric(horizontal: SWi * 0.02),
@@ -121,8 +123,7 @@ class MyProfil extends StatelessWidget {
                   child: Icon(Icons.bookmark_border, color: Colors.white)),
               title: Text(
                 "Bellänlerim",
-                style: TextStyle(
-                    fontSize: SWi * 0.045, fontWeight: FontWeight.w600),
+                style: ThemeProvided().styleUserPage,
               ),
               trailing: Text(
                   "${Provider.of<EventsFavoritProvid>(context).objs.length}"),
@@ -131,6 +132,7 @@ class MyProfil extends StatelessWidget {
           ),
         ),
         Card(
+          color: ThemeProvided().colorCanvas,
           child: Column(
             children: [
               Container(
@@ -192,6 +194,7 @@ class MyProfil extends StatelessWidget {
           ),
         ),
         Card(
+          color: ThemeProvided().colorCanvas,
           child: Column(
             children: [
               Container(
@@ -247,7 +250,7 @@ class MyProfil extends StatelessWidget {
                   leading: iconBloc(Icons.edit),
                   title: Text(
                     "Ady üýtgetmek",
-                    style: TextStyle(fontSize: SWi * 0.045),
+                    style: ThemeProvided().styleUserPage,
                   ),
                   //trailing: Text("0"),
                 ),
@@ -295,7 +298,7 @@ class MyProfil extends StatelessWidget {
                       )),
                   title: Text(
                     "Paroly üýtgetmek",
-                    style: TextStyle(fontSize: SWi * 0.045),
+                    style: ThemeProvided().styleUserPage,
                   ),
                   //trailing: Text("0"),
                 ),
@@ -313,7 +316,7 @@ class MyProfil extends StatelessWidget {
                   leading: iconBloc(Icons.logout),
                   title: Text(
                     "Ulgamdan çykmak",
-                    style: TextStyle(fontSize: SWi * 0.045),
+                    style: ThemeProvided().styleUserPage,
                   ),
                   //trailing: Text("0"),
                 ),
@@ -342,7 +345,7 @@ class MyProfil extends StatelessWidget {
           leading: iconBloc(icon),
           title: Text(
             title,
-            style: TextStyle(fontSize: SWi * 0.045),
+            style: ThemeProvided().styleUserPage,
           ),
           trailing: Text("${sum}"),
         ),

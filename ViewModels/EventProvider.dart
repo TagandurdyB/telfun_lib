@@ -13,20 +13,31 @@ class EventsProvid extends ChangeNotifier {
     notifyListeners();
   }
 
-  List sortWithMarks(int mark_id,int sortNum) {
+  List sortWithMarks(int mark_id, int sortNum, String _searchText) {
     List _list;
-    if(mark_id==0)
-     _list = _objs;
+    if (mark_id == 0)
+      _list = _objs;
     else
       _list = _objs.where((element) => element.mark_id == mark_id).toList();
-    if(sortNum==1){
-     _list.sort((a,b)=>a.price.compareTo(b.price));
-    }else if(sortNum==2){
-      _list.sort((a,b)=>a.price.compareTo(b.price));
-      _list=_list.reversed.toList();
-    }else{
-      _list.sort((a,b)=>a.data.compareTo(b.data));
-      _list=_list.reversed.toList();
+    if (sortNum == 1) {
+      _list.sort((a, b) => a.price.compareTo(b.price));
+    } else if (sortNum == 2) {
+      _list.sort((a, b) => a.price.compareTo(b.price));
+      _list = _list.reversed.toList();
+    } else {
+      _list.sort((a, b) => a.data.compareTo(b.data));
+      _list = _list.reversed.toList();
+    }
+    if (_searchText != "") {
+      print("I am in SortProvider :$_searchText");
+      List _searchList = List();
+      for (int i = 0; i < _list.length; i++) {
+        ElemEvents name = _list[i];
+        if (name.name.toLowerCase().contains(_searchText.toLowerCase())) {
+          _searchList.add(name);
+        }
+      }
+      return _searchList;
     }
     return _list;
   }
@@ -47,7 +58,7 @@ class EventsFavoritProvid extends ChangeNotifier {
   List get objs => _objs;
 
   void reload() {
-     _objs = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
+    _objs = Get_Lists(isApi: false, listTag: JsonTags.favorite).getList();
     notifyListeners();
   }
 

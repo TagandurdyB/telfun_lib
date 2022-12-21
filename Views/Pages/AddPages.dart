@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/TabBarViever.dart';
 import '/Views/widgets/imgBtn.dart';
@@ -35,7 +36,7 @@ class AddPage extends StatelessWidget {
                       },
                       child: Text(
                         "Ulanylan",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: ThemeProvided().styleUserPage,
                       ),
                     )),
                     Expanded(
@@ -49,7 +50,7 @@ class AddPage extends StatelessWidget {
                       },
                       child: Text(
                         "Täze",
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: ThemeProvided().styleUserPage,
                       ),
                     )),
                   ],

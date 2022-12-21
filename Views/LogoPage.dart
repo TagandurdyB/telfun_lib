@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/ViewModels/ShPBDebug.dart';
@@ -37,6 +39,8 @@ class _LogoState extends State<Logo> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+
 
     if (UserLoginDetals.getIsLogin()) {
       print("token: ${UserProperties.getProperty("token")}");
@@ -87,11 +91,12 @@ int _second=5;
     print(SWi);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ThemeProvided().colorCanvas,
         elevation: 0,
         brightness: Brightness.light,
       ),
       body: Container(
-        color: Colors.white,
+        color: ThemeProvided().colorCanvas,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -166,7 +171,7 @@ int _second=5;
               child: Positioned(
                   top: 1,
                   child: ImgBtn(
-                    color: Colors.white,
+                    color: ThemeProvided().colorCanvas,
                     onTap: () {
                       Navigator.of(context).pushReplacementNamed(PageName.pageMain);
                     },

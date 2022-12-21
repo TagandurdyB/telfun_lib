@@ -4,6 +4,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
@@ -41,7 +42,7 @@ class _MarkScrolState extends State<MarkScrol> {
                             blurRadius: 2,
                             offset: Offset(0, 3))
                       ],
-                     color: Colors.white,
+                     color: ThemeProvided().colorCanvas,
                      /* color: Provider.of<UsesVar>(context).getMark()[1] == index
                           ? Color(0xff9747FF)
                           : Colors.grey,*/
@@ -50,8 +51,8 @@ class _MarkScrolState extends State<MarkScrol> {
                       child: Padding(
                         padding: EdgeInsets.all(SWi * 0.01),
                         child: ImgBtn(
-                          color: Colors.white,
-                          shape: SWi * 0.027,
+                          color: ThemeProvided().colorCanvas,
+                        // shape: SWi * 0.027,
                           width: SWi * 0.21,
                           onTap: () {
                             print("i am working");

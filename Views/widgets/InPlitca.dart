@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/ViewModels/MapConverter.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/ViewModels/Names.dart';
@@ -90,7 +91,7 @@ class _InCategoryState extends State<InCategory> {
               Colors.white
             ]
           )*/
-            color: Colors.white,
+            color: ThemeProvided().colorCanvas,
           ),
           margin: EdgeInsets.all(SWi * 0.005),
           width: SWi,
