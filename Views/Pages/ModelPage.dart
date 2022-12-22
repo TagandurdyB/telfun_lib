@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/ShPBDebug.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/UserProvider.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
+import 'package:telfun/Views/widgets/Search.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/Model.dart';
 import '/Views/widgets/SortBtn.dart';
@@ -13,10 +19,22 @@ class ModelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<EventsProvid>(context);
+    final String searchText=Provider.of<UsesVar>(context).getSearch;
+    List _list = provider.searchWithMarks(searchText);
     return ScaffoldAll(
+      appBarBottom: SearchBtn(),
+      topBarHeight: 0.29,
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
+          Container(
+            //color: Colors.red,
+              padding: EdgeInsets.symmetric(
+                  horizontal: SWi * 0.06, vertical: SWi * 0.05),
+              child: Text("Markalar",
+                  style: TextStyle(
+                      fontSize: SWi * 0.05, fontWeight: FontWeight.w800))),
           Padding(
             padding: EdgeInsets.only(top: SWi * 0.02),
             child: Center(
@@ -24,17 +42,11 @@ class ModelPage extends StatelessWidget {
                 runSpacing: SWi * 0.05,
                 spacing: SWi * 0.09,
                 children: List.generate(
-                    Get_Lists(listTag: ApiTags.mark).getList().length ?? 0,
+                    _list.length ?? 0,
                     (index) => Model(
-                          image: Get_Lists(listTag: ApiTags.mark)
-                              .getList()[index]
-                              .image,
-                      name: Get_Lists(listTag: ApiTags.mark)
-                          .getList()[index]
-                          .name,
-                      mark_id: Get_Lists(listTag: ApiTags.mark)
-                          .getList()[index]
-                          .id,
+                          image: _list[index].image,
+                          name: _list[index].name,
+                          mark_id: _list[index].id,
                         )),
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:telfun/ViewModels/JsonCacher.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/favoriteBtn.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,20 +22,11 @@ class DetalPage extends StatefulWidget {
   final ElemEvents obj;
   final String place;
   DetalPage(
-      {
-        this.place="Näbelli ýer",
-        this.obj,
-        this.isfavorite = false,
+      {this.place = "Näbelli ýer",
+      this.obj,
+      this.isfavorite = false,
       this.index,
       Key key,
-      /*  @required this.image,
-      this.name = "",
-      this.phone = "",
-      this.price = "",
-      this.place = "",
-      this.about = "",
-      this.mark = "",
-      this.index,*/
       this.id})
       : super(key: key);
 
@@ -60,11 +52,6 @@ class _DetalPageState extends State<DetalPage> {
   Widget build(BuildContext context) {
     print("Detal favorite:=${widget.isfavorite}");
     list = Get_Lists(listTag: ApiTags.detal).getList()[0];
-    // print("++++++++++IMAGES:${list[0].images}");
-    // final provider=Provider.of<>(context);
-    // final eventProvider=Provider.of<>(context);
-    // final markProvider=Provider.of<>(context);
-    // final int _mark_id = markProvider.getMark()[0];
     return ScaffoldAll(
       phone: list.phone,
       IsFloatBtn: true,
@@ -94,12 +81,7 @@ class _DetalPageState extends State<DetalPage> {
                                               index: index)));
                                 },
                                 shape: 30,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 10,
-                                      spreadRadius: 0)
-                                ],
+                                boxShadow: ThemeProvided().shadowAll,
                                 child: CachedNetworkImage(
                                   cacheManager: CacheManager(Config(
                                       "events_detal",
@@ -127,7 +109,7 @@ class _DetalPageState extends State<DetalPage> {
                 bottom: SWi * 0.18,
                 right: SWi * 0.1,
                 child: FavoriteBtn(
-                  obj:widget.obj,
+                  obj: widget.obj,
                   index: widget.index,
                   favorite: widget.isfavorite,
                   radius: SWi * 0.15,
@@ -135,34 +117,6 @@ class _DetalPageState extends State<DetalPage> {
                   boxShadowActivColor: Color(0xff6900FE),
                   boxShadowPacivColor: Color(0xffD7BFFC),
                 ),
-                /*ImgBtn(
-                  onTap: (){
-                      Map _map = localConverter().elemEventsToMap(
-                          Get_Lists(listTag: ApiTags.events).getList()[list[0].index]);
-                      _map.addAll({"index":list[0].index});
-                      if (list[0].favorite) {
-                        JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
-                      } else {
-                        JsonListCacher(jsonName: JsonTags.favorite).addSaved(_map);
-                      }
-                      widget.favorite = !widget.favorite;
-
-                  },
-                  width: SWi * 0.15,
-                  height: SWi * 0.15,
-                  shape: SWi * 0.1,
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, list[0].favorite?3:2.5),
-                        color: list[0].favorite?Color(0xff6900FE):Color(0xffD7BFFC),
-                        blurRadius: list[0].favorite?20:2.5)
-                  ],
-                  child: Icon(
-                      list[0].favorite ? Icons.bookmark : Icons.bookmark_border,
-                      size: SWi * 0.09,
-                      color: Color(0xff6A00FF)),
-                )*/
               )
             ]),
             EventDetal(list, context),
@@ -176,10 +130,8 @@ class _DetalPageState extends State<DetalPage> {
     return ImgBtn(
       width: double.infinity,
       height: SWi * 0.25,
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(color: Colors.grey, offset: Offset(0, 5), blurRadius: 5)
-      ],
+      color: ThemeProvided().colorCanvas,
+      boxShadow: ThemeProvided().shadowDown,
       child: Align(
         alignment: Alignment.centerLeft,
         child: Padding(
@@ -190,34 +142,24 @@ class _DetalPageState extends State<DetalPage> {
             children: [
               RichText(
                   text: TextSpan(
-                      style: TextStyle(color: Colors.black),
                       children: [
                     // TextSpan(text: "Ady : ", style: TextStyle(fontSize: 18)),
                     TextSpan(text: list.name, style: TextStyle(fontSize: 18))
                   ])),
               RichText(
                   text: TextSpan(
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w600),
                       children: [
                     /*TextSpan(text: "Bahasy : ", style: TextStyle(fontSize: 18)),*/
                     TextSpan(
                         text: list.price.toString() + " TMT",
-                        style: TextStyle(fontSize: 16))
+                        style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600))
                   ])),
               RichText(
                   text: TextSpan(
-                      style: TextStyle(color: Colors.black),
                       children: [
-                    /* TextSpan(
-                          text: "Goýulan ýeri : ",
-                          style: TextStyle(fontSize: 18)),*/
                     TextSpan(text: widget.place)
                   ])),
               Row(children: [
-                /* TextSpan(
-                          text: "Goýulan ýeri : ",
-                          style: TextStyle(fontSize: 18)),*/
                 Text(
                   "${list.data.day}.${list.data.month}.${list.data.year}",
                   style: TextStyle(color: Colors.grey[700]),
@@ -372,29 +314,21 @@ class _DetalPageState extends State<DetalPage> {
               ),
             ),
             SizedBox(height: SWi * 0.05),
-            ImgBtn(
-              width: null,
-              height: null,
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, -5), color: Colors.grey, blurRadius: 5)
-              ],
-              child: Align(
-                alignment: Alignment.center,
-                child: ImgBtn(
-                    color: Colors.white,
-                    width: SWi * 0.95,
-                    height: null,
-                    // shape: 15,
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(list.about),
-                      ),
-                    )),
-              ),
+            Align(
+              alignment: Alignment.center,
+              child: ImgBtn(
+                  boxShadow: ThemeProvided().shadowUp,
+                  color: ThemeProvided().colorCanvas,
+                  width: double.infinity,
+                  height: null,
+                  // shape: 15,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding:  EdgeInsets.all(SWi*0.03),
+                      child: Text(list.about),
+                    ),
+                  )),
             ),
           ]),
     );

@@ -1,16 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 import 'Verification.dart';
-
+bool select=false;
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ThemeProvided().colorCanvas,
       appBar: AppBar(
-        leading: BackButton(color: Colors.black),
+       // leading: BackButton(color: Colors.black),
         actions: [
           TextButton(
               onPressed: () {
@@ -21,12 +24,11 @@ class SignUpPage extends StatelessWidget {
                 style: TextStyle(color: Color(0xff5807B6)),
               )),
         ],
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        brightness: ThemeProvided().ststusBrightness,
+        backgroundColor: ThemeProvided().colorCanvas,
         shadowColor: Colors.transparent,
       ),
       body: Container(
-        color: Colors.white,
         width: double.infinity,
         padding: EdgeInsets.all(17),
         child: SignUpForm(context: context),
@@ -59,7 +61,9 @@ class _SignUpFormState extends State<SignUpForm> {
     var _contr = controls.where((element) => element.text == "");
     if (_contr.isNotEmpty ||
         controls[2].text != controls[3].text ||
-        controls[2].text.length < 6) {
+        controls[2].text.length < 6||select==false) {
+      if(select==true)_empetySMS="Doly we dogry ýazyň!";
+      else _empetySMS="Hasap döretmek üçin ylalaşyň!";
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Container(
             decoration: BoxDecoration(
@@ -159,6 +163,32 @@ class _SignUpFormState extends State<SignUpForm> {
           index: 3,
           hidden: "Parolyňyz (dogrylama)",
           type: Type.pass,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Theme(
+                  data: Theme.of(context).copyWith(
+                    unselectedWidgetColor: ThemeProvided().colorText,
+                  ),
+                  child: Checkbox(
+                    value: select,
+                    onChanged: (chenge) {
+                      setState(() {
+                        select = chenge;
+                      });
+                    },
+                    shape: CircleBorder(),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, PageName.pageContract);
+                  },
+                  child: Text("Ylalaşýan")),
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -277,6 +307,7 @@ class _MyInputState extends State<MyInput> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        style: ThemeProvided().styleInputText,
         maxLength: widget.type == Type.tel ? 8 : null,
         obscureText: widget.type == Type.pass ? true : false,
         keyboardType: widget.type == Type.text
@@ -298,7 +329,7 @@ class _MyInputState extends State<MyInput> {
                 onTap: () {
                   controls[widget.index].clear();
                 },
-                child: Icon(Icons.cancel))),
+                child: Icon(Icons.cancel,color: ThemeProvided().colorText,))),
       ),
     );
   }

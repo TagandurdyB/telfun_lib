@@ -133,7 +133,7 @@ class _DropDownBtnUnValState extends State<DropDownBtnUnVal> {
           isExpanded: true,
           items: widget.items.map((val) {
             return DropdownMenuItem(
-                child: val.child == null ? Text(val.value,style: ThemeProvided().styleDisable,) : val.child,
+                child: val.child == null ? Text(val.value,style: ThemeProvided().styleDropDBItems) : val.child,
                 value: val.index.toString());
           }).toList(),
           /*  value: DropDownBase[widget.tag]==null?dropdownValue:

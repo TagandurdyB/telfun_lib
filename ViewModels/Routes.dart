@@ -1,3 +1,5 @@
+import 'package:telfun/Views/Login/RemowePassPage.dart';
+import 'package:telfun/Views/Login/contractPage.dart';
 import 'package:telfun/Views/Pages/AddShopPage.dart';
 import 'package:telfun/Views/Pages/InModelPage.dart';
 
@@ -35,6 +37,8 @@ class PageName {
   static const String pageProduct = "/ProductPage";
   static const String pageChat = "/ChatPage";
   static const String pageAddShop = "/AddShopPage";
+  static const String pageContract = "/ContractPage";
+  static const String pageRemovePass = "/RemovePassPage";
 
   final routes = {
     pageMain: (context) => MainPage(),
@@ -53,5 +57,7 @@ class PageName {
     pageProduct: (context) => ProductPage(),
     pageChat: (context) => ChatPage(),
     pageAddShop:(context)=>AddShopPage(),
+    pageContract:(context)=>ContractPage(),
+    pageRemovePass:(context)=>RemowePassPage(),
   };
 }

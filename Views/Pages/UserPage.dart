@@ -38,13 +38,7 @@ class UserPage extends StatelessWidget {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              spreadRadius: 0,
-                              blurRadius: 5,
-                              offset: Offset(0, 5),
-                              color: Colors.grey)
-                        ],
+                        boxShadow: ThemeProvided().shadowDown,
                         color: ThemeProvided().colorCanvas,
                       ),
                       height: 100,
@@ -109,6 +103,7 @@ class MyProfil extends StatelessWidget {
     return Column(
       children: [
         Card(
+          shadowColor: ThemeProvided().colorNavBarUnSelectIcon,
           color: ThemeProvided().colorCanvas,
           child: Container(
             margin: EdgeInsets.symmetric(vertical: SWi * 0.02),
@@ -132,6 +127,7 @@ class MyProfil extends StatelessWidget {
           ),
         ),
         Card(
+          shadowColor: ThemeProvided().colorNavBarUnSelectIcon,
           color: ThemeProvided().colorCanvas,
           child: Column(
             children: [
@@ -194,6 +190,7 @@ class MyProfil extends StatelessWidget {
           ),
         ),
         Card(
+          shadowColor: ThemeProvided().colorNavBarUnSelectIcon,
           color: ThemeProvided().colorCanvas,
           child: Column(
             children: [
@@ -321,6 +318,7 @@ class MyProfil extends StatelessWidget {
                   //trailing: Text("0"),
                 ),
               ),
+              SizedBox(height: SWi*0.03,)
             ],
           ),
         ),

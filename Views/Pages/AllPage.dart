@@ -29,6 +29,7 @@ class _AllPageState extends State<AllPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<EventsFavoritProvid>(context, listen: false).reload();
       Provider.of<EventsProvid>(context, listen: false).reLoad();
+      Provider.of<EventsProvid>(context, listen: false).fillMark();
     });
   }
 
@@ -40,7 +41,7 @@ class _AllPageState extends State<AllPage> {
     return ScaffoldAll(
       isSliver: true,
       EnableBotomMenu: true,
-      appBarBottom: SearchBtn(),
+      appBarBottom: SearchBtn(isFilter: true),
       topBarHeight: 0.33,
       ////////////////////////////////////////////////
       sliverBody: SizedBox(
@@ -50,7 +51,7 @@ class _AllPageState extends State<AllPage> {
           children: [
             TopMark(context),
             Visibility(
-              visible: Get_Lists(listTag: ApiTags.mark).getList().length > 0,
+              visible: eventProvider.markObjs.length > 0,
               child: MarkScrol(),
             ),
             ////////////////////////////////////////////////
@@ -70,14 +71,6 @@ class _AllPageState extends State<AllPage> {
           final int _mark_id = markProvider.getMark()[0];
           final int _sort_num = markProvider.sortNum;
           List _list = eventProvider.sortWithMarks(_mark_id, _sort_num,markProvider.getSearch);
-       /*   if (_sort_num == 0) {
-            _list = eventProvider.sortWithMarks(_mark_id, _sort_num);
-          } else if (_sort_num == 1) {
-            _list.sort((a, b) => a.price.compareTo(b.price));
-          } else if (_sort_num == 2) {
-            _list.sort((a, b) => a.price.compareTo(b.price));
-            _list = _list.reversed.toList();
-          }*/
           final obj = _list[index];
           return InCategory(
             obj: obj,
@@ -100,6 +93,7 @@ class _AllPageState extends State<AllPage> {
         alignment: Alignment.centerRight,
         child: OutlinedButton(
           onPressed: () {
+            Provider.of<UsesVar>(context,listen: false).changeSearch("");
             Provider.of<UsesVar>(context,listen: false).changeSort(0);
             Navigator.pushNamed(context, PageName.pageMark);
           },

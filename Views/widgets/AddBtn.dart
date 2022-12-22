@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
@@ -44,6 +45,7 @@ class _AddBtnState extends State<AddBtn> {
                     });
                     FocusScope.of(context).unfocus();
                     PopUppWidget(
+                      Theme:ThemeProvided().getTheme()?PopTheme.light:PopTheme.dark,
                         /* actionsTeam: [
                           ActionsTeam(text: "",func: (){})
                         ],*/
@@ -66,7 +68,7 @@ class _AddBtnState extends State<AddBtn> {
                                           "Bildirişiňiz goşulýança garaşyň.",
                                           style: TextStyle(
                                               fontSize: 20,
-                                              color: Colors.blue[900]),
+                                              color:ThemeProvided().colorText),
                                           textAlign: TextAlign.center,
                                         )),
                                   ],

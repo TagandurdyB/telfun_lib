@@ -65,7 +65,7 @@ class ScaffoldAll extends StatelessWidget {
               child: telfunAppBar())
           : null,
       // drawer: IsSideBar ? MyDrawer(context: context) : null,
-      drawer: MyDrawer(context: context),
+      drawer: MyDrawer(context: context,title: title != null ? title : telfun),
       // floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       // floatingActionButton: IsFloatBtn ? MyFloatingActionButton(phone: phone) : null,
       bottomNavigationBar: MyBottomNavBar(
@@ -92,7 +92,7 @@ class ScaffoldAll extends StatelessWidget {
             SliverToBoxAdapter(
               child: sliverBody != null ? sliverBody : SizedBox(),
             ),
-            sliverList,
+            if (sliverList!=null) sliverList ,
           ]);
         } else {
           return body;

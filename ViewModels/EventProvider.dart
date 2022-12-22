@@ -7,11 +7,35 @@ import 'Names.dart';
 class EventsProvid extends ChangeNotifier {
   List _objs = Get_Lists(listTag: ApiTags.events).getList();
   List get objs => _objs;
+  List _markObjs = Get_Lists(listTag: ApiTags.mark).getList();
+  List get markObjs => _markObjs;
 
   void reLoad() {
     _objs = Get_Lists(listTag: ApiTags.events).getList();
     notifyListeners();
   }
+  void fillMark(){
+    _markObjs = Get_Lists(listTag: ApiTags.mark).getList();
+    notifyListeners();
+  }
+
+  List searchWithMarks(String _searchText) {
+    List _list=[];
+    if (_searchText != "") {
+      print("I am in SortProvider :$_searchText");
+      List _searchList = [];
+      _list=_markObjs;
+      for (int i = 0; i < _list.length; i++) {
+        var name = _list[i];
+        if (name.name.toLowerCase().contains(_searchText.toLowerCase())) {
+          _searchList.add(name);
+        }
+      }
+      return _searchList;
+    }
+    return _markObjs;
+  }
+
 
   List sortWithMarks(int mark_id, int sortNum, String _searchText) {
     List _list;

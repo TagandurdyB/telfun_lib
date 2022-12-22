@@ -33,7 +33,7 @@ Widget telfun = ShaderMask(
       tileMode: TileMode.mirror,
     ).createShader(bounds);
   },
-  child: Text('Telfun', style: TextStyle(fontSize: SWi * 0.06)),
+  child: Text('Telfun', style: TextStyle(fontSize: SWi * 0.06,color: Colors.white,fontWeight: FontWeight.w600)),
 );
 List _event;
 TabController tabController;

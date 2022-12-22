@@ -36,6 +36,8 @@ class ThemeProvided extends ChangeNotifier {
       getTheme() ? MyTheme.lightColorNavBarIcon : MyTheme.darkColorNavBarIcon;
   Color get colorText =>
       getTheme() ? MyTheme.lightColorText : MyTheme.darkColorText;
+  Color get colorModel =>
+      getTheme() ? MyTheme.lightColorModel : MyTheme.darkColorModel;
   //TextStyles/////////////////////////////////////
   TextStyle get styleUserPage =>
       getTheme() ? MyTheme.lightStyleUserPage : MyTheme.darkStyleUserPage;
@@ -43,6 +45,10 @@ class ThemeProvided extends ChangeNotifier {
       getTheme() ? MyTheme.lightStyleEnable : MyTheme.darkStyleEnable;
   TextStyle get styleDisable =>
       getTheme() ? MyTheme.lightStyleDisable : MyTheme.darkStyleDisable;
+  TextStyle get styleDropDBItems =>
+      getTheme() ? MyTheme.lightStyleDropDBItems : MyTheme.darkStyleDropDBItems;
+  TextStyle get styleInputText =>
+      getTheme() ? MyTheme.lightStyleInputText : MyTheme.darkStyleInputText;
   //Icons//////////////////////////////////////////
   Icon get iconThemeBtn =>
       getTheme() ? MyTheme.lightIconThemeBtn : MyTheme.darkIconThemeBtn;
@@ -51,6 +57,14 @@ class ThemeProvided extends ChangeNotifier {
       getTheme() ? MyTheme.lightShadowSlider : MyTheme.darkShadowSlider;
   List<BoxShadow> get shadowSearch =>
       getTheme() ? MyTheme.lightShadowSearch : MyTheme.darkShadowSearch;
+  List<BoxShadow> get shadowModel =>
+      getTheme() ? MyTheme.lightShadowModel : MyTheme.darkShadowModel;
+  List<BoxShadow> get shadowAll =>
+      getTheme() ? MyTheme.lightShadowAll : MyTheme.darkShadowAll;
+  List<BoxShadow> get shadowDown =>
+      getTheme() ? MyTheme.lightShadowDown : MyTheme.darkShadowDown;
+  List<BoxShadow> get shadowUp =>
+      getTheme() ? MyTheme.lightShadowUp : MyTheme.darkShadowUp;
   //Brightness/////////////////////////////////////
   Brightness get ststusBrightness =>
       getTheme() ? MyTheme.lightBrightness : MyTheme.darkBrightness;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/AddShopBtn.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
@@ -29,9 +30,8 @@ class AddShopPage extends StatefulWidget {
 
 class _AddShopPageState extends State<AddShopPage> {
   DDBEl DDCategory, DDMark, DDPlace;
-  final TextStyle enable =
-  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-      disable = TextStyle(color: Colors.grey);
+  final TextStyle enable =ThemeProvided().styleEnable,
+      disable = ThemeProvided().styleDisable;
 
   @override
   void initState() {
@@ -118,41 +118,37 @@ if (d==0&&imageOk){
                         ],
                         onChanged: (DDBEl _element) {
                           canOpenAddBtn(context);
-                          List _etraps= Get_Lists(listTag: ApiTags.place)
+                          List _etraps = Get_Lists(listTag: ApiTags.place)
                               .getList()[_element.id - 1]
                               .etraps;
-                          if(_etraps.isNotEmpty) {
+                          if (_etraps.isNotEmpty) {
                             PopUppWidget(
                                 content: Column(
                                   children: List.generate(
                                       _etraps.length,
-                                          (index) =>
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              DDPlace.value =
-                                              "${_element.value} ${_etraps[index].name}";
-                                              DDPlace.id = _etraps[index].id;
-                                              DDPlace.index=0;
-                                              setState(() {});
-                                              print(
-                                                  "value:${DDPlace
-                                                      .value}  id:${DDPlace
-                                                      .id} index:${DDPlace
-                                                      .index}");
-                                            },
-                                            child: Text(
-                                              "${_etraps[index].name}",textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                          )),
+                                          (index) => TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          DDPlace.value =
+                                          "${_element.value} ${_etraps[index].name}";
+                                          DDPlace.id = _etraps[index].id;
+                                          DDPlace.index=0;
+                                          setState(() {});
+                                          print(
+                                              "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
+                                          print("place_ID:${DDBBase.getDate(DDBTags.dDBLocation).id.toString()}");
+                                        },
+                                        child: Text(
+                                          "${_etraps[index].name}",textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: SWi*0.033),
+                                        ),
+                                      )),
                                 ),
                                 title: "${_element.value} Etraplar:",
                                 centerTitle: true,
-                                bgColor: Colors.white)
+                                bgColor: ThemeProvided().colorCanvas)
                                 .popUp(context);
-                          }
-                          else{
+                          } else {
                             DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
                           }
                         },

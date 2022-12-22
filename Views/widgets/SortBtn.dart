@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/Names.dart';
@@ -154,7 +155,7 @@ class _SortBtnState extends State<SortBtn> {
                     children: [
                       Icon(provider.sortNum!=0?Icons.adjust_outlined:Icons.album_outlined,
                           size: 40, color:provider.sortNum!=0? Colors.grey[400]:Colors.purple),
-                      Text("  Asyl tertip", style: TextStyle(fontSize: SWi * 0.04)),
+                      Text("  Asyl tertip", style: TextStyle(fontSize: SWi * 0.04,color: ThemeProvided().colorText)),
                     ],
                   ),
                   onTap: () {
@@ -171,7 +172,7 @@ class _SortBtnState extends State<SortBtn> {
                     children: [
                       Icon(provider.sortNum!=1?Icons.adjust_outlined:Icons.album_outlined,
                           size: 40, color:provider.sortNum!=1?Colors.grey[400]:Colors.purple),
-                      Text("  Arzandan gymmada", style: TextStyle(fontSize: SWi * 0.04)),
+                      Text("  Arzandan gymmada", style: TextStyle(fontSize: SWi * 0.04,color: ThemeProvided().colorText)),
                     ],
                   ),
                   onTap: () {
@@ -187,7 +188,7 @@ class _SortBtnState extends State<SortBtn> {
                     children: [
                       Icon(provider.sortNum!=2?Icons.adjust_outlined:Icons.album_outlined,
                           size: 40, color:provider.sortNum!=2? Colors.grey[400]:Colors.purple),
-                      Text("  Gymmatdan arzana", style: TextStyle(fontSize: SWi * 0.04)),
+                      Text("  Gymmatdan arzana", style: TextStyle(fontSize: SWi * 0.04,color: ThemeProvided().colorText)),
                     ],
                   ),
                   onTap: () {

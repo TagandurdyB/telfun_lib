@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/ViewModels/Routes.dart';
 import '/Views/Login/verificationInput.dart';
@@ -27,9 +28,8 @@ class VerificationPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: BackButton(color: Colors.black),
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        brightness: ThemeProvided().ststusBrightness,
+        backgroundColor: ThemeProvided().colorCanvas,
         shadowColor: Colors.transparent,
       ),
       body: MyVarification(

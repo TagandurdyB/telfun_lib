@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/Pages/InModelPage.dart';
 import 'package:telfun/Views/Pages/ProductPage.dart';
 
@@ -61,22 +62,11 @@ class _ModelState extends State<Model> {
                       mark_id: widget.mark_id,
                     )));
       },
-      boxShadow: [
-        BoxShadow(
-            spreadRadius: 0,
-            blurRadius: 3,
-            offset: Offset(1, 3),
-            color: Colors.grey),
-        BoxShadow(
-            spreadRadius: 0,
-            blurRadius: 3,
-            offset: Offset(-1, 3),
-            color: Colors.grey)
-      ],
+      boxShadow: ThemeProvided().shadowModel,
       shape: SWi * 0.03,
       width: SWi * 0.35,
       height: SWi * 0.38,
-      color: Color(0xffF6F2FA),
+      color: ThemeProvided().colorModel,
       child: Column(
         children: [
           Container(

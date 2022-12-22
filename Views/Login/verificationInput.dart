@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 
 class EnterOTP extends StatelessWidget {
   @override
@@ -59,7 +60,7 @@ class OTPDigitTextFieldBox extends StatelessWidget {
         showCursor: false,
         readOnly: false,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 40),
+        style: TextStyle(fontSize: 40,color: ThemeProvided().colorText),
         keyboardType: TextInputType.number,
         maxLength: 1,
         decoration: InputDecoration(

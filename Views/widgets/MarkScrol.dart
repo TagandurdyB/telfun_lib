@@ -32,12 +32,14 @@ class _MarkScrolState extends State<MarkScrol> {
                   padding: EdgeInsets.symmetric(
                       vertical: SWi * 0.01, horizontal: SWi * 0.02),
                   child: ImgBtn(
+                    borderWidth: SWi*0.004,
+                      borderColor: Color(0xff9747FF),
                       boxShadow: [
                         BoxShadow(
                             color: Provider.of<UsesVar>(context).getMark()[1] ==
                                     index
                                 ? Colors.purpleAccent
-                                : Colors.grey[300],
+                                : Colors.transparent,
                             spreadRadius: 0,
                             blurRadius: 2,
                             offset: Offset(0, 3))

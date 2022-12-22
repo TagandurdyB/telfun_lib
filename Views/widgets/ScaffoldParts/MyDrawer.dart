@@ -12,10 +12,10 @@ import '../DrawBarBtn.dart';
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
     Key key,
-    @required this.context,
+    @required this.context, this.title,
   }) : super(key: key);
 
-  final context;
+  final context,title;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class MyDrawer extends StatelessWidget {
         Container(
           height: SHe * 0.02,
         ),
+        title,
         Visibility(
           visible: UserLoginDetals.getIsLogin(),
           child: Container(
@@ -148,14 +149,17 @@ class MyDrawer extends StatelessWidget {
                         leading: draverIcon(Icons.add_business),
                         title: Text("Dükan goş"),
                       )),
-                  DrawBarBtn(
-                    titleLeft: SWi * 0.15,
-                    onTap: (context) {
-                      Navigator.pushNamed(context, PageName.pageChat);
-                      // launch("tel://+99365000000");
-                    },
-                    leading: draverIcon(Icons.sms),
-                    title: Text("Habarlaşmak"),
+                  Visibility(
+                    visible: UserLoginDetals.getIsLogin(),
+                    child: DrawBarBtn(
+                      titleLeft: SWi * 0.15,
+                      onTap: (context) {
+                        Navigator.pushNamed(context, PageName.pageChat);
+                        // launch("tel://+99365000000");
+                      },
+                      leading: draverIcon(Icons.sms),
+                      title: Text("Habarlaşmak"),
+                    ),
                   ),
                   DrawBarBtn(
                     titleLeft: SWi * 0.15,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 
 import 'RIBase.dart';
 
@@ -79,6 +80,7 @@ class _ReadyInputState extends State<ReadyInput> {
         },
         maxLength: widget.type == Type.tel ? 8 : null,
         obscureText: widget.type == Type.pass ? true : false,
+        style: ThemeProvided().styleInputText,
         keyboardType: widget.type == Type.text
             ? null
             : widget.type == Type.tel
@@ -95,12 +97,12 @@ class _ReadyInputState extends State<ReadyInput> {
             labelText: widget.label != "" ? widget.label : "",
             suffix: GestureDetector(
                 onTap: () {
-                RIBase.eraseDate(widget.tag);
+                RIBase.getControl(widget.tag).clear();
                   //  controls[widget.index].clear();
                 if(widget.suffixFunc!=null)
                   widget.suffixFunc();
                 },
-                child: widget.reightWidget ?? Icon(Icons.cancel))),
+                child: widget.reightWidget ?? Icon(Icons.cancel,color: ThemeProvided().colorText,))),
       ),
     );
   }

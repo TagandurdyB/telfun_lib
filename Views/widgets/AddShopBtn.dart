@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Views/widgets/DropDownBtn/DDBBase.dart';
 import '/ViewModels/Names.dart';
@@ -58,10 +59,10 @@ class _AddShopBtnState extends State<AddShopBtn> {
                                     Container(
                                         padding: EdgeInsets.all(8),
                                         child: Text(
-                                          "Bildirişiňiz goşulýança garaşyň.",
+                                          "Dükanyňyz açylýança garaşyň.",
                                           style: TextStyle(
                                               fontSize: 20,
-                                              color: Colors.blue[900]),
+                                              color: ThemeProvided().colorText),
                                           textAlign: TextAlign.center,
                                         )),
                                   ],
@@ -72,7 +73,7 @@ class _AddShopBtnState extends State<AddShopBtn> {
                                 child: Container(
                                     padding: EdgeInsets.all(8),
                                     child: Text(
-                                      "Bildirişiňizi goşanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
+                                      "Dükan açanyňyzdan soň, tä tassyklanýança halka açylmaýar. "
                                       "Şol sebäpden garaşmagyňyzy haýyş edýäris. ",
                                       style: TextStyle(
                                           fontSize: 18, color: Colors.blue),
@@ -92,6 +93,7 @@ class _AddShopBtnState extends State<AddShopBtn> {
                       'name': RIBase.getText(RITags.rIName),
                       "place":DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
                       "about": RIBase.getText(RITags.rIAbout),//controls[2].text,
+                      "phone":UserProperties.getProperty("phone"),
                     };
                     bool isUpload = await service.addImage(body, images);
                     if (isUpload) {
@@ -105,7 +107,7 @@ class _AddShopBtnState extends State<AddShopBtn> {
                       });
                       MySnack(
                               textColor: Colors.white,
-                              message: "Bildiriş ugradyldy",
+                              message: "Dükan ugradyldy",
                               textBgColor: Color(0xff5308BE))
                           .pushSnack(context);
                       MySnack(
@@ -116,6 +118,8 @@ class _AddShopBtnState extends State<AddShopBtn> {
                       Navigator.pop(context);
                       Provider.of<UsesVar>(context, listen: false)
                           .navBarSelect(0);
+                      Future.delayed(Duration(seconds: 7)).then((value) =>
+                          Navigator.popUntil(context, (route) => route.isFirst));
                     } else {
                       setState(() {
                         _isUpload = false;
@@ -134,7 +138,7 @@ class _AddShopBtnState extends State<AddShopBtn> {
                     ? Color(0xff5408BF)
                     : Colors.grey,
                 child: Text(
-                  "Bildiriş goş",
+                  "Dükan aç",
                   style: TextStyle(color: Colors.white, fontSize: SWi * 0.05),
                 ),
               ),

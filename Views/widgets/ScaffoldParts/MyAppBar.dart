@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import '/Models/Public.dart';
 import '/Views/Pages/FilterPage.dart';
 import '/Views/Pages/SetingsPage.dart';
@@ -12,12 +14,13 @@ class MyAppBar extends StatefulWidget {
     @required this.myTabs,
     @required this.title,
     this.IsTabBar,
-    this.IsUser, this.IsSideBar=false,
+    this.IsUser,
+    this.IsSideBar = false,
   }) : super(key: key);
 
   final List<Tab> myTabs;
   final Widget title;
-  final bool IsTabBar, IsUser,IsSideBar;
+  final bool IsTabBar, IsUser, IsSideBar;
 
   @override
   _MyAppBarState createState() => _MyAppBarState();
@@ -46,8 +49,14 @@ class _MyAppBarState extends State<MyAppBar>
   Widget build(BuildContext context) {
     return AppBar(
       brightness: Provider.of<ThemeProvided>(context).ststusBrightness,
-leading: !widget.IsSideBar?BackButton():null,
-     /////////////////////////////////////
+      leading: !widget.IsSideBar ? BackButton(
+        onPressed: (){
+          Provider.of<UsesVar>(context,listen: false).changeSearch("");
+          RIBase.eraseDate(RITags.rISearch);
+          Navigator.pop(context);
+        },
+      ) : null,
+      /////////////////////////////////////
       bottom: widget.IsTabBar
           ? PreferredSize(
               preferredSize: Size.fromHeight(5),
@@ -90,19 +99,19 @@ leading: !widget.IsSideBar?BackButton():null,
   }
 }
 
-
 class MySliverAppBar extends StatefulWidget {
   const MySliverAppBar({
     Key key,
     @required this.myTabs,
     @required this.title,
     this.IsTabBar,
-    this.IsUser, this.IsSideBar=false,
+    this.IsUser,
+    this.IsSideBar = false,
   }) : super(key: key);
 
   final List<Tab> myTabs;
   final Widget title;
-  final bool IsTabBar, IsUser,IsSideBar;
+  final bool IsTabBar, IsUser, IsSideBar;
 
   @override
   _MySliverAppBarState createState() => _MySliverAppBarState();
@@ -130,22 +139,22 @@ class _MySliverAppBarState extends State<MySliverAppBar>
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: !widget.IsSideBar?BackButton():null,
+      leading: !widget.IsSideBar ? BackButton() : null,
       /////////////////////////////////////
       bottom: widget.IsTabBar
           ? PreferredSize(
-        preferredSize: Size.fromHeight(5),
-        child: Container(
-          padding: EdgeInsets.only(left: SWi * 0.06, right: SWi * 0.06),
-          child: TabBar(
-            indicatorSize: TabBarIndicatorSize.tab,
-            controller: tabController,
-            tabs: widget.myTabs,
-            labelColor: Colors.black,
-            labelStyle: TextStyle(color: Colors.red),
-          ),
-        ),
-      )
+              preferredSize: Size.fromHeight(5),
+              child: Container(
+                padding: EdgeInsets.only(left: SWi * 0.06, right: SWi * 0.06),
+                child: TabBar(
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  controller: tabController,
+                  tabs: widget.myTabs,
+                  labelColor: Colors.black,
+                  labelStyle: TextStyle(color: Colors.red),
+                ),
+              ),
+            )
           : null,
       ////////////////////////////////////
       //

@@ -8,6 +8,8 @@ import '/Models/Public.dart';
 import 'imgBtn.dart';
 
 class SearchBtn extends StatelessWidget {
+  final bool isFilter;
+  SearchBtn({this.isFilter=false});
   //const SearchBtn({Key? key}) : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class SearchBtn extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: SWi * 0.05),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Text("Gözle... ",style: TextStyle(fontSize: SWi*0.045,color: Colors.grey),),
@@ -58,15 +61,18 @@ class SearchBtn extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, PageName.pageSearch);
-                },
-                child: Icon(
-                  Icons.wrap_text,
-                  color: ThemeProvided().colorText,
-                  size: SWi * 0.08,
-                ))
+            Visibility(
+              visible: isFilter,
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, PageName.pageSearch);
+                  },
+                  child: Icon(
+                    Icons.wrap_text,
+                    color: ThemeProvided().colorText,
+                    size: SWi * 0.08,
+                  )),
+            )
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 
 class MySnack {
   final String message;
@@ -9,7 +10,7 @@ class MySnack {
       {this.sec = 3,
       this.textBgColor = Colors.grey,
       this.textColor = Colors.black,
-      this.bgColor = Colors.white,
+      this.bgColor,
       this.message = "Message"});
 
   pushSnack(BuildContext context) {
@@ -29,7 +30,7 @@ class MySnack {
                 fontSize: 20, fontWeight: FontWeight.w900, color: textColor),
             textAlign: TextAlign.center,
           )),
-      backgroundColor: bgColor,
+      backgroundColor: bgColor!=null?bgColor:ThemeProvided().colorCanvas,
     ));
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/Models/Public.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -120,7 +121,7 @@ class _AddImagesState extends State<AddImages> {
       return Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: Colors.white,
+            color: ThemeProvided().colorCanvas,
             borderRadius: BorderRadiusDirectional.circular(30),
             boxShadow: [
               BoxShadow(color: Color(0xff5308BE), blurRadius: 1, spreadRadius: 0)

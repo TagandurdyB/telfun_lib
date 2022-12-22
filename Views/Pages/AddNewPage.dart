@@ -24,8 +24,6 @@ class AddNewPage extends StatefulWidget {
 class _AddNewPageState extends State<AddNewPage> {
   DDBEl DDColor, DDCategory, DDMark, DDModel, DDPlace;
 
-  final TextStyle disable=ThemeProvided().styleDisable,enable=ThemeProvided().styleEnable;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -41,7 +39,7 @@ class _AddNewPageState extends State<AddNewPage> {
     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
   }
 
-  List _modelList = [];
+  List _modelList = [],_colorList=[];
   void modelFunc() {
     _modelList = Get_Lists(listTag: ApiTags.model)
         .getList()
@@ -50,10 +48,20 @@ class _AddNewPageState extends State<AddNewPage> {
             element.mark_id == DDMark.id)
         .toList();
   }
+  void colorFunc() {
+    _colorList = Get_Lists(listTag: ApiTags.model)
+        .getList()
+        .where((element) => element.id == DDModel.id)
+        .toList()[0]
+        .colors;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle disable=Provider.of<ThemeProvided>(context).styleDisable,
+        enable=Provider.of<ThemeProvided>(context).styleEnable;
     modelFunc();
+   // colorFunc();
     return Container(
         padding: EdgeInsets.symmetric(horizontal: SWi * 0.08),
         //color: Colors.blue,
@@ -117,7 +125,7 @@ class _AddNewPageState extends State<AddNewPage> {
                         ),
                         title: "${_element.value} Etraplar:",
                         centerTitle: true,
-                        bgColor: Colors.white)
+                        bgColor: ThemeProvided().colorCanvas)
                         .popUp(context);
                   } else {
                     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
@@ -273,7 +281,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                   ],
                                 ),
                                 SizedBox(width: 10),
-                                Text(getlist.tm),
+                                Text(getlist.tm,style: ThemeProvided().styleDisable,),
                               ],
                             ),
                             index: index,

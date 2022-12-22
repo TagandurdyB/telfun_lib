@@ -13,6 +13,7 @@ class RITags {
   static const String rIUserName = "tagUserName";
   static const String rIUserPass = "tagUserPass";
   static const String rISearch = "tagSearch";
+  static const String rIPhone = "tagPhone";
 }
 class ApiTags {
   static const String img = "img";

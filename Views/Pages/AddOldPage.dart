@@ -27,9 +27,7 @@ class AddOldPage extends StatefulWidget {
 class _AddOldPageState extends State<AddOldPage> {
  // List<String> inputValues = ["", "", ""];
   DDBEl DDCategory, DDMark, DDPlace;
-  final TextStyle enable =
-          ThemeProvided().styleEnable,
-      disable = ThemeProvided().styleDisable;
+
 
   @override
   void initState() {
@@ -54,6 +52,8 @@ if (d==0&&imageOk){
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle disable=Provider.of<ThemeProvided>(context).styleDisable,
+        enable=Provider.of<ThemeProvided>(context).styleEnable;
     return Container(
       padding: EdgeInsets.only(top: 20),
       child: Padding(
@@ -153,13 +153,13 @@ if (d==0&&imageOk){
                                           },
                                           child: Text(
                                             "${_etraps[index].name}",textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 20),
+                                            style: TextStyle(fontSize: SWi*0.033),
                                           ),
                                         )),
                               ),
                               title: "${_element.value} Etraplar:",
                               centerTitle: true,
-                              bgColor: Colors.white)
+                              bgColor: ThemeProvided().colorCanvas)
                               .popUp(context);
                         }
                         else{

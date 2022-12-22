@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
+import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/SharedPref.dart';
@@ -15,19 +16,22 @@ void callTel(String num) async {
   await launch("tel://$num");
 }
 
+String _empetySMS = "Içerik girmrk üçin ylalaşyň!";
+bool select = false;
+
 class LoginPage extends StatelessWidget {
   final int index;
 
-  LoginPage({this.index=0});
-  //const LoginPage({Key? key}) : super(key: key);
-  String _empetySMS = "Doly we dogry ýazyň!";
+  LoginPage({this.index = 0});
 
   void canLogin(context) async {
     {
       var _contr = controls.where((element) => element.text == "");
       if (_contr.isNotEmpty ||
-          controls[0].text.length < 8 ||
-          controls[1].text.length < 6) {
+          controls[1].text.length < 6||
+      select==false) {
+        if(select==true)_empetySMS="Doly we dogry ýazyň!";
+        else _empetySMS="Içerik girmrk üçin ylalaşyň!";
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Container(
               decoration: BoxDecoration(
@@ -42,10 +46,35 @@ class LoginPage extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                 textAlign: TextAlign.center,
               )),
-          backgroundColor: Colors.white,
+          backgroundColor: ThemeProvided().colorCanvas,
         ));
         print("empety");
       } else {
+        PopUppWidget(
+            title: "Garaşyň",
+            content: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                ),
+                Container(
+                  child: Text(
+                    "Hasap Gözlenýär!",
+                    style: TextStyle(
+                        fontSize: 20, color: Colors.blue[500]),
+                  ),
+                ),
+                Container(
+                    child: Text(
+                      "Bu hasabyň döredilip döredilmedigi barlanylýar.",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: ThemeProvided().colorText),
+                      textAlign: TextAlign.center,
+                    ))
+              ],
+            )).popUp(context);
         print(controls[0].text);
         print(controls[1].text);
         bool canLogin = await API_Post(
@@ -88,12 +117,11 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        brightness: ThemeProvided().ststusBrightness,
+        backgroundColor: ThemeProvided().colorCanvas,
         shadowColor: Colors.transparent,
       ),
       body: Container(
-          color: Colors.white,
           width: double.infinity,
           padding: EdgeInsets.all(17),
           child: ListView(
@@ -126,7 +154,7 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: MyInput(index: 1, hidden: "Parolyňyz:", type: Type.pass),
               ),
-              /* Remember(),*/
+              Remember(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Card(
@@ -134,25 +162,11 @@ class LoginPage extends StatelessWidget {
                   child: Builder(
                     builder: (context) => ListTile(
                       onTap: () {
-                        PopUppWidget(
-                          title: "Garaşyň",
-                          content: Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CircularProgressIndicator(),
-                            ),
-                            Container(child: Text("Hasap Gözlenýär!",
-                              style: TextStyle(fontSize: 20, color: Colors.blue[700]),),),
-                            Container(child: Text("Bu hasabyň döredilip döredilmedigi barlanylýar.",
-                              style: TextStyle(fontSize: 18, color: Colors.black),textAlign: TextAlign.center,))
-
-                          ],)
-                        ).popUp(context);
                         canLogin(context);
                       },
                       title: Center(
                           child: Text(
-                        "Içeri Gir ",
+                        "Içeri Gir",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       )),
                     ),
@@ -173,7 +187,10 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(context, PageName.pageSignUp);
                         },
-                        child: Text("Hasap döret",style: TextStyle(color: Color(0xff5807B6)),)),
+                        child: Text(
+                          "Hasap döret",
+                          style: TextStyle(color: Color(0xff5807B6)),
+                        )),
                   ],
                 ),
               )
@@ -195,7 +212,8 @@ class MyInput extends StatefulWidget {
       {this.index = 0,
       this.hidden = "",
       this.type = Type.text,
-      this.onControl, bool shape});
+      this.onControl,
+      bool shape});
   @override
   _MyInputState createState() => _MyInputState();
 }
@@ -215,6 +233,7 @@ class _MyInputState extends State<MyInput> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        style: ThemeProvided().styleInputText,
         onChanged: (value) {
           widget.onControl(value, widget.index);
         },
@@ -239,12 +258,14 @@ class _MyInputState extends State<MyInput> {
                 onTap: () {
                   controls[widget.index].clear();
                 },
-                child: Icon(Icons.cancel))),
+                child: Icon(
+                  Icons.cancel,
+                  color: ThemeProvided().colorText,
+                ))),
       ),
     );
   }
 }
-/*
 
 class Remember extends StatefulWidget {
   @override
@@ -252,7 +273,6 @@ class Remember extends StatefulWidget {
 }
 
 class _RememberState extends State<Remember> {
-  bool select = RemenberMeEnable;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -261,25 +281,35 @@ class _RememberState extends State<Remember> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Checkbox(
-                value: select,
-                onChanged: (chenge) {
-                  setState(() {
-                    select = chenge ?? false;
-                  });
-                },
-                shape: CircleBorder(),
-              ),
-              Text("Remember me"),
+              Theme(
+                  data: Theme.of(context).copyWith(
+                    unselectedWidgetColor: ThemeProvided().colorText,
+                  ),
+                  child: Checkbox(
+                    value: select,
+                    onChanged: (chenge) {
+                      setState(() {
+                        select = chenge;
+                      });
+                    },
+                    shape: CircleBorder(),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, PageName.pageContract);
+                  },
+                  child: Text("Ylalaşýan")),
             ],
           ),
-          TextButton(onPressed: () {
-            callTel("+993000000");
-          }, child: Text("Forgor pasword?")),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, PageName.pageRemovePass);
+              },
+              child: Text("Paroly dikeltmek")),
         ],
       ),
     );
   }
 }
-*/
