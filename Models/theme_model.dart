@@ -25,15 +25,15 @@ class MyTheme {
   static TextStyle lightStyleEnable = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w600,
-    fontSize: SWi * 0.03,
+    fontSize: SWi * 0.04,
   );
   static TextStyle lightStyleDisable = TextStyle(
     color: Colors.grey,
-    fontSize: SWi * 0.03,
+    fontSize: SWi * 0.04,
   );
   static TextStyle lightStyleDropDBItems = TextStyle(
     color: Colors.black,
-    fontSize: SWi * 0.03,
+    fontSize: SWi * 0.045,
   );
   static TextStyle lightStyleInputText = TextStyle(
     color: Colors.black,
@@ -45,15 +45,15 @@ class MyTheme {
   static TextStyle darkStyleEnable = TextStyle(
     color: Colors.white,
     fontWeight: FontWeight.w600,
-    fontSize: SWi * 0.03,
+    fontSize: SWi * 0.04,
   );
   static TextStyle darkStyleDisable = TextStyle(
     color: Colors.grey,
-    fontSize: SWi * 0.03,
+    fontSize: SWi * 0.04,
   );
   static TextStyle darkStyleDropDBItems = TextStyle(
     color: Colors.white,
-    fontSize: SWi * 0.03,
+    fontSize: SWi * 0.045,
   );
   static TextStyle darkStyleInputText = TextStyle(
     color: Colors.white,

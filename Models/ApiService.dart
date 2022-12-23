@@ -36,13 +36,9 @@ class API {
   }
 
 
-  Register(List list) async {
+  Register(Map map) async {
     Map<String, dynamic> map;
-    await http.post(Uri.parse(URL), body: {
-      "name": list[0],
-      "phone": list[1],
-      "password": list[2],
-    }).then((response) {
+    await http.post(Uri.parse(URL), body: map).then((response) {
       if (response.statusCode == 200) {
         map = json.decode(response.body);
         print("request:${map}");
@@ -54,14 +50,12 @@ class API {
     return map;
   }
 
-  Login(List list) async {
+  Login(Map _map) async {
     Map<String, dynamic> map;
-    print(list[0]);
-    print(list[1]);
-    await http.post(Uri.parse(URL), body: {
+    await http.post(Uri.parse(URL), body: _map/*body: {
       "phone": list[0],
       "password": list[1],
-    }).then((response) {
+    }*/).then((response) {
       if (response.statusCode == 200) {
         map = json.decode(response.body);
       } else {

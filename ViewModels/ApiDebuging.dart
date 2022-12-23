@@ -151,18 +151,19 @@ class Get_Me {
 }
 
 class API_Post {
-  final String URL, name, phone, pass;
+  final String URL;
+  final Map body;
 
-  API_Post(
-      {@required this.URL,
-      @required this.name,
+  API_Post({this.body,
+      @required this.URL,
+/*      @required this.name,
       @required this.phone,
-      @required this.pass});
+      @required this.pass*/});
 
   //if you aren't in base then send firebase sms
   Future<bool> IsRegister() async {
     Map<String, dynamic> map =
-        await API(URL: URL).Register([name, phone, pass]);
+        await API(URL: URL).Register(body);
     return map["status"];
     print("+++*** $map");
   }
@@ -180,7 +181,7 @@ class API_Post {
   //if sms code true you are login
   void addRegister() async {
     Map<String, dynamic> map =
-        await API(URL: URL).Register([name, phone, pass]);
+        await API(URL: URL).Register(body);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     print("***${UserLoginDetals.getIsLogin()}");
@@ -190,7 +191,7 @@ class API_Post {
   }
 
   Future<bool> IsLogin() async {
-    Map<String, dynamic> map = await API(URL: URL).Login([phone, pass]);
+    Map<String, dynamic> map = await API(URL: URL).Login(body);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     if (map["status"]) {

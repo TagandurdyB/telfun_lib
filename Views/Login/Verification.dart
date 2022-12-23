@@ -15,13 +15,15 @@ class VerificationPage extends StatelessWidget {
 
   final String name, pass, phone;
 
+  final Map body;
+
   VerificationPage(
       {this.verificationID,
       this.auth,
       this.user,
       this.name,
       this.pass,
-      this.phone});
+      this.phone, this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class VerificationPage extends StatelessWidget {
           name: name,
           phone: phone,
           pass: pass,
+          body: body,
           verificationID: verificationID),
     );
   }
@@ -50,6 +53,7 @@ class MyVarification extends StatefulWidget {
   User user;
   String verificationID = "";
   final String name, pass, phone;
+  final Map body;
 
   MyVarification(
       {Key key,
@@ -59,7 +63,7 @@ class MyVarification extends StatefulWidget {
       this.verificationID,
       this.name,
       this.pass,
-      this.phone})
+      this.phone, this.body})
       : super(key: key);
 
   @override
@@ -164,20 +168,12 @@ paroly ýazyň.
       () {
         if (widget.user != null) {
           print("***You are logged in successfully***");
-          /* Fluttertoast.showToast(
-            msg: "You are logged in successfully",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );*/
           API_Post(
                   URL: "$IP/api/register",
-                  name: widget.name,
+                  body:widget.body,
+                  /*name: widget.name,
                   phone: "+993"+widget.phone,
-                  pass: widget.pass)
+                  pass: widget.pass*/)
               .addRegister();
           Provider.of<UsesVar>(context,listen: false).navBarSelect(0);
           Scaffold.of(context).showSnackBar(SnackBar(

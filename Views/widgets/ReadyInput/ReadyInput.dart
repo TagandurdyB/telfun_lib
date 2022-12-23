@@ -36,12 +36,7 @@ class ReadyInput extends StatefulWidget {
 class _ReadyInputState extends State<ReadyInput> {
   @override
   void initState() {
-    if (widget.type == Type.num) {
-      RIBase.changeDate(widget.tag,TextEditingController(text:"0"));
-      //controls[widget.index] = TextEditingController(text: "0");
-    }else{
       RIBase.changeDate(widget.tag,TextEditingController(text:""));
-    }
 /*    controls.forEach((element) {
       element.text = "";
     });*/

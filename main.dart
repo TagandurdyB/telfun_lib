@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         canvasColor: Provider.of<ThemeProvided>(context).colorCanvas, //Color(0xffF0EBFF),
         appBarTheme: AppBarTheme(
-            color: Colors.white,
+            color: Colors.transparent,
             iconTheme: IconThemeData(
               color: Provider.of<ThemeProvided>(context).colorAppBarIcon,
             )),

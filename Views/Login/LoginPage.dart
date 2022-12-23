@@ -27,11 +27,11 @@ class LoginPage extends StatelessWidget {
   void canLogin(context) async {
     {
       var _contr = controls.where((element) => element.text == "");
-      if (_contr.isNotEmpty ||
-          controls[1].text.length < 6||
-      select==false) {
-        if(select==true)_empetySMS="Doly we dogry ýazyň!";
-        else _empetySMS="Içerik girmrk üçin ylalaşyň!";
+      if (_contr.isNotEmpty || controls[1].text.length < 6 || select == false) {
+        if (select == true)
+          _empetySMS = "Doly we dogry ýazyň!";
+        else
+          _empetySMS = "Içerik girmrk üçin ylalaşyň!";
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Container(
               decoration: BoxDecoration(
@@ -61,29 +61,27 @@ class LoginPage extends StatelessWidget {
                 Container(
                   child: Text(
                     "Hasap Gözlenýär!",
-                    style: TextStyle(
-                        fontSize: 20, color: Colors.blue[500]),
+                    style: TextStyle(fontSize: 20, color: Colors.blue[500]),
                   ),
                 ),
                 Container(
                     child: Text(
-                      "Bu hasabyň döredilip döredilmedigi barlanylýar.",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: ThemeProvided().colorText),
-                      textAlign: TextAlign.center,
-                    ))
+                  "Bu hasabyň döredilip döredilmedigi barlanylýar.",
+                  style:
+                      TextStyle(fontSize: 18, color: ThemeProvided().colorText),
+                  textAlign: TextAlign.center,
+                ))
               ],
             )).popUp(context);
         print(controls[0].text);
         print(controls[1].text);
-        bool canLogin = await API_Post(
-          URL: "$IP/api/login",
-          //URL: "$IP/api/register",
-          // name: "name124",
-          phone: "+993" + controls[0].text,
-          pass: controls[1].text,
-        ).IsLogin();
+        bool canLogin = await API_Post(URL: "$IP/api/login",
+            //URL: "$IP/api/register",
+            // name: "name124",
+            body: {
+              "phone": "+993" + controls[0].text,
+              "password": controls[1].text,
+            }).IsLogin();
         print("***canLogin = $canLogin");
         if (canLogin) {
           Provider.of<UsesVar>(context, listen: false).navBarSelect(index);

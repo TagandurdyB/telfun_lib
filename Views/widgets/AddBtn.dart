@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/ViewModels/Names.dart';
@@ -23,7 +24,7 @@ class AddBtn extends StatefulWidget {
 }
 
 class _AddBtnState extends State<AddBtn> {
-  Service service = Service();
+  Service service = Service(Url: "$IP/api/add");
   bool _about = false, _isUpload = false;
 
   @override

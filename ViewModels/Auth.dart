@@ -1,11 +1,12 @@
-/*
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter/material.dart';
+import 'package:telfun/Views/Login/Verification.dart';
 
 class Auth{
-  final String phoneNum;
-  Auth(this.phoneNum);
+  final String phone,pass,name;
+  final Map body;
+  final BuildContext context;
+  Auth(this.context,{this.body,this.pass="123456", this.name="telfun", this.phone="xxxxxxxx"});
 
   FirebaseAuth auth = FirebaseAuth.instance;
   bool otpVisibility = false;
@@ -13,77 +14,51 @@ class Auth{
   String verificationID = "";
 
   void loginWithPhone() async {
+    print("+993" + phone);
     auth.verifyPhoneNumber(
-      phoneNumber: "+993" + phoneNum,
-      verificationCompleted: ( credential) async {
+      phoneNumber: "+993" + phone,
+      verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) {
           print("You are logged in successfully");
         });
       },
       verificationFailed: (FirebaseAuthException e) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadiusDirectional.circular(10),
+                color: Colors.red[700],
+              ),
+              height: 50,
+              alignment: Alignment.center,
+              child: Text(
+                "Bir mesele ýüze çykdy. Az wagtdan soň täzeden synanşyň!",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                textAlign: TextAlign.center,
+              )),
+          backgroundColor: Colors.white,
+        ));
         print(e.message);
       },
       codeSent: (String verificationId, int resendToken) {
         otpVisibility = true;
-*/
-/*        verificationID = verificationId;
- setState(() {});*//*
-
-
+        verificationID = verificationId;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VerificationPage(
+                  auth: auth,
+                  user: user,
+                  body: body,
+                  name: name,
+                  phone: "+993"+phone,
+                  pass: pass,
+                  verificationID: verificationID,
+                )));
+        // setState(() {});
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
-
-  void verifyOTP() async {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationID, smsCode: otpController.text);
-
-    await auth.signInWithCredential(credential).then(
-          (value) {
- setState(() {
-          user = FirebaseAuth.instance.currentUser;
-        });
-
-      },
-    ).whenComplete(
-          () {
-        if (user != null) {
-          print("***You are logged in successfully***");
- Fluttertoast.showToast(
-            msg: "You are logged in successfully",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Home(),
-            ),
-          );
-        } else {
-          print("***ERROR***");
-    Fluttertoast.showToast(
-            msg: "your login is failed",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-
-        }
-      },
-    );
-  }
-
 }
-
-
-*/

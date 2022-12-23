@@ -1,19 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Auth.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 import 'Verification.dart';
-bool select=false;
+
+bool select = false;
+
 class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeProvided().colorCanvas,
       appBar: AppBar(
-       // leading: BackButton(color: Colors.black),
+        // leading: BackButton(color: Colors.black),
         actions: [
           TextButton(
               onPressed: () {
@@ -52,18 +55,18 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   String _empetySMS = "Doly we dogry ýazyň!",
       _textdetail = "Parolyňyz 6 belgiden az blmaly däl!";
-  FirebaseAuth auth = FirebaseAuth.instance;
-  bool otpVisibility = false,_showdetail=false;
-  User user;
-  String verificationID = "";
+  bool _showdetail = false;
 
   CreateFunc() async {
     var _contr = controls.where((element) => element.text == "");
     if (_contr.isNotEmpty ||
         controls[2].text != controls[3].text ||
-        controls[2].text.length < 6||select==false) {
-      if(select==true)_empetySMS="Doly we dogry ýazyň!";
-      else _empetySMS="Hasap döretmek üçin ylalaşyň!";
+        controls[2].text.length < 6 ||
+        select == false) {
+      if (select == true)
+        _empetySMS = "Doly we dogry ýazyň!";
+      else
+        _empetySMS = "Hasap döretmek üçin ylalaşyň!";
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Container(
             decoration: BoxDecoration(
@@ -81,23 +84,37 @@ class _SignUpFormState extends State<SignUpForm> {
         backgroundColor: Colors.white,
       ));
       if (controls[2].text.length < 6) {
-        _showdetail=true;
+        _showdetail = true;
         setState(() {});
       }
       print("empety");
     } else {
-      _showdetail=false;
+      _showdetail = false;
       setState(() {});
-      bool isAlredyRegister = await API_Post(
-        URL: "$IP/api/control",
-        //URL: "$IP/api/register",
-        name: controls[0].text,
+      bool isAlredyRegister = await API_Post(URL: "$IP/api/control",
+          //URL: "$IP/api/register",
+          body: {
+            "name": controls[0].text,
+            "phone": controls[1].text,
+            "pass": controls[2].text,
+          }
+          /* name: controls[0].text,
         phone: controls[1].text,
-        pass: controls[2].text,
-      ).IsRegister();
+        pass: controls[2].text,*/
+          ).IsRegister();
       print("**isAlredyRegister = $isAlredyRegister");
-      if (isAlredyRegister) {
-        loginWithPhone();
+      if (!isAlredyRegister) {
+        Auth(
+          context,
+          body: {
+            "name": controls[0].text,
+            "phone": controls[1].text,
+            "password": controls[2].text,
+          },
+          phone: controls[1].text,
+          /*name: controls[0].text,
+                pass: controls[2].text*/
+        ).loginWithPhone();
       } else {
         Scaffold.of(context).showSnackBar(SnackBar(
           content: Container(
@@ -230,54 +247,6 @@ class _SignUpFormState extends State<SignUpForm> {
       ],
     );
   }
-
-  void loginWithPhone() async {
-    print("+993" + controls[1].text);
-    auth.verifyPhoneNumber(
-      phoneNumber: "+993" + controls[1].text,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential).then((value) {
-          print("You are logged in successfully");
-        });
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-          content: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadiusDirectional.circular(10),
-                color: Colors.red[700],
-              ),
-              height: 50,
-              alignment: Alignment.center,
-              child: Text(
-                "Bir mesele ýüze çykdy. Az wagtdan soň täzeden synanşyň!",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
-                textAlign: TextAlign.center,
-              )),
-          backgroundColor: Colors.white,
-        ));
-        print(e.message);
-      },
-      codeSent: (String verificationId, int resendToken) {
-        otpVisibility = true;
-        verificationID = verificationId;
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => VerificationPage(
-                      auth: auth,
-                      user: user,
-                      name: controls[0].text,
-                      phone: controls[1].text,
-                      pass: controls[2].text,
-                      verificationID: verificationID,
-                    )));
-        // setState(() {});
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
 }
 
 List<TextEditingController> controls = [];
@@ -329,7 +298,10 @@ class _MyInputState extends State<MyInput> {
                 onTap: () {
                   controls[widget.index].clear();
                 },
-                child: Icon(Icons.cancel,color: ThemeProvided().colorText,))),
+                child: Icon(
+                  Icons.cancel,
+                  color: ThemeProvided().colorText,
+                ))),
       ),
     );
   }

@@ -142,12 +142,14 @@ class _DetalPageState extends State<DetalPage> {
             children: [
               RichText(
                   text: TextSpan(
+                    style: TextStyle(color: ThemeProvided().colorText),
                       children: [
                     // TextSpan(text: "Ady : ", style: TextStyle(fontSize: 18)),
                     TextSpan(text: list.name, style: TextStyle(fontSize: 18))
                   ])),
               RichText(
                   text: TextSpan(
+                      style: TextStyle(color: ThemeProvided().colorText),
                       children: [
                     /*TextSpan(text: "Bahasy : ", style: TextStyle(fontSize: 18)),*/
                     TextSpan(
@@ -156,6 +158,7 @@ class _DetalPageState extends State<DetalPage> {
                   ])),
               RichText(
                   text: TextSpan(
+                      style: TextStyle(color: ThemeProvided().colorText),
                       children: [
                     TextSpan(text: widget.place)
                   ])),

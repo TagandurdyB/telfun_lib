@@ -66,37 +66,7 @@ if (d==0&&imageOk){
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ReadyInput(
-                      shape: true,
-                     // index: 0,
-                      tag: RITags.rIName,
-                      borderRad: SWi*0.03,
-                      hidden: "Bildirişiň adyny ýazyň...",
-                      label: "Bildirişiň ady...",
-                      onChange: (val, index) {
-                        //inputValues[index] = controls[index].text;
-                        canOpenAddBtn(context);
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ReadyInput(
-                      shape: true,
-                     // index: 1,
-                      tag: RITags.rIPrice,
-                      type: Type.num,
-                      borderRad: SWi*0.03,
-                      hidden: "Bildirişiň bahasyny ýazyň...",
-                      label: "Bahasy...",
-                      onChange: (val, index) {
-                        //inputValues[index] = controls[index].text;
-                        canOpenAddBtn(context);
-                      },
-                    ),
-                  ),
+
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     //welayats
@@ -256,6 +226,38 @@ if (d==0&&imageOk){
                     padding: EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: SWi * 0.015),
                     child: AddImages(),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ReadyInput(
+                      shape: true,
+                      // index: 0,
+                      tag: RITags.rIName,
+                      borderRad: SWi*0.03,
+                      hidden: "Bildirişiň modelini ýazyň...",
+                      label: "Bildirişiň ady...",
+                      onChange: (val, index) {
+                        //inputValues[index] = controls[index].text;
+                        canOpenAddBtn(context);
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ReadyInput(
+                      shape: true,
+                      // index: 1,
+                      tag: RITags.rIPrice,
+                      type: Type.num,
+                      borderRad: SWi*0.03,
+                      hidden: "Bildirişiň bahasyny ýazyň...",
+                      label: "Bahasy...",
+                      onChange: (val, index) {
+                        //inputValues[index] = controls[index].text;
+                        canOpenAddBtn(context);
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
