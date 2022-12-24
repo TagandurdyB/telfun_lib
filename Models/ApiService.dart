@@ -11,34 +11,47 @@ import 'Public.dart';
 import 'connect.dart';
 
 class API {
-  String URL;
-  final Map Post; /*, name, phone, region, district, payment;*/
+  final String url;
+  final Map headers;
 
-  API(
-      {this.URL,
-      this.Post} /*, this.name, this.phone, this.region, this.district, this.payment,
-      this.list,*/
-      );
+  API({
+    this.headers,
+    this.url,
+  });
 
-
-  Future<Map> POST(Map _map)async{
+  Future<Map> post(Map body) async {
+    print("BODY:   $body");
     Map<String, dynamic> map;
-    await http.post(Uri.parse(URL), body: _map).then((response) {
-      if (response.statusCode == 200) {
-        map = json.decode(response.body);
-        print("request:${map}");
-      } else {
-        print("ERROR! you can't regiseter. Bicause you alrady sing up  :(");
-        map = {"status": false};
-      }
-    });
+    final response=await http.post(Uri.parse(url),headers: headers, body: body);
+    if(response.statusCode==200){
+      map = json.decode(response.body);
+      print("request:${map}");
+    }
+    else {
+
+      print("ERROR! Code:${response.statusCode} Be some errors in post method  :(");
+      map = {"status": false};
+    }
     return map;
   }
 
+  Future<Map> get() async {
+    Map<String, dynamic> map;
+    final response=await http.get(Uri.parse(url),headers: headers);
+    if(response.statusCode==200){
+      map = json.decode(response.body);
+      print("request:${map}");
+    }
+    else {
+      print("ERROR! Code:${response.statusCode} Be some errors in get method  :(");
+      map = {"status": false};
+    }
+    return map;
+  }
 
   Register(Map map) async {
     Map<String, dynamic> map;
-    await http.post(Uri.parse(URL), body: map).then((response) {
+    await http.post(Uri.parse(url), body: map).then((response) {
       if (response.statusCode == 200) {
         map = json.decode(response.body);
         print("request:${map}");
@@ -52,10 +65,15 @@ class API {
 
   Login(Map _map) async {
     Map<String, dynamic> map;
-    await http.post(Uri.parse(URL), body: _map/*body: {
+    await http
+        .post(Uri.parse(url),
+            body:
+                _map /*body: {
       "phone": list[0],
       "password": list[1],
-    }*/).then((response) {
+    }*/
+            )
+        .then((response) {
       if (response.statusCode == 200) {
         map = json.decode(response.body);
       } else {
@@ -68,12 +86,10 @@ class API {
     return map;
   }
 
-
-
   Future<List> getDate(String fileName) async {
     bool _isConnect = await isConnected();
     if (_isConnect) {
-      final response = await http.get(Uri.parse(URL));
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         print("Loading from API...");
         // writeJson(fileName, response.body);
@@ -86,7 +102,6 @@ class API {
         print("Loading from local...");
         print("cach map:${await Cacher.readJson(fileName)}");
         return Cacher.readJson(fileName);
-
       }
     }
   }
@@ -101,14 +116,14 @@ class API {
 
   Stream getDateStream() async* {
     yield* Stream.periodic(Duration(minutes: 1), (_) async {
-      final response = await http.get(Uri.parse(URL));
+      final response = await http.get(Uri.parse(url));
       print(json.decode(response.body).toString());
       return json.decode(response.body);
     }).asyncMap((event) async => await event);
   }
 
   getBerarer(String token) async {
-    final response = await http.get(Uri.parse(URL), headers: {
+    final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -117,5 +132,3 @@ class API {
     return json.decode(response.body);
   }
 }
-
-

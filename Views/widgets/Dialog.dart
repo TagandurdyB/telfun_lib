@@ -105,6 +105,7 @@ class _ShowingDialogState extends State<ShowingDialog> {
                         (e) => TextButton(
                             onPressed: () {
                               setState(() {
+                                if(e.func!=null)
                                 e.func();
                                 if (widget.isPopEnable && e.isPopEnable)
                                   Navigator.pop(context);
@@ -112,7 +113,7 @@ class _ShowingDialogState extends State<ShowingDialog> {
                             },
                             child: Text(
                               e.text,
-                              style: TextStyle(color: Color(0xff42069A)),
+                              style: TextStyle(color: ThemeProvided().colorAppBarIcon/*Color(0xff42069A)*/),
                             )),
                       )
                       .toList()
@@ -150,6 +151,7 @@ class _ShowingDialogState extends State<ShowingDialog> {
                             (e) => TextButton(
                                 onPressed: () {
                                   setState(() {
+                                    if(e.func!=null)
                                     e.func();
                                     if (widget.isPopEnable && e.isPopEnable)
                                       Navigator.pop(context);
@@ -157,7 +159,7 @@ class _ShowingDialogState extends State<ShowingDialog> {
                                 },
                                 child: Text(
                                   e.text,
-                                  style: TextStyle(color: Color(0xff42069A)),
+                                  style: TextStyle(color: ThemeProvided().colorAppBarIcon/*Color(0xff42069A)*/),
                                 )),
                           )
                           .toList()

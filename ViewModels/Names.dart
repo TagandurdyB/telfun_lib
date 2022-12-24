@@ -4,6 +4,7 @@ class DDBTags {
   static const String dDBCategory = "tagCategories";
   static const String dDBModel = "tagModel";
   static const String dDBColor = "tagColor";
+  static const String dDBTime = "tagTime";
 }
 class RITags {
   static const String rIPrice = "tagPrice";
@@ -14,6 +15,8 @@ class RITags {
   static const String rIUserPass = "tagUserPass";
   static const String rISearch = "tagSearch";
   static const String rIPhone = "tagPhone";
+  static const String rIMin = "tagMin";
+  static const String rIMax = "tagMax";
 }
 class ApiTags {
   static const String img = "img";

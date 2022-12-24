@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:telfun/Views/Login/Verification.dart';
 
 class Auth{
-  final String phone,pass,name;
+  final String phone;
   final Map body;
   final BuildContext context;
-  Auth(this.context,{this.body,this.pass="123456", this.name="telfun", this.phone="xxxxxxxx"});
+  Auth(this.context,{this.body, this.phone="xxxxxxxx"});
 
   FirebaseAuth auth = FirebaseAuth.instance;
   bool otpVisibility = false;
@@ -14,9 +14,9 @@ class Auth{
   String verificationID = "";
 
   void loginWithPhone() async {
-    print("+993" + phone);
+    print( phone);
     auth.verifyPhoneNumber(
-      phoneNumber: "+993" + phone,
+      phoneNumber:  phone,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) {
           print("You are logged in successfully");
@@ -51,9 +51,7 @@ class Auth{
                   auth: auth,
                   user: user,
                   body: body,
-                  name: name,
-                  phone: "+993"+phone,
-                  pass: pass,
+                  phone: phone,
                   verificationID: verificationID,
                 )));
         // setState(() {});

@@ -88,7 +88,6 @@ class GetOTP {
     for (int i = 0; i < 6; i++) {
       _code += controls[i].text;
     }
-
     return _code;
   }
 }

@@ -13,7 +13,7 @@ class VerificationPage extends StatelessWidget {
   User user;
   String verificationID;
 
-  final String name, pass, phone;
+  final String phone;
 
   final Map body;
 
@@ -21,8 +21,6 @@ class VerificationPage extends StatelessWidget {
       {this.verificationID,
       this.auth,
       this.user,
-      this.name,
-      this.pass,
       this.phone, this.body});
 
   @override
@@ -38,9 +36,7 @@ class VerificationPage extends StatelessWidget {
           context: context,
           auth: auth,
           user: user,
-          name: name,
           phone: phone,
-          pass: pass,
           body: body,
           verificationID: verificationID),
     );
@@ -52,7 +48,7 @@ class MyVarification extends StatefulWidget {
   FirebaseAuth auth;
   User user;
   String verificationID = "";
-  final String name, pass, phone;
+  final String phone;
   final Map body;
 
   MyVarification(
@@ -61,8 +57,6 @@ class MyVarification extends StatefulWidget {
       this.user,
       this.auth,
       this.verificationID,
-      this.name,
-      this.pass,
       this.phone, this.body})
       : super(key: key);
 
@@ -154,9 +148,9 @@ paroly ýazyň.
     );
   }
 
-  void verifyOTP(String OTP) async {
+  void verifyOTP(String codeOTP) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: widget.verificationID, smsCode: OTP);
+        verificationId: widget.verificationID, smsCode: codeOTP);
 
     await widget.auth.signInWithCredential(credential).then(
       (value) {

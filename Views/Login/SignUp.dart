@@ -104,16 +104,15 @@ class _SignUpFormState extends State<SignUpForm> {
           ).IsRegister();
       print("**isAlredyRegister = $isAlredyRegister");
       if (!isAlredyRegister) {
+        print("name:${controls[0].text} password: ${controls[2].text}");
         Auth(
           context,
           body: {
             "name": controls[0].text,
-            "phone": controls[1].text,
+            "phone": "+993"+controls[1].text,
             "password": controls[2].text,
           },
-          phone: controls[1].text,
-          /*name: controls[0].text,
-                pass: controls[2].text*/
+          phone: "+993"+controls[1].text,
         ).loginWithPhone();
       } else {
         Scaffold.of(context).showSnackBar(SnackBar(

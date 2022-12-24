@@ -37,7 +37,7 @@ class API_Get extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List>(
-        future: API(URL: URL).getDate(ApiName),
+        future: API(url: URL).getDate(ApiName),
         builder: (ctx, ss) {
           if (ss.hasError) {
             print("Error Fail***");
@@ -106,7 +106,7 @@ class Get_apiStream extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final stream = API(URL: URL).getDateStream();
+    final stream = API(url: URL).getDateStream();
     return StreamBuilder(
         stream: stream,
         builder: (ctx, ss) {
@@ -144,7 +144,7 @@ class Get_Me {
 
   Get_Me({this.URL, this.token});
   check() async {
-    var ss = await API(URL: URL).getBerarer(token);
+    var ss = await API(url: URL).getBerarer(token);
     print("isban: ${ss["isban"]}");
     return ss["isban"];
   }
@@ -163,7 +163,7 @@ class API_Post {
   //if you aren't in base then send firebase sms
   Future<bool> IsRegister() async {
     Map<String, dynamic> map =
-        await API(URL: URL).Register(body);
+        await API(url: URL).Register(body);
     return map["status"];
     print("+++*** $map");
   }
@@ -179,9 +179,10 @@ class API_Post {
   }
 
   //if sms code true you are login
+
   void addRegister() async {
     Map<String, dynamic> map =
-        await API(URL: URL).Register(body);
+        await API(url: URL).post(body);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     print("***${UserLoginDetals.getIsLogin()}");
@@ -191,7 +192,7 @@ class API_Post {
   }
 
   Future<bool> IsLogin() async {
-    Map<String, dynamic> map = await API(URL: URL).Login(body);
+    Map<String, dynamic> map = await API(url: URL).Login(body);
     print("+++*** $map");
     UserLoginDetals.saveLogin(map["status"]);
     if (map["status"]) {
@@ -203,7 +204,7 @@ class API_Post {
   }
 
   Future<bool> sendSMS(String _message) async {
-    Map<String, dynamic> map = await API(URL: URL).POST({
+    Map<String, dynamic> map = await API(url: URL).post({
       "name": UserProperties.getProperty("name"),
       "email": "User${UserProperties.getProperty("name")}@gmail.com",
       "phone": "${UserProperties.getProperty("phone")}",
