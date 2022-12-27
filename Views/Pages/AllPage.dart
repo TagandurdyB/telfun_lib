@@ -26,10 +26,16 @@ class _AllPageState extends State<AllPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    reloadFavorite();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<EventsFavoritProvid>(context, listen: false).reload();
       Provider.of<EventsProvid>(context, listen: false).reLoad();
       Provider.of<EventsProvid>(context, listen: false).fillMark();
+    });
+  }
+
+  void reloadFavorite(){
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<EventsFavoritProvid>(context, listen: false).reload();
     });
   }
 
@@ -41,11 +47,10 @@ class _AllPageState extends State<AllPage> {
     return ScaffoldAll(
       isSliver: true,
       EnableBotomMenu: true,
-      appBarBottom: SearchBtn(isFilter: true),
-      topBarHeight: 0.33,
+      appBarBottom: SearchBtn(isFilter: true,tag: RITags.rISearchEvent),
+      topBarHeight: 0.45,
       ////////////////////////////////////////////////
       sliverBody: SizedBox(
-        height: SWi * 0.545,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -75,6 +80,9 @@ class _AllPageState extends State<AllPage> {
           return InCategory(
             obj: obj,
             isFavorite: provider.isExist(obj),
+            favoriteFunc: (){
+              reloadFavorite();
+            },
           );
         },
             childCount: eventProvider

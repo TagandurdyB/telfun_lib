@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:telfun/Views/widgets/AddImg.dart';
 import '/Models/Base.dart';
 import 'ApiElements.dart';
 import 'Names.dart';
@@ -46,6 +47,10 @@ class MapConverter {
         list.add(localConverter().mapToElemPlace(_val));
       } else if (_name == JsonTags.favorite) {
         list.add(localConverter().mapToFavorite(_val));
+      }else if(_name==ApiTags.colors){
+        list.add(localConverter().mapToElemColor(_val));
+      }else if(_name==ApiTags.shops){
+        list.add(localConverter().mapToElemShop(_val));
       }
     }
     return list;
@@ -74,6 +79,10 @@ class MapConverter {
         list.add(localConverter().elemPlaceToMap(ElemList[i]));
       } else if (_name == JsonTags.favorite) {
         list.add(localConverter().favoriteToMap(ElemList[i]));
+      }else if(_name==ApiTags.colors){
+        list.add(localConverter().elemColorToMap(ElemList[i]));
+      }else if(_name==ApiTags.shops){
+        list.add(localConverter().elemShopToMap(ElemList[i]));
       }
     }
     return list;
@@ -102,6 +111,10 @@ class MapConverter {
         list.add(localConverter().mapToMapCategori(_val));
       } else if (_name == ApiTags.place) {
         list.add(localConverter().mapToMapPlace(_val));
+      } else if(_name==ApiTags.colors){
+        list.add(localConverter().mapToMapColor(_val));
+      }else if(_name==ApiTags.shops){
+        list.add(localConverter().mapToMapShop(_val));
       }
     }
     return list;
@@ -291,8 +304,6 @@ class localConverter {
       _elem.colors.forEach((elm) {
         _colors.add(elemColorToMap(elm));
       });
-      for (int _i; _i < _elem.colors.length; _i++)
-        _colors.add(elemColorToMap(_elem.colors[_i]));
       return {
         "category_id": _elem.category_id,
         "mark_id": _elem.mark_id,
@@ -330,6 +341,7 @@ class localConverter {
         id: _map["id"],
         tm: _map["tm"],
         ru: _map["ru"],
+       // en: _map["en"],
         code: _map["code"],
       );
     } catch (_e) {
@@ -343,7 +355,9 @@ class localConverter {
         "id": _elem.id,
         "tm": _elem.tm,
         "ru": _elem.ru,
+       // "en":_elem.en,
         "code": _elem.code,
+
       };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from elemColorToMap!!! :$_e");
@@ -356,6 +370,7 @@ class localConverter {
         "id": _map["id"],
         "tm": _map["tm"],
         "ru": _map["ru"],
+       // "en": _map["en"],
         "code": _map["code"],
       };
     } catch (_e) {
@@ -556,6 +571,63 @@ class localConverter {
     }
   }
 /////////////////////////////////////////////////////////////
+  ElemShop mapToElemShop(Map _map) {
+    try {
+      List<ElemImg> _images = [];
+      _map["images"].forEach((val) {
+        _images.add(mapToElemImg(val));
+      });
+      return ElemShop(
+        images: _images,
+        id: _map["id"],
+        name: _map["name"],
+        phone: _map["phone"],
+        about: _map["about"],
+        user_id: int.parse(_map["user_id"]),
+      );
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToElemShop!!! :$_e");
+    }
+  }
+
+  Map elemShopToMap(ElemShop _elem) {
+    try {
+      List<Map> _images = [];
+      _elem.images.forEach((elm) {
+        _images.add(elemImgToMap(elm));
+      });
+      return {
+        "images": _images,
+        "id": _elem.id,
+        "name": _elem.name,
+        "phone": _elem.phone,
+        "about": _elem.about,
+        "user_id": _elem.user_id,
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from elemShopToMap!!! :$_e");
+    }
+  }
+
+  Map mapToMapShop(Map _map) {
+    try {
+      List<Map> _images = [];
+      _map["images"].forEach((val) {
+        _images.add(mapToMapImg(val));
+      });
+      return {
+        "images": _images,
+        "id": _map["id"],
+        "name": _map["name"],
+        "phone": _map["phone"],
+        "about": _map["about"],
+        "user_id": _map["user_id"],
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToMapShop!!! :$_e");
+    }
+  }
+/////////////////////////////////////////////////////////////
 
   ElemEvents mapToFavorite(Map _map) {
     try {
@@ -569,6 +641,10 @@ class localConverter {
         name: _map["name"],
         index: _map["index"],
         favorite: true,
+        etrap: ElemEtrap(
+          id: _map["etrap"]["id"],
+          name: _map["etrap"]["name"],
+        ),
         //favorite: true
       );
     } catch (_e) {
@@ -588,6 +664,10 @@ class localConverter {
         "name": _elem.name,
         "index": _elem.index,
         "favorite": true,
+        "etrap": {
+          "name": _elem.etrap.name,
+          "id": _elem.etrap.id,
+        }
         //"favorite": true
       };
     } catch (_e) {

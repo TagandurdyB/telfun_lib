@@ -8,6 +8,7 @@ import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';
+import 'package:telfun/Views/widgets/imgBtn.dart';
 
 import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 
@@ -19,7 +20,22 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  DDBEl DDCategory = DDBEl(index: 0, id: 1, value: "Hemmesi");
+  DDBEl DDColor, DDMark, DDModel, DDPlace, DDTime;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    erease();
+  }
+
+  void erease() {
+    DDColor = DDBEl(index: -1, value: "Saýlanmadyk",id:0);
+    DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    DDModel = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    DDPlace = DDBEl(index: -1, value: "Saýlanmadyk",id:0);
+    DDTime= DDBEl(index: -1, value: "Saýlanmadyk",id:0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +57,16 @@ class _SearchPageState extends State<SearchPage> {
           Card(
             color: ThemeProvided().colorCanvas,
             child: ListTile(
+              onTap: () {
+                final List _marks = Get_Lists(listTag: ApiTags.mark).getList();
+                PopDrop(context,_marks,"Markalar").popUp(context);
+              },
               title: Text(
-                "Markalar we modeller",
+                "Markalar",
                 style: ThemeProvided().styleEnable,
               ),
               subtitle: Text(
-                "Saýlanmadyk",
+                "${DDMark.value}",
                 textAlign: TextAlign.left,
                 style: ThemeProvided().styleDisable,
               ),
@@ -55,12 +75,34 @@ class _SearchPageState extends State<SearchPage> {
           Card(
             color: ThemeProvided().colorCanvas,
             child: ListTile(
+              onTap: () {
+                final List _models = Get_Lists(listTag: ApiTags.model).getList();
+                PopDrop(context,_models,"Modeller").popUp(context);
+              },
+              title: Text(
+                "Modeller",
+                style: ThemeProvided().styleEnable,
+              ),
+              subtitle: Text(
+                "${DDModel.value}",
+                textAlign: TextAlign.left,
+                style: ThemeProvided().styleDisable,
+              ),
+            ),
+          ),
+          Card(
+            color: ThemeProvided().colorCanvas,
+            child: ListTile(
+              onTap: () {
+                final List _colors = Get_Lists(listTag: ApiTags.colors).getList();
+                PopDrop(context,_colors,"Reňki").popUp(context);
+              },
               title: Text(
                 "Reňki",
                 style: ThemeProvided().styleEnable,
               ),
               subtitle: Text(
-                "Saýlanmadyk",
+                "${DDColor.value}",
                 textAlign: TextAlign.left,
                 style: ThemeProvided().styleDisable,
               ),
@@ -72,37 +114,36 @@ class _SearchPageState extends State<SearchPage> {
               onTap: () {
                 print("salam");
                 PopUppWidget(
-                  title: "Bahasy",
-                  content: Container(child: Row(children: [
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ReadyInput(
-                        tag: RITags.rIMin,
-                        label: "iň arzan",
-                        shape: true,
-                        borderRad: 2,
-                        onChange: (_value,_tag){
-
-                        },
+                    title: "Bahasy",
+                    content: Container(
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: ReadyInput(
+                              tag: RITags.rIMin,
+                              label: "iň arzan",
+                              shape: true,
+                              borderRad: 2,
+                              onChange: (_value, _tag) {},
+                            ),
+                          )),
+                          Expanded(
+                              child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: ReadyInput(
+                              tag: RITags.rIMax,
+                              shape: true,
+                              borderRad: 2,
+                              label: "iň gymmat",
+                              onChange: (_value, _tag) {},
+                            ),
+                          )),
+                        ],
                       ),
-                    )),
-                    Expanded(child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ReadyInput(
-                        tag: RITags.rIMax,
-                        shape: true,
-                        borderRad: 2,
-                        label: "iň gymmat",
-                        onChange: (_value,_tag){
-
-                        },
-                      ),
-                    )),
-                  ],),),
-                  actionsTeam: [
-                    ActionsTeam(text: "SAÝLA")
-                  ]
-                ).popUp(context);
+                    ),
+                    actionsTeam: [ActionsTeam(text: "SAÝLA")]).popUp(context);
               },
               title: Text(
                 "Bahasy",
@@ -118,12 +159,18 @@ class _SearchPageState extends State<SearchPage> {
           Card(
             color: ThemeProvided().colorCanvas,
             child: ListTile(
+              onTap: () {
+                final List _place = Get_Lists(listTag: ApiTags.place).getList();
+                PopDrop(context,_place,"Ýerleşýän ýeri").popUp(context);
+               // final List _place = Get_Lists(listTag: ApiTags.place).getList();
+                PopDrop(context,_place,"Ýerleşýän ýeri").popUp(context);
+              },
               title: Text(
                 "Ýerleşýän ýeri",
                 style: ThemeProvided().styleEnable,
               ),
               subtitle: Text(
-                "Saýlanmadyk",
+                "${DDPlace.value}",
                 textAlign: TextAlign.left,
                 style: ThemeProvided().styleDisable,
               ),
@@ -142,7 +189,7 @@ class _SearchPageState extends State<SearchPage> {
                       Expanded(
                         child: Padding(
                             padding: EdgeInsets.all(8),
-                            child: Text(DDCategory.value, style: enable)),
+                            child: Text(DDTime.value, style: enable)),
                       ),
                     ],
                   ),
@@ -156,7 +203,7 @@ class _SearchPageState extends State<SearchPage> {
                     DDBEl(id: 6, index: 5, value: "Soňky 7 gün"),
                   ],
                   onChanged: (DDBEl _element) {
-                    DDCategory = _element;
+                    DDTime = _element;
                     setState(() {});
                   },
                 ),
@@ -189,5 +236,60 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
     ));
+  }
+
+  PopUppWidget PopDrop(BuildContext context,List<dynamic> _list, String _title) {
+    String _name="";
+    return PopUppWidget(
+        content: Column(
+          children: List.generate(_list.length + 1, (index) {
+            var _obj;
+            if(index!=0)
+              _obj = _list[index - 1];
+            if(_title!="Reňki")
+            _name=index!=0?_obj.name:"Ähli";
+            else
+              _name=index!=0?_obj.tm:"Ähli";
+              return Column(
+                children: [
+                  ImgBtn(
+                    onTap: () {
+                      if(_title=="Markalar") {
+                        DDMark.value = index != 0 ? _obj.name : "Ähli";
+                        DDMark.id = index != 0 ? _obj.id : 0;
+                        DDMark.index = 0;
+                      }else if(_title=="Modeller") {
+                        DDModel.value = index != 0 ? _obj.name : "Ähli";
+                        DDModel.id = index != 0 ? _obj.id : 0;
+                        DDModel.index = 0;
+                      }else if(_title=="Reňki") {
+                        DDColor.value = index != 0 ? _obj.tm : "Ähli";
+                        DDColor.id = index != 0 ? _obj.id : 0;
+                        DDColor.index = 0;
+                      }else if(_title=="Ýerleşýän ýeri") {
+                        DDPlace.value = index != 0 ? _obj.name : "Ähli";
+                        DDPlace.id = index != 0 ? _obj.id : 0;
+                        DDPlace.index = 0;
+                      }
+                      setState(() {});
+                      Navigator.pop(context);
+                    },
+                    width: double.infinity,
+                    height: SWi * 0.1,
+                    color: Colors.transparent,
+                    child: Text(
+                      "$_name",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: SWi * 0.033),
+                    ),
+                  ),
+                  Divider(color: Colors.purpleAccent)
+                ],
+              );
+          }),
+        ),
+        title: "$_title:",
+        centerTitle: true,
+        bgColor: ThemeProvided().colorCanvas);
   }
 }

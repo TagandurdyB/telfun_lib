@@ -15,7 +15,7 @@ import 'imgBtn.dart';
 class InCategory extends StatefulWidget {
   final Function favoriteFunc;
   List list;
-  final ElemEvents obj;
+  final obj;
   final int index;
   final bool isFavorite;
 
@@ -99,7 +99,7 @@ class _InCategoryState extends State<InCategory> {
           child: widget.obj.is_new?
               ClipRect(
                 child: Banner(
-                  color: Colors.red,
+                  color: Color(0xff8017FF),
                   message: "Täze",
 
                   location: BannerLocation.topStart,
@@ -119,7 +119,7 @@ class _InCategoryState extends State<InCategory> {
                 right: 0,
                 top: 0,
                 child: FavoriteBtn(
-                  // onTop: widget.favoriteFunc,
+                  onTop: widget.favoriteFunc,
                   favorite: widget.isFavorite,
                   obj: widget.obj,
                   index: widget.index,
@@ -192,29 +192,6 @@ class _InCategoryState extends State<InCategory> {
                 ),
               ),
             ),
-            /*  Positioned(
-              left: SWi * 0.09,
-              bottom: SWi * 0.001,
-              child: Container(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("${widget.obj.place}",
-                        style: TextStyle(
-                            fontSize: SWi * 0.037,
-                            fontFamily: "NunitoRegular",
-                            fontWeight: FontWeight.w500)),
-                    Text(
-                        "${widget.obj.data.day}.${widget.obj.data.month}.${widget.obj.data.year}",
-                        style: TextStyle(
-                            fontSize: SWi * 0.03,
-                            fontFamily: "NunitoRegular",
-                            fontWeight: FontWeight.w500)),
-                  ],
-                ),
-              ),
-            ),*/
           ],
         );
   }

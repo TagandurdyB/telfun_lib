@@ -50,11 +50,6 @@ class _MyAppBarState extends State<MyAppBar>
     return AppBar(
       brightness: Provider.of<ThemeProvided>(context).ststusBrightness,
       leading: !widget.IsSideBar ? BackButton(
-        onPressed: (){
-          Provider.of<UsesVar>(context,listen: false).changeSearch("");
-          RIBase.eraseDate(RITags.rISearch);
-          Navigator.pop(context);
-        },
       ) : null,
       /////////////////////////////////////
       bottom: widget.IsTabBar

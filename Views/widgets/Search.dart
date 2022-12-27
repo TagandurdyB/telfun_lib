@@ -9,7 +9,8 @@ import 'imgBtn.dart';
 
 class SearchBtn extends StatelessWidget {
   final bool isFilter;
-  SearchBtn({this.isFilter=false});
+  final String tag;
+  SearchBtn({this.isFilter=false, this.tag});
   //const SearchBtn({Key? key}) : super(key: key);
 
   @override
@@ -46,7 +47,7 @@ class SearchBtn extends StatelessWidget {
                                 .changeSearch(_value);
                           },
                           reightWidget: SizedBox(),
-                          tag: RITags.rISearch,
+                          tag: tag,
                           // hidden: "Gözle...",
                           label: "Gözle...",
                         ),

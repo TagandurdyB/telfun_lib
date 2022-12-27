@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/JsonCacher.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
@@ -15,9 +16,8 @@ import '/Models/Public.dart';
 import '/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 
 class DetalPage extends StatefulWidget {
-/*  final String name, phone, price, place, about, mark;
-  final List image;*/
-  final int /*index,*/ id, index;
+
+  final int  id, index;
   final bool isfavorite;
   final ElemEvents obj;
   final String place;
@@ -48,9 +48,14 @@ class _DetalPageState extends State<DetalPage> {
     list = Get_Lists(listTag: ApiTags.detal).getList()[0];
   }
 
+  void reloadFavorite() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<EventsFavoritProvid>(context, listen: false).reload();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("Detal favorite:=${widget.isfavorite}");
     list = Get_Lists(listTag: ApiTags.detal).getList()[0];
     return ScaffoldAll(
       phone: list.phone,
@@ -109,6 +114,9 @@ class _DetalPageState extends State<DetalPage> {
                 bottom: SWi * 0.18,
                 right: SWi * 0.1,
                 child: FavoriteBtn(
+                  onTop: () {
+                    reloadFavorite();
+                  },
                   obj: widget.obj,
                   index: widget.index,
                   favorite: widget.isfavorite,
@@ -142,7 +150,7 @@ class _DetalPageState extends State<DetalPage> {
             children: [
               RichText(
                   text: TextSpan(
-                    style: TextStyle(color: ThemeProvided().colorText),
+                      style: TextStyle(color: ThemeProvided().colorText),
                       children: [
                     // TextSpan(text: "Ady : ", style: TextStyle(fontSize: 18)),
                     TextSpan(text: list.name, style: TextStyle(fontSize: 18))
@@ -154,14 +162,13 @@ class _DetalPageState extends State<DetalPage> {
                     /*TextSpan(text: "Bahasy : ", style: TextStyle(fontSize: 18)),*/
                     TextSpan(
                         text: list.price.toString() + " TMT",
-                        style: TextStyle(fontSize: 16,fontWeight:FontWeight.w600))
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600))
                   ])),
               RichText(
                   text: TextSpan(
                       style: TextStyle(color: ThemeProvided().colorText),
-                      children: [
-                    TextSpan(text: widget.place)
-                  ])),
+                      children: [TextSpan(text: widget.place)])),
               Row(children: [
                 Text(
                   "${list.data.day}.${list.data.month}.${list.data.year}",
@@ -328,7 +335,7 @@ class _DetalPageState extends State<DetalPage> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding:  EdgeInsets.all(SWi*0.03),
+                      padding: EdgeInsets.all(SWi * 0.03),
                       child: Text(list.about),
                     ),
                   )),

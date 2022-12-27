@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ChatProvider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
+import 'package:telfun/ViewModels/ShopProvider.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
 import 'package:telfun/Views/Pages/DetalPage.dart';
 import '/Views/Login/SignUp.dart';
@@ -44,6 +45,8 @@ void main() async {
           create: (BuildContext context) => SMSProvider()),
       ChangeNotifierProvider<ThemeProvided>(
           create: (BuildContext context) => ThemeProvided()),
+      ChangeNotifierProvider<ShopProvider>(
+          create: (BuildContext context) => ShopProvider()),
     ],
     child: MyApp(),
   ));

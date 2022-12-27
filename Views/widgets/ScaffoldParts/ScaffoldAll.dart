@@ -84,7 +84,7 @@ class ScaffoldAll extends StatelessWidget {
               pinned: false,
               snap: true,
               floating: true,
-              expandedHeight: SWi * 0.45,
+              expandedHeight: SWi * topBarHeight,
               flexibleSpace: FlexibleSpaceBar(
                 background: telfunAppBar(),
               ),

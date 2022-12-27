@@ -13,7 +13,9 @@ class RITags {
   static const String rIChat = "tagChat";
   static const String rIUserName = "tagUserName";
   static const String rIUserPass = "tagUserPass";
-  static const String rISearch = "tagSearch";
+  static const String rISearchEvent = "tagSearchEvent";
+  static const String rISearchMark = "tagSearchMark";
+  static const String rISearchShop = "tagSearchShop";
   static const String rIPhone = "tagPhone";
   static const String rIMin = "tagMin";
   static const String rIMax = "tagMax";
@@ -29,6 +31,8 @@ class ApiTags {
   static const String product="product";
   static const String prosses="prosses";
   static const String all="all";
+  static const String colors="color";
+  static const String shops="shops";
 }
 class JsonTags{
   static const String favorite = "favorite";

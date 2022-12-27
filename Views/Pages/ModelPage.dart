@@ -23,8 +23,8 @@ class ModelPage extends StatelessWidget {
     final String searchText=Provider.of<UsesVar>(context).getSearch;
     List _list = provider.searchWithMarks(searchText);
     return ScaffoldAll(
-      appBarBottom: SearchBtn(),
-      topBarHeight: 0.29,
+      appBarBottom: SearchBtn(tag: RITags.rISearchMark),
+      topBarHeight: 0.3,
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [

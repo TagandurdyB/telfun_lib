@@ -32,9 +32,13 @@ class MainPage extends StatelessWidget {
                 URL: "$IP/api/categories",
                 ApiName: ApiTags.categori,
                 Return: API_Get(
-                    URL: "$IP/api/welayat",
-                    ApiName: ApiTags.place,
-                    Return: Main()),
+                  URL: "$IP/api/color",
+                  ApiName: ApiTags.colors,
+                  Return: API_Get(
+                      URL: "$IP/api/welayat",
+                      ApiName: ApiTags.place,
+                      Return: Main()),
+                ),
               ),
             )));
   }

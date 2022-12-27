@@ -25,9 +25,8 @@ class AddOldPage extends StatefulWidget {
 }
 
 class _AddOldPageState extends State<AddOldPage> {
- // List<String> inputValues = ["", "", ""];
-  DDBEl DDCategory, DDMark, DDPlace;
-
+  // List<String> inputValues = ["", "", ""];
+  DDBEl DDCategory, DDMark, DDPlace, DDColor;
 
   @override
   void initState() {
@@ -36,6 +35,7 @@ class _AddOldPageState extends State<AddOldPage> {
     DDCategory = DDBEl(index: -1, value: "Bölümler");
     DDMark = DDBEl(index: -1, value: "Marka", id: 0);
     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
+    DDColor = DDBEl(index: -1);
   }
 
 /*void canOpenAddBtn(BuildContext context){
@@ -52,8 +52,8 @@ if (d==0&&imageOk){
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle disable=Provider.of<ThemeProvided>(context).styleDisable,
-        enable=Provider.of<ThemeProvided>(context).styleEnable;
+    final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable,
+        enable = Provider.of<ThemeProvided>(context).styleEnable;
     return Container(
       padding: EdgeInsets.only(top: 20),
       child: Padding(
@@ -66,7 +66,6 @@ if (d==0&&imageOk){
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     //welayats
@@ -98,41 +97,38 @@ if (d==0&&imageOk){
                       ],
                       onChanged: (DDBEl _element) {
                         canOpenAddBtn(context);
-                        List _etraps= Get_Lists(listTag: ApiTags.place)
+                        List _etraps = Get_Lists(listTag: ApiTags.place)
                             .getList()[_element.id - 1]
                             .etraps;
-                        if(_etraps.isNotEmpty) {
+                        if (_etraps.isNotEmpty) {
                           PopUppWidget(
-                              content: Column(
-                                children: List.generate(
-                                    _etraps.length,
-                                        (index) =>
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            DDPlace.value =
-                                            "${_element.value} ${_etraps[index].name}";
-                                            DDPlace.id = _etraps[index].id;
-                                            DDPlace.index=0;
-                                            setState(() {});
-                                            print(
-                                                "value:${DDPlace
-                                                    .value}  id:${DDPlace
-                                                    .id} index:${DDPlace
-                                                    .index}");
-                                          },
-                                          child: Text(
-                                            "${_etraps[index].name}",textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: SWi*0.033),
-                                          ),
-                                        )),
-                              ),
-                              title: "${_element.value} Etraplar:",
-                              centerTitle: true,
-                              bgColor: ThemeProvided().colorCanvas)
+                                  content: Column(
+                                    children: List.generate(
+                                        _etraps.length,
+                                        (index) => TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                DDPlace.value =
+                                                    "${_element.value} ${_etraps[index].name}";
+                                                DDPlace.id = _etraps[index].id;
+                                                DDPlace.index = 0;
+                                                setState(() {});
+                                                print(
+                                                    "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
+                                              },
+                                              child: Text(
+                                                "${_etraps[index].name}",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: SWi * 0.033),
+                                              ),
+                                            )),
+                                  ),
+                                  title: "${_element.value} Etraplar:",
+                                  centerTitle: true,
+                                  bgColor: ThemeProvided().colorCanvas)
                               .popUp(context);
-                        }
-                        else{
+                        } else {
                           DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
                         }
                       },
@@ -222,19 +218,75 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: DropDownBtnUnVal(
+                      tag: DDBTags.dDBColor,
+                      hint: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          selectIcon(Icons.palette_outlined),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Text("Reňki:",
+                                  style:
+                                      DDColor.index == -1 ? disable : enable),
+                            ),
+                          ),
+                          DDColor.index == -1 ? Container() : DDColor.child,
+                        ],
+                      ),
+                      items: List.generate(
+                          Get_Lists(listTag: ApiTags.colors).getList().length ??
+                              0, (index) {
+                        var getlist =
+                            Get_Lists(listTag: ApiTags.colors).getList()[index];
+                        return DDBEl(
+                            child: Row(
+                              children: [
+                                ImgBtn(
+                                  width: 30,
+                                  height: 30,
+                                  color: getlist.toColor(),
+                                  shape: 2,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey[400], blurRadius: 1)
+                                  ],
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  getlist.tm,
+                                  style: ThemeProvided().styleDisable,
+                                ),
+                              ],
+                            ),
+                            index: index,
+                            value: getlist.tm,
+                            id: getlist.id);
+                      }),
+                      onChanged: (DDBEl _element) {
+                        setState(() {
+                          print(_element.value);
+                          DDColor = _element;
+                          canOpenAddBtn(context);
+                        });
+                      },
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: SWi * 0.015),
                     child: AddImages(),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ReadyInput(
                       shape: true,
                       // index: 0,
                       tag: RITags.rIName,
-                      borderRad: SWi*0.03,
+                      borderRad: SWi * 0.03,
                       hidden: "Bildirişiň modelini ýazyň...",
                       label: "Bildirişiň ady...",
                       onChange: (val, index) {
@@ -250,7 +302,7 @@ if (d==0&&imageOk){
                       // index: 1,
                       tag: RITags.rIPrice,
                       type: Type.num,
-                      borderRad: SWi*0.03,
+                      borderRad: SWi * 0.03,
                       hidden: "Bildirişiň bahasyny ýazyň...",
                       label: "Bahasy...",
                       onChange: (val, index) {
@@ -263,10 +315,10 @@ if (d==0&&imageOk){
                     padding: const EdgeInsets.all(8.0),
                     child: ReadyInput(
                       shape: true,
-                     // index: 2,
+                      // index: 2,
                       tag: RITags.rIAbout,
                       maxline: 3,
-                      borderRad: SWi*0.03,
+                      borderRad: SWi * 0.03,
                       hidden: "Bildirişiňiz barada maglumat ýazyň...",
                       label: "Bildiriş barada...",
                       onChange: (val, index) {
@@ -309,10 +361,10 @@ if (d==0&&imageOk){
     if (DDPlace.index == -1) d++;
     if (DDCategory.index == -1) d++;
     if (DDMark.index == -1) d++;
-   // if (controls[1].text == "") d++;
-    if(RIBase.getText(RITags.rIName)=="")d++;
-    if(RIBase.getText(RITags.rIPrice)=="")d++;
-    if(RIBase.getText(RITags.rIAbout)=="")d++;
+    // if (controls[1].text == "") d++;
+    if (RIBase.getText(RITags.rIName) == "") d++;
+    if (RIBase.getText(RITags.rIPrice) == "") d++;
+    if (RIBase.getText(RITags.rIAbout) == "") d++;
     if (d == 0) {
       Provider.of<UsesVar>(context, listen: false).changeCanAdd(true);
     } else {

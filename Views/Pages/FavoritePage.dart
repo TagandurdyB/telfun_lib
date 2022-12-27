@@ -20,7 +20,22 @@ class FavoritePage extends StatelessWidget {
   }
 }
 
-class FavoriteView extends StatelessWidget {
+class FavoriteView extends StatefulWidget {
+  @override
+  _FavoriteViewState createState() => _FavoriteViewState();
+}
+
+class _FavoriteViewState extends State<FavoriteView> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<EventsFavoritProvid>(context, listen: false).reload();
+    });
+  }
+
   void removeElemJsonFavorite(ElemEvents _elem) {
     Map _map = localConverter().favoriteToMap(_elem);
     JsonListCacher(jsonName: JsonTags.favorite).removeSaved(_map);
@@ -47,7 +62,7 @@ class FavoriteView extends StatelessWidget {
                 itemCount: objs
                     .length, //Get_Lists(listTag: JsonTags.favorite, isApi: false).getList().length ?? 0,
                 itemBuilder: (context, index) {
-                  final ElemEvents _obj = objs[index];
+                  final _obj = objs[index];
                   return Container(
                       child: InCategory(
                     // index: index,

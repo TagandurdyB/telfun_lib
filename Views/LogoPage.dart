@@ -39,16 +39,6 @@ class _LogoState extends State<Logo> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    API_Post(
-      URL: "$IP/api/register",
-      body: {
-        "name": "Tagandurdy",
-        "phone": "+99365168618",
-        "password": "123123",
-      },
-    ).addRegister();
-
     if (UserLoginDetals.getIsLogin()) {
       print("token: ${UserProperties.getProperty("token")}");
       IsBlock();

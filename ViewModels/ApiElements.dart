@@ -18,13 +18,12 @@ class ElemEtrap {
   final int id;
   ElemEtrap({this.id, this.name});
 
-   String shortName(){
-    if(name.length>15){
-      return name.substring(0,15)+"...";
+  String shortName() {
+    if (name.length > 15) {
+      return name.substring(0, 15) + "...";
     }
     return name;
   }
-
 }
 
 class ElemCategory {
@@ -48,7 +47,7 @@ class ElemModel {
 }
 
 class ElemEvents {
-  final int id, price, index, mark_id, category_id,view;
+  final int id, price, index, mark_id, category_id, view;
   bool favorite;
   final ElemColor color;
   final bool is_new;
@@ -58,10 +57,9 @@ class ElemEvents {
   final ElemEtrap etrap;
   //final List images;
   ElemEvents(
-      {
-        this.etrap,
-        this.view,
-        this.color,
+      {this.etrap,
+      this.view,
+      this.color,
       this.mark_id,
       this.category_id,
       this.index = -1,
@@ -77,34 +75,47 @@ class ElemEvents {
       this.id,
       this.name,
       this.public_image});
-  void changeFavorite(bool _is){
-    favorite=_is;
+  void changeFavorite(bool _is) {
+    favorite = _is;
   }
 
   List<int> idList(List objList) {
     List<int> _list = objList.map((e) => e.id).toList().cast<int>();
     return _list;
   }
+
   List<int> markIdList(List objList) {
     List<int> _list = objList.map((e) => e.mark_id).toList().cast<int>();
     return _list;
   }
 
-  String shortName(){
-    if(name.length>19){
-      return name.substring(0,19)+"...";
+  String shortName() {
+    if (name.length > 19) {
+      return name.substring(0, 19) + "...";
     }
     return name;
   }
-
 }
 
 class ElemColor {
   final int id;
-  final String tm, ru, code;
-  ElemColor({this.id, this.tm, this.ru, this.code});
+  final String tm, ru, en, code;
+  ElemColor({this.id, this.tm, this.ru, this.en, this.code});
   Color toColor() {
     int _code = int.parse("0xff${code.substring(1)}");
     return Color(_code);
+  }
+}
+
+class ElemShop {
+  final int id, user_id;
+  final String name, phone, about;
+  final List images;
+  ElemShop(
+      {this.user_id, this.phone, this.about, this.id, this.name, this.images});
+  String shortAbout(){
+    if(about.length>40)
+      return about.substring(0,40)+"...";
+    return about;
   }
 }
