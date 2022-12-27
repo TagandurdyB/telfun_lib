@@ -22,28 +22,32 @@ class API {
   Future<Map> post(Map body) async {
     print("BODY:   $body");
     Map<String, dynamic> map;
-    final response=await http.post(Uri.parse(url),headers: headers, body: body);
-    if(response.statusCode==200){
-      map = json.decode(response.body);
-      print("request:${map}");
-    }
-    else {
-
-      print("ERROR! Code:${response.statusCode} Be some errors in post method  :(");
-      map = {"status": false};
-    }
+    await http
+        .post(Uri.parse(url),  body: body)
+        .then((response) {
+      if (response.statusCode == 200) {
+        map = json.decode(response.body);
+        print("request:${map}");
+      } else {
+        print(
+            "ERROR! Code:${response.statusCode}! Be some errors in post method :!(");
+        print("ERROR!: ${response.body}");
+        map = {"status": false};
+      }
+    });
     return map;
   }
 
   Future<Map> get() async {
     Map<String, dynamic> map;
-    final response=await http.get(Uri.parse(url),headers: headers);
-    if(response.statusCode==200){
+    final response = await http.get(Uri.parse(url), headers: headers);
+    if (response.statusCode == 200) {
       map = json.decode(response.body);
       print("request:${map}");
-    }
-    else {
-      print("ERROR! Code:${response.statusCode} Be some errors in get method  :(");
+    } else {
+      print(
+          "ERROR! Code:${response.statusCode} Be some errors in get method  :(");
+      print("ERROR!: ${response.body}");
       map = {"status": false};
     }
     return map;
@@ -56,6 +60,7 @@ class API {
         map = json.decode(response.body);
         print("request:${map}");
       } else {
+        print("ERROR! you can't regiseter. Bicause you alrady sing up  :(");
         print("ERROR! you can't regiseter. Bicause you alrady sing up  :(");
         map = {"status": false};
       }

@@ -40,7 +40,14 @@ class _LogoState extends State<Logo> {
     // TODO: implement initState
     super.initState();
 
-
+    API_Post(
+      URL: "$IP/api/register",
+      body: {
+        "name": "Tagandurdy",
+        "phone": "+99365168618",
+        "password": "123123",
+      },
+    ).addRegister();
 
     if (UserLoginDetals.getIsLogin()) {
       print("token: ${UserProperties.getProperty("token")}");
@@ -63,14 +70,13 @@ class _LogoState extends State<Logo> {
     ////////////////////////////////////////////////////////////////////////
   }
 
-   Timer timer;
-int _second=5;
-  void StartTimer(){
-    timer=Timer.periodic(Duration(seconds: 1), (timer) {
+  Timer timer;
+  int _second = 5;
+  void StartTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        if(_second>0)
-        _second--;
-        if(_second==0){
+        if (_second > 0) _second--;
+        if (_second == 0) {
           timer.cancel();
           Navigator.of(context).pushReplacementNamed(PageName.pageMain);
         }
@@ -81,11 +87,9 @@ int _second=5;
           Navigator.of(context).pushReplacementNamed(PageName.pageMain));*/
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    final provider=Provider.of<UsesVar>(context,listen: false);
+    final provider = Provider.of<UsesVar>(context, listen: false);
     SWi = MediaQuery.of(context).size.width;
     SHe = MediaQuery.of(context).size.height;
     print(SWi);
@@ -107,10 +111,10 @@ int _second=5;
                     color: Colors.transparent,
                     onTap: () {
                       setState(() {
-                        if (_counter == 0){
+                        if (_counter == 0) {
                           provider.changeCount(1);
-                          _counter = 1;}
-                        else {
+                          _counter = 1;
+                        } else {
                           _counter = 0;
                           provider.changeCount(0);
                         }
@@ -123,63 +127,67 @@ int _second=5;
                 child: ImgBtn(
                     color: Colors.transparent,
                     onTap: () {
-                  setState(() {
-                    if (_counter == 1) {
-                      _counter = 2;
-                      provider.changeCount(2);
-                    }
-                    else {
-                      _counter = 0;
-                      provider.changeCount(0);
-                    }
-                  });
-                  print("2");
-                })),
-            Positioned(left: 1, bottom: 1, child: ImgBtn(
-                color: Colors.transparent,
-                onTap: () {
-              setState(() {
-                if (_counter == 2) {
-                  _counter = 3;
-                  provider.changeCount(3);
-                }
-                else{
-                  _counter = 0;
-                  provider.changeCount(0);
-                }
-              });
-              print("3");
-            })),
-            Positioned(right: 1, bottom: 1, child: ImgBtn(
-                color: Colors.transparent,
-                onTap: () {
-              setState(() {
-                if (_counter == 3){
-                  _counter = 4;
-                  provider.changeCount(4);
-                }
-                else{
-                  _counter = 0;
-                  provider.changeCount(0);
-                }
-              });
-              timer.cancel();
-              print("4");
-            })),
+                      setState(() {
+                        if (_counter == 1) {
+                          _counter = 2;
+                          provider.changeCount(2);
+                        } else {
+                          _counter = 0;
+                          provider.changeCount(0);
+                        }
+                      });
+                      print("2");
+                    })),
+            Positioned(
+                left: 1,
+                bottom: 1,
+                child: ImgBtn(
+                    color: Colors.transparent,
+                    onTap: () {
+                      setState(() {
+                        if (_counter == 2) {
+                          _counter = 3;
+                          provider.changeCount(3);
+                        } else {
+                          _counter = 0;
+                          provider.changeCount(0);
+                        }
+                      });
+                      print("3");
+                    })),
+            Positioned(
+                right: 1,
+                bottom: 1,
+                child: ImgBtn(
+                    color: Colors.transparent,
+                    onTap: () {
+                      setState(() {
+                        if (_counter == 3) {
+                          _counter = 4;
+                          provider.changeCount(4);
+                        } else {
+                          _counter = 0;
+                          provider.changeCount(0);
+                        }
+                      });
+                      timer.cancel();
+                      print("4");
+                    })),
             Visibility(
-              visible: _counter==4,
+              visible: _counter == 4,
               child: Positioned(
                   top: 1,
                   child: ImgBtn(
                     color: ThemeProvided().colorCanvas,
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed(PageName.pageMain);
+                      Navigator.of(context)
+                          .pushReplacementNamed(PageName.pageMain);
                     },
                     width: SWi,
                     child: Text(
                       "Tagandurdy Bayremdurdyyew Mekanowic",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: SWi*0.04),
+                      style: TextStyle(fontSize: SWi * 0.04),
                     ),
                   )),
             ),
