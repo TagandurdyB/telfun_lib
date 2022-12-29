@@ -15,7 +15,8 @@ import 'ScaffoldParts/MySnackBar.dart';
 
 class AddBtn extends StatefulWidget {
   final int place_id;
-  const AddBtn({Key key, @required this.inputValues, this.place_id}) : super(key: key);
+  final bool isModel;
+  const AddBtn({Key key, @required this.inputValues, this.place_id, this.isModel}) : super(key: key);
 
   final List<String> inputValues;
 
@@ -90,11 +91,14 @@ class _AddBtnState extends State<AddBtn> {
                             ],
                           ),
                         )).popUpCupertino(context);
+                    final String inputName=RIBase.getText(RITags.rIName);
+                    final String dropDName=DDBBase.getDate(DDBTags.dDBModel).value.toString();
                     Map<String, String> body = {
                       "category_id":
                           DDBBase.getDate(DDBTags.dDBCategory).id.toString(),
                       "user_id": UserProperties.getProperty("id"),
-                      'name': RIBase.getText(RITags.rIName),//controls[0].text,
+                      'name': widget.isModel?inputName:dropDName,//controls[0].text,
+                      "color_id":DDBBase.getDate(DDBTags.dDBColor).id.toString(),
                       "mark_id":
                           DDBBase.getDate(DDBTags.dDBMark).id.toString(),
                       "price": RIBase.getText(RITags.rIPrice),//controls[1].text,

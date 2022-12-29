@@ -19,8 +19,8 @@ class ElemEtrap {
   ElemEtrap({this.id, this.name});
 
   String shortName() {
-    if (name.length > 15) {
-      return name.substring(0, 15) + "...";
+    if (name.length > 10) {
+      return name.substring(0, 10) + "...";
     }
     return name;
   }

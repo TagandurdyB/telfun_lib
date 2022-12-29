@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
@@ -30,11 +31,11 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void erease() {
-    DDColor = DDBEl(index: -1, value: "Saýlanmadyk",id:0);
+    DDColor = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDModel = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
-    DDPlace = DDBEl(index: -1, value: "Saýlanmadyk",id:0);
-    DDTime= DDBEl(index: -1, value: "Saýlanmadyk",id:0);
+    DDPlace = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    DDTime = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
   }
 
   @override
@@ -58,8 +59,9 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _marks = Get_Lists(listTag: ApiTags.mark).getList();
-                PopDrop(context,_marks,"Markalar").popUp(context);
+                // final List _marks = Get_Lists(listTag: ApiTags.mark).getList();
+                // PopDrop(context, _marks, "Markalar").popUp(context);
+                PopStateFull(context);
               },
               title: Text(
                 "Markalar",
@@ -76,8 +78,9 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _models = Get_Lists(listTag: ApiTags.model).getList();
-                PopDrop(context,_models,"Modeller").popUp(context);
+                final List _models =
+                    Get_Lists(listTag: ApiTags.model).getList();
+                PopDrop(context, _models, "Modeller").popUp(context);
               },
               title: Text(
                 "Modeller",
@@ -94,8 +97,9 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _colors = Get_Lists(listTag: ApiTags.colors).getList();
-                PopDrop(context,_colors,"Reňki").popUp(context);
+                final List _colors =
+                    Get_Lists(listTag: ApiTags.colors).getList();
+                PopDrop(context, _colors, "Reňki").popUp(context);
               },
               title: Text(
                 "Reňki",
@@ -161,9 +165,9 @@ class _SearchPageState extends State<SearchPage> {
             child: ListTile(
               onTap: () {
                 final List _place = Get_Lists(listTag: ApiTags.place).getList();
-                PopDrop(context,_place,"Ýerleşýän ýeri").popUp(context);
-               // final List _place = Get_Lists(listTag: ApiTags.place).getList();
-                PopDrop(context,_place,"Ýerleşýän ýeri").popUp(context);
+                PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);
+                // final List _place = Get_Lists(listTag: ApiTags.place).getList();
+                PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);
               },
               title: Text(
                 "Ýerleşýän ýeri",
@@ -238,58 +242,116 @@ class _SearchPageState extends State<SearchPage> {
     ));
   }
 
-  PopUppWidget PopDrop(BuildContext context,List<dynamic> _list, String _title) {
-    String _name="";
+  PopUppWidget PopDrop(
+      BuildContext context, List<dynamic> _list, String _title) {
+    String _name = "";
+    bool _isCheck = false;
     return PopUppWidget(
         content: Column(
           children: List.generate(_list.length + 1, (index) {
             var _obj;
-            if(index!=0)
-              _obj = _list[index - 1];
-            if(_title!="Reňki")
-            _name=index!=0?_obj.name:"Ähli";
+            if (index != 0) _obj = _list[index - 1];
+            if (_title != "Reňki")
+              _name = index != 0 ? _obj.name : "Ähli";
             else
-              _name=index!=0?_obj.tm:"Ähli";
-              return Column(
-                children: [
-                  ImgBtn(
-                    onTap: () {
-                      if(_title=="Markalar") {
-                        DDMark.value = index != 0 ? _obj.name : "Ähli";
-                        DDMark.id = index != 0 ? _obj.id : 0;
-                        DDMark.index = 0;
-                      }else if(_title=="Modeller") {
-                        DDModel.value = index != 0 ? _obj.name : "Ähli";
-                        DDModel.id = index != 0 ? _obj.id : 0;
-                        DDModel.index = 0;
-                      }else if(_title=="Reňki") {
-                        DDColor.value = index != 0 ? _obj.tm : "Ähli";
-                        DDColor.id = index != 0 ? _obj.id : 0;
-                        DDColor.index = 0;
-                      }else if(_title=="Ýerleşýän ýeri") {
-                        DDPlace.value = index != 0 ? _obj.name : "Ähli";
-                        DDPlace.id = index != 0 ? _obj.id : 0;
-                        DDPlace.index = 0;
-                      }
-                      setState(() {});
-                      Navigator.pop(context);
-                    },
-                    width: double.infinity,
-                    height: SWi * 0.1,
-                    color: Colors.transparent,
-                    child: Text(
-                      "$_name",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: SWi * 0.033),
+              _name = index != 0 ? _obj.tm : "Ähli";
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ImgBtn(
+                  onTap: () {
+                    if (_title == "Markalar") {
+                      DDMark.value = index != 0 ? _obj.name : "Ähli";
+                      DDMark.id = index != 0 ? _obj.id : 0;
+                      DDMark.index = 0;
+                    } else if (_title == "Modeller") {
+                      DDModel.value = index != 0 ? _obj.name : "Ähli";
+                      DDModel.id = index != 0 ? _obj.id : 0;
+                      DDModel.index = 0;
+                    } else if (_title == "Reňki") {
+                      DDColor.value = index != 0 ? _obj.tm : "Ähli";
+                      DDColor.id = index != 0 ? _obj.id : 0;
+                      DDColor.index = 0;
+                    } else if (_title == "Ýerleşýän ýeri") {
+                      DDPlace.value = index != 0 ? _obj.name : "Ähli";
+                      DDPlace.id = index != 0 ? _obj.id : 0;
+                      DDPlace.index = 0;
+                    }
+                    setState(() {});
+                    // Navigator.pop(context);
+                  },
+                  width: double.infinity,
+                  height: SWi * 0.1,
+                  color: Colors.transparent,
+                  child: Container(
+                    child: ListTile(
+                      leading: Text(
+                        "$_name",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: SWi * 0.033),
+                      ),
+                      trailing: Container(
+                        child: Checkbox(
+                          value: _isCheck,
+                          onChanged: (bool _val) {
+                            _isCheck = _val;
+                            setState(() {});
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                  Divider(color: Colors.purpleAccent)
-                ],
-              );
+                ),
+                Divider(color: Colors.purpleAccent)
+              ],
+            );
           }),
         ),
         title: "$_title:",
         centerTitle: true,
         bgColor: ThemeProvided().colorCanvas);
+  }
+
+
+  PopStateFull(context) {
+    bool _isCheck = false;
+    return showDialog(
+        context: context,
+        builder: (context) => Scaffold(
+              body: Container(
+                color: Colors.black38,
+                alignment: Alignment.center,
+                child: CheckBtn()
+              ),
+            ));
+  }
+}
+
+
+class CheckBtn extends StatefulWidget {
+
+  @override
+  State<CheckBtn> createState() => _CheckBtnState();
+}
+
+class _CheckBtnState extends State<CheckBtn> {
+  int _num = 0;
+  @override
+  Widget build(BuildContext context) {
+    return ImgBtn(
+      color: ThemeProvided().colorModel,
+      width: SWi * 0.8,
+      height: SHe * 0.8,
+      shape: SWi * 0.02,
+      onTap: () {
+        setState(() {
+          _num++;
+        });
+      },
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(),
+      ),
+    );
   }
 }

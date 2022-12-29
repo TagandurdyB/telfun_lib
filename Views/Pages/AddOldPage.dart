@@ -26,7 +26,8 @@ class AddOldPage extends StatefulWidget {
 
 class _AddOldPageState extends State<AddOldPage> {
   // List<String> inputValues = ["", "", ""];
-  DDBEl DDCategory, DDMark, DDPlace, DDColor;
+  DDBEl DDCategory, DDMark, DDPlace, DDColor, DDModel;
+  bool _isModel = false;
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _AddOldPageState extends State<AddOldPage> {
     DDCategory = DDBEl(index: -1, value: "Bölümler");
     DDMark = DDBEl(index: -1, value: "Marka", id: 0);
     DDPlace = DDBEl(index: -1, value: "Ýerleşýän ýeri");
+    DDModel = DDBEl(index: -1, value: "Model", id: 0);
     DDColor = DDBEl(index: -1);
   }
 
@@ -50,8 +52,19 @@ if (d==0&&imageOk){
  }
 }*/
 
+  List _modelList = [];
+  void modelFunc() {
+    _modelList = Get_Lists(listTag: ApiTags.model)
+        .getList()
+        .where((element) =>
+            element.category_id == DDCategory.id &&
+            element.mark_id == DDMark.id)
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    modelFunc();
     final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable,
         enable = Provider.of<ThemeProvided>(context).styleEnable;
     return Container(
@@ -170,6 +183,7 @@ if (d==0&&imageOk){
                       onChanged: (DDBEl _element) {
                         setState(() {
                           DDCategory = _element;
+                          DDModel = DDBEl(index: -1, value: "Model", id: 0);
                           canOpenAddBtn(context);
                         });
                       },
@@ -213,6 +227,8 @@ if (d==0&&imageOk){
                       onChanged: (DDBEl _element) {
                         setState(() {
                           DDMark = _element;
+                          DDModel = DDBEl(index: -1, value: "Model", id: 0);
+
                           canOpenAddBtn(context);
                         });
                       },
@@ -275,27 +291,85 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: SWi * 0.015),
-                    child: AddImages(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ReadyInput(
-                      shape: true,
-                      // index: 0,
-                      tag: RITags.rIName,
-                      borderRad: SWi * 0.03,
-                      hidden: "Bildirişiň modelini ýazyň...",
-                      label: "Bildirişiň ady...",
-                      onChange: (val, index) {
-                        //inputValues[index] = controls[index].text;
-                        canOpenAddBtn(context);
-                      },
+
+                  Container(
+                    child: Card(
+                      color: ThemeProvided().colorCanvas,
+                      child: SwitchListTile(
+                        title: Text(
+                          "Model ýok",
+                          style: !_isModel?disable:enable,
+                        ),
+                        onChanged: (bool _val) {
+                          setState(() {});
+                          _isModel = !_isModel;
+                          DDModel = DDBEl(index: -1, value: "Model", id: 0);
+                        },
+                        //activeColor: Colors.red,
+                        //activeTrackColor: Colors.red,
+                        selectedTileColor: Colors.red,
+                        value: _isModel,
+                      ),
                     ),
                   ),
-                  Padding(
+                  Visibility(
+                      visible: !_isModel,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: DropDownBtnUnVal(
+                          hint: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              selectIcon(Icons.label),
+                              Expanded(
+                                child: Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(DDModel.value,
+                                        style: DDModel.value == "Model"
+                                            ? disable
+                                            : enable)),
+                              ),
+                            ],
+                          ),
+                          tag: DDBTags.dDBModel,
+                          items: DDCategory.index == -1
+                              ? [DDBEl(id: 0, index: -1, value: "")]
+                              : DDMark.index == -1
+                                  ? [DDBEl(id: 0, index: -1, value: "")]
+                                  : List.generate(_modelList.length ?? 0,
+                                      (index) {
+                                      ElemModel getlist = _modelList[index];
+                                      return DDBEl(
+                                          index: index,
+                                          value: getlist.name,
+                                          id: getlist.id);
+                                    }),
+                          onChanged: (DDBEl _element) {
+                            setState(() {});
+                              DDModel = _element;
+                              canOpenAddBtn(context);
+                          },
+                        ),
+                      )),
+                  Visibility(
+                    visible: _isModel,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ReadyInput(
+                        shape: true,
+                        // index: 0,
+                        tag: RITags.rIName,
+                        borderRad: SWi * 0.03,
+                        hidden: "Modeli/Bildirişi ýazyň...",
+                        label: "Modeliniň/Bildirişiň ady...",
+                        onChange: (val, index) {
+                          //inputValues[index] = controls[index].text;
+                          canOpenAddBtn(context);
+                        },
+                      ),
+                    ),
+                  ),
+                 /* Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ReadyInput(
                       shape: true,
@@ -310,6 +384,66 @@ if (d==0&&imageOk){
                         canOpenAddBtn(context);
                       },
                     ),
+                  ),*/
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: SWi * 0.04),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              ImgBtn(
+                                width: SWi * 0.1,
+                                height: SWi * 0.1,
+                                shape: 10,
+                                color: Color(0xff5408BF),
+                                child: Icon(
+                                  Icons.money_sharp,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  "  Bahasy:",
+                                  style: enable,
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: SWi*0.02),
+                                  width: SWi * 0.53,
+                                  child: ReadyInput(
+                                    shape: true,
+                                    //index: 1,
+                                    tag: RITags.rIPrice,
+                                    type: Type.num,
+                                    // borderRad: 60,
+                                    hidden: "Bahasy manatda",
+                                    label: "Bahasy manatda",
+                                    onChange: (val, index) {
+                                      setState(() {
+                                        canOpenAddBtn(context);
+                                      });
+                                      // inputValues[index] = controls[index].text;
+                                      // canOpenAddBtn(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Text("TMT",style: ThemeProvided().styleUserPage),
+                            ],
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: SWi * 0.015),
+                    child: AddImages(),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -327,7 +461,7 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
-                  AddBtn(place_id: DDPlace.id),
+                  AddBtn(place_id: DDPlace.id,isModel: _isModel,),
                   /*    Column(children: [
                     Text("${UserProperties.getProperty("id")}"),
                     Text("${UserProperties.getProperty("name")}"),
@@ -361,8 +495,9 @@ if (d==0&&imageOk){
     if (DDPlace.index == -1) d++;
     if (DDCategory.index == -1) d++;
     if (DDMark.index == -1) d++;
+    if (DDModel.index == -1&& RIBase.getText(RITags.rIName) == "") d++;
     // if (controls[1].text == "") d++;
-    if (RIBase.getText(RITags.rIName) == "") d++;
+   // if (RIBase.getText(RITags.rIName) == "") d++;
     if (RIBase.getText(RITags.rIPrice) == "") d++;
     if (RIBase.getText(RITags.rIAbout) == "") d++;
     if (d == 0) {

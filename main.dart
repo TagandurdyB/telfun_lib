@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ChatProvider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/FilterProvider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShopProvider.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
@@ -47,6 +48,8 @@ void main() async {
           create: (BuildContext context) => ThemeProvided()),
       ChangeNotifierProvider<ShopProvider>(
           create: (BuildContext context) => ShopProvider()),
+      ChangeNotifierProvider<FilterProvider>(
+          create: (BuildContext context) => FilterProvider()),
     ],
     child: MyApp(),
   ));

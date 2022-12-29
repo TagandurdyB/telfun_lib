@@ -46,7 +46,7 @@ class _InCategoryState extends State<InCategory> {
       child: ImgBtn(
         color: Color(0xff6A00FF),
         onTap: () {
-          Provider.of<UsesVar>(context,listen: false).changeSort(0);
+          //Provider.of<UsesVar>(context,listen: false).changeSort(0);
           print("In Category ID: ${widget.obj.id}");
           print("In Category is_new: ${widget.obj.is_new}");
           print("In Category favorite: ${widget.obj.favorite}");

@@ -443,16 +443,16 @@ class localConverter {
       return {
         "view": _map["view"],
         "is_new": _is_new,
-        "data": _map["updated_at"],
+        "data": _map["created_at"],
         "images": _map["image"],
-        "color": _is_new
-            ? {
+        "color":
+             {
                 "tm": _map["color"]["tm"],
                 "ru": _map["color"]["ru"],
                 "id": _map["color"]["id"],
                 "code": _map["color"]["code"],
               }
-            : {"code": "#ff0000", "tm": "", "ru": "", "id": 0},
+           ,
         "name": _map["name"],
         "price": _map["price"].toString(),
         "place": _map["welayat"],
@@ -513,7 +513,7 @@ class localConverter {
   Map mapToMapEvents(Map _map) {
     try {
       return {
-        "data": _map["updated_at"],
+        "data": _map["created_at"],
         "id": _map["id"],
         "name": _map["name"],
         "mark_id": _map["mark_id"],

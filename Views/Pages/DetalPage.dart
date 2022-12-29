@@ -263,26 +263,21 @@ class _DetalPageState extends State<DetalPage> {
                     Text("${list.name}"),
                   ]),
                   TableRow(children: [
-                    Visibility(
-                      visible: list.is_new,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Reňki"),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Reňki"),
                     ),
-                    Visibility(
-                        visible: list.is_new,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(list.is_new ? "${list.color.tm}" : ""),
-                              ImgBtn(
-                                width: SWi * 0.05,
-                                height: SWi * 0.05,
-                                shape: SWi * 0.01,
-                                color: list.color.toColor(),
-                              )
-                            ])),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("${list.color.tm}"),
+                          ImgBtn(
+                            width: SWi * 0.05,
+                            height: SWi * 0.05,
+                            shape: SWi * 0.01,
+                            color: list.color.toColor(),
+                          )
+                        ]),
                   ]),
                   /*TableRow(children: [
                     Padding(
