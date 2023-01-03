@@ -2,24 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/ChatProvider.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
-import 'package:telfun/ViewModels/FilterProvider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
-import 'package:telfun/ViewModels/ShopProvider.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
-import 'package:telfun/Views/Pages/DetalPage.dart';
-import '/Views/Login/SignUp.dart';
-import '/Views/Login/Verification.dart';
-import '/Views/Login/LoginPage.dart';
-import 'Demo/Provider update API/provider/todo_provider.dart';
-import 'ViewModels/UserProvider.dart';
-import 'Views/LogoPage.dart';
-import '/Views/Pages/SetingsPage.dart';
-import '/Models/Public.dart';
+import 'ViewModels/Providers.dart';
 import '/ViewModels/ShPBDebug.dart';
-import '/Views/Pages/MainPage.dart';
-import '/Views/Pages/FilterPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,28 +15,7 @@ void main() async {
   await ShPValues().create();
   // await ShPUser().create();
   runApp(MultiProvider(
-    providers: [
-      ///////////////////////////////////////////////
-      ChangeNotifierProvider<ToDoProvider>(
-          create: (BuildContext context) => ToDoProvider()),
-      ///////////////////////////////////////////////
-      ChangeNotifierProvider<UsesVar>(
-          create: (BuildContext context) => UsesVar()),
-      ChangeNotifierProvider<EventsFavoritProvid>(
-          create: (BuildContext context) => EventsFavoritProvid()),
-      ChangeNotifierProvider<EventsProvid>(
-          create: (BuildContext context) => EventsProvid()),
-      ChangeNotifierProvider<UserProvider>(
-          create: (BuildContext context) => UserProvider()),
-      ChangeNotifierProvider<SMSProvider>(
-          create: (BuildContext context) => SMSProvider()),
-      ChangeNotifierProvider<ThemeProvided>(
-          create: (BuildContext context) => ThemeProvided()),
-      ChangeNotifierProvider<ShopProvider>(
-          create: (BuildContext context) => ShopProvider()),
-      ChangeNotifierProvider<FilterProvider>(
-          create: (BuildContext context) => FilterProvider()),
-    ],
+    providers: Providers.list,
     child: MyApp(),
   ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

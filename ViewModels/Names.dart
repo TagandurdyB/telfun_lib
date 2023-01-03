@@ -36,4 +36,10 @@ class ApiTags {
 }
 class JsonTags{
   static const String favorite = "favorite";
+  static const String filterMark = "filterMark";
+  static const String filterModel = "filterModel";
+  static const String filterColor = "filterColor";
+  static const String filterPlace = "filterPlace";
+  static const String filterEtrap = "filterEtrap";
+
 }

@@ -66,7 +66,7 @@ class SearchBtn extends StatelessWidget {
               visible: isFilter,
               child: GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, PageName.pageSearch);
+                    Navigator.pushNamed(context, PageName.pageFilter);
                   },
                   child: Icon(
                     Icons.wrap_text,

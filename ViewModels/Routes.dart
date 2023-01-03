@@ -23,7 +23,7 @@ import '/Views/Pages/SetingsPage.dart';
 class PageName {
   static const String pageMain = "/MainPage";
   static const String pageSetting = "/SettingPage";
-  static const String pageSearch = "/SearchPage";
+  static const String pageFilter = "/SearchPage";
   static const String pageLogo = "/LogoPage";
   static const String pageLogIn = "/LogIn";
   static const String pageSignUp = "/SignUp";
@@ -43,7 +43,7 @@ class PageName {
   final routes = {
     pageMain: (context) => MainPage(),
     pageSetting: (context) => SetingsPage(),
-    pageSearch: (context) => SearchPage(),
+    pageFilter: (context) => FilterView(),
     pageLogo: (context) => Logo(),
     pageLogIn: (context) => LoginPage(),
     pageSignUp: (context) => SignUpPage(),

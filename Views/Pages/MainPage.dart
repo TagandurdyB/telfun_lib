@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/ValueProvider.dart';
 import '../../ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
@@ -60,7 +61,7 @@ class _MainState extends State<Main> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
+    Provider.of<ValuesProvider>(context,listen: false).reload();
     selPage = TabController(vsync: this, length: 3);
     _listMain = [
       Slider_pro(),

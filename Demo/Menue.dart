@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'FavoriteProvider/homePage.dart';
+import 'Notification/screens/MainPage.dart';
 import 'Provider update API/screen/home_Page.dart';
 import 'Sliver/DemoSliver.dart';
 
@@ -19,6 +20,7 @@ class DemoMenue extends StatelessWidget {
             MenueItem(DemoSliverPage(),"Slivews"),
             MenueItem(FavoriteHome(),"Favorite Provider"),
             MenueItem(ProviderAPI(),"Provider Update API"),
+            MenueItem(NotiMainPage(),"Npotification"),
           ],
         ),
       ),

@@ -99,8 +99,8 @@ class ElemEvents {
 
 class ElemColor {
   final int id;
-  final String tm, ru, en, code;
-  ElemColor({this.id, this.tm, this.ru, this.en, this.code});
+  final String tm, ru, en, code,name;
+  ElemColor({this.name,this.id, this.tm, this.ru, this.en, this.code});
   Color toColor() {
     int _code = int.parse("0xff${code.substring(1)}");
     return Color(_code);

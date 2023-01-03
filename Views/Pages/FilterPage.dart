@@ -2,25 +2,53 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
+import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/FilterProvider.dart';
+import 'package:telfun/ViewModels/JsonCacher.dart';
+import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/ValueProvider.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
+import 'package:telfun/Views/widgets/FilterSwitch.dart';
 import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 
 import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 
-class SearchPage extends StatefulWidget {
+class FilterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Json_Get(
+      jsonName: JsonTags.filterMark,
+      Return: Json_Get(
+        jsonName: JsonTags.filterModel,
+        Return: Json_Get(
+          jsonName: JsonTags.filterColor,
+          Return: Json_Get(
+            jsonName: JsonTags.filterPlace,
+            Return: Json_Get(
+              jsonName: JsonTags.filterEtrap,
+              Return: FilterView(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FilterView extends StatefulWidget {
   // const SetingsPage({Key? key}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _FilterViewState createState() => _FilterViewState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _FilterViewState extends State<FilterView> {
   DDBEl DDColor, DDMark, DDModel, DDPlace, DDTime;
 
   @override
@@ -28,6 +56,7 @@ class _SearchPageState extends State<SearchPage> {
     // TODO: implement initState
     super.initState();
     erease();
+    Provider.of<FilterProvider>(context, listen: false).reload();
   }
 
   void erease() {
@@ -40,6 +69,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final providerFilter = Provider.of<FilterProvider>(context);
+    final providerValues = Provider.of<ValuesProvider>(context);
     final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable,
         enable = Provider.of<ThemeProvided>(context).styleEnable;
     return ScaffoldAll(
@@ -59,9 +90,14 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                // final List _marks = Get_Lists(listTag: ApiTags.mark).getList();
+                final List _marks = providerValues.markObjs;
                 // PopDrop(context, _marks, "Markalar").popUp(context);
-                PopStateFull(context);
+                PopStateFull(
+                        context: context,
+                        list: _marks,
+                        title: "Markalar",
+                        jsonTag: JsonTags.filterMark)
+                    .pop;
               },
               title: Text(
                 "Markalar",
@@ -78,9 +114,14 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _models =
-                    Get_Lists(listTag: ApiTags.model).getList();
-                PopDrop(context, _models, "Modeller").popUp(context);
+                final List _models = providerFilter.modelObjs;
+                //PopDrop(context, _models, "Modeller").popUp(context);
+                PopStateFull(
+                        context: context,
+                        list: _models,
+                        title: "Modeller",
+                        jsonTag: JsonTags.filterModel)
+                    .pop;
               },
               title: Text(
                 "Modeller",
@@ -97,9 +138,14 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _colors =
-                    Get_Lists(listTag: ApiTags.colors).getList();
-                PopDrop(context, _colors, "Reňki").popUp(context);
+                final List _colors = providerValues.colorObjs;
+                //PopDrop(context, _colors, "Reňki").popUp(context);
+                PopStateFull(
+                        context: context,
+                        list: _colors,
+                        title: "Reňki",
+                        jsonTag: JsonTags.filterColor)
+                    .pop;
               },
               title: Text(
                 "Reňki",
@@ -164,10 +210,24 @@ class _SearchPageState extends State<SearchPage> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _place = Get_Lists(listTag: ApiTags.place).getList();
-                PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);
+                final List _place = providerValues.placeObjs;
+                /*  final List _place=[
+                  DDBEl(id: 1, index: 0, value: "Aşgabat"),
+                  DDBEl(id: 2, index: 1, value: "Ahal"),
+                  DDBEl(id: 3, index: 2, value: "Balkan"),
+                  DDBEl(id: 4, index: 3, value: "Mary"),
+                  DDBEl(id: 5, index: 4, value: "Lebap"),
+                  DDBEl(id: 6, index: 5, value: "Daşoguz"),
+                ];*/
+                /*PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);
                 // final List _place = Get_Lists(listTag: ApiTags.place).getList();
-                PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);
+                PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);*/
+                PopStateFull(
+                        context: context,
+                        list: _place,
+                        title: "Ýerleşýän ýeri",
+                        jsonTag: JsonTags.filterPlace)
+                    .pop;
               },
               title: Text(
                 "Ýerleşýän ýeri",
@@ -312,45 +372,139 @@ class _SearchPageState extends State<SearchPage> {
         bgColor: ThemeProvided().colorCanvas);
   }
 
-
-  PopStateFull(context) {
+/*  PopStateFull(context, List _list, String title) {
     bool _isCheck = false;
     return showDialog(
         context: context,
         builder: (context) => Scaffold(
+              backgroundColor: Colors.transparent,
               body: Container(
-                color: Colors.black38,
-                alignment: Alignment.center,
-                child: CheckBtn()
-              ),
+                  color: Colors.black26,
+                  alignment: Alignment.center,
+                  child:
+                      CheckList(isCheck: _isCheck, list: _list, title: title)),
             ));
-  }
+  }*/
 }
 
+class PopStateFull {
+  final BuildContext context;
+  bool isCheck;
+  final List list;
+  final String title, jsonTag;
+  PopStateFull(
+      {this.jsonTag, this.context, this.list, this.isCheck, this.title});
+  get pop => showDialog(
+      context: context,
+      builder: (context) => CheckList(title: title, list: list,jsonTag: jsonTag));
+}
 
-class CheckBtn extends StatefulWidget {
+class CheckList extends StatefulWidget {
+  bool isCheck;
+  final List list;
+  final String title, jsonTag;
+  CheckList({this.list, this.isCheck, this.title, this.jsonTag});
 
   @override
-  State<CheckBtn> createState() => _CheckBtnState();
+  _CheckListState createState() => _CheckListState();
 }
 
-class _CheckBtnState extends State<CheckBtn> {
-  int _num = 0;
+class _CheckListState extends State<CheckList> {
   @override
   Widget build(BuildContext context) {
-    return ImgBtn(
-      color: ThemeProvided().colorModel,
-      width: SWi * 0.8,
-      height: SHe * 0.8,
-      shape: SWi * 0.02,
-      onTap: () {
-        setState(() {
-          _num++;
-        });
-      },
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(),
+    return buildScaffold(context, widget.title, widget.list);
+  }
+
+  Scaffold buildScaffold(BuildContext context, String title, List list) {
+    final providerValues = Provider.of<ValuesProvider>(context);
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        color: Colors.black26,
+        alignment: Alignment.center,
+        child: ImgBtn(
+          color: ThemeProvided().colorModel,
+          width: SWi * 0.8,
+          height: SHe * 0.8,
+          shape: SWi * 0.02,
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(8),
+                child: Text(
+                  title + " :",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: SWi * 0.04),
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    children: List.generate(widget.list.length + 1, (index) {
+                      if (index == 0) {
+                        return FilterSwitch(
+                          title: "Ähli",
+                          // obj: _obj,
+                        );
+                      }
+                      if (title == "Ýerleşýän ýeri") {
+                        final _obj = widget.list[index - 1];
+                        return SwitchListTile(
+                            title: Text(_obj.name,
+                                style: ThemeProvided().styleUserPage),
+                            value: false,
+                            onChanged: (bool _val) {
+                              final List _etrabs =
+                                  providerValues.etrapObjs(_obj.id - 1);
+                              PopStateFull(
+                                context: context,
+                                list: _etrabs,
+                                title: "Etrap",
+                              ).pop;
+                            });
+                      } else {
+                        final _obj = widget.list[index - 1];
+                        return FilterSwitch(
+                          JsonTag: widget.jsonTag,
+                          title: _obj.name,
+                          obj: _obj,
+                        );
+                      }
+                    }),
+                  ),
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: ElevatedButton(
+                        child: Text('Ýatyr'),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                        ),
+                      ),
+                    )),
+                    Expanded(
+                        child: Container(
+                            padding: EdgeInsets.all(8),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Tamam")))),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

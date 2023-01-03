@@ -339,6 +339,7 @@ class localConverter {
     try {
       return ElemColor(
         id: _map["id"],
+        name: _map["tm"],
         tm: _map["tm"],
         ru: _map["ru"],
        // en: _map["en"],
@@ -354,6 +355,7 @@ class localConverter {
       return {
         "id": _elem.id,
         "tm": _elem.tm,
+        "name": _elem.name,
         "ru": _elem.ru,
        // "en":_elem.en,
         "code": _elem.code,
@@ -368,6 +370,7 @@ class localConverter {
     try {
       return {
         "id": _map["id"],
+        "name":_map["tm"],
         "tm": _map["tm"],
         "ru": _map["ru"],
        // "en": _map["en"],
@@ -686,5 +689,10 @@ class Get_Lists {
 
   List getList() {
     return Base(isAPI: isApi).get()[listTag];
+  }
+
+  static List<int> idList(List objList) {
+    List<int> _list = objList.map((e) => e.id).toList().cast<int>();
+    return _list;
   }
 }
