@@ -19,6 +19,7 @@ class RITags {
   static const String rIPhone = "tagPhone";
   static const String rIMin = "tagMin";
   static const String rIMax = "tagMax";
+  static const String rIFilter = "tagFilter";
 }
 class ApiTags {
   static const String img = "img";
@@ -36,6 +37,7 @@ class ApiTags {
 }
 class JsonTags{
   static const String favorite = "favorite";
+  static const String filters = "filters";
   static const String filterMark = "filterMark";
   static const String filterModel = "filterModel";
   static const String filterColor = "filterColor";

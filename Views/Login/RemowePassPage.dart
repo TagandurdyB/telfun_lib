@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';
 import 'package:telfun/Models/Public.dart';

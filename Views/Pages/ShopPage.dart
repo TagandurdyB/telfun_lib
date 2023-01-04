@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/Providers/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
-import 'package:telfun/ViewModels/ShopProvider.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
-import 'package:telfun/ViewModels/UserProvider.dart';
+import 'package:telfun/ViewModels/Providers/ShopProvider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/UserProvider.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 import 'package:telfun/Views/widgets/Search.dart';
 import 'package:telfun/Views/widgets/ShopPlitca.dart';

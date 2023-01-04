@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/ChatElement.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
-import 'package:telfun/ViewModels/ChatProvider.dart';
+import 'package:telfun/ViewModels/Providers/ChatProvider.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';

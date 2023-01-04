@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
-import '../widgets/DropDownBtn/DDBBase.dart';
+import '../../widgets/DropDownBtn/DDBBase.dart';
 import '/ViewModels/MapConverter.dart';
 import '/ViewModels/ApiElements.dart';
 import '/ViewModels/Names.dart';
@@ -12,7 +12,7 @@ import '/ViewModels/ShPBDebug.dart';
 import '/Views/widgets/ScaffoldParts/MySnackBar.dart';
 import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
-import '../widgets/ReadyInput/ReadyInput.dart';
+import '../../widgets/ReadyInput/ReadyInput.dart';
 import '/Views/widgets/imgBtn.dart';
 import '/Models/service.dart';
 

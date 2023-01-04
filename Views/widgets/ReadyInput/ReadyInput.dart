@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 
 import 'RIBase.dart';
 
@@ -71,6 +71,7 @@ class _ReadyInputState extends State<ReadyInput> {
         cursorColor: Color(0xff5308BE),
         maxLines: widget.maxline,
         onChanged: (value) {
+          if(widget.onChange!=null)
           widget.onChange(value, widget.tag/*widget.index*/);
         },
         maxLength: widget.type == Type.tel ? 8 : null,

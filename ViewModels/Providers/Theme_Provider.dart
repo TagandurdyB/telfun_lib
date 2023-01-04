@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:telfun/Models/theme_model.dart';
-import 'ShPBDebug.dart';
+import '../ShPBDebug.dart';
 
 bool _isLight;
 

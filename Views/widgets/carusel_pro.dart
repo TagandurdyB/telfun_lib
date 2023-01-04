@@ -6,7 +6,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Models/Public.dart';
 

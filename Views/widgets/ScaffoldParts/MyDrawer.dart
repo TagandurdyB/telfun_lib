@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '/Models/Public.dart';

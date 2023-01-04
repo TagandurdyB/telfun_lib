@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/Providers/EventProvider.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/ViewModels/ValueProvider.dart';
+import 'package:telfun/ViewModels/Providers/ValueProvider.dart';
 import '../../ViewModels/ApiElements.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/ShPBDebug.dart';
@@ -11,7 +11,7 @@ import '/Models/Public.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Views/widgets/Plitcas.dart';
 import '/Views/widgets/carusel_pro.dart';
-import 'AddPages.dart';
+import 'AddPages/AddPages.dart';
 import '../widgets/ScaffoldParts/ScaffoldAll.dart';
 import 'UserPage.dart';
 

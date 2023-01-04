@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/Providers/EventProvider.dart';
 import '/ViewModels/JsonCacher.dart';
 import '/ViewModels/JsonDebuger.dart';
 import '/ViewModels/MapConverter.dart';

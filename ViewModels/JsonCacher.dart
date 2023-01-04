@@ -43,10 +43,38 @@ class JsonListCacher {
         _added = true;
       } else{
         _added = false;
-       }
+      }
       return _added;
     }
   }
+
+/*  Future<bool> addFilters(Map _map) async {
+    bool _added;
+    List _list = await load();
+    if (_list.isEmpty) {
+      _list.add(_map);
+      save(_list);
+      addBase(_list);
+      _added = true;
+    } else {
+      bool _canAdd = true;
+     for (int i = 0; i < _list.length; i++) {
+        if (_list[i]["name"] == _map["name"]) {
+          _canAdd = false;
+          break;
+        }
+      }
+      if (_canAdd) {
+        _list.add(_map);
+        save(_list);
+        addBase(_list);
+        _added = true;
+      } else{
+        _added = false;
+       }
+      return _added;
+    }
+  }*/
 
   Future<bool> removeSaved(Map _map) async {
     bool _removed;

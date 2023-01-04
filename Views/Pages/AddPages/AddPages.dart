@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import '/Models/Public.dart';
 import '/Views/widgets/TabBarViever.dart';
 import '/Views/widgets/imgBtn.dart';
 
 import 'AddNewPage.dart';
 import 'AddOldPage.dart';
-import 'AllPage.dart';
-import 'ModelPage.dart';
+import '../AllPage.dart';
+import '../ModelPage.dart';
 
 class AddPage extends StatelessWidget {
   // AddPage({}) ;

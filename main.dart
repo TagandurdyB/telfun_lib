@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/Routes.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
-import 'ViewModels/Providers.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
+import 'ViewModels/Providers/Providers.dart';
 import '/ViewModels/ShPBDebug.dart';
 
 void main() async {

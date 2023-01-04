@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/ApiDebuging.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
-import 'package:telfun/ViewModels/UserProvider.dart';
+import 'package:telfun/ViewModels/Providers/EventProvider.dart';
+import 'package:telfun/ViewModels/Providers/UserProvider.dart';
 import 'package:telfun/Views/widgets/InPlitca.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 

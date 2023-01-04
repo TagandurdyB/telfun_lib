@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 
 class EnterOTP extends StatelessWidget {
   @override

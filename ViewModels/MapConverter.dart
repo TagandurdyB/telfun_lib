@@ -30,9 +30,9 @@ class MapConverter {
       Map _val = MapList[i];
       if (_name == ApiTags.img) {
         list.add(localConverter().mapToElemImg(_val));
-      } else if (_name == ApiTags.model) {
+      } else if (_name == ApiTags.model||_name==JsonTags.filterModel) {
         list.add(localConverter().mapToElemModel(_val));
-      } else if (_name == ApiTags.mark) {
+      } else if (_name == ApiTags.mark||_name==JsonTags.filterMark) {
         list.add(localConverter().mapToElemMark(_val));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToElemEventDetal(_val));
@@ -43,14 +43,16 @@ class MapConverter {
         list.add(localConverter().mapToElemEvents(_val));
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().mapToElemCategory(_val));
-      } else if (_name == ApiTags.place) {
+      } else if (_name == ApiTags.place||_name==JsonTags.filterPlace) {
         list.add(localConverter().mapToElemPlace(_val));
       } else if (_name == JsonTags.favorite) {
         list.add(localConverter().mapToFavorite(_val));
-      }else if(_name==ApiTags.colors){
+      }else if(_name==ApiTags.colors||_name==JsonTags.filterColor){
         list.add(localConverter().mapToElemColor(_val));
       }else if(_name==ApiTags.shops){
         list.add(localConverter().mapToElemShop(_val));
+      }else if(_name==JsonTags.filters){
+        list.add(localConverter().mapToFilters(_val));
       }
     }
     return list;
@@ -71,15 +73,17 @@ class MapConverter {
         list.add(localConverter().elemEventsToMap(ElemList[i]));
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().elemEventDetalToMap(ElemList[i]));
-      } else if (_name == ApiTags.mark) {
+      } else if (_name == ApiTags.mark||_name==JsonTags.filterMark) {
         list.add(localConverter().elemMarkToMap(ElemList[i]));
-      } else if (_name == ApiTags.model) {
+      } else if (_name == ApiTags.model||_name==JsonTags.filterModel) {
         list.add(localConverter().elemModelToMap(ElemList[i]));
-      } else if (_name == ApiTags.place) {
+      } else if (_name == ApiTags.place||_name==JsonTags.filterPlace) {
         list.add(localConverter().elemPlaceToMap(ElemList[i]));
       } else if (_name == JsonTags.favorite) {
         list.add(localConverter().favoriteToMap(ElemList[i]));
-      }else if(_name==ApiTags.colors){
+      }else if (_name == JsonTags.filters) {
+        list.add(localConverter().filtersToMap(ElemList[i]));
+      }else if(_name==ApiTags.colors||_name==JsonTags.filterColor){
         list.add(localConverter().elemColorToMap(ElemList[i]));
       }else if(_name==ApiTags.shops){
         list.add(localConverter().elemShopToMap(ElemList[i]));
@@ -287,8 +291,8 @@ class localConverter {
         _colors.add(mapToElemColor(val));
       });
       return ElemModel(
-        category_id: int.parse(_map["category_id"]),
-        mark_id: int.parse(_map["mark_id"]),
+        category_id: _map["category_id"],
+        mark_id: _map["mark_id"],
         colors: _colors,
         name: _map["name"],
         id: _map["id"],
@@ -323,8 +327,8 @@ class localConverter {
         _colors.add(mapToMapColor(val));
       });
       return {
-        "category_id": int.parse(_map["category_id"]).toString(),
-        "mark_id": int.parse(_map["mark_id"]).toString(),
+        "category_id": int.parse(_map["category_id"].toString()),
+        "mark_id": int.parse(_map["mark_id"].toString()),
         "color": _colors,
         "name": _map["name"],
         "id": _map["id"],
@@ -675,6 +679,28 @@ class localConverter {
       };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from favoriteToMap!!! :$_e");
+    }
+  }
+/////////////////////////////////////////////////////////////
+  ElemFilter mapToFilters(Map _map) {
+    try {
+      return ElemFilter(
+        name: _map["name"],
+        id: _map["id"],
+      );
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from mapToFilters!!! :$_e");
+    }
+  }
+
+  Map filtersToMap(ElemFilter _elem) {
+    try {
+      return {
+        "name": _elem.name,
+        "id":_elem.id
+      };
+    } catch (_e) {
+      print("+Convet_ERROR+: Be error from filtersToMap!!! :$_e");
     }
   }
 /////////////////////////////////////////////////////////////

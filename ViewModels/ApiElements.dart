@@ -119,3 +119,10 @@ class ElemShop {
     return about;
   }
 }
+
+class ElemFilter {
+  final int id;
+  final String name;
+  ElemFilter({this.name,this.id});
+
+}

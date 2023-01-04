@@ -2,7 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:telfun/Demo/Provider%20update%20API/provider/todo_provider.dart';
 import 'package:telfun/Models/Public.dart';
-import 'package:telfun/ViewModels/ValueProvider.dart';
+import 'package:telfun/ViewModels/Providers/ValueProvider.dart';
 
 import 'ChatProvider.dart';
 import 'EventProvider.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/ViewModels/ApiElements.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
@@ -12,11 +12,11 @@ import '/ViewModels/Names.dart';
 import '/Views/widgets/AddBtn.dart';
 import 'package:telfun/Views/widgets/ScaffoldParts/MySnackBar.dart';
 import '/ViewModels/ShPBDebug.dart';
-import '../widgets/DropDownBtn/DropDownBtn.dart';
+import '../../widgets/DropDownBtn/DropDownBtn.dart';
 import '/Models/Public.dart';
 import '/Models/service.dart';
 import '/Views/widgets/AddImg.dart';
-import '../widgets/ReadyInput/ReadyInput.dart';
+import '../../widgets/ReadyInput/ReadyInput.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 class AddOldPage extends StatefulWidget {

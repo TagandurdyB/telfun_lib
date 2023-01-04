@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
+import 'package:telfun/ViewModels/Providers/EventProvider.dart';
 import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/Views/Pages/AllPage.dart';
 import '/ViewModels/ApiDebuging.dart';
 import '/Views/Pages/CategoriPage.dart';

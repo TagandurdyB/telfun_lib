@@ -17,7 +17,7 @@ import '/Views/Login/Verification.dart';
 import '/Views/LogoPage.dart';
 import '/Views/Pages/DetalPage.dart';
 import '/Views/Pages/MainPage.dart';
-import '/Views/Pages/FilterPage.dart';
+import '../Views/Pages/FilterPage/FilterPage.dart';
 import '/Views/Pages/SetingsPage.dart';
 
 class PageName {
@@ -43,7 +43,7 @@ class PageName {
   final routes = {
     pageMain: (context) => MainPage(),
     pageSetting: (context) => SetingsPage(),
-    pageFilter: (context) => FilterView(),
+    pageFilter: (context) => FilterPage(),
     pageLogo: (context) => Logo(),
     pageLogIn: (context) => LoginPage(),
     pageSignUp: (context) => SignUpPage(),

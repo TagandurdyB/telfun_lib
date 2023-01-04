@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:telfun/Models/Base.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 
 import 'JsonCacher.dart';
 import 'MapConverter.dart';

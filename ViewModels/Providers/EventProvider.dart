@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:telfun/Models/Public.dart';
 import '/ViewModels/ApiElements.dart';
-import 'MapConverter.dart';
-import 'Names.dart';
+import '../MapConverter.dart';
+import '../Names.dart';
 
 class EventsProvid extends ChangeNotifier {
   List _objs = Get_Lists(listTag: ApiTags.events).getList();

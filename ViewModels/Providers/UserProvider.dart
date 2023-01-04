@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import 'MapConverter.dart';
-import 'Names.dart';
+import '../MapConverter.dart';
+import '../Names.dart';
 
 class UserProvider extends ChangeNotifier {
   List _allObjs = Get_Lists(listTag: ApiTags.all).getList();

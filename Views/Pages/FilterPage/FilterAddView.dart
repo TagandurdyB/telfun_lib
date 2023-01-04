@@ -1,54 +1,30 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
-import 'package:telfun/ViewModels/EventProvider.dart';
-import 'package:telfun/ViewModels/FilterProvider.dart';
 import 'package:telfun/ViewModels/JsonCacher.dart';
-import 'package:telfun/ViewModels/JsonDebuger.dart';
-import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
-import 'package:telfun/ViewModels/Theme_Provider.dart';
-import 'package:telfun/ViewModels/ValueProvider.dart';
+import 'package:telfun/ViewModels/Providers/FilterProvider.dart';
+import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
+import 'package:telfun/ViewModels/Providers/ValueProvider.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
 import 'package:telfun/Views/widgets/FilterSwitch.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';
+import 'package:telfun/Views/widgets/ScaffoldParts/ScaffoldAll.dart';
 import 'package:telfun/Views/widgets/imgBtn.dart';
 
-import '../widgets/ScaffoldParts/ScaffoldAll.dart';
+import 'FilterPop.dart';
 
-class FilterPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Json_Get(
-      jsonName: JsonTags.filterMark,
-      Return: Json_Get(
-        jsonName: JsonTags.filterModel,
-        Return: Json_Get(
-          jsonName: JsonTags.filterColor,
-          Return: Json_Get(
-            jsonName: JsonTags.filterPlace,
-            Return: Json_Get(
-              jsonName: JsonTags.filterEtrap,
-              Return: FilterView(),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class FilterView extends StatefulWidget {
+class FilterAddView extends StatefulWidget {
   // const SetingsPage({Key? key}) : super(key: key);
 
   @override
-  _FilterViewState createState() => _FilterViewState();
+  _FilterAddViewState createState() => _FilterAddViewState();
 }
 
-class _FilterViewState extends State<FilterView> {
+class _FilterAddViewState extends State<FilterAddView> {
   DDBEl DDColor, DDMark, DDModel, DDPlace, DDTime;
 
   @override
@@ -60,32 +36,70 @@ class _FilterViewState extends State<FilterView> {
   }
 
   void erease() {
-    DDColor = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDModel = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    DDColor = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDPlace = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDTime = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+  }
+
+
+  void fill(Map _basa){
+    List _listMark=_basa[JsonTags.filterMark];
+    List _listModel=_basa[JsonTags.filterModel];
+    List _listColor=_basa[JsonTags.filterColor];
+    List _listPlace=_basa[JsonTags.filterPlace];
+    int _numMark=_listMark.length;
+    int _numModel=_listModel.length;
+    int _numColor=_listColor.length;
+    int _numPlace=_listPlace.length;
+    if(_numMark==0)
+    DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    else if(_numMark==1)
+      DDMark = DDBEl(index: -1, value: "${_listMark[0].name}", id: 0);
+    else
+      DDMark = DDBEl(index: -1, value: "Marka ($_numMark)", id: 0);
+
+    if(_numModel==0)
+      DDModel = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    else if(_numModel==1)
+      DDModel = DDBEl(index: -1, value: "${_listModel[0].name}", id: 0);
+    else
+      DDModel = DDBEl(index: -1, value: "Model ($_numModel)", id: 0);
+
+    if(_numColor==0)
+      DDColor = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    else if(_numColor==1)
+      DDColor = DDBEl(index: -1, value: "${_listColor[0].name}", id: 0);
+    else
+      DDColor = DDBEl(index: -1, value: "Reňk ($_numColor)", id: 0);
+    if(_numPlace==0)
+      DDPlace = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    else if(_numPlace==1)
+      DDPlace = DDBEl(index: -1, value: "${_listPlace[0].name}", id: 0);
+    else
+      DDPlace = DDBEl(index: -1, value: "Ýer ($_numPlace)", id: 0);
   }
 
   @override
   Widget build(BuildContext context) {
     final providerFilter = Provider.of<FilterProvider>(context);
+    fill(providerFilter.filters);
     final providerValues = Provider.of<ValuesProvider>(context);
     final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable,
         enable = Provider.of<ThemeProvided>(context).styleEnable;
-    return ScaffoldAll(
-        body: Container(
+    return Container(
       padding: EdgeInsets.all(16),
       child: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          Container(
+/*          Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.symmetric(
                   horizontal: SWi * 0.06, vertical: SWi * 0.03),
               child: Text("Filtirler",
                   style: TextStyle(
-                      fontSize: SWi * 0.06, fontWeight: FontWeight.w800))),
+                      fontSize: SWi * 0.06, fontWeight: FontWeight.w800))),*/
           Card(
             color: ThemeProvided().colorCanvas,
             child: ListTile(
@@ -96,6 +110,7 @@ class _FilterViewState extends State<FilterView> {
                         context: context,
                         list: _marks,
                         title: "Markalar",
+                        apiTag: ApiTags.mark,
                         jsonTag: JsonTags.filterMark)
                     .pop;
               },
@@ -114,12 +129,13 @@ class _FilterViewState extends State<FilterView> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                final List _models = providerFilter.modelObjs;
+                final List _models = providerValues.modelObjs;
                 //PopDrop(context, _models, "Modeller").popUp(context);
                 PopStateFull(
                         context: context,
                         list: _models,
                         title: "Modeller",
+                        apiTag: ApiTags.model,
                         jsonTag: JsonTags.filterModel)
                     .pop;
               },
@@ -144,6 +160,7 @@ class _FilterViewState extends State<FilterView> {
                         context: context,
                         list: _colors,
                         title: "Reňki",
+                        apiTag: ApiTags.colors,
                         jsonTag: JsonTags.filterColor)
                     .pop;
               },
@@ -226,6 +243,7 @@ class _FilterViewState extends State<FilterView> {
                         context: context,
                         list: _place,
                         title: "Ýerleşýän ýeri",
+                        apiTag: ApiTags.place,
                         jsonTag: JsonTags.filterPlace)
                     .pop;
               },
@@ -294,218 +312,53 @@ class _FilterViewState extends State<FilterView> {
                   child: Container(
                       padding: EdgeInsets.all(8),
                       child: ElevatedButton(
-                          onPressed: () {}, child: Text("ÝATDASAKLA")))),
+                          onPressed: () {
+                            PopUppWidget(
+                                title: "Filtiriň Ady",
+                                centerTitle: true,
+                                content: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Container(
+                                      child: ReadyInput(
+                                        shape: true,
+                                        tag: RITags.rIFilter,
+                                        borderRad: 20,
+                                        hidden: "Filteriň adyny ýazyň...",
+                                        label: "Ad ber",
+                                        onChange: (val, tag) {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                actionsTeam: [
+                                  ActionsTeam(func: () {}, text: "Ýatyr"),
+                                  ActionsTeam(
+                                      func: () {
+                                        JsonListCacher(
+                                                jsonName: JsonTags.filters)
+                                            .addSaved({
+                                          "name":
+                                              "${RIBase.getText(RITags.rIFilter)}",
+                                          "id": providerFilter.savedFilters.length,
+                                        });
+                                        Provider.of<UsesVar>(context,
+                                                listen: false)
+                                            .Select(1);
+                                        Navigator.pop(context);
+                                      },
+                                      text: "Goş",
+                                      isPopEnable: false),
+                                ]).popUp(context);
+                          },
+                          child: Text("ÝATDASAKLA")))),
             ],
           )
         ],
       ),
-    ));
-  }
-
-  PopUppWidget PopDrop(
-      BuildContext context, List<dynamic> _list, String _title) {
-    String _name = "";
-    bool _isCheck = false;
-    return PopUppWidget(
-        content: Column(
-          children: List.generate(_list.length + 1, (index) {
-            var _obj;
-            if (index != 0) _obj = _list[index - 1];
-            if (_title != "Reňki")
-              _name = index != 0 ? _obj.name : "Ähli";
-            else
-              _name = index != 0 ? _obj.tm : "Ähli";
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ImgBtn(
-                  onTap: () {
-                    if (_title == "Markalar") {
-                      DDMark.value = index != 0 ? _obj.name : "Ähli";
-                      DDMark.id = index != 0 ? _obj.id : 0;
-                      DDMark.index = 0;
-                    } else if (_title == "Modeller") {
-                      DDModel.value = index != 0 ? _obj.name : "Ähli";
-                      DDModel.id = index != 0 ? _obj.id : 0;
-                      DDModel.index = 0;
-                    } else if (_title == "Reňki") {
-                      DDColor.value = index != 0 ? _obj.tm : "Ähli";
-                      DDColor.id = index != 0 ? _obj.id : 0;
-                      DDColor.index = 0;
-                    } else if (_title == "Ýerleşýän ýeri") {
-                      DDPlace.value = index != 0 ? _obj.name : "Ähli";
-                      DDPlace.id = index != 0 ? _obj.id : 0;
-                      DDPlace.index = 0;
-                    }
-                    setState(() {});
-                    // Navigator.pop(context);
-                  },
-                  width: double.infinity,
-                  height: SWi * 0.1,
-                  color: Colors.transparent,
-                  child: Container(
-                    child: ListTile(
-                      leading: Text(
-                        "$_name",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: SWi * 0.033),
-                      ),
-                      trailing: Container(
-                        child: Checkbox(
-                          value: _isCheck,
-                          onChanged: (bool _val) {
-                            _isCheck = _val;
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(color: Colors.purpleAccent)
-              ],
-            );
-          }),
-        ),
-        title: "$_title:",
-        centerTitle: true,
-        bgColor: ThemeProvided().colorCanvas);
-  }
-
-/*  PopStateFull(context, List _list, String title) {
-    bool _isCheck = false;
-    return showDialog(
-        context: context,
-        builder: (context) => Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Container(
-                  color: Colors.black26,
-                  alignment: Alignment.center,
-                  child:
-                      CheckList(isCheck: _isCheck, list: _list, title: title)),
-            ));
-  }*/
-}
-
-class PopStateFull {
-  final BuildContext context;
-  bool isCheck;
-  final List list;
-  final String title, jsonTag;
-  PopStateFull(
-      {this.jsonTag, this.context, this.list, this.isCheck, this.title});
-  get pop => showDialog(
-      context: context,
-      builder: (context) => CheckList(title: title, list: list,jsonTag: jsonTag));
-}
-
-class CheckList extends StatefulWidget {
-  bool isCheck;
-  final List list;
-  final String title, jsonTag;
-  CheckList({this.list, this.isCheck, this.title, this.jsonTag});
-
-  @override
-  _CheckListState createState() => _CheckListState();
-}
-
-class _CheckListState extends State<CheckList> {
-  @override
-  Widget build(BuildContext context) {
-    return buildScaffold(context, widget.title, widget.list);
-  }
-
-  Scaffold buildScaffold(BuildContext context, String title, List list) {
-    final providerValues = Provider.of<ValuesProvider>(context);
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        color: Colors.black26,
-        alignment: Alignment.center,
-        child: ImgBtn(
-          color: ThemeProvided().colorModel,
-          width: SWi * 0.8,
-          height: SHe * 0.8,
-          shape: SWi * 0.02,
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  title + " :",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: SWi * 0.04),
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: List.generate(widget.list.length + 1, (index) {
-                      if (index == 0) {
-                        return FilterSwitch(
-                          title: "Ähli",
-                          // obj: _obj,
-                        );
-                      }
-                      if (title == "Ýerleşýän ýeri") {
-                        final _obj = widget.list[index - 1];
-                        return SwitchListTile(
-                            title: Text(_obj.name,
-                                style: ThemeProvided().styleUserPage),
-                            value: false,
-                            onChanged: (bool _val) {
-                              final List _etrabs =
-                                  providerValues.etrapObjs(_obj.id - 1);
-                              PopStateFull(
-                                context: context,
-                                list: _etrabs,
-                                title: "Etrap",
-                              ).pop;
-                            });
-                      } else {
-                        final _obj = widget.list[index - 1];
-                        return FilterSwitch(
-                          JsonTag: widget.jsonTag,
-                          title: _obj.name,
-                          obj: _obj,
-                        );
-                      }
-                    }),
-                  ),
-                ),
-              ),
-              Container(
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      padding: EdgeInsets.all(8),
-                      child: ElevatedButton(
-                        child: Text('Ýatyr'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                        ),
-                      ),
-                    )),
-                    Expanded(
-                        child: Container(
-                            padding: EdgeInsets.all(8),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text("Tamam")))),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
+
+
