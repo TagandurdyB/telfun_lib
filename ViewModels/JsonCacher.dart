@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:telfun/Models/Base.dart';
+import 'package:telfun/ViewModels/Names.dart';
 
 import '/Models/Cacher.dart';
 import 'MapConverter.dart';
@@ -13,11 +14,9 @@ class JsonListCacher {
     Cacher.writeJson(jsonName, jsonEncode(list));
   }
 
-  void addBase(List _list){
-    Base(isAPI: false).add({
-      jsonName:
-      MapConverter(JsonName: jsonName, MapList:_list).toElem()
-    });
+  void addBase(List _list) {
+    Base(isAPI: false).add(
+        {jsonName: MapConverter(JsonName: jsonName, MapList: _list).toElem()});
   }
 
   Future<bool> addSaved(Map _map) async {
@@ -41,40 +40,40 @@ class JsonListCacher {
         save(_list);
         addBase(_list);
         _added = true;
-      } else{
+      } else {
         _added = false;
       }
       return _added;
     }
   }
 
-/*  Future<bool> addFilters(Map _map) async {
+  Future<bool> multiAddSaved(List _mapList) async {
     bool _added;
     List _list = await load();
     if (_list.isEmpty) {
-      _list.add(_map);
-      save(_list);
-      addBase(_list);
+      save(_mapList);
+      addBase(_mapList);
       _added = true;
     } else {
-      bool _canAdd = true;
-     for (int i = 0; i < _list.length; i++) {
-        if (_list[i]["name"] == _map["name"]) {
-          _canAdd = false;
-          break;
-        }
-      }
+      bool _canAdd = false;
+      _list.forEach((element) {
+        _mapList = _mapList
+            .where((elementM) => elementM["id"] != element["id"])
+            .toList();
+      });
+      if (_mapList.isNotEmpty) _canAdd = true;
+
       if (_canAdd) {
-        _list.add(_map);
-        save(_list);
-        addBase(_list);
+        List _result =_list + _mapList;
+        save(_result);
+        addBase(_result);
         _added = true;
-      } else{
+      } else {
         _added = false;
-       }
-      return _added;
+      }
     }
-  }*/
+    return _added;
+  }
 
   Future<bool> removeSaved(Map _map) async {
     bool _removed;
@@ -102,22 +101,55 @@ class JsonListCacher {
     return _removed;
   }
 
+  Future<bool> multiRemoveSaved(List<Map> _mapList) async {
+    bool _removed;
+    List _list = await load();
+    if (_list.isEmpty) {
+      _removed = false;
+    } else {
+      bool _canRemove = false;
+      int _firstListLength = _list.length;
+
+      _mapList.forEach((element) {
+        _list =
+            _list.where((elementL) => elementL["id"] != element["id"]).toList();
+      });
+
+      if (_firstListLength != _list.length) _canRemove = true;
+
+      if (_canRemove) {
+        save(_list);
+        addBase(_list);
+        _removed = true;
+      } else
+        _removed = false;
+    }
+    return _removed;
+  }
+
+  Future<bool> removeAllSaved() async {
+    bool _removed = false;
+    save([]);
+    _removed = true;
+    return _removed;
+  }
+
   Future<List> load() async {
     File file = await Cacher.getDirectory(jsonName);
-    List _result=[];
+    List _result = [];
     if (file.existsSync()) {
       List _list = await Cacher.readJson(jsonName);
       print("Loading Finished Sucsses!");
-      _result=_list;
-    }else{
+      _result = _list;
+    } else {
       print("Saved Json!");
       save([]);
-      _result=[];
+      _result = [];
     }
     return _result;
   }
 
-  Future getDate() async{
+  Future getDate() async {
     return await load();
   }
 }

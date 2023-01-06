@@ -11,18 +11,22 @@ class FilterSwitch extends StatefulWidget {
   bool isCheck;
   final obj;
   final String title;
-  final String jsonTag,apiTag;
+  final String jsonTag, apiTag;
   final Function func;
   FilterSwitch(
-      {this.apiTag,this.func, this.isCheck = false, this.title, this.obj, this.jsonTag});
+      {this.apiTag,
+      this.func,
+      this.isCheck = false,
+      this.title,
+      this.obj,
+      this.jsonTag});
 
   @override
   State<FilterSwitch> createState() => _FilterSwitchState();
 }
 
 class _FilterSwitchState extends State<FilterSwitch> {
-
-  Map convert(_obj){
+  Map convert(_obj) {
     Map _map = {};
     switch (widget.jsonTag) {
       case JsonTags.filterMark:
@@ -54,9 +58,9 @@ class _FilterSwitchState extends State<FilterSwitch> {
     return _map;
   }
 
-  void funcTongle() {
+  void funcTongle() async {
     final provider = Provider.of<FilterProvider>(context, listen: false);
-    if(widget.title!="Ähli"){
+    if (widget.title != "Ähli") {
       final _obj = widget.obj;
       Map _map = convert(_obj);
       if (widget.isCheck) {
@@ -65,25 +69,26 @@ class _FilterSwitchState extends State<FilterSwitch> {
         JsonListCacher(jsonName: widget.jsonTag).addSaved(_map);
       }
       provider.tongleFilter(_obj, widget.jsonTag);
-      provider.reload();
+    } else {
+      List _list = Provider.of<ValuesProvider>(context, listen: false)
+          .all(widget.apiTag);
+      bool _canAdded = false;
+      bool _canRemowed = false;
+      List _mapList =
+          MapConverter(ApiName: widget.apiTag, ElemList: _list).toMap();
+      if (widget.isCheck) {
+        _canRemowed =
+            await JsonListCacher(jsonName: widget.jsonTag).removeAllSaved();
+        print("Can Remowed:= $_canRemowed");
+      } else {
+        _canAdded = await JsonListCacher(jsonName: widget.jsonTag)
+            .multiAddSaved(_mapList);
+        print("Can Added:= $_canAdded");
+      }
+      provider.tongleAllFilter(_list, widget.jsonTag, widget.isCheck);
     }
-    else {
-List _list=Provider.of<ValuesProvider>(context,listen: false).all(widget.apiTag);
-_list.forEach((element) {
-  final _obj = element;
-  Map _map = convert(_obj);
-  if (widget.isCheck) {
-    JsonListCacher(jsonName: widget.jsonTag).removeSaved(_map);
-  } else {
-    JsonListCacher(jsonName: widget.jsonTag).addSaved(_map);
-  }
-  provider.tongleFilterAll(_obj, widget.jsonTag,widget.isCheck);
-});
 
-provider.reload();
-    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +97,8 @@ provider.reload();
         SwitchListTile(
             title: Text(widget.title, style: ThemeProvided().styleUserPage),
             value: widget.isCheck,
-            onChanged: (bool _val) {
-              funcTongle();
-              setState(() {
-                widget.isCheck = _val;
-              });
+            onChanged: (bool _val) async {
+              await funcTongle();
               if (widget.func != null) widget.func();
             }),
         Container(color: Colors.purpleAccent, height: 2),

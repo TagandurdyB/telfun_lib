@@ -20,6 +20,7 @@ class FilterProvider extends ChangeNotifier {
     JsonTags.filterModel: [],
     JsonTags.filterColor: [],
     JsonTags.filterPlace: [],
+    JsonTags.filterEtrap: [],
   };
   Map<String, List> get filters => _filters;
   List filter(String tag) => _filters[tag];
@@ -47,6 +48,8 @@ class FilterProvider extends ChangeNotifier {
             Get_Lists(isApi: false, listTag: JsonTags.filterColor).getList(),
         JsonTags.filterPlace:
             Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList(),
+        JsonTags.filterEtrap:
+            Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList(),
       };
       notifyListeners();
     });
@@ -69,12 +72,21 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void tongleAllFilter(List list, String tag, bool isAll) {
+  if(isAll) {
+    _filters[tag] = [];
+  }
+  else {
+    list = list.where((obj) => !isExist(obj, tag)).toList();
+    _filters[tag]+=list;
+  }
+    notifyListeners();
+  }
+
   void tongleFilterAll(obj, String tag, bool isAll) {
     if (isExist(obj, tag) && isAll) {
-      print("The End++++++ true");
       _filters[tag].remove(obj);
     } else if (!isExist(obj, tag) && !isAll) {
-      print("The End++++++ false");
       _filters[tag].add(obj);
     }
     notifyListeners();

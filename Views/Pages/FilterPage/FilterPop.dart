@@ -71,10 +71,13 @@ class _CheckListState extends State<CheckList> {
                   child: Column(
                     children: List.generate(widget.list.length + 1, (index) {
                       if (index == 0) {
+                        final int lengthValues=providerValues.all(widget.apiTag).length;
+                        final int lengthFilter=providerFilter.filter(widget.jsonTag).length;
                         return FilterSwitch(
                           title: "Ähli",
                           jsonTag: widget.jsonTag,
                           apiTag: widget.apiTag,
+                          isCheck: lengthFilter==lengthValues,
                         );
                       }
                       if (title == "Ýerleşýän ýeri") {
@@ -90,7 +93,9 @@ class _CheckListState extends State<CheckList> {
                                       context: context,
                                       list: _etrabs,
                                       title: "Etrap",
-                                      jsonTag: JsonTags.filterEtrap)
+                                      jsonTag: JsonTags.filterEtrap,
+                                      apiTag: ApiTags.place
+                              )
                                   .pop;
                             });
                       } else {
