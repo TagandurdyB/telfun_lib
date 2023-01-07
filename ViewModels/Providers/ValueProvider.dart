@@ -11,7 +11,9 @@ class ValuesProvider extends ChangeNotifier {
   List get colorObjs => _colorObjs;
   List _placeObjs = [];
   List get placeObjs => _placeObjs;
-  List etrapObjs(int welayatIndex) {
+  List _etrapObjs = [];
+  List get etrapObjs => _etrapObjs;
+  List etrapObjsIndex(int welayatIndex) {
     return _placeObjs[welayatIndex].etraps ?? [];
   }
   List _categoryObjs = [];
@@ -22,7 +24,8 @@ class ValuesProvider extends ChangeNotifier {
     ApiTags.model: [],
     ApiTags.colors: [],
     ApiTags.place: [],
-    ApiTags.categori:[]
+    ApiTags.etraps:[],
+    ApiTags.categori:[],
   };
   Map get allOfThem => _all;
   List  all(String tag)=>_all[tag];
@@ -33,12 +36,14 @@ class ValuesProvider extends ChangeNotifier {
       _modelObjs = Get_Lists(listTag: ApiTags.model).getList();
       _colorObjs = Get_Lists(listTag: ApiTags.colors).getList();
       _placeObjs = Get_Lists(listTag: ApiTags.place).getList();
+      _etrapObjs = Get_Lists(listTag: ApiTags.etraps).getList();
       _categoryObjs = Get_Lists(listTag: ApiTags.categori).getList();
       _all = {
         ApiTags.mark: Get_Lists(listTag: ApiTags.mark).getList(),
         ApiTags.model: Get_Lists(listTag: ApiTags.model).getList(),
         ApiTags.colors: Get_Lists(listTag: ApiTags.colors).getList(),
         ApiTags.place: Get_Lists(listTag: ApiTags.place).getList(),
+        ApiTags.etraps: Get_Lists(listTag: ApiTags.etraps).getList(),
         ApiTags.categori:Get_Lists(listTag: ApiTags.categori).getList(),
       };
       notifyListeners();

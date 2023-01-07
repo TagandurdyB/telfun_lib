@@ -11,6 +11,7 @@ class MyTheme {
   static Color lightColorNavBarIcon = Color(0xffC944F6);
   static Color lightColorText = Colors.black;
   static Color lightColorModel = Color(0xffF6F2FA);
+  static Color lightColorVip = Colors.yellow[300];
   /*Dark*/
   static Color darkColorCanves = Color(0xff10083C);
   static Color darkColorAppBarIcon = Colors.white;
@@ -18,6 +19,7 @@ class MyTheme {
   static Color darkColorNavBarIcon = Color(0xff6A00FF);
   static Color darkColorText = Colors.white;
   static Color darkColorModel = Color(0xff1A0B6C);
+  static Color darkColorVip = Colors.grey[500];
   //TextStyles/////////////////////////////////////////////////////////////////
   /*Light*/
   static TextStyle lightStyleUserPage = TextStyle(

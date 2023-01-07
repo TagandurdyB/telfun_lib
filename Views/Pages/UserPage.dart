@@ -333,13 +333,15 @@ class MyProfil extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: SWi * 0.01),
       child: Builder(
         builder: (context) => ListTile(
-          onTap: () => Navigator.push(
+          onTap: () {
+            Provider.of<UsesVar>(context,listen: false).changeScaffoldTitle(title);
+            Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => ProductPage(
                         title: titleProduct,
                         objs: objs,
-                      ))),
+                      )));},
           leading: iconBloc(icon),
           title: Text(
             title,

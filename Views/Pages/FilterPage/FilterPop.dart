@@ -86,15 +86,17 @@ class _CheckListState extends State<CheckList> {
                             title: Text(_obj.name,
                                 style: ThemeProvided().styleUserPage),
                             value: false,
+                            //providerFilter.isExist(obj, widget.jsonTag),
                             onChanged: (bool _val) {
                               final List _etrabs =
-                                  providerValues.etrapObjs(_obj.id - 1);
+                              //providerValues.etrapObjs;
+                                  providerValues.etrapObjsIndex(_obj.id - 1);
                               PopStateFull(
                                       context: context,
                                       list: _etrabs,
-                                      title: "Etrap",
+                                      title: "${_obj.name} welaýat",
                                       jsonTag: JsonTags.filterEtrap,
-                                      apiTag: ApiTags.place
+                                      apiTag: ApiTags.etraps
                               )
                                   .pop;
                             });

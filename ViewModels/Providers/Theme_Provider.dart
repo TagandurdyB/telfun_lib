@@ -38,6 +38,8 @@ class ThemeProvided extends ChangeNotifier {
       getTheme() ? MyTheme.lightColorText : MyTheme.darkColorText;
   Color get colorModel =>
       getTheme() ? MyTheme.lightColorModel : MyTheme.darkColorModel;
+  Color get colorVip =>
+      getTheme() ? MyTheme.lightColorVip : MyTheme.darkColorVip;
   //TextStyles/////////////////////////////////////
   TextStyle get styleUserPage =>
       getTheme() ? MyTheme.lightStyleUserPage : MyTheme.darkStyleUserPage;

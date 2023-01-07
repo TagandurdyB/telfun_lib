@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:telfun/ViewModels/Auth.dart';
 import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
 import '/ViewModels/ApiDebuging.dart';
 
 import 'Verification.dart';
@@ -81,7 +82,7 @@ class _SignUpFormState extends State<SignUpForm> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
               textAlign: TextAlign.center,
             )),
-        backgroundColor: Colors.white,
+        backgroundColor:ThemeProvided().colorCanvas,
       ));
       if (controls[2].text.length < 6) {
         _showdetail = true;
@@ -104,6 +105,10 @@ class _SignUpFormState extends State<SignUpForm> {
           ).IsRegister();
       print("**isAlredyRegister = $isAlredyRegister");
       if (!isAlredyRegister) {
+        PopUppWidget(
+          title: "Garaşyň!",
+          content: Container(child: CircularProgressIndicator(),),
+        ).popUpCupertino(context);
         print("name:${controls[0].text} password: ${controls[2].text}");
         Auth(
           context,

@@ -12,9 +12,12 @@ class FilterProvider extends ChangeNotifier {
   List _colorObjs = [];
   List get colorObjs => _colorObjs;
   List _placeObjs = [];
-  List _etrapObjs = [];
   List get placeObjs => _placeObjs;
-
+  List _etrapObjs = [];
+  List get etrapObjs => _etrapObjs;
+  List etrapObjsIndex(int welayatIndex) {
+    return _placeObjs[welayatIndex].etraps ?? [];
+  }
   Map<String, List> _filters = {
     JsonTags.filterMark: [],
     JsonTags.filterModel: [],
@@ -39,6 +42,8 @@ class FilterProvider extends ChangeNotifier {
           Get_Lists(isApi: false, listTag: JsonTags.filterColor).getList();
       _placeObjs =
           Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList();
+      _etrapObjs =
+          Get_Lists(isApi: false, listTag: JsonTags.filterEtrap).getList();
       _filters = {
         JsonTags.filterMark:
             Get_Lists(isApi: false, listTag: JsonTags.filterMark).getList(),
@@ -49,7 +54,7 @@ class FilterProvider extends ChangeNotifier {
         JsonTags.filterPlace:
             Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList(),
         JsonTags.filterEtrap:
-            Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList(),
+            Get_Lists(isApi: false, listTag: JsonTags.filterEtrap).getList(),
       };
       notifyListeners();
     });

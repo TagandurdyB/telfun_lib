@@ -22,12 +22,12 @@ class Categori extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<UsesVar>(context,listen: false).changeSort(0);
+        Provider.of<UsesVar>(context, listen: false).changeSort(0);
         Provider.of<UsesVar>(context, listen: false).changeMark(0, -1);
         // Provider.of<UsesVar>(context, listen: false).Select(0);
-        int categoriId =
-            Get_Lists(listTag: ApiTags.categori).getList()[index].id;
-        Provider.of<UsesVar>(context, listen: false).changeCategoryIndex(index);
+        int categoriId = list[index].id;
+        String categoryName = list[index].tm;
+        Provider.of<UsesVar>(context, listen: false).changeScaffoldTitle(categoryName);
         print("CategoryID:$categoriId");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => API_Get(
@@ -41,7 +41,7 @@ class Categori extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(SWi * 0.05),
-            boxShadow:Provider.of<ThemeProvided>(context).shadowSlider,
+            boxShadow: Provider.of<ThemeProvided>(context).shadowSlider,
             color: Color(0xff7262DF),
             gradient: LinearGradient(
                 begin: Alignment.topLeft,

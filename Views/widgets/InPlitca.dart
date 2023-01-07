@@ -32,14 +32,24 @@ class InCategory extends StatefulWidget {
 }
 
 class _InCategoryState extends State<InCategory> {
+
+  String _placeShort,_place2Full;
+
   @override
-  Widget build(BuildContext context) {
-   final String _place= widget.obj.etrap.shortName() != "Ähli"
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+      _placeShort = widget.obj.etrap.shortName() != "Ähli"
         ? "${widget.obj.place} / ${widget.obj.etrap.shortName()}"
         : "${widget.obj.place}";
-   final String _place2= widget.obj.etrap.shortName() != "Ähli"
-       ? "${widget.obj.place} / ${widget.obj.etrap.name}"
-       : "${widget.obj.place}";
+      _place2Full = widget.obj.etrap.shortName() != "Ähli"
+        ? "${widget.obj.place} / ${widget.obj.etrap.name}"
+        : "${widget.obj.place}";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: SWi * 0.02, vertical: SWi * 0.017),
@@ -58,7 +68,7 @@ class _InCategoryState extends State<InCategory> {
                         URL: "$IP/api/new/${widget.obj.id}",
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
-                          place: _place2,
+                            place: _place2Full,
                             obj: widget.obj,
                             isfavorite:
                                 widget.isFavorite /*list[index].favorite*/,
@@ -68,7 +78,7 @@ class _InCategoryState extends State<InCategory> {
                         URL: "$IP/api/event/${widget.obj.id}",
                         ApiName: ApiTags.detal,
                         Return: DetalPage(
-                          place: _place2,
+                          place: _place2Full,
                           obj: widget.obj,
                           isfavorite:
                               widget.isFavorite /*list[index].favorite*/,
@@ -85,114 +95,121 @@ class _InCategoryState extends State<InCategory> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadiusDirectional.circular(SWi * 0.035),
-            /* gradient: LinearGradient(
-            colors: [
-              Colors.yellow[300],
-              Colors.white
-            ]
-          )*/
+            gradient: widget.obj.isVip?LinearGradient(colors: [
+              ThemeProvided().colorVip,
+              ThemeProvided().colorCanvas
+            ]):null,
             color: ThemeProvided().colorCanvas,
           ),
           margin: EdgeInsets.all(SWi * 0.005),
           width: SWi,
           height: SWi * 0.3,
-          child: widget.obj.is_new?
-              ClipRect(
-                child: Banner(
-                  color: Color(0xff8017FF),
-                  message: "Täze",
-
-                  location: BannerLocation.topStart,
-                child: InCategoriStak(_place),),
-              ):
-          InCategoriStak(_place),
+          child: widget.obj.is_new
+              ? ClipRect(
+                  child: Banner(
+                    color: Color(0xff8017FF),
+                    message: "Täze",
+                    location: BannerLocation.topStart,
+                    child: vipBaner(),
+                  ),
+                )
+              : vipBaner(),
         ),
       ),
     );
   }
 
-  Stack InCategoriStak(String _place) {
+  Widget vipBaner(){
+    return widget.obj.isVip?ClipRect(
+      child: Banner(
+        color: Colors.deepOrange,
+        message: "VIP",
+        location: BannerLocation.bottomEnd,
+        child: InCategoriStak(),
+      ),
+    ):InCategoriStak();
+  }
+
+  Stack InCategoriStak() {
     return Stack(
-          alignment: Alignment.centerRight,
-          children: [
-            Positioned(
-                right: 0,
-                top: 0,
-                child: FavoriteBtn(
-                  onTop: widget.favoriteFunc,
-                  favorite: widget.isFavorite,
-                  obj: widget.obj,
-                  index: widget.index,
-                  radius: SWi * 0.1,
-                )),
-            Positioned(
-              right: SWi * 0.1,
-              child: Container(
-                padding: EdgeInsets.all(SWi * 0.01),
-                decoration: BoxDecoration(
-                    //  color: Colors.grey[400],
-                    ),
-                width: SWi * 0.3,
-                height: SWi * 0.3,
-                child: CachedNetworkImage(
-                  cacheManager: CacheManager(Config("events",
-                      stalePeriod: Duration(days: 15),
-                      maxNrOfCacheObjects: 200)),
-                  key: UniqueKey(),
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Center(
-                      child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: Icon(
-                            Icons.photo,
-                            color: Colors.grey,
-                          ))),
-                  imageUrl: "$IP/storage/${widget.obj.public_image}",
-                  fit: BoxFit.cover,
+      alignment: Alignment.centerRight,
+      children: [
+        Positioned(
+            right: 0,
+            top: 0,
+            child: FavoriteBtn(
+              onTop: widget.favoriteFunc,
+              favorite: widget.isFavorite,
+              obj: widget.obj,
+              index: widget.index,
+              radius: SWi * 0.1,
+              color: Colors.transparent,
+            )),
+        Positioned(
+          right: SWi * 0.1,
+          child: Container(
+            padding: EdgeInsets.all(SWi * 0.01),
+            decoration: BoxDecoration(
+                //  color: Colors.grey[400],
                 ),
-              ),
+            width: SWi * 0.3,
+            height: SWi * 0.3,
+            child: CachedNetworkImage(
+              cacheManager: CacheManager(Config("events",
+                  stalePeriod: Duration(days: 15), maxNrOfCacheObjects: 200)),
+              key: UniqueKey(),
+              placeholder: (context, url) =>
+                  Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Center(
+                  child: FittedBox(
+                      fit: BoxFit.cover,
+                      child: Icon(
+                        Icons.photo,
+                        color: Colors.grey,
+                      ))),
+              imageUrl: "$IP/storage/${widget.obj.public_image}",
+              fit: BoxFit.cover,
             ),
-            Positioned(
-              left: SWi * 0.09,
-              child: Container(
-                // color: Colors.red,
-                // padding: EdgeInsets.all(SWi * 0.04),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        child: Text("${widget.obj.shortName()}",
-                            style: TextStyle(
-                                fontSize: SWi * 0.043,
-                                fontFamily: "NunitoRegular",
-                                fontWeight: FontWeight.w900))),
-                    SizedBox(height: SWi * 0.01),
-                    Container(
-                      child: Text("${widget.obj.price} TMT",
-                          style: TextStyle(
-                              fontSize: SWi * 0.04,
-                              fontFamily: "NunitoRegular")),
-                    ),
-                    SizedBox(height: SWi * 0.01),
-                    Text(
-                        _place,
+          ),
+        ),
+        Positioned(
+          left: SWi * 0.09,
+          child: Container(
+            // color: Colors.red,
+            // padding: EdgeInsets.all(SWi * 0.04),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    child: Text("${widget.obj.shortName()}",
                         style: TextStyle(
-                            fontSize: SWi * 0.037,
+                            fontSize: SWi * 0.043,
                             fontFamily: "NunitoRegular",
-                            fontWeight: FontWeight.w500)),
-                    SizedBox(height: SWi * 0.01),
-                    Text(
-                        "${widget.obj.data.day}.${widget.obj.data.month}.${widget.obj.data.year}",
-                        style: TextStyle(
-                            fontSize: SWi * 0.03,
-                            fontFamily: "NunitoRegular",
-                            fontWeight: FontWeight.w500)),
-                  ],
+                            fontWeight: FontWeight.w900))),
+                SizedBox(height: SWi * 0.01),
+                Container(
+                  child: Text("${widget.obj.price} TMT",
+                      style: TextStyle(
+                          fontSize: SWi * 0.04, fontFamily: "NunitoRegular")),
                 ),
-              ),
+                SizedBox(height: SWi * 0.01),
+                Text(_placeShort,
+                    style: TextStyle(
+                        fontSize: SWi * 0.037,
+                        fontFamily: "NunitoRegular",
+                        fontWeight: FontWeight.w500)),
+                SizedBox(height: SWi * 0.01),
+                Text(
+                    "${widget.obj.data.day}.${widget.obj.data.month}.${widget.obj.data.year}",
+                    style: TextStyle(
+                        fontSize: SWi * 0.03,
+                        fontFamily: "NunitoRegular",
+                        fontWeight: FontWeight.w500)),
+              ],
             ),
-          ],
-        );
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -15,8 +15,8 @@ class ElemPlace {
 
 class ElemEtrap {
   final String name;
-  final int id;
-  ElemEtrap({this.id, this.name});
+  final int id,place_id;
+  ElemEtrap({this.place_id,this.id, this.name});
 
   String shortName() {
     if (name.length > 10) {
@@ -50,14 +50,17 @@ class ElemEvents {
   final int id, price, index, mark_id, category_id, view;
   bool favorite;
   final ElemColor color;
-  final bool is_new;
+  final bool is_new, isVip;
   final DateTime data;
   final List images;
-  final String name, phone, place, about, mark, public_image;
+  final String name, phone, place, about,category, mark, public_image;
   final ElemEtrap etrap;
   //final List images;
   ElemEvents(
-      {this.etrap,
+      {
+        this.category="",
+        this.isVip = false,
+      this.etrap,
       this.view,
       this.color,
       this.mark_id,
@@ -99,8 +102,8 @@ class ElemEvents {
 
 class ElemColor {
   final int id;
-  final String tm, ru, en, code,name;
-  ElemColor({this.name,this.id, this.tm, this.ru, this.en, this.code});
+  final String tm, ru, en, code, name;
+  ElemColor({this.name, this.id, this.tm, this.ru, this.en, this.code});
   Color toColor() {
     int _code = int.parse("0xff${code.substring(1)}");
     return Color(_code);
@@ -113,9 +116,8 @@ class ElemShop {
   final List images;
   ElemShop(
       {this.user_id, this.phone, this.about, this.id, this.name, this.images});
-  String shortAbout(){
-    if(about.length>40)
-      return about.substring(0,40)+"...";
+  String shortAbout() {
+    if (about.length > 40) return about.substring(0, 40) + "...";
     return about;
   }
 }
@@ -123,6 +125,5 @@ class ElemShop {
 class ElemFilter {
   final int id;
   final String name;
-  ElemFilter({this.name,this.id});
-
+  ElemFilter({this.name, this.id});
 }

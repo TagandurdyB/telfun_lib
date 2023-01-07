@@ -16,8 +16,11 @@ class FavoriteBtn extends StatefulWidget {
   final int index;
   final double radius;
   final ElemEvents obj;
+  final Color color;
   FavoriteBtn(
-      {this.obj,
+      {
+        this.color,
+        this.obj,
       this.enableShadow = false,
       this.radius = 20,
       this.onTop,
@@ -66,7 +69,8 @@ class _FavoriteBtnState extends State<FavoriteBtn> {
       shape: widget.radius,
       width: widget.radius,
       height: widget.radius,
-      color: ThemeProvided().colorCanvas,
+      //color: ThemeProvided().colorCanvas,
+      color: widget.color??ThemeProvided().colorCanvas,
       child: Icon(
         widget.favorite ? Icons.bookmark : Icons.bookmark_border,
         size: widget.radius * 0.7,

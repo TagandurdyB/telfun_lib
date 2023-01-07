@@ -93,6 +93,7 @@ class _AddBtnState extends State<AddBtn> {
                         )).popUpCupertino(context);
                     final String inputName=RIBase.getText(RITags.rIName);
                     final String dropDName=DDBBase.getDate(DDBTags.dDBModel).value.toString();
+                    print("salam +++:=${DDBBase.getDate(DDBTags.dDBLocation).value}");
                     Map<String, String> body = {
                       "category_id":
                           DDBBase.getDate(DDBTags.dDBCategory).id.toString(),
@@ -102,7 +103,7 @@ class _AddBtnState extends State<AddBtn> {
                       "mark_id":
                           DDBBase.getDate(DDBTags.dDBMark).id.toString(),
                       "price": RIBase.getText(RITags.rIPrice),//controls[1].text,
-                      "place":DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
+                      "place":widget.place_id.toString(),//DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
                          // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": RIBase.getText(RITags.rIAbout),//controls[2].text,
                     };

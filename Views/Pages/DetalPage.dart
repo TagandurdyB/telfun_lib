@@ -246,7 +246,7 @@ class _DetalPageState extends State<DetalPage> {
                       child: Text("Bölümi"),
                     ),
                     Text(
-                        "${Get_Lists(listTag: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm}"),
+                        "${list.category}"),
                   ]),
                   TableRow(children: [
                     Padding(

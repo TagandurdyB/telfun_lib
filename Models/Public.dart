@@ -6,9 +6,9 @@ import 'package:telfun/ViewModels/ShPBDebug.dart';
 double SWi = 0.0, SHe = 0.0;
 int _select = 0, _navBarSelect = 0;
 List<DropDBid> filters = List.generate(10, (index) => DropDBid());
-int categoriId, categoriIndex = 0, _selectMarkId = 0, _selectMarkIndex = -1;
+int categoriId, _selectMarkId = 0, _selectMarkIndex = -1;
 bool _canAddEvent = false, _isLight;
-String _search = "";
+String _search = "", scaffoldTitle = "";
 StreamController myStreamControler = StreamController();
 
 class DropDBid {
@@ -88,13 +88,13 @@ class UsesVar extends ChangeNotifier {
     return [_selectMarkId, _selectMarkIndex];
   }
 
-  void changeCategoryIndex(int _val) {
-    categoriIndex = _val;
+  void changeScaffoldTitle(String _val) {
+    scaffoldTitle = _val;
     notifyListeners();
   }
 
-  int getCategoryIndex() {
-    return categoriIndex;
+  String getScaffoldTitle() {
+    return scaffoldTitle;
   }
 
   void changeCanAdd(i) {

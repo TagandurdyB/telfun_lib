@@ -136,7 +136,7 @@ class ScaffoldAll extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: SWi * 0.03),
                           child: Text(
-                            "${EnableBotomMenu ? Get_Lists(listTag: ApiTags.categori).getList()[Provider.of<UsesVar>(context).getCategoryIndex()].tm : ""}",
+                            EnableBotomMenu ? Provider.of<UsesVar>(context).getScaffoldTitle() : "",
                             style: TextStyle(
                                 fontSize: SWi * 0.045, fontWeight: FontWeight.w600),
                           ),

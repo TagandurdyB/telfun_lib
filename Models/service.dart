@@ -11,7 +11,7 @@ class Service {
   Service({this.Url});
   Future<bool> addImage(Map<String, String> body, List<File> filepath) async {
     if (filepath[0] == null) return false;
-    print("I am hear 1");
+    print("I am hear 1  :=${body}");
     //String addimageUrl = '$IP/api/add';
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
@@ -50,9 +50,9 @@ class Service {
   }
 
 
-  Future<bool> addNewEvent(Map map,String URL) async {
+  Future<bool> addNewEvent(Map map) async {
     bool check;
-    await http.post(Uri.parse(URL), body:map /*{
+    await http.post(Uri.parse(Url), body:map /*{
       "user_id": list[0],
       "place": list[1],
       "price": list[2],

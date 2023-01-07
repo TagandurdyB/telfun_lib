@@ -383,7 +383,7 @@ class _AddNewPageState extends State<AddNewPage> {
   }
 
   Widget AddNewBtn() {
-    Service service = Service(Url: '$IP/api/add');
+    Service service = Service(Url: "$IP/api/new_add");
     bool _about = false, _isUpload = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -443,7 +443,7 @@ class _AddNewPageState extends State<AddNewPage> {
                           DDBBase.getDate(DDBTags.dDBModel).id.toString(),
                     };
                     bool isUpload =
-                        await service.addNewEvent(body, "$IP/api/new_add");
+                        await service.addNewEvent(body);
                     if (isUpload) {
                 /*      controls.forEach((element) {
                         element.text = "";

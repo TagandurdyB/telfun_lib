@@ -1,11 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:telfun/ViewModels/Auth.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
+import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 import 'package:telfun/Views/widgets/ReadyInput/ReadyInput.dart';
 import 'package:telfun/Models/Public.dart';
+import 'package:telfun/Views/widgets/imgBtn.dart';
 
 class RemowePassPage extends StatelessWidget {
+  String _empetySMS = "Doly we dogry ýazyň!";
+
+  changeFunc(BuildContext context) {
+    String phone="+993"+RIBase.getText(RITags.rIPhone);
+    if(phone=="+993"){
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: ImgBtn(
+          height: 50,
+          shape: 10,
+          color: Colors.grey,
+          child: Text(
+            "${_empetySMS}",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        backgroundColor: ThemeProvided().colorCanvas,
+      ));
+    }else{
+      PopUppWidget(
+        title: "Garaşyň!",
+        content: Container(child: CircularProgressIndicator(),),
+      ).popUpCupertino(context);
+      Auth(
+        context,
+        body: {
+          "phone": phone,
+        },
+        phone: phone,
+      ).loginWithPhone();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +88,7 @@ class RemowePassPage extends StatelessWidget {
                       color: Color(0xff5807B6),
                       child: Builder(
                         builder: (context) => ListTile(
-                          onTap: () {},
+                          onTap:()=>changeFunc(context),
                           title: Center(
                               child: Text(
                                 "Dikelt",

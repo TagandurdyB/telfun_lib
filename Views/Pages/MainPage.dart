@@ -38,7 +38,10 @@ class MainPage extends StatelessWidget {
                   Return: API_Get(
                       URL: "$IP/api/welayat",
                       ApiName: ApiTags.place,
-                      Return: Main()),
+                      Return: API_Get(
+                          URL: "$IP/api/etrap",
+                          ApiName: ApiTags.etraps,
+                          Return: Main())),
                 ),
               ),
             )));
