@@ -11,10 +11,12 @@ class FilterSwitch extends StatefulWidget {
   bool isCheck;
   final obj;
   final String title;
+  final List objs;
   final String jsonTag, apiTag;
   final Function func;
   FilterSwitch(
-      {this.apiTag,
+      {this.objs,
+        this.apiTag,
       this.func,
       this.isCheck = false,
       this.title,
@@ -24,6 +26,7 @@ class FilterSwitch extends StatefulWidget {
   @override
   State<FilterSwitch> createState() => _FilterSwitchState();
 }
+
 
 class _FilterSwitchState extends State<FilterSwitch> {
   Map convert(_obj) {
@@ -60,18 +63,38 @@ class _FilterSwitchState extends State<FilterSwitch> {
 
   void funcTongle() async {
     final provider = Provider.of<FilterProvider>(context, listen: false);
-    if (widget.title != "Ähli") {
+     if (widget.title != "Ähli") {
       final _obj = widget.obj;
       Map _map = convert(_obj);
+      bool _canAdded = false;
+      bool _canRemowed = false;
       if (widget.isCheck) {
-        JsonListCacher(jsonName: widget.jsonTag).removeSaved(_map);
+        _canRemowed =
+            await JsonListCacher(jsonName: widget.jsonTag).removeSaved(_map);
+        print("Can Remowed:= $_canRemowed");
+        provider.reload();
       } else {
-        JsonListCacher(jsonName: widget.jsonTag).addSaved(_map);
+        _canAdded =
+            await JsonListCacher(jsonName: widget.jsonTag).addSaved(_map);
+        print("Can Added:= $_canAdded");
       }
       provider.tongleFilter(_obj, widget.jsonTag);
-    } else {
-      List _list = Provider.of<ValuesProvider>(context, listen: false)
-          .all(widget.apiTag);
+
+      if(widget.jsonTag==JsonTags.filterEtrap){
+
+      }
+
+    }
+ else {
+      List _list =widget.objs;
+      /*if(ApiTags.etraps!=widget.apiTag) {
+        _list = Provider.of<ValuesProvider>(context, listen: false)
+            .all(widget.apiTag);
+      }
+      else{
+        _list = Provider.of<ValuesProvider>(context, listen: false)
+            .placeEtrapObjs();
+      }*/
       bool _canAdded = false;
       bool _canRemowed = false;
       List _mapList =
@@ -79,11 +102,11 @@ class _FilterSwitchState extends State<FilterSwitch> {
       if (widget.isCheck) {
         _canRemowed =
             await JsonListCacher(jsonName: widget.jsonTag).removeAllSaved();
-        print("Can Remowed:= $_canRemowed");
+        print("Can Multi Remowed:= $_canRemowed");
       } else {
         _canAdded = await JsonListCacher(jsonName: widget.jsonTag)
             .multiAddSaved(_mapList);
-        print("Can Added:= $_canAdded");
+        print("Can Multi Added:= $_canAdded");
       }
       provider.tongleAllFilter(_list, widget.jsonTag, widget.isCheck);
     }

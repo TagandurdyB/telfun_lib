@@ -224,7 +224,11 @@ class localConverter {
         place_id: _map["place_id"],
       );
     } catch (_e) {
-      print("+Convet_ERROR+: Be error from mapToElemEtrap!!! :$_e");
+      print("MAP : ${_map}");
+    //  print("name : ${_map["name"]}");
+     // print("place_id : ${_map["place_id"]}");
+    //  print("id : ${_map["id"]}");
+      print("+Convet_ERROR+123: Be error from mapToElemEtrap!!! :$_e");
     }
   }
 

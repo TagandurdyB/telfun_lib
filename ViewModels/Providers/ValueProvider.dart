@@ -29,6 +29,9 @@ class ValuesProvider extends ChangeNotifier {
   };
   Map get allOfThem => _all;
   List  all(String tag)=>_all[tag];
+  List placeEtrapObjs(int welayatIndex) {
+    return _all[ApiTags.place][welayatIndex].etraps ?? [];
+  }
 
   void reload() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

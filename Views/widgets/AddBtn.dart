@@ -103,7 +103,7 @@ class _AddBtnState extends State<AddBtn> {
                       "mark_id":
                           DDBBase.getDate(DDBTags.dDBMark).id.toString(),
                       "price": RIBase.getText(RITags.rIPrice),//controls[1].text,
-                      "place":widget.place_id.toString(),//DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
+                      "place":DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
                          // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": RIBase.getText(RITags.rIAbout),//controls[2].text,
                     };

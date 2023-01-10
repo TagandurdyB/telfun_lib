@@ -12,9 +12,12 @@ class PopStateFull {
   final BuildContext context;
   bool isCheck;
   final List list;
+  final int welayatIndex;
   final String title, jsonTag, apiTag;
   PopStateFull(
-      {this.apiTag,
+      {
+        this.welayatIndex,
+        this.apiTag,
       this.jsonTag,
       this.context,
       this.list,
@@ -23,14 +26,17 @@ class PopStateFull {
   get pop => showDialog(
       context: context,
       builder: (context) => CheckList(
-          title: title, list: list, jsonTag: jsonTag, apiTag: apiTag));
+          title: title, list: list, jsonTag: jsonTag, apiTag: apiTag,welayatIndex: welayatIndex,));
 }
 
 class CheckList extends StatefulWidget {
   bool isCheck;
   final List list;
+  final int welayatIndex;
   final String title, jsonTag, apiTag;
-  CheckList({this.list, this.isCheck, this.title, this.jsonTag, this.apiTag});
+  CheckList({
+    this.welayatIndex,
+    this.list, this.isCheck, this.title, this.jsonTag, this.apiTag});
 
   @override
   _CheckListState createState() => _CheckListState();
@@ -70,24 +76,32 @@ class _CheckListState extends State<CheckList> {
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     children: List.generate(widget.list.length + 1, (index) {
+                      final int lengthValues =
+                          providerValues.all(widget.apiTag).length;
+                      final int lengthFilter =
+                          providerFilter.filter(widget.jsonTag).length;
                       if (index == 0) {
-                        final int lengthValues=providerValues.all(widget.apiTag).length;
-                        final int lengthFilter=providerFilter.filter(widget.jsonTag).length;
                         return FilterSwitch(
                           title: "Ähli",
                           jsonTag: widget.jsonTag,
                           apiTag: widget.apiTag,
-                          isCheck: lengthFilter==lengthValues,
+                          objs: widget.apiTag == ApiTags.etraps
+                              ? providerValues.placeEtrapObjs(widget.welayatIndex)
+                              : providerValues.all(widget.apiTag),
+                          isCheck: widget.apiTag == ApiTags.etraps?
+                          lengthFilter>=providerValues.placeEtrapObjs(widget.welayatIndex).length
+                              :lengthFilter == lengthValues,
                         );
                       }
                       if (title == "Ýerleşýän ýeri") {
                         final _obj = widget.list[index - 1];
-                        return SwitchListTile(
+                        return /*SwitchListTile(
                             title: Text(_obj.name,
                                 style: ThemeProvided().styleUserPage),
-                            value: false,
-                            //providerFilter.isExist(obj, widget.jsonTag),
+                            value: //false,
+                            providerFilter.isExist(_obj, widget.jsonTag),
                             onChanged: (bool _val) {
+
                               final List _etrabs =
                               //providerValues.etrapObjs;
                                   providerValues.etrapObjsIndex(_obj.id - 1);
@@ -99,12 +113,41 @@ class _CheckListState extends State<CheckList> {
                                       apiTag: ApiTags.etraps
                               )
                                   .pop;
-                            });
+                            });*/
+                            Card(
+                          color: ThemeProvided().colorCanvas,
+                          shadowColor: ThemeProvided().colorText,
+                          child: ListTile(
+                            leading: Text(_obj.name,
+                                style: ThemeProvided().styleUserPage),
+                            onTap: () {
+                              final List _etrabs =
+                                  //providerValues.etrapObjs;
+                                  providerValues.placeEtrapObjs(_obj.id - 1);
+                              PopStateFull(
+                                welayatIndex: _obj.id-1,
+                                      context: context,
+                                      list: _etrabs,
+                                      title: "${_obj.name} welaýat",
+                                      jsonTag: JsonTags.filterEtrap,
+                                      apiTag: ApiTags.etraps)
+                                  .pop;
+                            },
+                            trailing: Checkbox(
+                              side:
+                                  BorderSide(color: ThemeProvided().colorText),
+                              value:lengthFilter>=providerValues.placeEtrapObjs(_obj.id-1).length,
+                                  //providerFilter.isExist(_obj, widget.jsonTag),
+                              onChanged: (bool _val) {},
+                            ),
+                          ),
+                        );
                       } else {
                         final _obj = widget.list[index - 1];
                         return FilterSwitch(
                           func: () {},
                           isCheck: providerFilter.isExist(_obj, widget.jsonTag),
+                          // isCheck: false,
                           jsonTag: widget.jsonTag,
                           title: _obj.name,
                           obj: _obj,

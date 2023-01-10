@@ -18,6 +18,7 @@ class FilterProvider extends ChangeNotifier {
   List etrapObjsIndex(int welayatIndex) {
     return _placeObjs[welayatIndex].etraps ?? [];
   }
+
   Map<String, List> _filters = {
     JsonTags.filterMark: [],
     JsonTags.filterModel: [],
@@ -27,6 +28,10 @@ class FilterProvider extends ChangeNotifier {
   };
   Map<String, List> get filters => _filters;
   List filter(String tag) => _filters[tag];
+  List placeEtrapObjs(int welayatIndex) {
+    return _filters[JsonTags.filterPlace][welayatIndex].etraps ?? [];
+  }
+
 
   List _savedFilters = [];
   List get savedFilters => _savedFilters;
@@ -78,13 +83,12 @@ class FilterProvider extends ChangeNotifier {
   }
 
   void tongleAllFilter(List list, String tag, bool isAll) {
-  if(isAll) {
-    _filters[tag] = [];
-  }
-  else {
-    list = list.where((obj) => !isExist(obj, tag)).toList();
-    _filters[tag]+=list;
-  }
+    if (isAll) {
+      _filters[tag] = [];
+    } else {
+      list = list.where((obj) => !isExist(obj, tag)).toList();
+      _filters[tag] += list;
+    }
     notifyListeners();
   }
 
@@ -99,7 +103,12 @@ class FilterProvider extends ChangeNotifier {
 
   bool isExist(obj, String tag) {
     bool _isExist = false;
-    _isExist = Get_Lists.idList(_filters[tag]).contains(obj.id);
+    if (tag == JsonTags.filterPlace) {
+      _isExist = ElemEtrap.pace_idList(_filters[JsonTags.filterEtrap])
+          .contains(obj.id);
+    } else {
+      _isExist = Get_Lists.idList(_filters[tag]).contains(obj.id);
+    }
     return _isExist;
   }
 

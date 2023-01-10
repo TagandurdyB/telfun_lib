@@ -24,6 +24,12 @@ class ElemEtrap {
     }
     return name;
   }
+
+  static List<int> pace_idList(List objList) {
+    List<int> _list = objList.map((e) => e.place_id).toList().cast<int>();
+    return _list;
+  }
+
 }
 
 class ElemCategory {

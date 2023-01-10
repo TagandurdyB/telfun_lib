@@ -125,6 +125,7 @@ if (d==0&&imageOk){
                                                     "${_element.value} ${_etraps[index].name}";
                                                 DDPlace.id = _etraps[index].id;
                                                 DDPlace.index = 0;
+                                                DDBBase.changeDate(DDBTags.dDBLocation,DDPlace);
                                                 setState(() {});
                                                 print(
                                                     "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
@@ -461,7 +462,7 @@ if (d==0&&imageOk){
                       },
                     ),
                   ),
-                  AddBtn(place_id: DDPlace.id,isModel: _isModel,),
+                  AddBtn(isModel: _isModel,),
                   /*    Column(children: [
                     Text("${UserProperties.getProperty("id")}"),
                     Text("${UserProperties.getProperty("name")}"),
