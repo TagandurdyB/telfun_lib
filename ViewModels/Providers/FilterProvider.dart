@@ -11,31 +11,35 @@ class FilterProvider extends ChangeNotifier {
   List get modelObjs => _modelObjs;
   List _colorObjs = [];
   List get colorObjs => _colorObjs;
-  List _placeObjs = [];
-  List get placeObjs => _placeObjs;
   List _etrapObjs = [];
   List get etrapObjs => _etrapObjs;
-  List etrapObjsIndex(int welayatIndex) {
-    return _placeObjs[welayatIndex].etraps ?? [];
-  }
+
 
   Map<String, List> _filters = {
     JsonTags.filterMark: [],
     JsonTags.filterModel: [],
     JsonTags.filterColor: [],
-    JsonTags.filterPlace: [],
     JsonTags.filterEtrap: [],
   };
   Map<String, List> get filters => _filters;
   List filter(String tag) => _filters[tag];
-  List placeEtrapObjs(int welayatIndex) {
-    return _filters[JsonTags.filterPlace][welayatIndex].etraps ?? [];
-  }
 
+  List filterMap(String tag) => MapConverter(JsonName: tag,ElemList: _filters[tag]).toMap();
+  Map filterMaps() =>
+      {
+        JsonTags.filterMark:filterMap(JsonTags.filterMark),
+        JsonTags.filterModel:filterMap(JsonTags.filterModel),
+        JsonTags.filterColor:filterMap(JsonTags.filterColor),
+        JsonTags.filterEtrap:filterMap(JsonTags.filterEtrap),
+      };
+
+  List findEtrapObjs(int welayatId) {
+    return _filters[JsonTags.filterEtrap].where((element) =>element.place_id==welayatId).toList();
+  }
 
   List _savedFilters = [];
   List get savedFilters => _savedFilters;
-  Map filtersMap(ElemFilter _obj) => localConverter().filtersToMap(_obj);
+  Map filtersMapSave(ElemFilter _obj) => localConverter().filtersToMap(_obj);
 
   void reload() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -45,8 +49,6 @@ class FilterProvider extends ChangeNotifier {
           Get_Lists(isApi: false, listTag: JsonTags.filterModel).getList();
       _colorObjs =
           Get_Lists(isApi: false, listTag: JsonTags.filterColor).getList();
-      _placeObjs =
-          Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList();
       _etrapObjs =
           Get_Lists(isApi: false, listTag: JsonTags.filterEtrap).getList();
       _filters = {
@@ -56,8 +58,6 @@ class FilterProvider extends ChangeNotifier {
             Get_Lists(isApi: false, listTag: JsonTags.filterModel).getList(),
         JsonTags.filterColor:
             Get_Lists(isApi: false, listTag: JsonTags.filterColor).getList(),
-        JsonTags.filterPlace:
-            Get_Lists(isApi: false, listTag: JsonTags.filterPlace).getList(),
         JsonTags.filterEtrap:
             Get_Lists(isApi: false, listTag: JsonTags.filterEtrap).getList(),
       };
@@ -92,12 +92,10 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void tongleFilterAll(obj, String tag, bool isAll) {
-    if (isExist(obj, tag) && isAll) {
-      _filters[tag].remove(obj);
-    } else if (!isExist(obj, tag) && !isAll) {
-      _filters[tag].add(obj);
-    }
+  void multiRemoweFilter(List list, String tag) {
+    list.forEach((elementL) {
+      _filters[tag] = _filters[tag].where((elementF) => elementF.id!=elementL.id).toList();
+    });
     notifyListeners();
   }
 
@@ -127,11 +125,6 @@ class FilterProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearPlace() {
-    _placeObjs = [];
-    notifyListeners();
-  }
-
   void clearEtrap() {
     _etrapObjs = [];
     notifyListeners();
@@ -142,7 +135,7 @@ class FilterProvider extends ChangeNotifier {
       JsonTags.filterMark: [],
       JsonTags.filterModel: [],
       JsonTags.filterColor: [],
-      JsonTags.filterPlace: [],
+      JsonTags.filterEtrap: [],
     };
     notifyListeners();
   }

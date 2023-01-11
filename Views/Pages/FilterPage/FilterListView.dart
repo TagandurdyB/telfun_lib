@@ -39,41 +39,32 @@ class _FliterListState extends State<FliterList> {
     final providerValues = Provider.of<ValuesProvider>(context);
     final providerFilter = Provider.of<FilterProvider>(context);
     List _list = providerFilter.savedFilters;
-    _list.forEach((element) {
-      print("filters :=${element.name}");
-    });
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView(
           physics: BouncingScrollPhysics(),
           children: List.generate(_list.length ?? 0, (index) {
-            final _obj=_list[index];
+            final _obj = _list[index];
             return Card(
               color: ThemeProvided().colorCanvas,
               shadowColor: ThemeProvided().colorText,
               child: ListTile(
+                onTap: () {
+                  print(
+                      "name:${_obj.name}  id:${_obj.id}  filters:${_obj.filters}");
+                },
                 leading: Text("${_obj.name}"),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.edit,
-                          color: Colors.blue,
-                        )),
-                    IconButton(
-                        onPressed: () {
-                          JsonListCacher(jsonName: JsonTags.filters)
-                              .removeSaved(providerFilter.filtersMap(_obj));
-                          Provider.of<FilterProvider>(context,listen: false).reloadSaved();
-                        },
-                        icon: Icon(
-                          Icons.delete_forever,
-                          color: Colors.red,
-                        )),
-                  ],
-                ),
+                trailing: IconButton(
+                    onPressed: () {
+                      JsonListCacher(jsonName: JsonTags.filters)
+                          .removeSaved(providerFilter.filtersMapSave(_obj));
+                      Provider.of<FilterProvider>(context, listen: false)
+                          .reloadSaved();
+                    },
+                    icon: Icon(
+                      Icons.delete_forever,
+                      color: Colors.red,
+                    )),
               ),
             );
           })),

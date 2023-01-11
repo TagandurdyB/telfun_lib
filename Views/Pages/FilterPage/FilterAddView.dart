@@ -43,40 +43,55 @@ class _FilterAddViewState extends State<FilterAddView> {
     DDTime = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
   }
 
+  void fill(Map _basa, Map _basaApi) {
+    List _listMark = _basa[JsonTags.filterMark];
+    List _listModel = _basa[JsonTags.filterModel];
+    List _listColor = _basa[JsonTags.filterColor];
+    List _listPlace = _basa[JsonTags.filterEtrap];
 
-  void fill(Map _basa){
-    List _listMark=_basa[JsonTags.filterMark];
-    List _listModel=_basa[JsonTags.filterModel];
-    List _listColor=_basa[JsonTags.filterColor];
-    List _listPlace=_basa[JsonTags.filterPlace];
-    int _numMark=_listMark.length;
-    int _numModel=_listModel.length;
-    int _numColor=_listColor.length;
-    int _numPlace=_listPlace.length;
-    if(_numMark==0)
-    DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
-    else if(_numMark==1)
+    int _numMark = _listMark.length;
+    int _numModel = _listModel.length;
+    int _numColor = _listColor.length;
+    int _numPlace = _listPlace.length;
+
+    int _numMarkApi = _basaApi[ApiTags.mark].length;
+    int _numModelApi = _basaApi[ApiTags.model].length;
+    int _numColorApi = _basaApi[ApiTags.colors].length;
+    int _numPlaceApi = _basaApi[ApiTags.etraps].length;
+
+    if (_numMark == 0)
+      DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    else if (_numMark == 1)
       DDMark = DDBEl(index: -1, value: "${_listMark[0].name}", id: 0);
+    else if (_numMark == _numMarkApi)
+      DDMark = DDBEl(index: -1, value: "Ähli", id: 0);
     else
       DDMark = DDBEl(index: -1, value: "Marka ($_numMark)", id: 0);
 
-    if(_numModel==0)
+    if (_numModel == 0)
       DDModel = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
-    else if(_numModel==1)
+    else if (_numModel == 1)
       DDModel = DDBEl(index: -1, value: "${_listModel[0].name}", id: 0);
+    else if (_numModel == _numModelApi)
+      DDModel = DDBEl(index: -1, value: "Ähli", id: 0);
     else
       DDModel = DDBEl(index: -1, value: "Model ($_numModel)", id: 0);
 
-    if(_numColor==0)
+    if (_numColor == 0)
       DDColor = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
-    else if(_numColor==1)
+    else if (_numColor == 1)
       DDColor = DDBEl(index: -1, value: "${_listColor[0].name}", id: 0);
+    else if (_numColor == _numColorApi)
+      DDColor = DDBEl(index: -1, value: "Ähli", id: 0);
     else
       DDColor = DDBEl(index: -1, value: "Reňk ($_numColor)", id: 0);
-    if(_numPlace==0)
+
+    if (_numPlace == 0)
       DDPlace = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
-    else if(_numPlace==1)
+    else if (_numPlace == 1)
       DDPlace = DDBEl(index: -1, value: "${_listPlace[0].name}", id: 0);
+    else if (_numPlace == _numPlaceApi)
+      DDPlace = DDBEl(index: -1, value: "Ähli", id: 0);
     else
       DDPlace = DDBEl(index: -1, value: "Ýer ($_numPlace)", id: 0);
   }
@@ -84,8 +99,8 @@ class _FilterAddViewState extends State<FilterAddView> {
   @override
   Widget build(BuildContext context) {
     final providerFilter = Provider.of<FilterProvider>(context);
-    fill(providerFilter.filters);
     final providerValues = Provider.of<ValuesProvider>(context);
+    fill(providerFilter.filters, providerValues.allOfThem);
     final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable,
         enable = Provider.of<ThemeProvided>(context).styleEnable;
     return Container(
@@ -93,13 +108,19 @@ class _FilterAddViewState extends State<FilterAddView> {
       child: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-/*          Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(
-                  horizontal: SWi * 0.06, vertical: SWi * 0.03),
-              child: Text("Filtirler",
-                  style: TextStyle(
-                      fontSize: SWi * 0.06, fontWeight: FontWeight.w800))),*/
+          Container(
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.all(8),
+              child: IconButton(
+                onPressed: () {
+                  providerFilter.clearAll();
+                },
+                icon: Icon(
+                  Icons.delete,
+                  color: Colors.orange,
+                ),
+                iconSize: SWi * 0.07,
+              )),
           Card(
             color: ThemeProvided().colorCanvas,
             child: ListTile(
@@ -299,7 +320,11 @@ class _FilterAddViewState extends State<FilterAddView> {
                 padding: EdgeInsets.all(8),
                 child: ElevatedButton(
                   child: Text('9 SANY'),
-                  onPressed: () {},
+                  onPressed: () {
+                    print(''''
+${providerFilter.filterMaps()}
+''');
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.green,
                     //   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -341,7 +366,10 @@ class _FilterAddViewState extends State<FilterAddView> {
                                             .addSaved({
                                           "name":
                                               "${RIBase.getText(RITags.rIFilter)}",
-                                          "id": providerFilter.savedFilters.length,
+                                          "id": providerFilter
+                                              .savedFilters.length,
+                                          "filters":
+                                              providerFilter.filterMaps(),
                                         });
                                         Provider.of<UsesVar>(context,
                                                 listen: false)
@@ -360,5 +388,3 @@ class _FilterAddViewState extends State<FilterAddView> {
     );
   }
 }
-
-

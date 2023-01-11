@@ -22,11 +22,8 @@ class FilterPage extends StatelessWidget {
         Return: Json_Get(
           jsonName: JsonTags.filterColor,
           Return: Json_Get(
-            jsonName: JsonTags.filterPlace,
-            Return: Json_Get(
-              jsonName: JsonTags.filterEtrap,
-              Return: FilterView(),
-            ),
+            jsonName: JsonTags.filterEtrap,
+            Return: FilterView(),
           ),
         ),
       ),
@@ -49,32 +46,34 @@ class FilterView extends StatelessWidget {
                     children: [
                       Expanded(
                           child: FlatButton(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onPressed: () {
-                              Provider.of<UsesVar>(context, listen: false)
-                                  .Select(0);
-                              Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
-                            },
-                            child: Text(
-                              "Filtirler",
-                              style: ThemeProvided().styleUserPage,
-                            ),
-                          )),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onPressed: () {
+                          Provider.of<UsesVar>(context, listen: false)
+                              .Select(0);
+                          Provider.of<UsesVar>(context, listen: false)
+                              .changeCanAdd(false);
+                        },
+                        child: Text(
+                          "Filtirler",
+                          style: ThemeProvided().styleUserPage,
+                        ),
+                      )),
                       Expanded(
                           child: FlatButton(
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onPressed: () {
-                              Provider.of<UsesVar>(context, listen: false)
-                                  .Select(1);
-                              Provider.of<UsesVar>(context, listen: false).changeCanAdd(false);
-                            },
-                            child: Text(
-                              "Taýýar",
-                              style: ThemeProvided().styleUserPage,
-                            ),
-                          )),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onPressed: () {
+                          Provider.of<UsesVar>(context, listen: false)
+                              .Select(1);
+                          Provider.of<UsesVar>(context, listen: false)
+                              .changeCanAdd(false);
+                        },
+                        child: Text(
+                          "Taýýar",
+                          style: ThemeProvided().styleUserPage,
+                        ),
+                      )),
                     ],
                   ),
                   Container(
@@ -82,9 +81,7 @@ class FilterView extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.only(
                         left: SWi *
-                            (Provider.of<UsesVar>(context)
-                                .witchSelect() *
-                                0.4 +
+                            (Provider.of<UsesVar>(context).witchSelect() * 0.4 +
                                 0.1) /*0.1-0.5*/),
                     //Alignment.centerRight//,
                     child: ImgBtn(
@@ -109,4 +106,3 @@ class FilterView extends StatelessWidget {
     );
   }
 }
-

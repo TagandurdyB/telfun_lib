@@ -131,5 +131,6 @@ class ElemShop {
 class ElemFilter {
   final int id;
   final String name;
-  ElemFilter({this.name, this.id});
+  final Map filters;
+  ElemFilter({this.name, this.id,this.filters});
 }

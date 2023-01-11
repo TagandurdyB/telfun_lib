@@ -15,9 +15,8 @@ class PopStateFull {
   final int welayatIndex;
   final String title, jsonTag, apiTag;
   PopStateFull(
-      {
-        this.welayatIndex,
-        this.apiTag,
+      {this.welayatIndex,
+      this.apiTag,
       this.jsonTag,
       this.context,
       this.list,
@@ -26,7 +25,12 @@ class PopStateFull {
   get pop => showDialog(
       context: context,
       builder: (context) => CheckList(
-          title: title, list: list, jsonTag: jsonTag, apiTag: apiTag,welayatIndex: welayatIndex,));
+            title: title,
+            list: list,
+            jsonTag: jsonTag,
+            apiTag: apiTag,
+            welayatIndex: welayatIndex,
+          ));
 }
 
 class CheckList extends StatefulWidget {
@@ -34,15 +38,20 @@ class CheckList extends StatefulWidget {
   final List list;
   final int welayatIndex;
   final String title, jsonTag, apiTag;
-  CheckList({
-    this.welayatIndex,
-    this.list, this.isCheck, this.title, this.jsonTag, this.apiTag});
+  CheckList(
+      {this.welayatIndex,
+      this.list,
+      this.isCheck,
+      this.title,
+      this.jsonTag,
+      this.apiTag});
 
   @override
   _CheckListState createState() => _CheckListState();
 }
 
 class _CheckListState extends State<CheckList> {
+
   @override
   Widget build(BuildContext context) {
     return buildScaffold(context, widget.title);
@@ -76,45 +85,34 @@ class _CheckListState extends State<CheckList> {
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     children: List.generate(widget.list.length + 1, (index) {
-                      final int lengthValues =
-                          providerValues.all(widget.apiTag).length;
-                      final int lengthFilter =
-                          providerFilter.filter(widget.jsonTag).length;
+                      final int lengthValues = providerValues.all(widget.apiTag).length;
                       if (index == 0) {
                         return FilterSwitch(
                           title: "Ähli",
                           jsonTag: widget.jsonTag,
                           apiTag: widget.apiTag,
                           objs: widget.apiTag == ApiTags.etraps
-                              ? providerValues.placeEtrapObjs(widget.welayatIndex)
+                              ? providerValues
+                                  .placeEtrapObjs(widget.welayatIndex)
+                              :widget.apiTag == ApiTags.place?
+                          providerValues.all(ApiTags.etraps)
                               : providerValues.all(widget.apiTag),
-                          isCheck: widget.apiTag == ApiTags.etraps?
-                          lengthFilter>=providerValues.placeEtrapObjs(widget.welayatIndex).length
-                              :lengthFilter == lengthValues,
+                          isCheck: widget.apiTag == ApiTags.etraps
+                              ? providerFilter
+                                      .findEtrapObjs(widget.welayatIndex + 1)
+                                      .length ==
+                                  providerValues
+                                      .placeEtrapObjs(widget.welayatIndex)
+                                      .length
+                              : widget.apiTag == ApiTags.place?
+                              providerFilter.filter(JsonTags.filterEtrap).length==
+                                  providerValues.all(ApiTags.etraps).length
+                              :providerFilter.filter(widget.jsonTag).length == lengthValues,
                         );
                       }
                       if (title == "Ýerleşýän ýeri") {
                         final _obj = widget.list[index - 1];
-                        return /*SwitchListTile(
-                            title: Text(_obj.name,
-                                style: ThemeProvided().styleUserPage),
-                            value: //false,
-                            providerFilter.isExist(_obj, widget.jsonTag),
-                            onChanged: (bool _val) {
-
-                              final List _etrabs =
-                              //providerValues.etrapObjs;
-                                  providerValues.etrapObjsIndex(_obj.id - 1);
-                              PopStateFull(
-                                      context: context,
-                                      list: _etrabs,
-                                      title: "${_obj.name} welaýat",
-                                      jsonTag: JsonTags.filterEtrap,
-                                      apiTag: ApiTags.etraps
-                              )
-                                  .pop;
-                            });*/
-                            Card(
+                        return Card(
                           color: ThemeProvided().colorCanvas,
                           shadowColor: ThemeProvided().colorText,
                           child: ListTile(
@@ -122,10 +120,9 @@ class _CheckListState extends State<CheckList> {
                                 style: ThemeProvided().styleUserPage),
                             onTap: () {
                               final List _etrabs =
-                                  //providerValues.etrapObjs;
                                   providerValues.placeEtrapObjs(_obj.id - 1);
                               PopStateFull(
-                                welayatIndex: _obj.id-1,
+                                      welayatIndex: _obj.id - 1,
                                       context: context,
                                       list: _etrabs,
                                       title: "${_obj.name} welaýat",
@@ -133,12 +130,44 @@ class _CheckListState extends State<CheckList> {
                                       apiTag: ApiTags.etraps)
                                   .pop;
                             },
+                            title: Container(
+                              alignment: Alignment.centerRight,
+                              child: providerFilter
+                                          .findEtrapObjs(_obj.id)
+                                          .length ==
+                                      0
+                                  ? null
+                                  : providerFilter
+                                              .findEtrapObjs(_obj.id)
+                                              .length ==
+                                          providerValues
+                                              .placeEtrapObjs(_obj.id - 1)
+                                              .length
+                                      ? Text("Ähli",
+                                          style: ThemeProvided().styleDisable)
+                                      : Text(
+                                          "(${providerFilter.findEtrapObjs(_obj.id).length})",
+                                          style: ThemeProvided().styleDisable),
+                            ),
                             trailing: Checkbox(
                               side:
                                   BorderSide(color: ThemeProvided().colorText),
-                              value:lengthFilter>=providerValues.placeEtrapObjs(_obj.id-1).length,
-                                  //providerFilter.isExist(_obj, widget.jsonTag),
-                              onChanged: (bool _val) {},
+                              value: providerFilter
+                                      .findEtrapObjs(_obj.id)
+                                      .length ==
+                                  providerValues
+                                      .placeEtrapObjs(_obj.id - 1)
+                                      .length,
+                              //providerFilter.isExist(_obj, widget.jsonTag),
+                              onChanged: (bool _val) {
+                                FilterFuncGroup(
+                                  objs: providerValues
+                                      .placeEtrapObjs(_obj.id - 1),
+                                  isCheck: !_val,
+                                  jsonTag: JsonTags.filterEtrap,
+                                  apiTag: ApiTags.etraps,
+                                ).allSwitch(context);
+                              },
                             ),
                           ),
                         );

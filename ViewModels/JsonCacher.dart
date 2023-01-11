@@ -101,7 +101,7 @@ class JsonListCacher {
     return _removed;
   }
 
-  Future<bool> multiRemoveSaved(List<Map> _mapList) async {
+  Future<bool> multiRemoveSaved(List _mapList) async {
     bool _removed;
     List _list = await load();
     if (_list.isEmpty) {

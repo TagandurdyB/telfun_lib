@@ -708,6 +708,7 @@ class localConverter {
       return ElemFilter(
         name: _map["name"],
         id: _map["id"],
+        filters: _map["filters"],
       );
     } catch (_e) {
       print("+Convet_ERROR+: Be error from mapToFilters!!! :$_e");
@@ -718,7 +719,8 @@ class localConverter {
     try {
       return {
         "name": _elem.name,
-        "id":_elem.id
+        "id":_elem.id,
+        "filters":_elem.filters,
       };
     } catch (_e) {
       print("+Convet_ERROR+: Be error from filtersToMap!!! :$_e");
