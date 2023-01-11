@@ -21,6 +21,12 @@ class FilterProvider extends ChangeNotifier {
     JsonTags.filterColor: [],
     JsonTags.filterEtrap: [],
   };
+  void filterFill(Map _obj){
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _filters=_obj;
+    });
+    notifyListeners();
+  }
   Map<String, List> get filters => _filters;
   List filter(String tag) => _filters[tag];
 
@@ -32,6 +38,16 @@ class FilterProvider extends ChangeNotifier {
         JsonTags.filterColor:filterMap(JsonTags.filterColor),
         JsonTags.filterEtrap:filterMap(JsonTags.filterEtrap),
       };
+
+  List filterObj(String tag,List list) => MapConverter(JsonName: tag,MapList: list).toElem();
+  Map filterObjs(Map _filterMaps) =>
+      {
+        JsonTags.filterMark:filterObj(JsonTags.filterMark,_filterMaps[JsonTags.filterMark]),
+        JsonTags.filterModel:filterObj(JsonTags.filterModel,_filterMaps[JsonTags.filterModel]),
+        JsonTags.filterColor:filterObj(JsonTags.filterColor,_filterMaps[JsonTags.filterColor]),
+        JsonTags.filterEtrap:filterObj(JsonTags.filterEtrap,_filterMaps[JsonTags.filterEtrap]),
+      };
+
 
   List findEtrapObjs(int welayatId) {
     return _filters[JsonTags.filterEtrap].where((element) =>element.place_id==welayatId).toList();
