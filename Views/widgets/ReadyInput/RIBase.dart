@@ -12,22 +12,28 @@ class RIBase {
   static String getText(String tag) {
     if (ReadyInputBase[tag] == null)
       return "";
-    else {
+    else
       return ReadyInputBase[tag].text;
-    }
   }
 
   static TextEditingController getControl(String tag) {
     if (ReadyInputBase[tag] == null)
       return TextEditingController();
-    else {
+    else
       return ReadyInputBase[tag];
-    }
   }
 
  static void changeDate(String tag,TextEditingController control) {
     ReadyInputBase.addAll({tag: control});
   }
+static bool isEmpety(String tag){
+    if(ReadyInputBase[tag] == null)
+      return true;
+    else if(ReadyInputBase[tag].text=="")
+      return true;
+    else
+      return false;
+}
 
   static void eraseDate(String tag) {
     ReadyInputBase.addAll(

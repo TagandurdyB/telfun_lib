@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:telfun/Views/widgets/AddImg.dart';
+import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import '/Models/Base.dart';
 import 'ApiElements.dart';
 import 'Names.dart';
@@ -55,6 +56,10 @@ class MapConverter {
         list.add(localConverter().mapToElemShop(_val));
       }else if(_name==JsonTags.filters){
         list.add(localConverter().mapToFilters(_val));
+      }else if(_name==JsonTags.filterPrice){
+        list.add(_val["price"]);
+      }else if(_name==JsonTags.filterTime){
+        list.add(DDBEl(id:_val["id"],value: _val["value"]));
       }
     }
     return list;
@@ -64,33 +69,38 @@ class MapConverter {
     List list = [];
     String _name = name();
     for (int i = 0; i < ElemList.length; i++) {
+      final _val = ElemList[i];
       if (_name == ApiTags.img) {
-        list.add(localConverter().elemImgToMap(ElemList[i]));
+        list.add(localConverter().elemImgToMap(_val));
       } else if (_name == ApiTags.categori) {
-        list.add(localConverter().elemCategoryToMap(ElemList[i]));
+        list.add(localConverter().elemCategoryToMap(_val));
       } else if (_name == ApiTags.events ||
           _name == ApiTags.all ||
           _name == ApiTags.product ||
           _name == ApiTags.prosses) {
-        list.add(localConverter().elemEventsToMap(ElemList[i]));
+        list.add(localConverter().elemEventsToMap(_val));
       } else if (_name == ApiTags.detal) {
-        list.add(localConverter().elemEventDetalToMap(ElemList[i]));
+        list.add(localConverter().elemEventDetalToMap(_val));
       } else if (_name == ApiTags.mark||_name==JsonTags.filterMark) {
-        list.add(localConverter().elemMarkToMap(ElemList[i]));
+        list.add(localConverter().elemMarkToMap(_val));
       } else if (_name == ApiTags.model||_name==JsonTags.filterModel) {
-        list.add(localConverter().elemModelToMap(ElemList[i]));
+        list.add(localConverter().elemModelToMap(_val));
       } else if (_name == ApiTags.place||_name==JsonTags.filterPlace) {
-        list.add(localConverter().elemPlaceToMap(ElemList[i]));
+        list.add(localConverter().elemPlaceToMap(_val));
       } else if (_name == ApiTags.etraps||_name==JsonTags.filterEtrap) {
-        list.add(localConverter().elemEtrapToMap(ElemList[i]));
+        list.add(localConverter().elemEtrapToMap(_val));
       } else if (_name == JsonTags.favorite) {
-        list.add(localConverter().favoriteToMap(ElemList[i]));
+        list.add(localConverter().favoriteToMap(_val));
       }else if (_name == JsonTags.filters) {
-        list.add(localConverter().filtersToMap(ElemList[i]));
+        list.add(localConverter().filtersToMap(_val));
       }else if(_name==ApiTags.colors||_name==JsonTags.filterColor){
-        list.add(localConverter().elemColorToMap(ElemList[i]));
+        list.add(localConverter().elemColorToMap(_val));
       }else if(_name==ApiTags.shops){
-        list.add(localConverter().elemShopToMap(ElemList[i]));
+        list.add(localConverter().elemShopToMap(_val));
+      }else if(_name==JsonTags.filterPrice){
+        list.add({"id":0,"price":_val});
+      }else if(_name==JsonTags.filterTime){
+        list.add({"id":_val.id,"value":_val.value});
       }
     }
     return list;

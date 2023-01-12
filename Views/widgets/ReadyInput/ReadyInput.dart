@@ -11,14 +11,16 @@ enum Type { tel, pass, text, num, email }
 
 class ReadyInput extends StatefulWidget {
   final int index, maxline;
-  final String hidden, label,tag;
+  final String hidden, label,tag,startVal;
   final bool shape;
   final double borderRad;
   final Type type;
   final Function onChange,suffixFunc;
   final Widget reightWidget;
   ReadyInput(
-      {this.suffixFunc,
+      {
+        this.startVal="",
+        this.suffixFunc,
         this.tag,
         this.index = 0,
       this.hidden = "",
@@ -36,7 +38,7 @@ class ReadyInput extends StatefulWidget {
 class _ReadyInputState extends State<ReadyInput> {
   @override
   void initState() {
-      RIBase.changeDate(widget.tag,TextEditingController(text:""));
+      RIBase.changeDate(widget.tag,TextEditingController(text:widget.startVal));
 /*    controls.forEach((element) {
       element.text = "";
     });*/

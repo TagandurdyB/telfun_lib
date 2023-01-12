@@ -75,6 +75,13 @@ class JsonListCacher {
     return _added;
   }
 
+  Future<bool> addAllSaved(List _mapList) async {
+    bool _added = false;
+    save(_mapList);
+    _added = true;
+    return _added;
+  }
+
   Future<bool> removeSaved(Map _map) async {
     bool _removed;
     List _list = await load();

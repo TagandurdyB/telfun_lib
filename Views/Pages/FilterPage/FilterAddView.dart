@@ -25,22 +25,23 @@ class FilterAddView extends StatefulWidget {
 }
 
 class _FilterAddViewState extends State<FilterAddView> {
-  DDBEl DDColor, DDMark, DDModel, DDPlace, DDTime;
+  DDBEl DDColor, DDMark, DDModel, DDPrice, DDEtrap, DDTime;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     erease();
-    Provider.of<FilterProvider>(context, listen: false).reload();
+    //Provider.of<FilterProvider>(context, listen: false).reload();
   }
 
   void erease() {
     DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDModel = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDColor = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
-    DDPlace = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    DDEtrap = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     DDTime = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+    DDPrice = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
   }
 
   void fill(Map _basa, Map _basaApi) {
@@ -58,6 +59,11 @@ class _FilterAddViewState extends State<FilterAddView> {
     int _numModelApi = _basaApi[ApiTags.model].length;
     int _numColorApi = _basaApi[ApiTags.colors].length;
     int _numPlaceApi = _basaApi[ApiTags.etraps].length;
+
+    final int _min=_basa[JsonTags.filterPrice][0];
+    final int _max=_basa[JsonTags.filterPrice][1];
+
+final dDTime=_basa[JsonTags.filterTime][0];
 
     if (_numMark == 0)
       DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
@@ -87,13 +93,21 @@ class _FilterAddViewState extends State<FilterAddView> {
       DDColor = DDBEl(index: -1, value: "Reňk ($_numColor)", id: 0);
 
     if (_numPlace == 0)
-      DDPlace = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+      DDEtrap = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
     else if (_numPlace == 1)
-      DDPlace = DDBEl(index: -1, value: "${_listPlace[0].name}", id: 0);
+      DDEtrap = DDBEl(index: -1, value: "${_listPlace[0].name}", id: 0);
     else if (_numPlace == _numPlaceApi)
-      DDPlace = DDBEl(index: -1, value: "Ähli", id: 0);
+      DDEtrap = DDBEl(index: -1, value: "Ähli", id: 0);
     else
-      DDPlace = DDBEl(index: -1, value: "Ýer ($_numPlace)", id: 0);
+      DDEtrap = DDBEl(index: -1, value: "Ýer ($_numPlace)", id: 0);
+
+    if(_max>0)
+      DDPrice=DDBEl(index: -1, value: "$_min TMT -> $_max TMT", id: 0);
+    else
+      DDPrice=DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
+
+    if(dDTime.id!=0)
+      DDTime=dDTime;
   }
 
   @override
@@ -113,7 +127,7 @@ class _FilterAddViewState extends State<FilterAddView> {
               padding: EdgeInsets.all(8),
               child: IconButton(
                 onPressed: () {
-                  providerFilter.clearAll();
+                  FilterFuncGroup().ereareAll(context);
                 },
                 icon: Icon(
                   Icons.delete,
@@ -200,7 +214,6 @@ class _FilterAddViewState extends State<FilterAddView> {
             color: ThemeProvided().colorCanvas,
             child: ListTile(
               onTap: () {
-                print("salam");
                 PopUppWidget(
                     title: "Bahasy",
                     content: Container(
@@ -211,6 +224,10 @@ class _FilterAddViewState extends State<FilterAddView> {
                             padding: const EdgeInsets.all(4.0),
                             child: ReadyInput(
                               tag: RITags.rIMin,
+                              type: Type.num,
+                              startVal: RIBase.isEmpety(RITags.rIMin)
+                                  ? "0"
+                                  : RIBase.getText(RITags.rIMin),
                               label: "iň arzan",
                               shape: true,
                               borderRad: 2,
@@ -222,6 +239,10 @@ class _FilterAddViewState extends State<FilterAddView> {
                             padding: const EdgeInsets.all(4.0),
                             child: ReadyInput(
                               tag: RITags.rIMax,
+                              type: Type.num,
+                              startVal: RIBase.isEmpety(RITags.rIMax)
+                                  ? "0"
+                                  : RIBase.getText(RITags.rIMax),
                               shape: true,
                               borderRad: 2,
                               label: "iň gymmat",
@@ -231,14 +252,31 @@ class _FilterAddViewState extends State<FilterAddView> {
                         ],
                       ),
                     ),
-                    actionsTeam: [ActionsTeam(text: "SAÝLA")]).popUp(context);
+                    actionsTeam: [
+                      ActionsTeam(
+                          text: "SAÝLA",
+                          func: () {
+                            String subtitle;
+                            final List _price = FilterFuncGroup().funcPrice(context);
+                            final int _min = _price[0];
+                            final int _max = _price[1];
+                            if (_min >= _max)
+                              subtitle = "Saýlanmadyk";
+                            else
+                              subtitle = "$_min TMT -> $_max TMT";
+                            DDPrice.value=subtitle;
+                          //  DDPrice.index=_min;
+                          //  DDPrice.id=_max;
+                            setState(() {});
+                          })
+                    ]).popUp(context);
               },
               title: Text(
                 "Bahasy",
                 style: ThemeProvided().styleEnable,
               ),
               subtitle: Text(
-                "Saýlanmadyk",
+                "${DDPrice.value}",
                 textAlign: TextAlign.left,
                 style: ThemeProvided().styleDisable,
               ),
@@ -249,17 +287,6 @@ class _FilterAddViewState extends State<FilterAddView> {
             child: ListTile(
               onTap: () {
                 final List _place = providerValues.placeObjs;
-                /*  final List _place=[
-                  DDBEl(id: 1, index: 0, value: "Aşgabat"),
-                  DDBEl(id: 2, index: 1, value: "Ahal"),
-                  DDBEl(id: 3, index: 2, value: "Balkan"),
-                  DDBEl(id: 4, index: 3, value: "Mary"),
-                  DDBEl(id: 5, index: 4, value: "Lebap"),
-                  DDBEl(id: 6, index: 5, value: "Daşoguz"),
-                ];*/
-                /*PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);
-                // final List _place = Get_Lists(listTag: ApiTags.place).getList();
-                PopDrop(context, _place, "Ýerleşýän ýeri").popUp(context);*/
                 PopStateFull(
                         context: context,
                         list: _place,
@@ -273,7 +300,7 @@ class _FilterAddViewState extends State<FilterAddView> {
                 style: ThemeProvided().styleEnable,
               ),
               subtitle: Text(
-                "${DDPlace.value}",
+                "${DDEtrap.value}",
                 textAlign: TextAlign.left,
                 style: ThemeProvided().styleDisable,
               ),
@@ -307,6 +334,8 @@ class _FilterAddViewState extends State<FilterAddView> {
                   ],
                   onChanged: (DDBEl _element) {
                     DDTime = _element;
+                    final List _time = FilterFuncGroup().funcTime(context);
+                    DDTime=_time[0];
                     setState(() {});
                   },
                 ),
@@ -374,10 +403,8 @@ ${providerFilter.filterMaps()}
                                         Provider.of<UsesVar>(context,
                                                 listen: false)
                                             .Select(1);
-                                        Navigator.pop(context);
                                       },
-                                      text: "Goş",
-                                      isPopEnable: false),
+                                      text: "Goş"),
                                 ]).popUp(context);
                           },
                           child: Text("ÝATDASAKLA")))),

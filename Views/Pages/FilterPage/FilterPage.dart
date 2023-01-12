@@ -23,7 +23,12 @@ class FilterPage extends StatelessWidget {
           jsonName: JsonTags.filterColor,
           Return: Json_Get(
             jsonName: JsonTags.filterEtrap,
-            Return: FilterView(),
+            Return: Json_Get(
+              jsonName: JsonTags.filterPrice,
+              Return: Json_Get(
+                  jsonName: JsonTags.filterTime,
+                  Return: FilterView()),
+            ),
           ),
         ),
       ),

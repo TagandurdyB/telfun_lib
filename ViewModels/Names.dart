@@ -44,5 +44,8 @@ class JsonTags{
   static const String filterColor = "filterColor";
   static const String filterPlace = "filterPlace";
   static const String filterEtrap = "filterEtrap";
-
+  static const String filterMin = "filterMin";
+  static const String filterMax = "filterMax";
+  static const String filterPrice = "filterPrice";
+  static const String filterTime = "filterTime";
 }

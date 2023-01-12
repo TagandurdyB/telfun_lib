@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:telfun/ViewModels/MapConverter.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
+import 'package:telfun/Views/widgets/FilterSwitch.dart';
+import 'package:telfun/Views/widgets/ReadyInput/RIBase.dart';
 
 import '../ApiElements.dart';
 
@@ -14,43 +17,56 @@ class FilterProvider extends ChangeNotifier {
   List _etrapObjs = [];
   List get etrapObjs => _etrapObjs;
 
-
   Map<String, List> _filters = {
     JsonTags.filterMark: [],
     JsonTags.filterModel: [],
     JsonTags.filterColor: [],
     JsonTags.filterEtrap: [],
+    JsonTags.filterPrice: [0, 0],
+    JsonTags.filterTime: [DDBEl(id: 0, value: "")],
   };
-  void filterFill(Map _obj){
+  void filterFill(Map _obj) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _filters=_obj;
+      _filters = _obj;
     });
     notifyListeners();
   }
+
   Map<String, List> get filters => _filters;
   List filter(String tag) => _filters[tag];
 
-  List filterMap(String tag) => MapConverter(JsonName: tag,ElemList: _filters[tag]).toMap();
-  Map filterMaps() =>
-      {
-        JsonTags.filterMark:filterMap(JsonTags.filterMark),
-        JsonTags.filterModel:filterMap(JsonTags.filterModel),
-        JsonTags.filterColor:filterMap(JsonTags.filterColor),
-        JsonTags.filterEtrap:filterMap(JsonTags.filterEtrap),
+  List filterMap(String tag) =>
+      MapConverter(JsonName: tag, ElemList: _filters[tag]).toMap();
+  Map filterMaps() => {
+        JsonTags.filterMark: filterMap(JsonTags.filterMark),
+        JsonTags.filterModel: filterMap(JsonTags.filterModel),
+        JsonTags.filterColor: filterMap(JsonTags.filterColor),
+        JsonTags.filterEtrap: filterMap(JsonTags.filterEtrap),
+        JsonTags.filterPrice: filterMap(JsonTags.filterPrice),
+        JsonTags.filterTime: filterMap(JsonTags.filterTime),
       };
 
-  List filterObj(String tag,List list) => MapConverter(JsonName: tag,MapList: list).toElem();
-  Map filterObjs(Map _filterMaps) =>
-      {
-        JsonTags.filterMark:filterObj(JsonTags.filterMark,_filterMaps[JsonTags.filterMark]),
-        JsonTags.filterModel:filterObj(JsonTags.filterModel,_filterMaps[JsonTags.filterModel]),
-        JsonTags.filterColor:filterObj(JsonTags.filterColor,_filterMaps[JsonTags.filterColor]),
-        JsonTags.filterEtrap:filterObj(JsonTags.filterEtrap,_filterMaps[JsonTags.filterEtrap]),
+  List filterObj(String tag, List list) =>
+      MapConverter(JsonName: tag, MapList: list).toElem();
+  Map filterObjs(Map _filterMaps) => {
+        JsonTags.filterMark:
+            filterObj(JsonTags.filterMark, _filterMaps[JsonTags.filterMark]),
+        JsonTags.filterModel:
+            filterObj(JsonTags.filterModel, _filterMaps[JsonTags.filterModel]),
+        JsonTags.filterColor:
+            filterObj(JsonTags.filterColor, _filterMaps[JsonTags.filterColor]),
+        JsonTags.filterEtrap:
+            filterObj(JsonTags.filterEtrap, _filterMaps[JsonTags.filterEtrap]),
+        JsonTags.filterPrice:
+            filterObj(JsonTags.filterPrice, _filterMaps[JsonTags.filterPrice]),
+        JsonTags.filterTime:
+            filterObj(JsonTags.filterTime, _filterMaps[JsonTags.filterTime]),
       };
-
 
   List findEtrapObjs(int welayatId) {
-    return _filters[JsonTags.filterEtrap].where((element) =>element.place_id==welayatId).toList();
+    return _filters[JsonTags.filterEtrap]
+        .where((element) => element.place_id == welayatId)
+        .toList();
   }
 
   List _savedFilters = [];
@@ -59,6 +75,26 @@ class FilterProvider extends ChangeNotifier {
 
   void reload() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final List<int> _listPrice =
+          Get_Lists(isApi: false, listTag: JsonTags.filterPrice)
+              .getList()
+              .cast<int>();
+      int min = 0, max = 0;
+      if (_listPrice.isNotEmpty) {
+        min = _listPrice[0];
+        max = _listPrice[1];
+      }
+      final List _listTime =
+          Get_Lists(isApi: false, listTag: JsonTags.filterTime).getList();
+      DDBEl dDTime=DDBEl(id: 0,value: "");
+      if(_listTime.isNotEmpty){
+        dDTime=_listTime[0];
+      }
+      RIBase.changeDate(
+          RITags.rIMin, TextEditingController(text: min.toString()));
+      RIBase.changeDate(
+          RITags.rIMax, TextEditingController(text: max.toString()));
+
       _markObjs =
           Get_Lists(isApi: false, listTag: JsonTags.filterMark).getList();
       _modelObjs =
@@ -76,6 +112,8 @@ class FilterProvider extends ChangeNotifier {
             Get_Lists(isApi: false, listTag: JsonTags.filterColor).getList(),
         JsonTags.filterEtrap:
             Get_Lists(isApi: false, listTag: JsonTags.filterEtrap).getList(),
+        JsonTags.filterPrice: [min, max],
+        JsonTags.filterTime: [dDTime]
       };
       notifyListeners();
     });
@@ -87,6 +125,20 @@ class FilterProvider extends ChangeNotifier {
           Get_Lists(isApi: false, listTag: JsonTags.filters).getList();
       notifyListeners();
     });
+  }
+
+  void changePrice(int min, int max) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _filters[JsonTags.filterPrice] = [min, max];
+    });
+    notifyListeners();
+  }
+
+  void changeTime(DDBEl _elem) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _filters[JsonTags.filterTime] = [_elem];
+    });
+    notifyListeners();
   }
 
   void tongleFilter(obj, String tag) {
@@ -110,7 +162,9 @@ class FilterProvider extends ChangeNotifier {
 
   void multiRemoweFilter(List list, String tag) {
     list.forEach((elementL) {
-      _filters[tag] = _filters[tag].where((elementF) => elementF.id!=elementL.id).toList();
+      _filters[tag] = _filters[tag]
+          .where((elementF) => elementF.id != elementL.id)
+          .toList();
     });
     notifyListeners();
   }
@@ -152,6 +206,8 @@ class FilterProvider extends ChangeNotifier {
       JsonTags.filterModel: [],
       JsonTags.filterColor: [],
       JsonTags.filterEtrap: [],
+      JsonTags.filterPrice: [0, 0],
+      JsonTags.filterTime: [DDBEl(id: 0, value: "")],
     };
     notifyListeners();
   }
