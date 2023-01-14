@@ -77,7 +77,9 @@ class FilterFuncGroup {
     await JsonListCacher(jsonName: JsonTags.filterPrice).addAllSaved(_mapList);
     print("Can Added price:= $_canAdded");
     if(_canAdded)
-      Provider.of<FilterProvider>(_context,listen: false).changePrice(min, max) ;
+      Future.delayed(Duration(milliseconds: 50)).then((value) =>
+          Provider.of<FilterProvider>(_context,listen: false).changePrice(min, max));
+
   }
 
   List<int> funcPrice(BuildContext _context){
@@ -98,7 +100,7 @@ class FilterFuncGroup {
         await JsonListCacher(jsonName: JsonTags.filterTime).addAllSaved(_mapList);
     print("Can Added time:= $_canAdded");
     if(_canAdded)
-      Provider.of<FilterProvider>(_context,listen: false).changeTime(list[0]) ;
+         Provider.of<FilterProvider>(_context,listen: false).changeTime(list[0]);
   }
 
   List funcTime(BuildContext _context){

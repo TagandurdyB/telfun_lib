@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/Names.dart';
+import 'package:telfun/ViewModels/Providers/FilterProvider.dart';
 import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/Views/Pages/FilterPage/FilterListView.dart';
 import 'package:telfun/Views/widgets/TabBarViever.dart';
@@ -15,24 +16,7 @@ import 'FilterAddView.dart';
 class FilterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Json_Get(
-      jsonName: JsonTags.filterMark,
-      Return: Json_Get(
-        jsonName: JsonTags.filterModel,
-        Return: Json_Get(
-          jsonName: JsonTags.filterColor,
-          Return: Json_Get(
-            jsonName: JsonTags.filterEtrap,
-            Return: Json_Get(
-              jsonName: JsonTags.filterPrice,
-              Return: Json_Get(
-                  jsonName: JsonTags.filterTime,
-                  Return: FilterView()),
-            ),
-          ),
-        ),
-      ),
-    );
+    return FilterView();
   }
 }
 
@@ -101,7 +85,7 @@ class FilterView extends StatelessWidget {
             ),
             Expanded(
               child: TabViewer(childs: [
-                FilterAddView(),
+                FilterFirstView(),
                 FilterListView(),
               ]),
             )

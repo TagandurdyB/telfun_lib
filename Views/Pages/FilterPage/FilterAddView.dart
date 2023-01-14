@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:telfun/Models/Public.dart';
 import 'package:telfun/ViewModels/JsonCacher.dart';
+import 'package:telfun/ViewModels/JsonDebuger.dart';
 import 'package:telfun/ViewModels/Names.dart';
 import 'package:telfun/ViewModels/Providers/FilterProvider.dart';
 import 'package:telfun/ViewModels/Providers/Theme_Provider.dart';
 import 'package:telfun/ViewModels/Providers/ValueProvider.dart';
+import 'package:telfun/ViewModels/Routes.dart';
 import 'package:telfun/Views/widgets/Dialog.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DDBBase.dart';
 import 'package:telfun/Views/widgets/DropDownBtn/DropDownBtn.dart';
@@ -17,9 +20,35 @@ import 'package:telfun/Views/widgets/imgBtn.dart';
 
 import 'FilterPop.dart';
 
+
+class FilterFirstView extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Json_Get(
+      jsonName: JsonTags.filterMark,
+      Return: Json_Get(
+        jsonName: JsonTags.filterModel,
+        Return: Json_Get(
+          jsonName: JsonTags.filterColor,
+          Return: Json_Get(
+            jsonName: JsonTags.filterEtrap,
+            Return: Json_Get(
+              jsonName: JsonTags.filterPrice,
+              Return: Json_Get(
+                  jsonName: JsonTags.filterTime,
+                  Return: FilterAddView()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 class FilterAddView extends StatefulWidget {
   // const SetingsPage({Key? key}) : super(key: key);
-
   @override
   _FilterAddViewState createState() => _FilterAddViewState();
 }
@@ -32,7 +61,7 @@ class _FilterAddViewState extends State<FilterAddView> {
     // TODO: implement initState
     super.initState();
     erease();
-    //Provider.of<FilterProvider>(context, listen: false).reload();
+    Provider.of<FilterProvider>(context, listen: false).reload();
   }
 
   void erease() {
@@ -44,7 +73,10 @@ class _FilterAddViewState extends State<FilterAddView> {
     DDPrice = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
   }
 
-  void fill(Map _basa, Map _basaApi) {
+  void fill(BuildContext context) {
+
+    Map _basa=Provider.of<FilterProvider>(context).filters;
+    Map _basaApi=Provider.of<ValuesProvider>(context).allOfThem;
     List _listMark = _basa[JsonTags.filterMark];
     List _listModel = _basa[JsonTags.filterModel];
     List _listColor = _basa[JsonTags.filterColor];
@@ -63,7 +95,7 @@ class _FilterAddViewState extends State<FilterAddView> {
     final int _min=_basa[JsonTags.filterPrice][0];
     final int _max=_basa[JsonTags.filterPrice][1];
 
-final dDTime=_basa[JsonTags.filterTime][0];
+    final dDTime=_basa[JsonTags.filterTime][0];
 
     if (_numMark == 0)
       DDMark = DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
@@ -108,15 +140,17 @@ final dDTime=_basa[JsonTags.filterTime][0];
 
     if(dDTime.id!=0)
       DDTime=dDTime;
+    else
+      DDTime=DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
   }
 
   @override
   Widget build(BuildContext context) {
     final providerFilter = Provider.of<FilterProvider>(context);
     final providerValues = Provider.of<ValuesProvider>(context);
-    fill(providerFilter.filters, providerValues.allOfThem);
-    final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable,
-        enable = Provider.of<ThemeProvided>(context).styleEnable;
+    fill(context);
+    final TextStyle disable = Provider.of<ThemeProvided>(context).styleDisable;
+    final TextStyle enable = Provider.of<ThemeProvided>(context).styleEnable;
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView(
@@ -225,9 +259,10 @@ final dDTime=_basa[JsonTags.filterTime][0];
                             child: ReadyInput(
                               tag: RITags.rIMin,
                               type: Type.num,
-                              startVal: RIBase.isEmpety(RITags.rIMin)
+                              startVal: providerFilter.filter(JsonTags.filterPrice)[0].toString(),
+                              /*RIBase.isEmpety(RITags.rIMin)
                                   ? "0"
-                                  : RIBase.getText(RITags.rIMin),
+                                  : RIBase.getText(RITags.rIMin),*/
                               label: "iň arzan",
                               shape: true,
                               borderRad: 2,
@@ -240,9 +275,10 @@ final dDTime=_basa[JsonTags.filterTime][0];
                             child: ReadyInput(
                               tag: RITags.rIMax,
                               type: Type.num,
-                              startVal: RIBase.isEmpety(RITags.rIMax)
+                              startVal: providerFilter.filter(JsonTags.filterPrice)[1].toString(),
+                              /*RIBase.isEmpety(RITags.rIMax)
                                   ? "0"
-                                  : RIBase.getText(RITags.rIMax),
+                                  : RIBase.getText(RITags.rIMax),*/
                               shape: true,
                               borderRad: 2,
                               label: "iň gymmat",
@@ -334,9 +370,10 @@ final dDTime=_basa[JsonTags.filterTime][0];
                   ],
                   onChanged: (DDBEl _element) {
                     DDTime = _element;
-                    final List _time = FilterFuncGroup().funcTime(context);
-                    DDTime=_time[0];
+                    //final List _time = FilterFuncGroup().funcTime(context);
+                   // DDTime=_time[0];
                     setState(() {});
+                    FilterFuncGroup().funcTime(context);
                   },
                 ),
               ),
