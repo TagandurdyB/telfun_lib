@@ -139,7 +139,7 @@ class _FilterAddViewState extends State<FilterAddView> {
       DDPrice=DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
 
     if(dDTime.id!=0)
-      DDTime=dDTime;
+     Future.delayed(Duration(milliseconds: 50)).then((value) => DDTime=dDTime);
     else
       DDTime=DDBEl(index: -1, value: "Saýlanmadyk", id: 0);
   }
