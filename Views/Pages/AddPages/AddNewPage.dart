@@ -112,6 +112,7 @@ class _AddNewPageState extends State<AddNewPage> {
                                   "${_element.value} ${_etraps[index].name}";
                                   DDPlace.id = _etraps[index].id;
                                   DDPlace.index=0;
+                                  DDBBase.changeDate(DDBTags.dDBLocation, DDPlace);
                                   setState(() {});
                                   print(
                                       "value:${DDPlace.value}  id:${DDPlace.id} index:${DDPlace.index}");
@@ -434,8 +435,7 @@ class _AddNewPageState extends State<AddNewPage> {
                       "place": DDBBase().getDate(DDBName.dDBLocation).id.toString(),
                       "about": controls[2].text,*/
                       "user_id": UserProperties.getProperty("id"),
-                      "place": DDPlace.id.toString(),
-                         // DDBBase().getDate(DDBName.dDBLocation).id.toString(),
+                      "place": DDBBase.getDate(DDBTags.dDBLocation).id.toString(),
                       "price": RIBase.getText(RITags.rIPrice),//controls[1].text,
                       "color_id":
                           DDBBase.getDate(DDBTags.dDBColor).id.toString(),

@@ -35,17 +35,23 @@ class ApiTags {
   static const String all="all";
   static const String colors="color";
   static const String shops="shops";
+  static const String filter="filter_list";
 }
 class JsonTags{
   static const String favorite = "favorite";
   static const String filters = "filters";
-  static const String filterMark = "filterMark";
-  static const String filterModel = "filterModel";
-  static const String filterColor = "filterColor";
+  static const String filterMark = "mark_id";
+  static const String filterModel = "products_id";
+  static const String filterColor = "color_id";
   static const String filterPlace = "filterPlace";
-  static const String filterEtrap = "filterEtrap";
+  static const String filterEtrap = "etrap_id";
   static const String filterMin = "filterMin";
   static const String filterMax = "filterMax";
-  static const String filterPrice = "filterPrice";
-  static const String filterTime = "filterTime";
+  static const String filterPrice = "price";
+  static const String filterTime = "time";
+}
+class SortTag{
+  static const String basic = "basic";
+  static const String min = "min";
+  static const String max = "max";
 }

@@ -23,7 +23,7 @@ class FilterProvider extends ChangeNotifier {
     JsonTags.filterColor: [],
     JsonTags.filterEtrap: [],
     JsonTags.filterPrice: [0, 0],
-    JsonTags.filterTime: [DDBEl(id: 0, value: "")],
+    JsonTags.filterTime: [DDBEl(id: 1, value: "")],
   };
   void filterFill(Map _obj) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {

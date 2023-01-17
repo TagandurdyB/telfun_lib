@@ -61,10 +61,14 @@ class EventsProvid extends ChangeNotifier {
           _searchList.add(name);
         }
       }
-      return _searchList;
+      _list=_searchList;
     }
+
+    //_list.sort((a, b) => a.vipBoolToInt().compareTo(b.vipBoolToInt()));
+    //_list=_list.reversed.toList();
     return _list;
   }
+
 
   bool isExist(int id) {
     final bool _isExist = ElemEvents().idList(_objs).contains(id);

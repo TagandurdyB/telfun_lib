@@ -77,7 +77,7 @@ class _AllPageState extends State<AllPage> {
           final int _sort_num = markProvider.sortNum;
           List _list = eventProvider.sortWithMarks(_mark_id, _sort_num,markProvider.getSearch);
           final obj = _list[index];
-         // print("sakjdalsd++:=${obj.id}");
+          //print("sakjdalsd++:=${obj.id}");
           return InCategory(
             obj: obj,
             isFavorite: provider.isExist(obj),

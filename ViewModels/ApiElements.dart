@@ -15,8 +15,8 @@ class ElemPlace {
 
 class ElemEtrap {
   final String name;
-  final int id,place_id;
-  ElemEtrap({this.place_id,this.id, this.name});
+  final int id, place_id;
+  ElemEtrap({this.place_id, this.id, this.name});
 
   String shortName() {
     if (name.length > 10) {
@@ -29,7 +29,6 @@ class ElemEtrap {
     List<int> _list = objList.map((e) => e.place_id).toList().cast<int>();
     return _list;
   }
-
 }
 
 class ElemCategory {
@@ -59,13 +58,12 @@ class ElemEvents {
   final bool is_new, isVip;
   final DateTime data;
   final List images;
-  final String name, phone, place, about,category, mark, public_image;
+  final String name, phone, place, about, category, mark, public_image;
   final ElemEtrap etrap;
   //final List images;
   ElemEvents(
-      {
-        this.category="",
-        this.isVip = false,
+      {this.category = "",
+      this.isVip = false,
       this.etrap,
       this.view,
       this.color,
@@ -87,6 +85,8 @@ class ElemEvents {
   void changeFavorite(bool _is) {
     favorite = _is;
   }
+
+  int vipBoolToInt() => isVip ? 1 : 0;
 
   List<int> idList(List objList) {
     List<int> _list = objList.map((e) => e.id).toList().cast<int>();
@@ -132,5 +132,5 @@ class ElemFilter {
   final int id;
   final String name;
   final Map filters;
-  ElemFilter({this.name, this.id,this.filters});
+  ElemFilter({this.name, this.id, this.filters});
 }

@@ -98,7 +98,7 @@ class MapConverter {
       }else if(_name==ApiTags.shops){
         list.add(localConverter().elemShopToMap(_val));
       }else if(_name==JsonTags.filterPrice){
-        list.add({"id":0,"price":_val});
+        list.add({"price":_val});
       }else if(_name==JsonTags.filterTime){
         list.add({"id":_val.id,"value":_val.value});
       }

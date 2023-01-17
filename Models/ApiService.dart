@@ -13,18 +13,21 @@ import 'connect.dart';
 class API {
   final String url;
   final Map headers;
+  final Map body;
 
   API({
     this.headers,
     this.url,
+    this.body,
   });
 
-  Future<Map> post(Map body) async {
+  Future post(Map body) async {
     print("BODY:   $body");
+    print("URL:    $url");
     Map<String, dynamic> map;
-    await http
-        .post(Uri.parse(url),headers:headers,  body: body)
-        .then((response) {
+    print("I am hear 1");
+    await http.post(Uri.parse(url), body: jsonEncode(body)).then((response) {
+      print("I am hear 2");
       if (response.statusCode == 200) {
         map = json.decode(response.body);
         print("request:${map}");
@@ -100,6 +103,34 @@ class API {
         // writeJson(fileName, response.body);
         return json.decode(response.body);
       }
+    } else {
+      print('not connected');
+      File file = await Cacher.getDirectory(fileName);
+      if (file.existsSync()) {
+        print("Loading from local...");
+        print("cach map:${await Cacher.readJson(fileName)}");
+        return Cacher.readJson(fileName);
+      }
+    }
+  }
+
+  Future<List> getDatePost(String fileName) async {
+    print("body:${body}");
+    print("URL :${url}");
+    bool _isConnect = await isConnected();
+    print("I am hear");
+    if (_isConnect) {
+      print("I am hear 23");
+      await http.post(Uri.parse(url), body: jsonEncode(body)).then((response) {
+        print("I am hear 24");
+        if (response.statusCode == 200) {
+          print("salam");
+          print("Loading from API...");
+          // writeJson(fileName, response.body);
+          return json.decode(response.body);
+        } else
+          print("${response.statusCode}");
+      });
     } else {
       print('not connected');
       File file = await Cacher.getDirectory(fileName);

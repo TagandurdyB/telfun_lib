@@ -92,6 +92,85 @@ class API_Get extends StatelessWidget {
   }
 }
 
+class API_PostBuilder extends StatelessWidget {
+  final String URL;
+  final Map Body;
+  final Widget Return;
+  final String ApiName;
+  // final int LIndex;
+  API_PostBuilder(
+      {Key key,
+        @required this.URL,
+        @required this.Body,
+        @required this.Return,
+        @required this.ApiName,
+        // @required this.LIndex,
+      })
+      : super(key: key);
+
+  void addBase(List _list) {
+    Base().add(
+        {ApiName: MapConverter(ApiName: ApiName, MapList: _list).toElem()});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List>(
+        future: API(url: URL,body: Body).getDatePost(ApiName),
+        builder: (ctx, ss) {
+          if (ss.hasError) {
+            print("Error Fail***");
+          }
+          if (ss.hasData) {
+            return FutureBuilder<bool>(
+                future: isConnected(),
+                builder: (context, snapsh) {
+                  if (snapsh.hasError) {
+                    print("Error ******+*");
+                  }
+                  if (snapsh.hasData) {
+                    if (snapsh.data) {
+                      List _mapL =
+                      MapConverter(ApiName: ApiName, MapList: ss.data)
+                          .maptoMap();
+                      addBase(_mapL);
+                      String _body = jsonEncode(_mapL);
+                      Cacher.writeJson(ApiName, _body);
+                    } else {
+                      addBase(ss.data);
+                    }
+                    return Return;
+                  } else {
+                    return loadingApi();
+                  }
+                });
+          } else {
+            return loadingApi();
+          }
+        });
+  }
+
+  Widget loadingApi() {
+    return Center(
+        child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: ThemeProvided().colorCanvas,
+              /* gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Colors.white,
+                  Color(0xff6911B0),
+                  Colors.white
+                ] */ /*[Colors.yellow, Color(0xff6911B0), Colors.red]*/ /*)*/
+            ),
+            child: Container(child: CircularProgressIndicator())));
+  }
+}
+
 class Get_apiStream extends StatelessWidget {
   final String URL;
   final Widget Return;
@@ -179,6 +258,13 @@ class API_Post {
   }
 
   //if sms code true you are login
+
+  Future filter() async {
+    Map map =
+    await API(url: URL).post(body);
+    print("Filter Map ${map}");
+ // return map;
+  }
 
   void addRegister() async {
     Map<String, dynamic> map =
