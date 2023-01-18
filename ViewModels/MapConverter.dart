@@ -38,6 +38,7 @@ class MapConverter {
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToElemEventDetal(_val));
       } else if (_name == ApiTags.events ||
+      _name==ApiTags.filter||
           _name == ApiTags.all ||
           _name == ApiTags.product ||
           _name == ApiTags.prosses) {
@@ -75,6 +76,7 @@ class MapConverter {
       } else if (_name == ApiTags.categori) {
         list.add(localConverter().elemCategoryToMap(_val));
       } else if (_name == ApiTags.events ||
+          _name == ApiTags.filter ||
           _name == ApiTags.all ||
           _name == ApiTags.product ||
           _name == ApiTags.prosses) {
@@ -121,6 +123,7 @@ class MapConverter {
       } else if (_name == ApiTags.detal) {
         list.add(localConverter().mapToMapEventDetal(_val));
       } else if (_name == ApiTags.events ||
+          _name == ApiTags.filter ||
           _name == ApiTags.all ||
           _name == ApiTags.product ||
           _name == ApiTags.prosses) {

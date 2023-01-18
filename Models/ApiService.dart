@@ -126,10 +126,11 @@ class API {
         if (response.statusCode == 200) {
           print("salam");
           print("Loading from API...");
+          print("body:=${json.decode(response.body)}");
           // writeJson(fileName, response.body);
           return json.decode(response.body);
         } else
-          print("${response.statusCode}");
+          print("ERROR CODE: ${response.statusCode}");
       });
     } else {
       print('not connected');

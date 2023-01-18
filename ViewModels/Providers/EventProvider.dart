@@ -63,10 +63,10 @@ class EventsProvid extends ChangeNotifier {
       }
       _list=_searchList;
     }
-
-    //_list.sort((a, b) => a.vipBoolToInt().compareTo(b.vipBoolToInt()));
+    final List _listVip=_list.where((element) => element.isVip).toList();
+    _list=_list.where((element) => !element.isVip).toList();
     //_list=_list.reversed.toList();
-    return _list;
+    return _listVip+_list;
   }
 
 
