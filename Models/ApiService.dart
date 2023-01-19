@@ -96,13 +96,14 @@ class API {
 
   Future<List> getDate(String fileName) async {
     bool _isConnect = await isConnected();
+
     if (_isConnect) {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         print("Loading from API...");
-        // writeJson(fileName, response.body);
+        Cacher.writeJson(fileName, response.body);
         return json.decode(response.body);
-      }
+      } else  print("Error Code:${response.statusCode}");
     } else {
       print('not connected');
       File file = await Cacher.getDirectory(fileName);
@@ -118,20 +119,14 @@ class API {
     print("body:${body}");
     print("URL :${url}");
     bool _isConnect = await isConnected();
-    print("I am hear");
     if (_isConnect) {
-      print("I am hear 23");
-      await http.post(Uri.parse(url), body: jsonEncode(body)).then((response) {
-        print("I am hear 24");
-        if (response.statusCode == 200) {
-          print("salam");
-          print("Loading from API...");
-          print("body:=${json.decode(response.body)}");
-          // writeJson(fileName, response.body);
-          return json.decode(response.body);
-        } else
-          print("ERROR CODE: ${response.statusCode}");
-      });
+      final response = await http.post(Uri.parse(url), body: jsonEncode(body));
+      if (response.statusCode == 200) {
+        print("Loading from API...");
+        Cacher.writeJson(fileName, response.body);
+        return json.decode(response.body);
+      } else
+        print("Error Code:${response.statusCode}");
     } else {
       print('not connected');
       File file = await Cacher.getDirectory(fileName);
