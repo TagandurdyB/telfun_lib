@@ -24,10 +24,11 @@ class FilterDetalPage extends StatelessWidget {
 class FilterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("filter:++${Get_Lists(listTag: ApiTags.filter).getList()}");
+    final List _objs=Get_Lists(listTag: ApiTags.filter).getList();
+    print("Filter length:=${_objs.length}");
     return ProductPage(
-      title: "",
-      objs: [], //objs,
+      title: "Filter",
+      objs: _objs,
     );
   }
 }

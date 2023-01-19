@@ -113,13 +113,10 @@ class API_PostBuilder extends StatelessWidget {
         {ApiName: MapConverter(ApiName: ApiName, MapList: _list).toElem()});
   }
 
-  Future printPost() async{
-    print("print Post:=${await API(url: URL,body: Body).getDatePost(ApiName)}");
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    printPost();
     return FutureBuilder<List>(
         future: API(url: URL,body: Body).getDatePost(ApiName),
         builder: (ctx, ss) {
