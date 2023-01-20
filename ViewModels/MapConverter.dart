@@ -508,7 +508,7 @@ class localConverter {
         data: DateTime.parse(_map["data"]),
         id: _map["id"],
         name: _map["name"],
-        mark_id: int.parse(_map["mark_id"]),
+        mark_id: _map["mark_id"],
         is_new: _map["is_new"],
         isVip: _map["isVip"],
         //about: _map["about"],
@@ -517,7 +517,7 @@ class localConverter {
         // phone: _map["user"]["phone"],
         place: _map["place"],
         etrap: ElemEtrap(name: _map["etrap"]["name"], id: _map["etrap"]["id"]),
-        price: int.parse(_map["price"]),
+        price: _map["price"],
         public_image: _map["public_image"],
       );
     } catch (_e) {
@@ -531,7 +531,7 @@ class localConverter {
         "data": _elem.data.toString(),
         "id": _elem.id,
         "name": _elem.name,
-        "mark_id": _elem.mark_id.toString(),
+        "mark_id": _elem.mark_id,
         "is_new": _elem.is_new,
         "isVip":_elem.isVip,
         // "about": _elem.about,
@@ -540,7 +540,7 @@ class localConverter {
         // "phone": _elem.phone,
         "etrap": {"name": _elem.etrap.name, "id": _elem.etrap.id},
         "place": _elem.place,
-        "price": _elem.price.toString(),
+        "price": _elem.price,
         "public_image": _elem.public_image,
       };
     } catch (_e) {
@@ -755,6 +755,11 @@ class Get_Lists {
 
   static List<int> idList(List objList) {
     List<int> _list = objList.map((e) => e.id).toList().cast<int>();
+    return _list;
+  }
+
+  static List<int> mapIdList(List _mapList) {
+    List<int> _list = _mapList.map((e) => e["id"]).toList().cast<int>();
     return _list;
   }
 }

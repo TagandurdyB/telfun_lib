@@ -75,7 +75,9 @@ class LoginPage extends StatelessWidget {
             )).popUp(context);
         print(controls[0].text);
         print(controls[1].text);
-        bool canLogin = await API_Post(URL: "$IP/api/login",
+        bool canLogin = await API_Post(
+        //  URL: "$IP/api/filter",
+         URL: "$IP/api/login",
             //URL: "$IP/api/register",
             // name: "name124",
             body: {

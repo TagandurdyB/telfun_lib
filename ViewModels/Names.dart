@@ -48,6 +48,8 @@ class JsonTags{
   static const String filterMin = "filterMin";
   static const String filterMax = "filterMax";
   static const String filterPrice = "price";
+  static const String filterPriceMin = "price_min";
+  static const String filterPriceMax = "price_max";
   static const String filterTime = "time";
 }
 class SortTag{

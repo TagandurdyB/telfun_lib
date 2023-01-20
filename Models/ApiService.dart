@@ -13,7 +13,7 @@ import 'connect.dart';
 class API {
   final String url;
   final Map headers;
-  final Map body;
+  Map body;
 
   API({
     this.headers,
@@ -21,12 +21,12 @@ class API {
     this.body,
   });
 
-  Future post(Map body) async {
-    print("BODY:   $body");
+  Future post(Map _body) async {
+    print("BODY:   $_body");
     print("URL:    $url");
     Map<String, dynamic> map;
     print("I am hear 1");
-    await http.post(Uri.parse(url), body: jsonEncode(body)).then((response) {
+    await http.post(Uri.parse(url), body: _body).then((response) {
       print("I am hear 2");
       if (response.statusCode == 200) {
         map = json.decode(response.body);
@@ -73,15 +73,7 @@ class API {
 
   Login(Map _map) async {
     Map<String, dynamic> map;
-    await http
-        .post(Uri.parse(url),
-            body:
-                _map /*body: {
-      "phone": list[0],
-      "password": list[1],
-    }*/
-            )
-        .then((response) {
+    await http.post(Uri.parse(url), body: _map).then((response) {
       if (response.statusCode == 200) {
         map = json.decode(response.body);
       } else {
@@ -103,7 +95,8 @@ class API {
         print("Loading from API...");
         Cacher.writeJson(fileName, response.body);
         return json.decode(response.body);
-      } else  print("Error Code:${response.statusCode}");
+      } else
+        print("Error Code:${response.statusCode}");
     } else {
       print('not connected');
       File file = await Cacher.getDirectory(fileName);
@@ -116,26 +109,30 @@ class API {
   }
 
   Future<List> getDatePost(String fileName) async {
-    print("body:${body}");
-    print("URL :${url}");
+   // body={"mark_id":json.encode([2,3])};
+    print("builder body:${body}");
+    print("builder URL :${url}");
+    List _listData=[];
     bool _isConnect = await isConnected();
     if (_isConnect) {
-      final response = await http.post(Uri.parse(url), body: jsonEncode(body));
-      if (response.statusCode == 200) {
-        print("Loading from API...");
-        Cacher.writeJson(fileName, response.body);
-        return json.decode(response.body);
-      } else
-        print("Error Code:${response.statusCode}");
+      await http.post(Uri.parse(url), body: (body)).then((response) {
+        if (response.statusCode == 200) {
+          print("Loading from API... ${response.body}");
+          Cacher.writeJson(fileName, response.body);
+          _listData= json.decode(response.body);
+        } else
+          print("Error Code:${response.statusCode}");
+      });
     } else {
       print('not connected');
       File file = await Cacher.getDirectory(fileName);
       if (file.existsSync()) {
         print("Loading from local...");
         print("cach map:${await Cacher.readJson(fileName)}");
-        return Cacher.readJson(fileName);
+        _listData=Cacher.readJson(fileName)as List;
       }
     }
+    return _listData;
   }
 
 /*   void getDateStream()  async{

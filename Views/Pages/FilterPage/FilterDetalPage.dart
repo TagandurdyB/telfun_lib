@@ -25,6 +25,9 @@ class FilterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List _objs=Get_Lists(listTag: ApiTags.filter).getList();
+    _objs.forEach((element) {
+      print("name:=${element.name}");
+    });
     print("Filter length:=${_objs.length}");
     return ProductPage(
       title: "Filter",
